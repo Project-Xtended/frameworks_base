@@ -495,6 +495,8 @@ class GlobalScreenshot {
 
     private Ringtone  mScreenshotSound;
 
+    private final int mSfHwRotation;
+
     /**
      * @param context everything needs a context :(
      */
@@ -563,6 +565,9 @@ class GlobalScreenshot {
         // Setup the Screenshot sound
         mScreenshotSound= RingtoneManager.getRingtone(mContext,
                     Uri.parse("file://" + "/system/media/audio/ui/camera_click.ogg"));
+
+        // Load hardware rotation from prop
+        mSfHwRotation = android.os.SystemProperties.getInt("ro.sf.hwrotation", 0) / 90;
     }
 
     /**
@@ -608,6 +613,8 @@ class GlobalScreenshot {
         mDisplay.getRealMetrics(mDisplayMetrics);
         float[] dims = {mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels};
         int rot = mDisplay.getRotation();
+        // Allow for abnormal hardware orientation
+        rot = (rot + mSfHwRotation) % 4;
         float degrees = getDegreesForRotation(rot);
         boolean requiresRotation = (degrees > 0);
         if (requiresRotation) {
