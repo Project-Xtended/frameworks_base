@@ -61,4 +61,7 @@
   <!-- On-The-Go -->
   <java-symbol type="drawable" name="ic_lock_onthego" />
 
+  <!-- Gesture Sensor -->
+  <java-symbol type="bool" name="config_enableGestureService" />
+
 </resources>
