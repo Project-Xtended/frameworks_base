@@ -1326,7 +1326,7 @@ public class AudioService extends IAudioService.Stub
         boolean safeMediaVolumeEnabled = mContext.getResources().getBoolean(
                 com.android.internal.R.bool.config_safe_media_volume_enabled);
         boolean safeHeadsetVolumeEnabled = Settings.System.getIntForUser(cr,
-                Settings.System.SAFE_HEADSET_VOLUME, safeMediaVolumeEnabled ? 1 : 0,
+                Settings.System.SAFE_HEADSET_VOLUME, safeMediaVolumeEnabled ? 0 : 1,
                 UserHandle.USER_CURRENT_OR_SELF) != 0;
         return safeHeadsetVolumeEnabled;
     }
@@ -2996,7 +2996,7 @@ public class AudioService extends IAudioService.Stub
 
         synchronized (mSafeMediaVolumeState) {
             mMusicActiveMs = MathUtils.constrain(Settings.Secure.getIntForUser(mContentResolver,
-                    Settings.Secure.UNSAFE_VOLUME_MUSIC_ACTIVE_MS, 0, UserHandle.USER_CURRENT),
+                    Settings.Secure.UNSAFE_VOLUME_MUSIC_ACTIVE_MS, 1, UserHandle.USER_CURRENT),
                     0, UNSAFE_VOLUME_MUSIC_ACTIVE_MS_MAX);
             if (mSafeVolumeEnabled &&
                     mSafeMediaVolumeState == SAFE_MEDIA_VOLUME_ACTIVE) {
