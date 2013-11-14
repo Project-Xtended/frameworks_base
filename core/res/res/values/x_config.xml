@@ -200,4 +200,9 @@
     <!-- Aspect ratio of screen -->
     <item name="config_screenAspectRatio" format="float" type="dimen">2.1</item>
 
+    <!-- EdgeGesture service -->
+    <java-symbol type="dimen" name="edge_gesture_trigger_distance" />
+    <java-symbol type="dimen" name="edge_gesture_perpendicular_distance" />
+    <java-symbol type="dimen" name="edge_gesture_trigger_thickness" />
+
 </resources>
