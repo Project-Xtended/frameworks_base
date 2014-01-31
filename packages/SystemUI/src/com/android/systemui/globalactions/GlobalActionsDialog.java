@@ -230,6 +230,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
         mScreenshotHelper = new ScreenshotHelper(context);
+
+        // Set the initial status of airplane mode toggle
+        mAirplaneState = getUpdatedAirplaneToggleState();
     }
 
     /**
@@ -742,7 +745,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
 	    @Override
 	    public boolean showBeforeProvisioning() {
-	        return true;
+	        return false;
             }
         };
     }
@@ -763,7 +766,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
             @Override
             public boolean showBeforeProvisioning() {
-                return false;
+                return true;
             }
         };
     }
