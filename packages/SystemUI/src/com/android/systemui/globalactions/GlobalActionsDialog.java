@@ -186,6 +186,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                 R.bool.config_useFixedVolume);
 
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
+
+        // Set the initial status of airplane mode toggle
+        mAirplaneState = getUpdatedAirplaneToggleState();
     }
 
     /**
