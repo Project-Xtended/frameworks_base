@@ -4421,6 +4421,32 @@ public final class Settings {
         /**
          * Applications list where heasdup should't show
          *
+         */
+        public static final String BATTERY_BAR_LOCATION = "battery_bar_location";
+
+        /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_COLOR = "battery_bar_color";
+
+        /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_THICKNESS = "battery_bar_thickness";
+
+        /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_STYLE = "battery_bar_style";
+
+        /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_ANIMATE = "battery_bar_animate";
+
+        /**
+         * Applications list where heasdup should't show
+         *
          * @hide
          */
         public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
