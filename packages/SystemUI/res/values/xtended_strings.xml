@@ -313,4 +313,9 @@
          [CHAR LIMIT=4] -->
     <string name="status_bar_notification_info_overflow" translatable="false">\u221E</string>
 
+    <!-- App circle sidebar -->
+    <string name="app_float_maximize_item_title">Maximize</string>
+    <string name="app_float_item_title">Float view</string>
+    <string name="app_stop_item_title">Kill app</string>
+
 </resources>
