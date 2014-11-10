@@ -4003,6 +4003,9 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MEDIA_BLUR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4029,6 +4032,9 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MEDIA_BLUR))) {
                 setLockScreenMediaBlurLevel();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN))) {
+                setStatusBarWindowViewOptions();
             }
             update();
         }
@@ -4043,6 +4049,7 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
             setMaxNotifPanelNotifConfig();
             setPulseOnNewTracks();
             setLockScreenMediaBlurLevel();
+            setStatusBarWindowViewOptions();
         }
     }
 
@@ -4108,6 +4115,12 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
     private void setLockScreenMediaBlurLevel() {
         if (mMediaManager != null) {
             mMediaManager.setLockScreenMediaBlurLevel();
+        }
+    }
+
+    private void setStatusBarWindowViewOptions() {
+        if (mNotificationShadeWindowViewController != null) {
+            mNotificationShadeWindowViewController.setStatusBarWindowViewOptions();
         }
     }
 
