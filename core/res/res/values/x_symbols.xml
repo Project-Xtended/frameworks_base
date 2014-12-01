@@ -210,4 +210,7 @@
   <!-- Pocket bridge -->
   <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
 
+  <!-- Device Wake Keys -->
+  <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
+
 </resources>

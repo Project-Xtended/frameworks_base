@@ -5403,15 +5403,45 @@ public final class Settings {
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
         /**
-         * Whether to enable Smart Pixels
+         * Whether to wake the screen with the home key, the value is boolean.
          * @hide
          */
-        public static final String SMART_PIXELS_ENABLE = "smart_pixels_enable";
+        public static final String HOME_WAKE_SCREEN = "home_wake_screen";
 
         /**
-         * Smart Pixels pattern
+         * Whether to wake the screen with the back key, the value is boolean.
          * @hide
          */
+        public static final String BACK_WAKE_SCREEN = "back_wake_screen";
+
+        /**
+         * Whether to wake the screen with the menu key, the value is boolean.
+         * @hide
+         */
+        public static final String MENU_WAKE_SCREEN = "menu_wake_screen";
+
+        /**
+         * Whether to wake the screen with the assist key, the value is boolean.
+         * @hide
+         */
+        public static final String ASSIST_WAKE_SCREEN = "assist_wake_screen";
+
+        /**
+         * Whether to wake the screen with the app switch key, the value is boolean.
+         * @hide
+         */
+        public static final String APP_SWITCH_WAKE_SCREEN = "app_switch_wake_screen";
+
+        /**
+	 ** Whether to enable Smart Pixels
+	 ** @hide
+	 **/
+	public static final String SMART_PIXELS_ENABLE = "smart_pixels_enable";
+
+	/**
+	 ** Smart Pixels pattern
+         ** @hide
+         **/
         public static final String SMART_PIXELS_PATTERN = "smart_pixels_pattern";
 
         /**
