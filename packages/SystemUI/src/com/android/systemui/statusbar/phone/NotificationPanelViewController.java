@@ -38,6 +38,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -48,10 +49,13 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.hardware.biometrics.BiometricSourceType;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.os.UserHandle;
 import android.os.SystemClock;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.MathUtils;
@@ -77,6 +81,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.LatencyTracker;
+import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardClockSwitch;
 import com.android.keyguard.KeyguardStatusView;
 import com.android.keyguard.KeyguardUpdateMonitor;
@@ -332,6 +337,8 @@ public class NotificationPanelViewController extends PanelViewController {
     private float mDownX;
     private float mDownY;
 
+    private boolean mKeyguardOrShadeShowing;
+
     private final KeyguardClockPositionAlgorithm
             mClockPositionAlgorithm =
             new KeyguardClockPositionAlgorithm();
@@ -380,6 +387,9 @@ public class NotificationPanelViewController extends PanelViewController {
     private FalsingManager mFalsingManager;
     private String mLastCameraLaunchSource = KeyguardBottomAreaView.CAMERA_LAUNCH_SOURCE_AFFORDANCE;
 
+    private LockPatternUtils mLockPatternUtils;
+    private boolean mStatusBarLockedOnSecureKeyguard;
+
     private Runnable mHeadsUpExistenceChangedRunnable = () -> {
         setHeadsUpAnimatingAway(false);
         notifyBarPanelExpansionChanged();
@@ -420,6 +430,9 @@ public class NotificationPanelViewController extends PanelViewController {
             new ArrayList<>();
     private ArrayList<Runnable> mVerticalTranslationListener = new ArrayList<>();
     private HeadsUpAppearanceController mHeadsUpAppearanceController;
+
+    private SettingsObserver mSettingsObserver;
+    private Handler mHandler = new Handler();
 
     private int mPanelAlpha;
     private Runnable mPanelAlphaEndAction;
@@ -650,6 +663,8 @@ public class NotificationPanelViewController extends PanelViewController {
         }
 
         mScreenDecorations = Dependency.get(ScreenDecorations.class);
+        mSettingsObserver = new SettingsObserver(mHandler);
+        mLockPatternUtils = new LockPatternUtils(mView.getContext());
 
         onFinishInflate();
     }
@@ -1053,10 +1068,15 @@ public class NotificationPanelViewController extends PanelViewController {
         mAnimateNextPositionUpdate = true;
     }
 
+    private boolean isQSEventBlocked() {
+        return mLockPatternUtils.isSecure(KeyguardUpdateMonitor.getCurrentUser())
+            && mStatusBarLockedOnSecureKeyguard && mKeyguardOrShadeShowing;
+    }
+
     public void setQsExpansionEnabled(boolean qsExpansionEnabled) {
-        mQsExpansionEnabled = qsExpansionEnabled;
+        mQsExpansionEnabled = qsExpansionEnabled&& !isQSEventBlocked();
         if (mQs == null) return;
-        mQs.setHeaderClickable(qsExpansionEnabled);
+        mQs.setHeaderClickable(mQsExpansionEnabled);
     }
 
     @Override
@@ -2967,6 +2987,42 @@ public class NotificationPanelViewController extends PanelViewController {
         return !isFullWidth() || !mShowIconsWhenExpanded;
     }
 
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mView.getContext().getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mView.getContext().getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+
+        public void update() {
+            ContentResolver resolver = mView.getContext().getContentResolver();
+            mStatusBarLockedOnSecureKeyguard = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_LOCKED_ON_SECURE_KEYGUARD, 0,
+                    UserHandle.USER_CURRENT) == 1;
+        }
+    }
+
     private final FragmentListener mFragmentListener = new FragmentListener() {
         @Override
         public void onFragmentViewCreated(String tag, Fragment fragment) {
@@ -3942,11 +3998,15 @@ public class NotificationPanelViewController extends PanelViewController {
             boolean keyguardFadingAway = mKeyguardStateController.isKeyguardFadingAway();
             int oldState = mBarState;
             boolean keyguardShowing = statusBarState == StatusBarState.KEYGUARD;
+            boolean keyguardOrShadeShowing = statusBarState == StatusBarState.KEYGUARD
+                    || statusBarState == StatusBarState.SHADE_LOCKED;
+
             setKeyguardStatusViewVisibility(statusBarState, keyguardFadingAway, goingToFullShade);
             setKeyguardBottomAreaVisibility(statusBarState, goingToFullShade);
 
             mBarState = statusBarState;
             mKeyguardShowing = keyguardShowing;
+            mKeyguardOrShadeShowing = keyguardOrShadeShowing;
 
             if (oldState == StatusBarState.KEYGUARD && (goingToFullShade
                     || statusBarState == StatusBarState.SHADE_LOCKED)) {
@@ -4008,6 +4068,7 @@ public class NotificationPanelViewController extends PanelViewController {
             TunerService.Tunable {
         @Override
         public void onViewAttachedToWindow(View v) {
+            mSettingsObserver.observe();
             FragmentHostManager.get(mView).addTagListener(QS.TAG, mFragmentListener);
             mStatusBarStateController.addCallback(mStatusBarStateListener);
             mZenModeController.addCallback(mZenModeControllerCallback);
@@ -4022,6 +4083,7 @@ public class NotificationPanelViewController extends PanelViewController {
 
         @Override
         public void onViewDetachedFromWindow(View v) {
+            mSettingsObserver.unobserve();
             FragmentHostManager.get(mView).removeTagListener(QS.TAG, mFragmentListener);
             mStatusBarStateController.removeCallback(mStatusBarStateListener);
             mZenModeController.removeCallback(mZenModeControllerCallback);
