@@ -29,4 +29,25 @@
     <java-symbol type="string" name="reboot_to_bootloader_message" />
     <java-symbol type="string" name="reboot_title" />
     <java-symbol type="string" name="reboot_message" />
+<<<<<<< HEAD:core/res/res/values/gzosp_symbols.xml
+=======
+
+    <java-symbol type="drawable" name="ic_audio_notification_new" />
+    <java-symbol type="drawable" name="ic_audio_notification_mute_new" />
+
+    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+    <java-symbol type="bool" name="config_multiColorBatteryLed" />
+    <java-symbol type="bool" name="config_ledCanPulse" />
+
+    <java-symbol type="anim" name="du_app_in" />
+    <java-symbol type="anim" name="du_app_out" />
+
+    <!-- Slim recent app screen-->
+    <java-symbol type="integer" name="config_recentDefaultDur" />
+    <java-symbol type="style" name="Animation.SlimRecentScreen" />
+    <java-symbol type="anim" name="recent_screen_fade_out" />
+    <java-symbol type="anim" name="recent_enter" />
+
+    <java-symbol type="bool" name="config_enableScreenrecordChord" />
+>>>>>>> 9376933... base: bring back screenrecord:core/res/res/values/validus_symbols.xml
 </resources>
