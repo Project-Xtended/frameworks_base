@@ -4833,7 +4833,16 @@ public final class Settings {
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
          * the setting value. See an example above.
          */
-        
+
+        /** <===================> Add Below This Only <==================> */
+
+        /**
+         * Whether to vibrate when quick settings tile is pressed.
+         *
+         * @hide
+         */
+        public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_tiles_vibrate";
+
         /**
          * Whether to show the battery info on the lockscreen while charging
          * @hide
