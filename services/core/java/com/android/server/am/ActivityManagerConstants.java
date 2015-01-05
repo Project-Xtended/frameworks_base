@@ -20,8 +20,8 @@ import android.content.ContentResolver;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.SystemProperties;
 import android.os.Process;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.util.KeyValueListParser;
 import android.util.Slog;
@@ -72,7 +72,7 @@ final class ActivityManagerConstants extends ContentObserver {
     static final String KEY_TOP_TO_FGS_GRACE_DURATION = "top_to_fgs_grace_duration";
 
     private static final int DEFAULT_MAX_CACHED_PROCESSES =
-            SystemProperties.getInt("ro.vendor.qti.sys.fw.bg_apps_limit",32);
+            SystemProperties.getInt("ro.vendor.qti.sys.fw.bg_apps_limit", 32);
     private static final long DEFAULT_BACKGROUND_SETTLE_TIME = 60*1000;
     private static final long DEFAULT_FGSERVICE_MIN_SHOWN_TIME = 2*1000;
     private static final long DEFAULT_FGSERVICE_MIN_REPORT_TIME = 3*1000;
@@ -237,15 +237,15 @@ final class ActivityManagerConstants extends ContentObserver {
     public int CUR_MAX_CACHED_PROCESSES;
 
     static final boolean USE_TRIM_SETTINGS =
-            SystemProperties.getBoolean("ro.vendor.qti.sys.fw.use_trim_settings",false);
-    static final int EMPTY_APP_PERCENT = SystemProperties.getInt("ro.vendor.qti.sys.fw.empty_app_percent",50);
+            SystemProperties.getBoolean("ro.vendor.qti.sys.fw.use_trim_settings", true);
+    static final int EMPTY_APP_PERCENT =
+            SystemProperties.getInt("ro.vendor.qti.sys.fw.empty_app_percent", 50);
     static final int TRIM_EMPTY_PERCENT =
-            SystemProperties.getInt("ro.vendor.qti.sys.fw.trim_empty_percent",100);
+            SystemProperties.getInt("ro.vendor.qti.sys.fw.trim_empty_percent", 100);
     static final int TRIM_CACHE_PERCENT =
-            SystemProperties.getInt("ro.vendor.qti.sys.fw.trim_cache_percent",100);
+            SystemProperties.getInt("ro.vendor.qti.sys.fw.trim_cache_percent", 100);
     static final long TRIM_ENABLE_MEMORY =
             SystemProperties.getLong("ro.vendor.qti.sys.fw.trim_enable_memory",1073741824);
-    public static boolean allowTrim() { return Process.getTotalMemory() < TRIM_ENABLE_MEMORY ; }
 
     // The maximum number of empty app processes we will let sit around.
     public int CUR_MAX_EMPTY_PROCESSES;
@@ -289,25 +289,25 @@ final class ActivityManagerConstants extends ContentObserver {
 
     public static int computeEmptyProcessLimit(int totalProcessLimit) {
         if(USE_TRIM_SETTINGS && allowTrim()) {
-            return totalProcessLimit*EMPTY_APP_PERCENT/100;
+            return totalProcessLimit * EMPTY_APP_PERCENT / 100;
         } else {
-            return totalProcessLimit/2;
+            return totalProcessLimit / 2;
         }
     }
 
     public static int computeTrimEmptyApps(int rawMaxEmptyProcesses) {
         if (USE_TRIM_SETTINGS && allowTrim()) {
-            return rawMaxEmptyProcesses*TRIM_EMPTY_PERCENT/100;
+            return rawMaxEmptyProcesses * TRIM_EMPTY_PERCENT / 100;
         } else {
-            return rawMaxEmptyProcesses/2;
+            return rawMaxEmptyProcesses / 2;
         }
     }
 
     public static int computeTrimCachedApps(int rawMaxEmptyProcesses, int totalProcessLimit) {
         if (USE_TRIM_SETTINGS && allowTrim()) {
-            return totalProcessLimit*TRIM_CACHE_PERCENT/100;
+            return totalProcessLimit * TRIM_CACHE_PERCENT / 100;
         } else {
-            return (totalProcessLimit-rawMaxEmptyProcesses)/3;
+            return (totalProcessLimit-rawMaxEmptyProcesses) / 3;
         }
     }
 
@@ -476,5 +476,9 @@ final class ActivityManagerConstants extends ContentObserver {
         pw.print("  CUR_MAX_EMPTY_PROCESSES="); pw.println(CUR_MAX_EMPTY_PROCESSES);
         pw.print("  CUR_TRIM_EMPTY_PROCESSES="); pw.println(CUR_TRIM_EMPTY_PROCESSES);
         pw.print("  CUR_TRIM_CACHED_PROCESSES="); pw.println(CUR_TRIM_CACHED_PROCESSES);
+    }
+
+    private static boolean allowTrim() {
+        return Process.getTotalMemory() < TRIM_ENABLE_MEMORY;
     }
 }
