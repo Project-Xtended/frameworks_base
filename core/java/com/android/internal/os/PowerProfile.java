@@ -416,6 +416,28 @@ public class PowerProfile {
         return 0;
     }
 
+    private int getPowerProfileResId(final Context context) {
+        int id = com.android.internal.R.xml.power_profile;
+        /*
+         * If ro.power_profile.override is set, use it to override the default.
+         * This is used for devices, which need to dynamically define the power profile.
+         */
+        String powerProfileOverride = SystemProperties.get("ro.power_profile.override");
+        if (!powerProfileOverride.isEmpty()) {
+            int tmpId = context.getResources().getIdentifier(powerProfileOverride, "xml",
+                    "android");
+            if (tmpId > 0) {
+                Slog.i(TAG, "getPowerProfileResId: using power profile \""
+                        + powerProfileOverride + "\"");
+                id = tmpId;
+            } else {
+                Slog.e(TAG, "getPowerProfileResId: could not retrieve power profile \""
+                        + powerProfileOverride + "\", using default instead");
+            }
+        }
+        return id;
+    }
+
     /**
      * Returns the average current in mA consumed by the subsystem, or the given
      * default value if the subsystem has no recorded value.
