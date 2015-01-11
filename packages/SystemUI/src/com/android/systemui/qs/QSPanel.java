@@ -25,10 +25,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.annotation.Nullable;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.metrics.LogMaker;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
@@ -72,7 +75,6 @@ import java.util.Collection;
 /** View that represents the quick settings tile panel (when expanded/pulled down). **/
 public class QSPanel extends LinearLayout implements Tunable, Callback, BrightnessMirrorListener {
 
-    public static final String QS_SHOW_BRIGHTNESS = "qs_show_brightness";
     public static final String QS_SHOW_HEADER = "qs_show_header";
     public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
 
@@ -85,6 +87,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     protected boolean mExpanded;
     protected boolean mListening;
+
+    private SettingObserver mSettingObserver;
 
     private QSDetail.Callback mCallback;
     private BrightnessController mBrightnessController;
@@ -112,6 +116,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     public QSPanel(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
+
+        mSettingObserver = new SettingObserver(new Handler(context.getMainLooper()));
 
         setOrientation(VERTICAL);
 
@@ -171,8 +177,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         final TunerService tunerService = Dependency.get(TunerService.class);
-        tunerService.addTunable(this, QS_SHOW_BRIGHTNESS);
         tunerService.addTunable(this, QS_BRIGHTNESS_POSITION_BOTTOM);
+        mSettingObserver.observe();
+        mSettingObserver.update();
         if (mHost != null) {
             setTiles(mHost.getTiles());
         }
@@ -203,9 +210,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (QS_SHOW_BRIGHTNESS.equals(key)) {
-            updateViewVisibilityForTuningValue(mBrightnessView, newValue);
-        }
         if (QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
             if (newValue == null || Integer.parseInt(newValue) == 0) {
                 removeView(mBrightnessView);
@@ -227,6 +231,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             }
         }
         return 0;
+=======
+        // No tunings for you.
+>>>>>>> edf879448a0... QuickSettings: Option to disable brightness slider (1/2)
     }
 
     private void updateViewVisibilityForTuningValue(View view, @Nullable String newValue) {
@@ -458,6 +465,33 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     protected boolean shouldShowDetail() {
         return mExpanded;
+    }
+
+    private final class SettingObserver extends ContentObserver {
+        public SettingObserver(Handler handler) {
+            super(handler);
+        }
+
+         void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            update();
+        }
+
+        public void update() {
+            boolean brightnessSliderEnabled = Settings.Secure.getIntForUser(
+            mContext.getContentResolver(), Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER,
+                1, UserHandle.USER_CURRENT) == 1;
+            mBrightnessView.setVisibility(brightnessSliderEnabled ? View.VISIBLE : View.GONE);
+        }
     }
 
     protected TileRecord addTile(final QSTile tile, boolean collapsedView) {
