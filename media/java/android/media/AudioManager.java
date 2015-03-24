@@ -950,31 +950,26 @@ public class AudioManager {
     public void setStreamMaxVolume(int streamType, int maxVol) {
         IAudioService service = getService();
         try {
-            double previousMax = new Integer(getStreamMaxVolume(streamType)).doubleValue();
-            double previousVolume = new Integer(getStreamVolume(streamType)).doubleValue();
-            double newMax = new Integer(maxVol).doubleValue();
-            double newVolume = Math.floor((newMax / previousMax) * previousVolume);
+//            if (mUseMasterVolume) {
+//                // service.setMasterMaxVolume(maxVol);
+//            } else {
+                double previousMax = new Integer(getStreamMaxVolume(streamType)).doubleValue();
+                double previousVolume = new Integer(getStreamVolume(streamType)).doubleValue();
+                double newMax = new Integer(maxVol).doubleValue();
+                double newVolume = Math.floor((newMax / previousMax) * previousVolume);
 
-            service.setStreamMaxVolume(streamType, maxVol);
+                service.setStreamMaxVolume(streamType, maxVol);
 
-            Log.i(TAG, "Volume steps for stream " + String.valueOf(streamType) + " set to " +
-                    String.valueOf(maxVol));
+                Log.i(TAG, "Volume steps for stream " + String.valueOf(streamType) + " set to " +
+                        String.valueOf(maxVol));
 
-            setStreamVolume(streamType, new Double(newVolume).intValue(), 0);
+                setStreamVolume(streamType, new Double(newVolume).intValue(), 0);
 
-            Log.i(TAG, "Volume adjusted from " + String.valueOf(previousVolume) + " to " +
-                    String.valueOf(newVolume));
+                Log.i(TAG, "Volume adjusted from " + String.valueOf(previousVolume) + " to " +
+                        String.valueOf(newVolume));
+//            }
         } catch (RemoteException e) {
             Log.e(TAG, "Dead object in setStreamMaxVolume", e);
-        }
-    }
-
-    public int getDefaultStreamMaxVolume(int streamType) {
-        final IAudioService service = getService();
-        try {
-            return service.getDefaultStreamMaxVolume(streamType);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
         }
     }
 
