@@ -4793,6 +4793,12 @@ public final class Settings {
         };  
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
+	    /**
+         * show the membar in recents
+         *  @hide
+         */
+        public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
+
         /**
          * Color of toast message icon
          * @hide
