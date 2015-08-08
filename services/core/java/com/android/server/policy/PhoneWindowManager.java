@@ -857,6 +857,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private int mCurrentUserId;
     private int[] haveEnabledCarbonGestures = new int[4];
     private String[] carbonGesturePackages = new String[4];
+    private boolean haveEnableGesture = false;
 
     // Maps global key codes to the components that will handle them.
     private GlobalKeyManager mGlobalKeyManager;
@@ -1247,6 +1248,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.OMNI_USE_BOTTOM_GESTURE_NAVIGATION), false, this,
                     UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.THREE_FINGER_GESTURE), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -1358,6 +1362,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     };
 
     private ImmersiveModeConfirmation mImmersiveModeConfirmation;
+
+    private OPGesturesListener mOPGestures;
 
     @VisibleForTesting
     SystemGesturesPointerEventListener mSystemGestures;
@@ -2406,6 +2412,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     context, minHorizontal, maxHorizontal, minVertical, maxVertical, maxRadius);
         }
 
+        mOPGestures = new OPGesturesListener(context, new OPGesturesListener.Callbacks() {
+            @Override
+            public void onSwipeThreeFinger() {
+                mHandler.post(mScreenshotRunnable);
+            }
+        });
+
         mHandler = new PolicyHandler();
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(new TorchModeCallback(), mHandler);
@@ -2830,6 +2843,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return gesture;
         }
         return null;
+     }
+
+     private void enableSwipeThreeFingerGesture(boolean enable){
+        if (enable) {
+            if (haveEnableGesture) return;
+            haveEnableGesture = true;
+            mWindowManagerFuncs.registerPointerEventListener(mOPGestures);
+        } else {
+            if (!haveEnableGesture) return;
+            haveEnableGesture = false;
+            mWindowManagerFuncs.unregisterPointerEventListener(mOPGestures);
+        }
     }
 
     @Override
@@ -3014,6 +3039,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mCarbonGesturesDown = handleCarbonGesture(mCarbonGesturesDown,
                 carbonCustomGestureFingers, carbonCustomGestureDown + carbonCustomGestureFingers,
                 CarbonGesturesListener.Directions.DOWN, carbonCustomGestureDownPkg);
+
+	    //Three Finger Gesture
+            boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
+                    Settings.System.THREE_FINGER_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
+            enableSwipeThreeFingerGesture(threeFingerGesture);
 
             // Configure rotation lock.
             int userRotation = Settings.System.getIntForUser(resolver,
