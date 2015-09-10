@@ -2973,6 +2973,7 @@
         <item>power</item>
         <item>restart</item>
         <item>logout</item>
+        <item>onthego</item>
     </string-array>
 
     <!-- Number of milliseconds to hold a wake lock to ensure that drawing is fully
