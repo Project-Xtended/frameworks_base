@@ -208,4 +208,7 @@
     <!-- Emergency button in power menu -->
     <java-symbol type="bool" name="config_showEmergencyButtonInPowerMenu" />
 
+    <!-- Rotation sensor -->
+    <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
+
 </resources>
