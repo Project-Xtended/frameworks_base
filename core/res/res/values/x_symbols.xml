@@ -22,7 +22,10 @@
     <java-symbol type="string" name="config_lightFontFamily" />
     <java-symbol type="string" name="config_regularFontFamily" />
 
-  <!-- Themes -->
-  <java-symbol type="color" name="theme_generic_semi_transparent_color" />
+    <!-- Themes -->
+    <java-symbol type="color" name="theme_generic_semi_transparent_color" />
+
+    <!-- Rotation sensor -->
+    <java-symbol type="bool" name="config_useSystemClockforRotationSensor" />
 
 </resources>
