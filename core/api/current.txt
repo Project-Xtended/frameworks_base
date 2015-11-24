@@ -30722,6 +30722,7 @@ package android.os {
     field public static final String BRAND;
     field @Deprecated public static final String CPU_ABI;
     field @Deprecated public static final String CPU_ABI2;
+    field public static final String DATE;
     field public static final String DEVICE;
     field public static final String DISPLAY;
     field public static final String FINGERPRINT;

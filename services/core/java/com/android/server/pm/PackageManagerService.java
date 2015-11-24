@@ -7606,10 +7606,10 @@ public class PackageManagerService extends IPackageManager.Stub
 
             final VersionInfo ver = mSettings.getInternalVersion();
             mIsUpgrade =
-                    !buildFingerprint.equals(ver.fingerprint);
+                    !Build.DATE.equals(ver.fingerprint);
             if (mIsUpgrade) {
                 PackageManagerServiceUtils.logCriticalInfo(Log.INFO,
-                        "Upgrading from " + ver.fingerprint + " to " + Build.FINGERPRINT);
+                        "Upgrading from " + ver.fingerprint + " to " + Build.DATE);
             }
 
             // when upgrading from pre-M, promote system app permissions from install to runtime
@@ -7997,7 +7997,7 @@ public class PackageManagerService extends IPackageManager.Stub
             // this situation.
             if (mIsUpgrade) {
                 Slog.i(TAG, "Build fingerprint changed from " + ver.fingerprint + " to "
-                        + Build.FINGERPRINT + "; regranting permissions for internal storage");
+                        + Build.DATE + "; regranting permissions for internal storage");
             }
             mPermissionManager.onStorageVolumeMounted(
                     StorageManager.UUID_PRIVATE_INTERNAL, mIsUpgrade);
