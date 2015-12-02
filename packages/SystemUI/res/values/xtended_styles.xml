@@ -52,6 +52,7 @@
     </style>
 
     <style name="ScreenshotEditorStyle" parent="@android:style/Theme.Material" >
+    </style>
 
     <style name="ListTheme" parent="@*android:style/Theme.Holo">
         <item name="android:windowBackground">@*android:color/transparent</item>

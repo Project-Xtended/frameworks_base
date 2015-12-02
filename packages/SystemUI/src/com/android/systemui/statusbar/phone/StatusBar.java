@@ -9601,5 +9601,4 @@ public class StatusBar extends SystemUI implements DemoMode,
  
          return lp;
      }
-   }
 }
