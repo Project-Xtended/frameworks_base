@@ -4255,7 +4255,14 @@ public final class Settings {
         public static final String POWERMENU_LOGOUT = "powermenu_logout";
 
         /**
-         * If On-The-Go should be displayed at the power menu.
+         * Whether to display the screenrecord option in the power menu
+         *
+         * @hide
+         */
+        public static final String POWERMENU_SCREENRECORD = "powermenu_screenrecord";
+
+        /**
+	 * If On-The-Go should be displayed at the power menu.
          *
          * @hide
          */

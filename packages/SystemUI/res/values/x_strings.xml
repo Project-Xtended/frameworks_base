@@ -30,6 +30,7 @@
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Unable to record screen</string>
     <string name="notification_channel_screenrecord">Screenrecords</string>
+    <string name="global_action_screenrecord">Screenrecord</string>
 
     <!-- On The Go -->
     <string name="global_action_onthego">On-The-Go</string>
