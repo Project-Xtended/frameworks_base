@@ -25,6 +25,7 @@ import com.android.systemui.plugins.qs.QSTileView;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.AlwaysOnDisplayTile;
+import com.android.systemui.qs.tiles.AmbientDisplayTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CaffeineTile;
@@ -115,6 +116,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new NightDisplayTile(mHost);
             case "nfc":
                 return new NfcTile(mHost);
+            case "ambient_display":
+                return new AmbientDisplayTile(mHost);
             case "sync":
                 return new SyncTile(mHost);
             case "onthego":
