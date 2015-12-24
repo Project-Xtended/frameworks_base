@@ -5512,6 +5512,12 @@ public final class Settings {
         public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
 
         /**
+         * Show 4G instead of LTE
+         * @hide
+         */
+        public static final String SHOW_FOURG = "show_fourg";
+
+        /**
          * @hide
          */
         public static final String SCREEN_STATE_GPS = "screen_state_gps";
@@ -5706,6 +5712,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
             PRIVATE_SETTINGS.add(VOLUME_PANEL_ON_LEFT);
             PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
+            PRIVATE_SETTINGS.add(SHOW_FOURG);
         }
 
         /**
