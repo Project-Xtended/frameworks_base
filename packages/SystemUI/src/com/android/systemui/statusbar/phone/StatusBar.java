@@ -579,6 +579,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mFpQuickPulldownQs;
     private boolean mFpDismissNotifications;
 
+    //Lockscreen Notifications
+    private int mMaxKeyguardNotifConfig;
+    private boolean mCustomMaxKeyguard;
+
     // the tracker view
     int mTrackingPosition; // the position of the top of the tracking view.
 
@@ -6161,13 +6165,20 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     protected int getMaxKeyguardNotifications(boolean recompute) {
-        if (recompute) {
-            mMaxKeyguardNotifications = Math.max(1,
-                    mNotificationPanel.computeMaxKeyguardNotifications(
-                            mMaxAllowedKeyguardNotifications));
-            return mMaxKeyguardNotifications;
+        mCustomMaxKeyguard = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.LOCK_SCREEN_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
+        if (mCustomMaxKeyguard) {
+            return mMaxKeyguardNotifConfig;
+        } else {
+           if (recompute) {
+               mMaxKeyguardNotifications = Math.max(1,
+                       mNotificationPanel.computeMaxKeyguardNotifications(
+                               mMaxAllowedKeyguardNotifications));
+               return mMaxKeyguardNotifications;
+           } else {
+               return mMaxKeyguardNotifications;
+           }
         }
-        return mMaxKeyguardNotifications;
     }
 
     public int getMaxKeyguardNotifications() {
@@ -7282,6 +7293,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ACTIVITY_INDICATORS),
                     false, this, UserHandle.USER_ALL);    
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
+                    false, this, UserHandle.USER_ALL);
 
             update();
         }
@@ -7339,6 +7353,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 } catch (Exception e) {
                     Log.e(TAG, "Unable to inflate Signal Clusters: " + e);
                 }
+            } else if (uri.equals(Settings.System.getUriFor(
+                Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
+                setMaxKeyguardNotifConfig();				   
 	   }
         }
 
@@ -7371,6 +7388,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 	    updateKeyguardStatusSettings();
 	    updateBlurSettings();
 	    updateRoundedCorner(); 
+	    setMaxKeyguardNotifConfig();
         }
     }
 
@@ -7435,6 +7453,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setLockscreenMediaMetadata() {
         mLockscreenMediaMetadata = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.LOCKSCREEN_MEDIA_METADATA, 0, UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void setMaxKeyguardNotifConfig() {
+        mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
     }
 
     private void updateQsPanelResources() {
