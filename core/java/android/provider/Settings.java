@@ -4448,11 +4448,13 @@ public final class Settings {
          * @hide
          */
         public static final String VIBRATE_ON_CONNECT = "vibrate_on_connect";
+
          /**
          * Whether the phone vibrates on call waiting
          * @hide
          */
         public static final String VIBRATE_ON_CALLWAITING = "vibrate_on_callwaiting";
+	
          /**
          * Whether the phone vibrates on disconnect
          * @hide
@@ -4959,6 +4961,18 @@ public final class Settings {
          * 3 = Fullscreen
          */
         public static final String IMMERSIVE_RECENTS = "immersive_recents";
+
+        /**
+         * Whether to display clock while recents are in full screen
+         * @hide
+         */
+        public static final String RECENTS_FULL_SCREEN_CLOCK = "recents_full_screen_clock";
+
+        /**
+         * Whether to display clock while recents are in full screen
+         * @hide
+         */
+        public static final String RECENTS_FULL_SCREEN_DATE = "recents_full_screen_date";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
