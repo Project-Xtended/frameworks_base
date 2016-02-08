@@ -65,6 +65,7 @@ import com.android.systemui.qs.tiles.WeatherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.AmbientPlayTile;
+import com.android.systemui.qs.tiles.AppPickerTile;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.util.leak.GarbageMonitor;
 
@@ -168,7 +169,9 @@ public class QSFactoryImpl implements QSFactory {
                 return new LteTile(mHost);
             case "ambientplay":
                 return new AmbientPlayTile(mHost);
-        }
+            case "app_picker":
+                return new AppPickerTile(mHost);
+	}
 
         // Intent tiles.
         if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
