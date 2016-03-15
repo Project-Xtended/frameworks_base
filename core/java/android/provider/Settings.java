@@ -7316,6 +7316,14 @@ public final class Settings {
         public static final String PULSE_LIGHT_LAYOUT_STYLE = "pulse_light_layout_style";
 
         /**
+         * Whether user can swap navigation lateral keys.
+         * <p>
+         * Type: int (0 for false, 1 for true)
+         * @hide
+         */
+        public static final String SWAP_NAVIGATION_KEYS = "swap_navigation_keys";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
