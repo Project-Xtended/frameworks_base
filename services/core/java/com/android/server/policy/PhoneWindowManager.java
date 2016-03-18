@@ -1121,6 +1121,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ACCELEROMETER_ROTATION_ANGLES), false, this,
                     UserHandle.USER_ALL);
+
             updateSettings();
         }
 
@@ -7026,7 +7027,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Send events to a dozing dream even if the screen is off since the dream
         // is in control of the state of the screen.
         try {
-            if (dreamManager != null && dreamManager.isDreaming()) {
+            if (dreamManager != null && dreamManager.isDreaming() && !dreamManager.isDozing()) {
                 return true;
             }
         } catch (RemoteException e) {
