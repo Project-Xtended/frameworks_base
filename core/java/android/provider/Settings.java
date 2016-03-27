@@ -5822,6 +5822,16 @@ public final class Settings {
               new SettingsValidators.InclusiveIntegerRangeValidator(0, 1200000);
 
         /**
+        * Heads up timeout configuration
+        * @hide
+        */
+        public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
+
+        /** @hide */
+        private static final Validator HEADS_UP_TIMEOUT_VALIDATOR =
+              new SettingsValidators.InclusiveIntegerRangeValidator(0, 10000);
+
+        /**
          * Whether the user has already accepted MediaProjection permission for the built-in screenrecorder
          * @hide
          */
@@ -5949,6 +5959,7 @@ public final class Settings {
             TRANSPARENT_POWER_MENU,
             TRANSPARENT_POWER_DIALOG_DIM,
             HEADS_UP_NOTIFICATION_SNOOZE,
+            HEADS_UP_TIMEOUT,
         };
 
         /**
@@ -6140,6 +6151,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_MENU);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_DIALOG_DIM);
             PRIVATE_SETTINGS.add(HEADS_UP_NOTIFICATION_SNOOZE);
+            PRIVATE_SETTINGS.add(HEADS_UP_TIMEOUT);
         }
 
         /**
@@ -6299,6 +6311,7 @@ public final class Settings {
             VALIDATORS.put(TRANSPARENT_POWER_MENU,TRANSPARENT_POWER_MENU_VALIDATOR);
             VALIDATORS.put(TRANSPARENT_POWER_DIALOG_DIM,TRANSPARENT_POWER_DIALOG_DIM_VALIDATOR);
             VALIDATORS.put(HEADS_UP_NOTIFICATION_SNOOZE,HEADS_UP_NOTIFICATION_SNOOZE_VALIDATOR);
+            VALIDATORS.put(HEADS_UP_TIMEOUT,HEADS_UP_TIMEOUT_VALIDATOR);
         }
 
         /**
