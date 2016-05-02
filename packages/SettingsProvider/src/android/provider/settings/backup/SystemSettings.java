@@ -92,5 +92,6 @@ public class SystemSettings {
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
         Settings.System.LOCKSCREEN_MEDIA_METADATA,
         Settings.System.INCALL_FEEDBACK_VIBRATE,
+        Settings.System.FP_WAKE_UNLOCK,
     };
 }
