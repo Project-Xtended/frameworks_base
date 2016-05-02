@@ -4452,6 +4452,16 @@ public final class Settings {
         public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
 
         /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_CHARGING_COLOR = "battery_bar_charging_color";
+
+        /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_BATTERY_LOW_COLOR = "battery_bar_battery_low_color";
+
+        /**
          * Which applications to disable heads up notifications for
          *
          * @hide
