@@ -6149,6 +6149,13 @@ public final class Settings {
         private static final Validator ANIM_TILE_DURATION_VALIDATOR =
               new SettingsValidators.InclusiveIntegerRangeValidator(500, 2500);
 
+	/**
+         * Change quick settings tiles interpolator
+         *
+         * @hide
+         */
+        public static final String ANIM_TILE_INTERPOLATOR = "anim_tile_interpolator";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
