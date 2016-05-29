@@ -29,4 +29,6 @@
     <!-- Network traffic monitor padding-->
     <dimen name="net_traffic_txt_img_padding">4dp</dimen>
 
+    <dimen name="crop_buttons">48dp</dimen>
+    <dimen name="crop_color_rect">32dp</dimen>
 </resources>
