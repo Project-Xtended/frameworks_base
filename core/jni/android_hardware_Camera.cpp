@@ -1131,7 +1131,7 @@ static void android_hardware_Camera_sendVendorCommand(JNIEnv *env, jobject thiz,
 //-------------------------------------------------
 
 static const JNINativeMethod camMethods[] = {
-        {"getNumberOfCameras", "()I", (void *)android_hardware_Camera_getNumberOfCameras},
+        {"_getNumberOfCameras", "()I", (void *)android_hardware_Camera_getNumberOfCameras},
         {"_getCameraInfo", "(IZLandroid/hardware/Camera$CameraInfo;)V",
          (void *)android_hardware_Camera_getCameraInfo},
         {"native_setup", "(Ljava/lang/Object;ILjava/lang/String;Z)I",
@@ -1151,6 +1151,10 @@ static const JNINativeMethod camMethods[] = {
         {"native_autoFocus", "()V", (void *)android_hardware_Camera_autoFocus},
         {"native_cancelAutoFocus", "()V", (void *)android_hardware_Camera_cancelAutoFocus},
         {"native_takePicture", "(I)V", (void *)android_hardware_Camera_takePicture},
+        {"native_setHistogramMode", "(Z)V", (void *)android_hardware_Camera_setHistogramMode},
+        {"native_setMetadataCb", "(Z)V", (void *)android_hardware_Camera_setMetadataCb},
+        {"native_sendHistogramData", "()V", (void *)android_hardware_Camera_sendHistogramData},
+        {"native_setLongshot", "(Z)V", (void *)android_hardware_Camera_setLongshot},
         {"native_setParameters", "(Ljava/lang/String;)V",
          (void *)android_hardware_Camera_setParameters},
         {"native_getParameters", "()Ljava/lang/String;",
@@ -1168,10 +1172,6 @@ static const JNINativeMethod camMethods[] = {
          (void *)android_hardware_Camera_enableFocusMoveCallback},
         {"setAudioRestriction", "(I)V", (void *)android_hardware_Camera_setAudioRestriction},
         {"getAudioRestriction", "()I", (void *)android_hardware_Camera_getAudioRestriction},
-        {"native_setHistogramMode", "(Z)V", (void *)android_hardware_Camera_setHistogramMode},
-        {"native_setMetadataCb", "(Z)V", (void *)android_hardware_Camera_setMetadataCb},
-        {"native_sendHistogramData", "()V", (void *)android_hardware_Camera_sendHistogramData},
-        {"native_setLongshot", "(Z)V", (void *)android_hardware_Camera_setLongshot},
         {"_sendVendorCommand", "(III)V", (void *)android_hardware_Camera_sendVendorCommand},
 };
 
