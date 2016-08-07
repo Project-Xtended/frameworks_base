@@ -650,7 +650,9 @@ public class HardkeyActionHandler {
             resolver.registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false, this,
                     UserHandle.USER_ALL);
-
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.HARDWARE_KEYS_DISABLE), false, this,
+                    UserHandle.USER_ALL);
             updateKeyAssignments();
         }
 
@@ -663,8 +665,8 @@ public class HardkeyActionHandler {
     private void updateKeyAssignments() {
         ContentResolver cr = mContext.getContentResolver();
         synchronized (mLock) {
-            mHwKeysDisabled = Settings.Secure.getIntForUser(cr,
-                    Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
+            mHwKeysDisabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.HARDWARE_KEYS_DISABLE, 0,
                     UserHandle.USER_CURRENT) != 0;
 
             final boolean hasMenu = (mDeviceHardwareKeys & KEY_MASK_MENU) != 0;
