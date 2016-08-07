@@ -586,6 +586,9 @@ public final class PowerManagerService extends SystemService
     // True if we are currently in light device idle mode.
     private boolean mLightDeviceIdleMode;
 
+    // overrule and disable brightness for buttons
+    private boolean mHardwareKeysDisable = false;
+
     // Set of app ids that we will always respect the wake locks for.
     int[] mDeviceIdleWhitelist = new int[0];
 
@@ -1252,6 +1255,9 @@ public final class PowerManagerService extends SystemService
         resolver.registerContentObserver(Settings.System.getUriFor(
                 Settings.System.BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED),
                 false, mSettingsObserver, UserHandle.USER_ALL);
+        resolver.registerContentObserver(Settings.Secure.getUriFor(
+                Settings.Secure.HARDWARE_KEYS_DISABLE),
+                false, mSettingsObserver, UserHandle.USER_ALL);
 
         IVrManager vrManager = IVrManager.Stub.asInterface(getBinderService(Context.VR_SERVICE));
         if (vrManager != null) {
@@ -1458,6 +1464,9 @@ public final class PowerManagerService extends SystemService
         mButtonLightOnKeypressOnly = Settings.System.getIntForUser(resolver,
                 Settings.System.BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED,
                 0, UserHandle.USER_CURRENT) == 1;
+        mHardwareKeysDisable = Settings.Secure.getIntForUser(resolver,
+                Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
+                UserHandle.USER_CURRENT) != 0;
 
         mWakeUpWhenPluggedOrUnpluggedSetting = Settings.Global.getInt(resolver,
                 Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
@@ -2590,11 +2599,15 @@ public final class PowerManagerService extends SystemService
                     if (now < nextTimeout) {
                         mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
                         if (getWakefulnessLocked() == WAKEFULNESS_AWAKE) {
-                            float buttonBrightness = PowerManager.BRIGHTNESS_OFF_FLOAT;;
-                            if (isValidButtonBrightness(mButtonBrightnessOverrideFromWindowManager)) {
-                                buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
-                            } else if (isValidButtonBrightness(mButtonBrightness)) {
-                                buttonBrightness = mButtonBrightness;
+                            float buttonBrightness = PowerManager.BRIGHTNESS_OFF_FLOAT;
+                            if (mHardwareKeysDisable) {
+                                buttonBrightness = PowerManager.BRIGHTNESS_OFF_FLOAT;
+                            } else {
+                                if (isValidButtonBrightness(mButtonBrightnessOverrideFromWindowManager)) {
+                                    buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
+                                } else if (isValidButtonBrightness(mButtonBrightness)) {
+                                    buttonBrightness = mButtonBrightness;
+                                }
                             }
 
                             mLastButtonActivityTime = mButtonLightOnKeypressOnly ?
