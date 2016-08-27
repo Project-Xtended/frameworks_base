@@ -89,4 +89,5 @@
     <!-- Doze always on default value -->
     <bool name="config_dozeAlwaysOnDisplayEnabledDefault">false</bool>
 
+    <bool name="config_allowNotificationIconTextTinting">true</bool>
 </resources>
