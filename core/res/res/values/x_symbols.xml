@@ -82,4 +82,7 @@
   <java-symbol type="bool" name="config_useDarkBgNotificationTinting_override" />
   <java-symbol type="bool" name="config_notificationTinting_override" />
 
+  <!-- IMESwitcher -->
+  <java-symbol type="bool" name="config_show_cmIMESwitcher"/>
+
 </resources>
