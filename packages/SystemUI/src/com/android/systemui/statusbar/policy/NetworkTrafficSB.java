@@ -68,6 +68,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
     private int txtSize;
     private int txtImgPadding;
     private int mTrafficType;
+    private boolean mHideArrow;
     private int mAutoHideThreshold;
     private int mTintColor;
     private int mVisibleState = -1;
@@ -182,6 +183,9 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_HIDEARROW), false,
                     this, UserHandle.USER_ALL);
         }
 
@@ -303,6 +307,9 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         mAutoHideThreshold = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 0,
                 UserHandle.USER_CURRENT);
+        mHideArrow = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_HIDEARROW, 0,
+	        UserHandle.USER_CURRENT) == 1;
     }
 
     private void clearHandlerCallbacks() {
@@ -313,7 +320,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
 
     private void updateTrafficDrawable() {
         int intTrafficDrawable;
-        if (mIsEnabled) {
+        if (mIsEnabled && !mHideArrow) {
               if (mTrafficType == UP) {
             intTrafficDrawable = R.drawable.stat_sys_network_traffic_up;
           } else if (mTrafficType == DOWN) {
@@ -324,7 +331,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable 
         } else {
             intTrafficDrawable = 0;
         }
-        if (intTrafficDrawable != 0) {
+        if (intTrafficDrawable != 0 && !mHideArrow) {
             Drawable d = getContext().getDrawable(intTrafficDrawable);
             d.setColorFilter(mTintColor, Mode.MULTIPLY);
             setCompoundDrawablePadding(txtImgPadding);
