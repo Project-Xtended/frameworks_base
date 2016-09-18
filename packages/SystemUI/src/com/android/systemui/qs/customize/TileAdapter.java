@@ -498,7 +498,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             ta.recycle();
         }
 
-
         @Override
         public void onDraw(Canvas c, RecyclerView parent, State state) {
             super.onDraw(c, parent, state);
