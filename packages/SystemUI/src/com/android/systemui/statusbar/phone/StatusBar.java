@@ -126,6 +126,7 @@ import android.util.ArraySet;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
+import android.util.Pair;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -141,6 +142,7 @@ import android.view.IWindowManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.OrientationEventListener;
 import android.view.ThreadedRenderer;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -282,6 +284,7 @@ import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.KeyguardMonitorImpl;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.NetworkController;
+import com.android.systemui.statusbar.pie.PieController;
 import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
 import com.android.systemui.statusbar.policy.PreviewInflater;
 import com.android.systemui.statusbar.policy.RemoteInputView;
@@ -601,6 +604,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected ScreenGesturesController gesturesController;
 
     protected AppCircleSidebar mAppCircleSidebar;
+
+   // Pie controls
+    protected PieController mPieController;
+    public int mOrientation = 0;
+    private OrientationEventListener mOrientationListener;
 
     // Tracking finger for opening/closing.
     boolean mTracking;
@@ -1195,6 +1203,12 @@ public class StatusBar extends SystemUI implements DemoMode,
                 Settings.Secure.EDGE_GESTURES_ENABLED), false,
                 mEdgeGesturesSettingsObserver);
 
+        mPieSettingsObserver.onChange(false);
+        mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
+                Settings.Secure.PIE_STATE), false, mPieSettingsObserver);
+        mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
+                Settings.Secure.PIE_GRAVITY), false, mPieSettingsObserver);
+
         mMediaSessionManager
                 = (MediaSessionManager) mContext.getSystemService(Context.MEDIA_SESSION_SERVICE);
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
@@ -1612,6 +1626,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         mNotificationShelf.setStatusBarState(mState);
     }
 
+    @Override
+    public NetworkController getNetworkController() {
+        return mNetworkController;
+    }
+
     public void onDensityOrFontScaleChanged() {
         // start old BaseStatusBar.onDensityOrFontScaleChanged().
         if (!KeyguardUpdateMonitor.getInstance(mContext).isSwitchingUser()) {
@@ -1643,6 +1662,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean edgeGesturesEnabled = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.EDGE_GESTURES_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
         updateEdgeGestures(edgeGesturesEnabled);
+
+        boolean pieEnabled = Settings.Secure.getIntForUser(resolver,
+                Settings.Secure.PIE_STATE, 0, UserHandle.USER_CURRENT) == 1;
+        updatePieControls(!pieEnabled);
     }
 
     @Override
@@ -2278,7 +2301,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    protected void performRemoveNotification(StatusBarNotification n) {
+    public void performRemoveNotification(StatusBarNotification n) {
         Entry entry = mNotificationData.get(n.getKey());
         if (mRemoteInputController.isRemoteInputActive(entry)) {
             mRemoteInputController.removeRemoteInput(entry, null);
@@ -2303,6 +2326,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             // We were showing a pulse for a notification, but no notifications are pulsing anymore.
             // Finish the pulse.
             mDozeScrimController.pulseOutNow();
+        }
+        if (mPieController != null) {
+            mPieController.updateNotifications();
         }
         // end old BaseStatusBar.performRemoveNotification.
     }
@@ -4635,6 +4661,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 				mScreenOn = false;
                 finishBarAnimations();
                 resetUserExpandedStates();
+                // detach pie when screen is turned off
+                if (mPieController != null) mPieController.detachPie();
             }
             else if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 mScreenOn = true;
@@ -4724,6 +4752,12 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         updateRowStates();
         mScreenPinningRequest.onConfigurationChanged();
+
+       int rotation = mDisplay.getRotation();
+        if (rotation != mOrientation) {
+            if (mPieController != null) mPieController.detachPie();
+            mOrientation = rotation;
+        }
     }
 
     public void userSwitched(int newUserId) {
@@ -7079,14 +7113,30 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mDeviceInteractive;
     }
 
+    public ArrayList<Pair<StatusBarNotification, Icon>> getNotifications() {
+        ArrayList<Pair<StatusBarNotification, Icon>> notifs
+                = new ArrayList<Pair<StatusBarNotification, Icon>>();
+        for (Entry entry : mNotificationData.getActiveNotifications()) {
+            StatusBarNotification sbn = entry.notification;
+            Icon icon = entry.notification.getNotification().getSmallIcon();
+            notifs.add(new Pair<StatusBarNotification, Icon>(sbn, icon));
+        }
+        return notifs;
+    }
+
+    public abstract NetworkController getNetworkController();
+
     private final ContentObserver mEdgeGesturesSettingsObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange) {
             ContentResolver resolver = mContext.getContentResolver();
             boolean edgeGesturesEnabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.EDGE_GESTURES_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
-
             updateEdgeGestures(edgeGesturesEnabled);
+
+            boolean pieEnabled = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.PIE_STATE, 0, UserHandle.USER_CURRENT) == 1;
+            updatePieControls(!pieEnabled);
         }
     };
 
@@ -8936,7 +8986,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    protected Bundle getActivityOptions() {
+    public Bundle getActivityOptions() {
         // Anything launched from the notification shade should always go into the
         // fullscreen stack.
         ActivityOptions options = ActivityOptions.makeBasic();
@@ -9600,5 +9650,70 @@ public class StatusBar extends SystemUI implements DemoMode,
          lp.setTitle("AppCircleSidebar");
  
          return lp;
+    }
+
+
+     public void updatePieControls(boolean reset) {
+         ContentResolver resolver = mContext.getContentResolver();
+ 
+         if (reset) {
+             Settings.Secure.putIntForUser(resolver,
+                     Settings.Secure.PIE_GRAVITY, 0, UserHandle.USER_CURRENT);
+             toggleOrientationListener(false);
+         } else {
+             getOrientationListener();
+             toggleOrientationListener(true);
+         }
+ 
+         if (mPieController == null) {
+             mPieController = PieController.getInstance();
+             mPieController.init(mContext, mWindowManager, this);
+         }
+ 
+         int gravity = Settings.Secure.getInt(resolver,
+                 Settings.Secure.PIE_GRAVITY, 0);
+         mPieController.resetPie(!reset, gravity);
+     }
+ 
+     public void toggleOrientationListener(boolean enable) {
+         if (mOrientationListener == null) {
+             if (!enable) {
+                 // Do nothing if listener has already dropped
+                 return;
+             } else {
+                 boolean shouldEnable = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                         Settings.Secure.PIE_STATE, 0, UserHandle.USER_CURRENT) == 1;
+                 if (shouldEnable) {
+                     // Re-init Orientation listener for later action
+                     getOrientationListener();
+                 } else {
+                     return;
+                 }
+             }
+         }
+ 
+         if (enable && mPowerManager.isScreenOn()) {
+             mOrientationListener.enable();
+         } else {
+             mOrientationListener.disable();
+             // if it has been disabled, then don't leave it to
+             // prevent called from PhoneWindowManager
+             mOrientationListener = null;
+         }
+     }
+
+     private void getOrientationListener() {
+         if (mOrientationListener == null)
+             mOrientationListener = new OrientationEventListener(mContext,
+                     SensorManager.SENSOR_DELAY_NORMAL) {
+                 @Override
+                 public void onOrientationChanged(int orientation) {
+                     int rotation = mDisplay.getRotation();
+                     if (rotation != mOrientation) {
+                         if (mPieController != null) mPieController.detachPie();
+                         mOrientation = rotation;
+                     }
+                 }
+            };
      }
 }

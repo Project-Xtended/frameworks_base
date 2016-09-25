@@ -31,4 +31,7 @@
     <integer name="quick_settings_num_columns">4</integer>
     <bool name="quick_settings_wide">true</bool>
     <dimen name="qs_detail_margin_top">0dp</dimen>
+
+    <dimen name="pie_panel_padding">100dp</dimen>
+
 </resources>

@@ -389,6 +389,10 @@ public class CommandQueue extends IStatusBar.Stub {
         }
     }
 
+    public void toggleOrientationListener(boolean enable) {
+        mCallbacks.toggleOrientationListener(enable);
+    }
+
     public void setWindowState(int window, int state) {
         synchronized (mLock) {
             // don't coalesce these
