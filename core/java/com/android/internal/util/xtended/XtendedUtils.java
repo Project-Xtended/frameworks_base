@@ -39,6 +39,7 @@ import android.view.KeyEvent;
 import android.net.ConnectivityManager;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.android.internal.statusbar.IStatusBarService;
 
@@ -162,6 +163,11 @@ public class XtendedUtils {
             }
         }
         return null;
+    }
+
+    public static boolean isChineseLanguage() {
+       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
+               Locale.CHINESE.getLanguage());
     }
 }
 

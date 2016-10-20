@@ -23,4 +23,5 @@
     <color name="floating_action_button_icon_color">@android:color/white</color>
 
     <color name="qs_icon_active_color">@*android:color/qs_icon_active_color</color>
+
 </resources>
