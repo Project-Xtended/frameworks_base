@@ -18,6 +18,9 @@
 package com.android.internal.util.xtended;
 
 import android.Manifest;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.IActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
