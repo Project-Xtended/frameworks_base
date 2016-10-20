@@ -32,4 +32,11 @@
 
     <!-- Qs visibility -->
     <dimen name="qs_tile_height_wo_label">48dp</dimen>
+
+    <!-- Custom tuner settings -->
+    <dimen name="preference_no_icon_padding_start">24dp</dimen>
+
+    <!-- Custom Carrier Label -->
+    <dimen name="status_bar_carrier_height">14dp</dimen>
+
 </resources>
