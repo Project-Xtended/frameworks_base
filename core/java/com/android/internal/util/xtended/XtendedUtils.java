@@ -17,11 +17,12 @@
 package com.android.internal.util.xtended;
 
 import android.app.ActivityManager;
-import android.app.AlertDialog; 
+import android.app.AlertDialog;
 import android.app.IActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -187,5 +188,10 @@ public class XtendedUtils {
             }
         }
         return false;
+    }
+
+    public static boolean isChineseLanguage() {
+       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
+               Locale.CHINESE.getLanguage());
     }
 }
