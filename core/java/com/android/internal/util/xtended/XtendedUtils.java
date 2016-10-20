@@ -21,6 +21,8 @@ import android.content.ComponentName;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.media.AudioManager;
+import android.app.AlertDialog;
+import android.app.IActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
