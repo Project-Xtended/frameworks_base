@@ -4241,6 +4241,15 @@ public final class Settings {
          */
         public static final String POWERMENU_SOUNDPANEL = "powermenu_soundpanel";
 
+	/**
+         * Whether allowing pocket service to register sensors and dispatch informations.
+         *   0 = disabled
+         *   1 = enabled
+         * @author Carlo Savignano
+         * @hide
+         */
+        public static final String POCKET_JUDGE = "pocket_judge";
+
         /**
          * Whether to display screenshot in the power menu
          *
@@ -5646,6 +5655,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);	   
 	    PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_HIDEARROW); 
             PRIVATE_SETTINGS.add(OMNI_USE_BOTTOM_GESTURE_NAVIGATION);
+            PRIVATE_SETTINGS.add(POCKET_JUDGE);
         }
 
 
