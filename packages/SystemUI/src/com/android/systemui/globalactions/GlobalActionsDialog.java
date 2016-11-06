@@ -176,6 +176,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private final boolean mShowSilentToggle;
     private final EmergencyAffordanceManager mEmergencyAffordanceManager;
     private boolean mTorchEnabled = false;
+    private int mScreenshotDelay;
 
     private BitSet mAirplaneModeBits;
     private final List<PhoneStateListener> mPhoneStateListeners = new ArrayList<>();
@@ -309,6 +310,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private void handleShow() {
         awakenIfNecessary();
         mDialog = createDialog();
+        checkSettings();
         prepareDialog();
 
         // If we only have 1 item and it's a simple press action, just do this action.
@@ -638,7 +640,6 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         }
     }
 
-
     private final class AdvancedRestartAction extends SinglePressAction implements LongPressAction {
         private AdvancedRestartAction() {
             super(com.android.systemui.R.drawable.ic_restart_advanced, com.android.systemui.R.string.global_action_restart_advanced);
@@ -716,7 +717,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
                     public void run() {
                         takeScreenrecord();
                     }
-                }, 500);
+                }, mScreenshotDelay);
             }
 
             public boolean showDuringKeyguard() {
@@ -1953,5 +1954,10 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private static boolean showWallpaperTint(Context context) {
         return Settings.System.getIntForUser(context.getContentResolver(),
                 Settings.System.WALLPAPER_POWER_MENU_TINT, 1, UserHandle.USER_CURRENT) == 1;
+    }
+
+   private void checkSettings() {
+        mScreenshotDelay = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_DELAY, 100);
     }
 }

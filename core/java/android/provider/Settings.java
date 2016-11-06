@@ -4118,13 +4118,11 @@ public final class Settings {
          */
         public static final String LAST_DOZE_AUTO_BRIGHTNESS = "last_doze_auto_brightness";
 
-
         /**
-         * IMPORTANT: If you add a new public settings you also have to add it to
-         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
-         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
-         * the setting value. See an example above.
+         * Change the delay when a screenshot is taken
+         * @hide
          */
+        public static final String SCREENSHOT_DELAY = "screenshot_delay";
 
        /**
         * MediaScanner behavior on boot.
