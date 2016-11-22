@@ -136,4 +136,6 @@
     <!-- Nav Bar Swipe -->
     <string name="nav_bar_layout_inverse">Swap back and recents</string>
 
+    <string name="recents_custom_android_n">CLEAR ALL</string>
+
 </resources>
