@@ -259,6 +259,7 @@ import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.statusbar.stack.NotificationStackScrollLayout;
+import com.android.systemui.tuner.TunerService;
 import com.android.systemui.volume.VolumeComponent;
 
 import java.io.FileDescriptor;
@@ -4959,6 +4960,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_TITLE_VISIBILITY),
+                    false, this, UserHandle.USER_ALL);
 	 }
 
         @Override
@@ -4977,7 +4981,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_LANDSCAPE)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_PORTRAIT)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.QS_COLUMNS_LANDSCAPE))) {
-                setQsRowsColumns();
+		updateQsPanelResources();
 	    }
             update();
         }
@@ -4990,14 +4994,14 @@ public class StatusBar extends SystemUI implements DemoMode,
 	    setMaxKeyguardNotifConfig();
 	    updateDozeBrightness();
 	    setLockscreenMediaMetadata();
-            setQsRowsColumns();
+            updateQsPanelResources();
         }
     }
 
-         private void setQsRowsColumns() {
-            if (mQSPanel != null) {
-                mQSPanel.updateResources();
-         }
+    private void updateQsPanelResources() {
+       if (mQSPanel != null) {
+           mQSPanel.updateResources();
+       }
     }
 
     private void setHeadsUpStoplist() {
@@ -6142,8 +6146,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             mAssistManager.startAssist(args);
         }
     }
-    // End Extra BaseStatusBarMethods.
 
+    // End Extra BaseStatusBarMethods.
     private final Runnable mAutoDim = () -> {
         if (mNavigationBar != null) {
             mNavigationBar.getBarTransitions().setAutoDim(true);
