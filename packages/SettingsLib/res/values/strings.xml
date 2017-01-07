@@ -1128,4 +1128,11 @@
 
     <!-- time label for event have that happened very recently [CHAR LIMIT=60] -->
     <string name="time_unit_just_now">Just now</string>
+
+    <!-- Description for the screen zoom level that makes interface elements smaller. [CHAR LIMIT=24] -->
+    <string name="screen_zoom_summary_smaller">Smaller</string>
+
+    <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
+    <string name="screen_zoom_summary_smallest">Smallest</string>
+    
 </resources>
