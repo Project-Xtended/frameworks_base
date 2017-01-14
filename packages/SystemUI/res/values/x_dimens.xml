@@ -55,4 +55,8 @@
     <dimen name="opa_return_translation">-1.0dip</dimen>
     <dimen name="opa_rest_to_collapse">7.0dip</dimen>
 
+    <!-- Burn-in protection -->
+    <dimen name="horizontal_max_swift">3.0dp</dimen>
+    <dimen name="vertical_max_swift">1.0dp</dimen>
+
 </resources>
