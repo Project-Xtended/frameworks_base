@@ -323,4 +323,7 @@
 
     <integer name="def_ota_disable_automatic_update">1</integer>
 
+    <!-- Show Password Off by default. -->
+    <bool name="def_text_show_password">false</bool>
+
 </resources>
