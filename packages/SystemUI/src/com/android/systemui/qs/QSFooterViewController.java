@@ -76,6 +76,7 @@ public class QSFooterViewController extends ViewController<QSFooterView> impleme
     private final boolean mShowPMLiteButton;
     private final GlobalActionsDialogLite mGlobalActionsDialog;
     private final UiEventLogger mUiEventLogger;
+    private View mRunningServicesButton;
 
     private final UserInfoController.OnUserInfoChangedListener mOnUserInfoChangedListener =
             new UserInfoController.OnUserInfoChangedListener() {
@@ -109,6 +110,17 @@ public class QSFooterViewController extends ViewController<QSFooterView> impleme
             } else if (v == mPowerMenuLite) {
                 mUiEventLogger.log(GlobalActionsDialogLite.GlobalActionsEvent.GA_OPEN_QS);
                 mGlobalActionsDialog.showOrHideDialog(false, true);
+            } else if (v == mRunningServicesButton) {
+                if (!mDeviceProvisionedController.isCurrentUserSetup()) {
+                    // If user isn't setup just unlock the device and dump them back at SUW.
+                    mActivityStarter.postQSRunnableDismissingKeyguard(() -> {
+                    });
+                    return;
+                }
+                mMetricsLogger.action(
+                        mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
+                                : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
+                startRunningServicesActivity();
             }
         }
     };
@@ -139,6 +151,7 @@ public class QSFooterViewController extends ViewController<QSFooterView> impleme
         mFalsingManager = falsingManager;
         mMultiUserSwitchController = multiUserSwitchController;
 
+        mRunningServicesButton = mView.findViewById(R.id.running_services_button);
         mSettingsButton = mView.findViewById(R.id.settings_button);
         mSettingsButtonContainer = mView.findViewById(R.id.settings_button_container);
         mBuildText = mView.findViewById(R.id.build);
@@ -168,6 +181,7 @@ public class QSFooterViewController extends ViewController<QSFooterView> impleme
                 (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) ->
                         mView.updateAnimator(
                                 right - left, mQuickQSPanelController.getNumQuickTiles()));
+        mRunningServicesButton.setOnClickListener(mSettingsOnClickListener);
         mSettingsButton.setOnClickListener(mSettingsOnClickListener);
         mSettingsButton.setOnLongClickListener(view -> {
             startXtensionsActivity();
@@ -254,6 +268,13 @@ public class QSFooterViewController extends ViewController<QSFooterView> impleme
     @Override
     public void disable(int state1, int state2, boolean animate) {
         mView.disable(state2, isTunerEnabled(), mMultiUserSwitchController.isMultiUserEnabled());
+    }
+
+    private void startRunningServicesActivity() {
+        Intent intent = new Intent();
+        intent.setClassName("com.android.settings",
+                "com.android.settings.Settings$DevRunningServicesActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
     private void startSettingsActivity() {
