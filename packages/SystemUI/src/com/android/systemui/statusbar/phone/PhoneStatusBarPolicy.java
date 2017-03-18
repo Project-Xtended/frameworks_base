@@ -28,6 +28,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
@@ -36,6 +38,7 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.provider.Settings;
 import android.provider.Settings.Global;
 import android.service.notification.ZenModeConfig;
 import android.telecom.TelecomManager;
@@ -139,6 +142,8 @@ public class PhoneStatusBarPolicy
 
     private boolean mManagedProfileIconVisible = false;
 
+    private boolean mShowBluetoothBattery;
+
     private BluetoothController mBluetooth;
     private AlarmManager.AlarmClockInfo mNextAlarm;
 
@@ -201,7 +206,7 @@ public class PhoneStatusBarPolicy
         updateTTY();
 
         // bluetooth status
-        updateBluetooth();
+        updateSettings();
 
         // Alarm clock
         mIconController.setIcon(mSlotAlarmClock, R.drawable.stat_sys_alarm, null);
@@ -265,6 +270,42 @@ public class PhoneStatusBarPolicy
         mLocationController.addCallback(this);
 
         SysUiServiceProvider.getComponent(mContext, CommandQueue.class).addCallback(this);
+
+        Handler mHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
+    }
+
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            Uri uri = Settings.System.getUriFor(Settings.System.BLUETOOTH_SHOW_BATTERY);
+            resolver.registerContentObserver(uri, false,
+                    this, UserHandle.USER_ALL);
+            updateSettings();
+        }
+
+        /*
+         *  @hide
+         */
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
+    }
+
+    private void updateSettings() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        mShowBluetoothBattery = Settings.System.getIntForUser(resolver,
+                Settings.System.BLUETOOTH_SHOW_BATTERY, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        updateBluetooth();
     }
 
     @Override
@@ -409,12 +450,12 @@ public class PhoneStatusBarPolicy
 
     @Override
     public void onBluetoothDevicesChanged() {
-        updateBluetooth();
+        updateSettings();
     }
 
     @Override
     public void onBluetoothStateChange(boolean enabled) {
-        updateBluetooth();
+        updateSettings();
     }
 
     private final void updateBluetooth() {
@@ -433,7 +474,8 @@ public class PhoneStatusBarPolicy
                     if (state == BluetoothProfile.STATE_CONNECTED) {
                         int batteryLevel = device.getBatteryLevel();
                         BluetoothClass type = device.getBtClass();
-                        if (batteryLevel != BluetoothDevice.BATTERY_LEVEL_UNKNOWN && showBatteryForThis(type)) {
+                        if (batteryLevel != BluetoothDevice.BATTERY_LEVEL_UNKNOWN
+                                         && showBatteryForThis(type) && mShowBluetoothBattery) {
                             iconId = getBtLevelIconRes(batteryLevel);
                         } else {
                             iconId = R.drawable.stat_sys_data_bluetooth_connected;
