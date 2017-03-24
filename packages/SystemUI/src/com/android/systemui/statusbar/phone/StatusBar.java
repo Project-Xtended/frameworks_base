@@ -6412,11 +6412,18 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_SECURITY_ALPHA),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.NO_SIM_CLUSTER_SWITCH),
+                 false, this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             update();
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NO_SIM_CLUSTER_SWITCH))) {
+                    trytoinflateclusters();
+             }
         }
 
         public void update() {
@@ -8416,4 +8423,11 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         return lp;
     }
+
+   public void trytoinflateclusters() {
+        try {
+             inflateSignalClusters();
+        } catch (Exception e) {
+        }
+   }
 }

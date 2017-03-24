@@ -4523,6 +4523,12 @@ public final class Settings {
         /**
          * Whether to display the users option in the power menu
          *
+         * Null Signal indicator disabling switch
+         * @hide
+         */
+        public static final String NO_SIM_CLUSTER_SWITCH = "no_sim_cluster_switch";
+
+        /**
          * @hide
          */
         public static final String POWERMENU_USERS = "powermenu_users";
