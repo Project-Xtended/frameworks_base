@@ -855,6 +855,9 @@ public final class DefaultPermissionGrantPolicy {
 
         // GBoard
         grantSystemFixedPermissionsToSystemPackage("com.google.android.inputmethod.latin", userId, STORAGE_PERMISSIONS);
+
+        // OmniJaws
+        grantSystemFixedPermissionsToSystemPackage("org.omnirom.omnijaws", userId, ALWAYS_LOCATION_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(String category, int userId) {
