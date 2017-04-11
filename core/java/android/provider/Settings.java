@@ -4924,8 +4924,13 @@ public final class Settings {
         public static final String PROXIMITY_AUTO_SPEAKER_INCALL_ONLY = "proximity_auto_speaker_incall_only";
 
         /*
-         * Change fonts for the system lockscreen clock widget
-         *
+         * Whether to show the heads up for dialer when heads up are disabled
+         * @hide
+         */
+        public static final String ALWAYS_HEADSUP_DIALER = "always_headsup_dialer";
+
+        /**
+         * LockScreen Clock Fonts
          * @hide
          */
         public static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";
