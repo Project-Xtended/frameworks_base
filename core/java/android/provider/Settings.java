@@ -5238,7 +5238,11 @@ public final class Settings {
         public static final String GESTURE_ANYWHERE_TRIGGER_TOP = "gesture_anywhere_trigger_top";
 
         /**
-         * Height of the gesture anywhere trigger.
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
          * @hide
          */
         @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)

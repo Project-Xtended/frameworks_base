@@ -76,6 +76,7 @@ public class MobileSignalController extends SignalController<
     private Config mConfig;
 
     private boolean mShow4gForLte;
+    private boolean mDataDisabledIcon;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -113,6 +114,10 @@ public class MobileSignalController extends SignalController<
                 updateTelephony();
             }
         };
+
+        Handler mHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
     }
 
     class SettingsObserver extends ContentObserver {
@@ -124,6 +129,9 @@ public class MobileSignalController extends SignalController<
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.DATA_DISABLED_ICON), false,
                     this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -142,6 +150,9 @@ public class MobileSignalController extends SignalController<
 
         mShow4gForLte = Settings.System.getIntForUser(resolver,
                 Settings.System.SHOW_FOURG_ICON, 0,
+                UserHandle.USER_CURRENT) == 1;
+        mDataDisabledIcon = Settings.System.getIntForUser(resolver,
+                Settings.System.DATA_DISABLED_ICON, 1,
                 UserHandle.USER_CURRENT) == 1;
 
         mapIconSets();
@@ -519,7 +530,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.roaming = isRoaming();
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
-        } else if (isDataDisabled()) {
+        } else if (isDataDisabled() && mDataDisabledIcon) {
             mCurrentState.iconGroup = TelephonyIcons.DATA_DISABLED;
         }
         if (isEmergencyOnly() != mCurrentState.isEmergency) {
