@@ -261,4 +261,7 @@
   <java-symbol type="array" name="qboost_strong_param_value" />
   <java-symbol type="array" name="qboost_weak_param_value" />
 
+  <!-- PlatLogo -->
+  <java-symbol type="drawable" name="platlogo_xtended" />
+
 </resources>
