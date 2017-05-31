@@ -408,7 +408,7 @@ public class TaskViewHeader extends FrameLayout
         if (headerBarHeight != mHeaderBarHeight || headerButtonPadding != mHeaderButtonPadding) {
             mHeaderBarHeight = headerBarHeight;
             mHeaderButtonPadding = headerButtonPadding;
-            updateLayoutParams(mIconView, mTitleView, mMoveTaskButton, mKillButton, mDismissButton);
+            updateLayoutParams(mIconView, mTitleView, mMoveTaskButton, mLockTaskButton, mKillButton, mDismissButton);
             if (mAppOverlayView != null) {
                 updateLayoutParams(mAppIconView, mAppTitleView, null, null, null, mAppInfoView);
             }
@@ -817,12 +817,12 @@ public class TaskViewHeader extends FrameLayout
             }
         } else if (v == mKillButton) {
             TaskView tv = Utilities.findParent(this, TaskView.class);
-            if (killTask()) {
-                tv.dismissTask();
+
+                killTask();
+		tv.dismissTask();
                 // Keep track of deletions by the dismiss button
                 MetricsLogger.histogram(getContext(), "overview_task_dismissed_source",
                         Constants.Metrics.DismissSourceHeaderButton);
-            }		
         } else if (v == mMoveTaskButton) {
             TaskView tv = Utilities.findParent(this, TaskView.class);
             EventBus.getDefault().send(new LaunchTaskEvent(tv, mTask, null,
@@ -842,7 +842,6 @@ public class TaskViewHeader extends FrameLayout
     }
 
     private void killTask() {
-        boolean killed = false;
         if (mDeepClear && getContext().checkCallingOrSelfPermission(android.Manifest.permission.FORCE_STOP_PACKAGES)
                 == PackageManager.PERMISSION_GRANTED) {
             String packageName = mTask.key.getComponent().getPackageName();
@@ -853,13 +852,12 @@ public class TaskViewHeader extends FrameLayout
                     Toast appKilled = Toast.makeText(getContext(), R.string.recents_app_killed,
                             Toast.LENGTH_SHORT);
                     appKilled.show();
-                    killed = true;
                 } catch (RemoteException e) {
-                    killed = false;
+                    return;
                 }
             }
         }
-        return killed;
+        return;
     }
 
     @Override
