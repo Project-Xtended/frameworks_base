@@ -4449,6 +4449,7 @@ public final class Settings {
          */
         public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
 
+
         /**
          * Whether or not to hide the network traffic indicator when there is no activity
          * @hide
@@ -4535,6 +4536,12 @@ public final class Settings {
          * @hide
          */
         public static final String NO_SIM_CLUSTER_SWITCH = "no_sim_cluster_switch";
+
+        /**
+         * Disable No sim icon if sim isnt available
+         * @hide
+         */
+        public static final String DISABLE_NO_SIM = "disable_no_sim";
 
         /**
          * @hide
