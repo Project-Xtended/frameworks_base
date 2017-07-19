@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:visibility="gone"
-            android:paddingEnd="2dp"/>
->>>>>>> be4f4be6cdf... SystemUI: Add new configuration for displ
+            android:paddingStart="1dp"
+            android:paddingEnd="1dp"/>
         <FrameLayout
             android:id="@+id/inout_container"
             android:layout_height="17dp"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingStart="2.5dp"
+            android:paddingStart="1.5dp"
             android:paddingEnd="1dp"
             android:paddingTop="1.5dp"
             android:visibility="gone" />
