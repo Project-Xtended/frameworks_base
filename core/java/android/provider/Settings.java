@@ -5283,6 +5283,12 @@ public final class Settings {
         public static final String FP_WAKE_AND_UNLOCK = "fp_wake_and_unlock";
 
         /**
+         * Whether to display 4G icon instead LTE
+         * @hide
+         */
+        public static final String SHOW_FOURG_ICON = "show_fourg_icon";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
