@@ -27,6 +27,7 @@ import com.android.settingslib.mobile.TelephonyIcons;
 import com.android.systemui.R;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.statusbar.connectivity.IconState;
+import com.android.systemui.statusbar.connectivity.ImsIconState;
 import com.android.systemui.statusbar.connectivity.MobileDataIndicators;
 import com.android.systemui.statusbar.connectivity.NetworkController;
 import com.android.systemui.statusbar.connectivity.SignalCallback;
@@ -58,6 +59,7 @@ public class StatusBarSignalPolicy implements SignalCallback,
     private final String mSlotVpn;
     private final String mSlotNoCalling;
     private final String mSlotCallStrength;
+    private final String mSlotIms;
 
     private final Context mContext;
     private final StatusBarIconController mIconController;
@@ -73,6 +75,7 @@ public class StatusBarSignalPolicy implements SignalCallback,
     private boolean mHideEthernet;
     private boolean mActivityEnabled;
     private boolean mHideVpn;
+    private boolean mHideIms;
 
     // Track as little state as possible, and only for padding purposes
     private boolean mIsAirplaneMode = false;
@@ -109,6 +112,7 @@ public class StatusBarSignalPolicy implements SignalCallback,
         mSlotCallStrength =
                 mContext.getString(com.android.internal.R.string.status_bar_call_strength);
         mActivityEnabled = mContext.getResources().getBoolean(R.bool.config_showActivity);
+        mSlotIms = mContext.getString(com.android.internal.R.string.status_bar_ims);
     }
 
     /** Call to initilaize and register this classw with the system. */
@@ -169,17 +173,20 @@ public class StatusBarSignalPolicy implements SignalCallback,
         boolean hideWifi = hideList.contains(mSlotWifi);
         boolean hideEthernet = hideList.contains(mSlotEthernet);
         boolean hideVpn = hideList.contains(mSlotVpn);
+        boolean hideIms = hideList.contains(mSlotIms);
 
         if (hideVpn != mHideVpn) {
             mHideVpn = hideVpn;
             mHandler.post(this::updateVpn);
         }
         if (hideAirplane != mHideAirplane || hideMobile != mHideMobile
-                || hideEthernet != mHideEthernet || hideWifi != mHideWifi) {
+                || hideEthernet != mHideEthernet || hideWifi != mHideWifi
+                || hideIms != mHideIms) {
             mHideAirplane = hideAirplane;
             mHideMobile = hideMobile;
             mHideEthernet = hideEthernet;
             mHideWifi = hideWifi;
+            mHideIms = hideIms;
             // Re-register to get new callbacks.
             mNetworkController.removeCallback(this);
             mNetworkController.addCallback(this);
@@ -429,6 +436,19 @@ public class StatusBarSignalPolicy implements SignalCallback,
     @Override
     public void setMobileDataEnabled(boolean enabled) {
         // Don't care.
+    }
+
+    @Override
+    public void setImsIcon(ImsIconState icon) {
+        boolean showIms = icon.visible && !mHideIms;
+        String description = icon.contentDescription;
+
+        if (showIms) {
+            mIconController.setImsIcon(mSlotIms, icon);
+            mIconController.setIconVisibility(mSlotIms, true);
+        } else {
+            mIconController.setIconVisibility(mSlotIms, false);
+        }
     }
 
     /**
