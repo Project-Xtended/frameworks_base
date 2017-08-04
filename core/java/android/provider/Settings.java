@@ -4375,7 +4375,13 @@ public final class Settings {
          public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
 
         /**
-         * Whether the phone ringtone should be played in an increasing manner
+         * Sensor block per-package
+         * @hide
+         */
+        public static final String SENSOR_BLOCK = "sensor_block";
+
+        /**
+         * Wether the phone ringtone should be played in an increasing manner
          * @hide
          */
         public static final String INCREASING_RING = "increasing_ring";

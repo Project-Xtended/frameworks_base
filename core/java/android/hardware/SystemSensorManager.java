@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.MemoryFile;
 import android.os.MessageQueue;
+import android.provider.Settings;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -161,19 +162,8 @@ public class SystemSensorManager extends SensorManager {
                 + "the sensor listeners size has exceeded the maximum limit "
                 + MAX_LISTENER_COUNT);
         }
-        if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION) {
-            String pkgName = mContext.getPackageName();
-            for (String blockedPkgName : mContext.getResources().getStringArray(
-                    com.android.internal.R.array.config_blockPackagesSensorDrain)) {
-                if (pkgName.equals(blockedPkgName)) {
-                    Log.w(TAG, "Preventing " + pkgName + "from draining battery using " +
-                                    "significant motion sensor");
-                    return false;
-                }
-            }
-        }
         if (Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SENSOR_BLOCK, 0) == 1) {
+                Settings.System.SENSOR_BLOCK, 1) == 1) {
             if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION) {
                 String pkgName = mContext.getPackageName();
                 for (String blockedPkgName : mContext.getResources().getStringArray(
@@ -185,17 +175,37 @@ public class SystemSensorManager extends SensorManager {
                     }
                 }
             }
-            if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+        }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SENSOR_BLOCK, 1) == 1) {
+            if (sensor.getType() == Sensor.TYPE_SIGNIFICANT_MOTION) {
                 String pkgName = mContext.getPackageName();
                 for (String blockedPkgName : mContext.getResources().getStringArray(
                         com.android.internal.R.array.config_blockPackagesSensorDrain)) {
                     if (pkgName.equals(blockedPkgName)) {
                         Log.w(TAG, "Preventing " + pkgName + "from draining battery using " +
-                                "accelerometer sensor");
+                                "significant motion sensor");
                         return false;
                     }
                 }
             }
+         }
+         if (Settings.System.getInt(mContext.getContentResolver(),
+             Settings.System.SENSOR_BLOCK, 1) == 1) {
+             if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                 String pkgName = mContext.getPackageName();
+                 for (String blockedPkgName : mContext.getResources().getStringArray(
+                         com.android.internal.R.array.config_blockPackagesSensorDrain)) {
+                      if (pkgName.equals(blockedPkgName)) {
+                          Log.w(TAG, "Preventing " + pkgName + "from draining battery using " +
+                                    "accelerometer sensor");
+                          return false;
+                    }
+                }
+            }
+        }
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SENSOR_BLOCK, 1) == 1) {
             if (sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
                 String pkgName = mContext.getPackageName();
                 for (String blockedPkgName : mContext.getResources().getStringArray(
