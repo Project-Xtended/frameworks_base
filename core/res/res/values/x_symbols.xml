@@ -170,12 +170,14 @@
   <!-- Wake Keys Config -->
   <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
 
-    <!-- Custom Battery light -->
-    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
-    <java-symbol type="bool" name="config_multiColorBatteryLed" />
-    <java-symbol type="bool" name="config_ledCanPulse" />
+  <!-- Custom Battery light -->
+  <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+  <java-symbol type="bool" name="config_multiColorBatteryLed" />
+  <java-symbol type="bool" name="config_ledCanPulse" />
 
   <java-symbol type="bool" name="config_FastChargingLedSupported" />
   <java-symbol type="integer" name="config_notificationsFastBatteryARGB" />
+
+  <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 
 </resources>

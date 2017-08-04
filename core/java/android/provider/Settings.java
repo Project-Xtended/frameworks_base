@@ -5300,6 +5300,15 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Sensor block per-package
+         * @hide
+         */
+        public static final String SENSOR_BLOCK = "sensor_block";
+
+        private static final Validator SENSOR_BLOCK_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5404,6 +5413,7 @@ public final class Settings {
             OMNI_FAST_BATTERY_LIGHT_COLOR,
             OMNI_FAST_CHARGING_LED_ENABLED,
             OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED,
+            SENSOR_BLOCK,
         };
 
         /**
@@ -5573,6 +5583,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_FAST_BATTERY_LIGHT_COLOR);
             PRIVATE_SETTINGS.add(OMNI_FAST_CHARGING_LED_ENABLED);
             PRIVATE_SETTINGS.add(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED);
+            PRIVATE_SETTINGS.add(SENSOR_BLOCK);
         }
 
         /**
@@ -5709,6 +5720,7 @@ public final class Settings {
             VALIDATORS.put(OMNI_FAST_BATTERY_LIGHT_COLOR, OMNI_FAST_BATTERY_LIGHT_COLOR_VALIDATOR);
             VALIDATORS.put(OMNI_FAST_CHARGING_LED_ENABLED, OMNI_FAST_CHARGING_LED_ENABLED_VALIDATOR);
             VALIDATORS.put(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED, OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED_VALIDATOR);
+            VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
         }
 
         /**
