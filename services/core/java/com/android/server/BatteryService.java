@@ -61,6 +61,7 @@ import android.os.UEventObserver;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.battery.BatteryServiceDumpProto;
+import android.text.TextUtils;
 import android.util.EventLog;
 import android.util.MutableInt;
 import android.util.Slog;
@@ -197,6 +198,9 @@ public final class BatteryService extends SystemService {
     private boolean mWarpCharger;
     private boolean mHasWarpCharger;
     private boolean mLastWarpCharger;
+
+    private boolean mOemFastCharger;
+    private boolean mLastOemFastCharger;
 
     private long mDischargeStartTime;
     private int mDischargeStartLevel;
@@ -678,6 +682,7 @@ public final class BatteryService extends SystemService {
         mVoocCharger = mHasVoocCharger && isVoocCharger();
         mTurboPower = mHasTurboPower && isTurboPower();
         mWarpCharger = mHasWarpCharger && isWarpCharger();
+        mOemFastCharger = isOemFastCharger();
 
         if (force || (mHealthInfo.batteryStatus != mLastBatteryStatus ||
                 mHealthInfo.batteryHealth != mLastBatteryHealth ||
@@ -694,6 +699,7 @@ public final class BatteryService extends SystemService {
                 mVoocCharger != mLastVoocCharger ||
                 mTurboPower != mLastTurboPower ||
                 mWarpCharger != mLastWarpCharger ||
+                mOemFastCharger != mLastOemFastCharger ||
                 mBatteryModProps.modLevel != mLastModLevel ||
                 mBatteryModProps.modStatus != mLastModStatus ||
                 mBatteryModProps.modFlag != mLastModFlag ||
@@ -873,6 +879,7 @@ public final class BatteryService extends SystemService {
             mLastVoocCharger = mVoocCharger;
             mLastTurboPower = mTurboPower;
             mLastWarpCharger = mWarpCharger;
+            mLastOemFastCharger = mOemFastCharger;
             mLastModLevel = mBatteryModProps.modLevel;
             mLastModStatus = mBatteryModProps.modStatus;
             mLastModFlag = mBatteryModProps.modFlag;
@@ -909,6 +916,7 @@ public final class BatteryService extends SystemService {
         intent.putExtra(BatteryManager.EXTRA_VOOC_CHARGER, mVoocCharger);
         intent.putExtra(BatteryManager.EXTRA_TURBO_POWER, mTurboPower);
         intent.putExtra(BatteryManager.EXTRA_WARP_CHARGER, mWarpCharger);
+        intent.putExtra(BatteryManager.EXTRA_OEM_FAST_CHARGER, mOemFastCharger);
         intent.putExtra(BatteryManager.EXTRA_MOD_LEVEL, mBatteryModProps.modLevel);
         intent.putExtra(BatteryManager.EXTRA_MOD_STATUS, mBatteryModProps.modStatus);
         intent.putExtra(BatteryManager.EXTRA_MOD_FLAG, mBatteryModProps.modFlag);
@@ -917,7 +925,8 @@ public final class BatteryService extends SystemService {
         intent.putExtra(BatteryManager.EXTRA_MOD_POWER_SOURCE, mBatteryModProps.modPowerSource);
         if (DEBUG) {
             Slog.d(TAG, "Sending ACTION_BATTERY_CHANGED. scale:" + BATTERY_SCALE
-                    + ", info:" + mHealthInfo.toString());
+                    + ", info:" + mHealthInfo.toString()
+                    + ", mOemFastCharger:" + mOemFastCharger);
         }
 
         mHandler.post(() -> ActivityManager.broadcastStickyIntent(intent, UserHandle.USER_ALL));
@@ -1021,6 +1030,26 @@ public final class BatteryService extends SystemService {
             return "Turbo".equals(state);
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
+        }
+        return false;
+    }
+
+    private boolean isOemFastCharger() {
+        final String path = mContext.getResources().getString(
+                com.android.internal.R.string.config_oemFastChargerStatusPath);
+        if (TextUtils.isEmpty(path))
+            return false;
+
+        String value = mContext.getResources().getString(
+                com.android.internal.R.string.config_oemFastChargerStatusValue);
+        if (TextUtils.isEmpty(value))
+            value = "1";
+
+        try {
+            return FileUtils.readTextFile(new File(path), value.length(), null).equals(value);
+        } catch (IOException e) {
+            Slog.e(TAG, "Failed to read oem fast charger status path: "
+                + path);
         }
         return false;
     }
