@@ -132,8 +132,6 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
     private Action mSilentModeAction;
     private ToggleAction mAirplaneModeOn;
     private ToggleAction.State mAirplaneState = ToggleAction.State.Off;
-    private ToggleRestartAdvancedAction mRestartAdvancedAction;
-
     private MyAdapter mAdapter;
 
     private boolean mKeyguardShowing = false;
@@ -403,7 +401,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
                 mItems.add(new RestartAction());
             } else if (GLOBAL_ACTION_KEY_RESTART_RECOVERY.equals(actionKey)) {
-                mItems.add(mRestartAdvancedAction);
+                mItems.add(new AdvancedRestartAction());
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
             }
@@ -499,6 +497,34 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         @Override
         public void onPress() {
             mWindowManagerFuncs.reboot(false);
+        }
+    }
+
+
+    private final class AdvancedRestartAction extends SinglePressAction implements LongPressAction {
+        private AdvancedRestartAction() {
+            super(com.android.systemui.R.drawable.ic_restart_advanced, com.android.systemui.R.string.global_action_restart_advanced);
+        }
+
+        @Override
+        public boolean onLongPress() {
+            mWindowManagerFuncs.advancedReboot(PowerManager.REBOOT_BOOTLOADER);
+            return true;
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+
+        @Override
+        public void onPress() {
+            mWindowManagerFuncs.advancedReboot(PowerManager.REBOOT_RECOVERY);
         }
     }
 
@@ -841,7 +867,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener, DialogIn
         public View getView(int position, View convertView, ViewGroup parent) {
             Action action = getItem(position);
             View view = action.create(mContext, convertView, parent, LayoutInflater.from(mContext));
-            if (position == 2) {
+            if (position == 3) {
                 HardwareUiLayout.get(parent).setDivisionView(view);
             }
             return view;
