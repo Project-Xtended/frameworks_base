@@ -5412,6 +5412,12 @@ public final class Settings {
         public static final String SCREENSHOT_SOUND = "screenshot_sound";
 
         /**
+         *  Enable statusbar double tap gesture on to put device to sleep
+         * @hide
+         */
+        public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5563,6 +5569,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ANBI_ENABLED_OPTION);
             PRIVATE_SETTINGS.add(ALLOW_INCALL_HOME);
             PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
+            PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
         }
 
         /**
