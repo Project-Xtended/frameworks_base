@@ -112,4 +112,5 @@ interface IStatusBarService
     // Used to hide the biometric dialog when the AuthenticationClient is stopped
     void hideBiometricDialog();
     void restartUI();
+    void toggleCameraFlash();
 }

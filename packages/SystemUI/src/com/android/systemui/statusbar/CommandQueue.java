@@ -117,6 +117,7 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
     private static final int MSG_SHOW_PINNING_TOAST_ESCAPE     = 46 << MSG_SHIFT;
     private static final int MSG_RECENTS_ANIMATION_STATE_CHANGED = 47 << MSG_SHIFT;
     private static final int MSG_RESTART_UI                    = 48 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_CAMERA_FLASH           = 49 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -279,6 +280,7 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         default void onBiometricError(String error) { }
         default void hideBiometricDialog() { }
 	default void restartUI() { }
+	default void toggleCameraFlash() { }
 
         /**
          * @see IStatusBar#onDisplayReady(int)
@@ -832,6 +834,13 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         synchronized (mLock) {
             mHandler.removeMessages(MSG_RESTART_UI);
             mHandler.obtainMessage(MSG_RESTART_UI).sendToTarget();
+	}
+    }
+
+    public void toggleCameraFlash() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH);
+            mHandler.sendEmptyMessage(MSG_TOGGLE_CAMERA_FLASH);
         }
     }
 
@@ -1103,6 +1112,11 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                 case MSG_RESTART_UI:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).restartUI();
+		    }
+		    break;
+                case MSG_TOGGLE_CAMERA_FLASH:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).toggleCameraFlash();
                     }
                     break;
             }
