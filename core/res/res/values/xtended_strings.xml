@@ -47,4 +47,5 @@
 
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">Long press power button to interact</string>
+
 </resources>
