@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.ScreenRecordTile;
 import com.android.systemui.qs.tiles.SleepScreenTile;
 import com.android.systemui.qs.tiles.SoundTile;
@@ -108,6 +109,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<MonoToggleTile> mMonoToggleTileProvider;
     private final Provider<MusicTile> mMusicTileProvider;
     private final Provider<RebootTile> mRebootTileProvider;
+    private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<SleepScreenTile> mSleepScreenTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<SoundSearchTile> mSoundSearchTileProvider;
@@ -151,6 +153,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<MonoToggleTile> monoToggleTileProvider,
             Provider<MusicTile> musicTileProvider,
             Provider<RebootTile> rebootTileProvider,
+            Provider<ScreenshotTile> screenshotTileProvider,
             Provider<SleepScreenTile> sleepScreenTileProvider,
             Provider<SoundTile> soundTileProvider,
             Provider<SoundSearchTile> soundSearchTileProvider,
@@ -190,6 +193,7 @@ public class QSFactoryImpl implements QSFactory {
         mMonoToggleTileProvider = monoToggleTileProvider;
         mMusicTileProvider = musicTileProvider;
         mRebootTileProvider = rebootTileProvider;
+        mScreenshotTileProvider = screenshotTileProvider;
         mSleepScreenTileProvider = sleepScreenTileProvider;
         mSoundTileProvider = soundTileProvider;
         mSoundSearchTileProvider = soundSearchTileProvider;
@@ -271,6 +275,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mMusicTileProvider.get();
             case "reboot":
                 return mRebootTileProvider.get();
+            case "screenshot":
+                return mScreenshotTileProvider.get();
             case "sleepscreen":
                 return mSleepScreenTileProvider.get();
             case "sound":
