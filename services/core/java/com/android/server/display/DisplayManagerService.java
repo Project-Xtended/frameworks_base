@@ -2238,6 +2238,15 @@ public final class DisplayManagerService extends SystemService {
                     mDisplayDevices.get(i).onOverlayChangedLocked();
                 }
             }
+	}
+
+        public void updateCustomBrightnessDozeValue(int value) {
+            mDisplayPowerController.updateCustomBrightnessDozeValue(value);
+        }
+
+        @Override
+        public void enableAutoDozeBrightness(boolean enable) {
+            mDisplayPowerController.enableAutoDozeBrightness(enable);
         }
     }
 }

@@ -4907,6 +4907,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BURN_IN_PROTECTION_INTERVAL),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.AMBIENT_DOZE_CUSTOM_BRIGHTNESS),
+                    false, this, UserHandle.USER_ALL);
 	 }
 
         @Override
@@ -4914,7 +4917,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (uri.equals(Settings.System.getUriFor(
                 Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
                 setMaxKeyguardNotifConfig();
-	   }
+            } else if (uri.equals(Settings.System.getUriFor(
+                Settings.System.AMBIENT_DOZE_CUSTOM_BRIGHTNESS))) {
+	     updateDozeBrightness();
+	    }
             update();
         }
 
@@ -4924,6 +4930,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setLockscreenDoubleTapToSleep();
 	    setBrightnessSlider();
 	    setMaxKeyguardNotifConfig();
+	    updateDozeBrightness();
         }
     }
 
@@ -4948,6 +4955,15 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setMaxKeyguardNotifConfig() {
         mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
+    }
+
+    private void updateDozeBrightness() {
+        int defaultDozeBrightness = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_screenBrightnessDoze);
+        int customDozeBrightness = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_DOZE_CUSTOM_BRIGHTNESS, defaultDozeBrightness,
+                UserHandle.USER_CURRENT);
+        StatusBarWindowManager.updateCustomBrightnessDozeValue(customDozeBrightness);
     }
 
     public int getWakefulnessState() {

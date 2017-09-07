@@ -64,7 +64,7 @@ public class StatusBarWindowManager implements RemoteInputController.Callback, D
     private boolean mHasTopUiChanged;
     private int mBarHeight;
     private final boolean mKeyguardScreenRotation;
-    private float mScreenBrightnessDoze;
+    private static float mScreenBrightnessDoze;
     private final State mCurrentState = new State();
     private OtherwisedCollapsedListener mListener;
 
@@ -75,6 +75,10 @@ public class StatusBarWindowManager implements RemoteInputController.Callback, D
         mKeyguardScreenRotation = shouldEnableKeyguardScreenRotation();
         mDozeParameters = DozeParameters.getInstance(mContext);
         mScreenBrightnessDoze = mDozeParameters.getScreenBrightnessDoze();
+    }
+
+    public static void updateCustomBrightnessDozeValue(int value) {
+        mScreenBrightnessDoze = value / 255f;
     }
 
     private boolean shouldEnableKeyguardScreenRotation() {
