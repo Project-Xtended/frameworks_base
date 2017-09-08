@@ -328,6 +328,14 @@
             </intent-filter>
         </activity-alias>
 
+        <activity android:name=".tuner.LockscreenActivity"
+                  android:theme="@style/ExTunerSettings"
+                  android:label="@string/tuner_lock_screen"
+                  android:process=":tuner"
+                  android:parentActivityName="com.msm.xtended.fragments.LockScreenSettings"
+                  android:exported="true">
+        </activity>
+
         <!-- Service used by secondary users to register themselves with the system user. -->
         <service android:name=".recents.RecentsSystemUserService"
             android:exported="false"
