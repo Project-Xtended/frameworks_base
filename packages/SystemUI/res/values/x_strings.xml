@@ -148,4 +148,8 @@
     <string name="vpn_credentials_username">Username</string>
     <string name="vpn_credentials_password">Password</string>
     <string name="vpn_credentials_dialog_connect">Connect</string>
+
+    <!-- Statusbar Tuner -->
+    <string name="statusbar_items_title">Statusbar Icons</string>
+
 </resources>
