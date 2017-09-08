@@ -231,9 +231,6 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
             }
         }
         return 0;
-=======
-        // No tunings for you.
->>>>>>> edf879448a0... QuickSettings: Option to disable brightness slider (1/2)
     }
 
     private void updateViewVisibilityForTuningValue(View view, @Nullable String newValue) {
