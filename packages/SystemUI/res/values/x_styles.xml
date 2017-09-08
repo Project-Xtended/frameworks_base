@@ -14,7 +14,9 @@
 -->
 <resources>
 
-    <!-- Label for area where tiles can be added to the qs panel -->
-    <string name="drag_or_tap_to_add_tiles">Halten &amp; ziehen oder tippen zum Hinzufügen oder Entfernen</string>
+    <!-- Pure Tuner Theme-->
+    <style name="ExTunerSettings" parent="@android:style/Theme.DeviceDefault.Settings">
+        <item name="preferenceTheme">@style/TunerPreferenceTheme</item>
+    </style>
 
 </resources>
