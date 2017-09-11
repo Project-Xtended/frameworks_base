@@ -1754,7 +1754,6 @@ public class WifiConfiguration implements Parcelable {
                 .append(recentFailure.getAssociationStatus()).append("\n");
         sbuf.append("autoConnect: " + autoConnect);
         sbuf.append("\n");
-
         return sbuf.toString();
     }
 
