@@ -98,6 +98,7 @@ import static com.android.server.policy.HardkeyActionHandler.KEY_MASK_APP_SWITCH
 import android.Manifest;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.Manifest;
 import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RecentTaskInfo;
@@ -5956,6 +5957,19 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     @Override
     public void sendCustomAction(Intent intent) {
         String action = intent.getAction();
+        if (action != null) {
+            if (XtendedUtils.INTENT_SCREENSHOT.equals(action)) {
+                mContext.enforceCallingOrSelfPermission(Manifest.permission.ACCESS_SURFACE_FLINGER,
+                        TAG + "sendCustomAction permission denied");
+                interceptScreenshotChord(
+                        TAKE_SCREENSHOT_FULLSCREEN, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+            } else if (XtendedUtils.INTENT_REGION_SCREENSHOT.equals(action)) {
+                mContext.enforceCallingOrSelfPermission(Manifest.permission.ACCESS_SURFACE_FLINGER,
+                        TAG + "sendCustomAction permission denied");
+                interceptScreenshotChord(
+                        TAKE_SCREENSHOT_SELECTED_REGION, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
+            }
+        }
     }
 
     @Override
