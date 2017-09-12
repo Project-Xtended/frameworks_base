@@ -40,6 +40,8 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.view.IWindowManager;
+import android.view.WindowManagerGlobal;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.InputDevice;
@@ -58,6 +60,9 @@ import java.util.Locale;
  * Add our Xtended utilities
  */
 public class XtendedUtils {
+
+    public static final String INTENT_SCREENSHOT = "action_handler_screenshot";
+    public static final String INTENT_REGION_SCREENSHOT = "action_handler_region_screenshot";
 
     private static OverlayManager mOverlayService;
 
@@ -242,6 +247,15 @@ public class XtendedUtils {
 
     public static void toggleCameraFlash() {
         FireActions.toggleCameraFlash();
+    }
+
+    public static void takeScreenshot(boolean full) {
+        IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.sendCustomAction(new Intent(full? INTENT_SCREENSHOT : INTENT_REGION_SCREENSHOT));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private static final class FireActions {
