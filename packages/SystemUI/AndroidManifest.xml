@@ -360,6 +360,9 @@
     <!-- Custom permissions -->
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
 
+    <!-- Screenshot tile -->
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
