@@ -30,9 +30,6 @@
     <!-- Whether to persist the notification for when a usb drive device is plugged in -->
     <bool name="config_persistUsbDriveNotification">false</bool>
 
-    <!-- If this is true, key chords can be used to take a screen record on the device. -->
-    <bool name="config_enableScreenrecordChord">true</bool>
-
-    <!-- Whether device has dash charging support -->
-    <bool name="config_hasDashCharger">false</bool>
+    <!-- Setting to false will disable CM's IME switcher implementation for tablets -->
+    <bool name="config_show_cmIMESwitcher">false</bool>
 </resources>
