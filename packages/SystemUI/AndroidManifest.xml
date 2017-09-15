@@ -206,6 +206,9 @@
     <!-- to change themes - light or dark -->
     <uses-permission android:name="android.permission.CHANGE_OVERLAY_PACKAGES" />
 
+    <!-- To Force Kill Packages From Recents -->
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
+
     <!-- Reboot -->
     <uses-permission android:name="android.permission.REBOOT" />
     <uses-permission android:name="android.permission.RECOVERY" />
@@ -228,7 +231,6 @@
  
     <protected-broadcast android:name="android.intent.action.SCREEN_STATE_SERVICE_UPDATE" />
 
-    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
 
     <!-- OmniJaws -->
     <uses-permission android:name="org.omnirom.omnijaws.READ_WEATHER" />
