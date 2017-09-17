@@ -158,4 +158,15 @@
     <string name="config_smartChargingSuspendValue" translatable="false">0</string>
     <string name="config_smartChargingResumeValue" translatable="false">1</string>
     
+    <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
+    <bool name="config_intrusiveBatteryLed">false</bool>
+
+     <!-- Does the battery LED support multiple colors?
+         Used to decide if the user can change the colors -->
+    <bool name="config_multiColorBatteryLed">false</bool>
+
+     <!-- Do the battery/notification LEDs support pulsing?
+         Used to decide if we show pulse settings -->
+    <bool name="config_ledCanPulse">false</bool>
+
 </resources>
