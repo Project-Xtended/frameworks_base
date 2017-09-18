@@ -4233,6 +4233,12 @@ public final class Settings {
          */
         public static final String VIBRATE_ON_CALLWAITING = "vibrate_on_callwaiting";
 
+         /**
+         * Whether the phone volume up / down effect should be played
+         * @hide
+         */
+        public static final String VOLUME_ADJUST_SOUNDS_ENABLED = "volume_adjust_sounds_enabled";
+
         /**
          * Whether the phone vibrates on disconnect
          * @hide
