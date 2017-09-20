@@ -641,6 +641,12 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
     }
 
     private boolean shouldBeVisibleH(VolumeRow row, VolumeRow activeRow) {
+        final boolean linkNotificationWithVolume = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
+        final boolean isNotificationStream = row.stream == AudioManager.STREAM_NOTIFICATION;
+        if (linkNotificationWithVolume && isNotificationStream) {
+            return false;
+        }
         boolean isActive = row == activeRow;
 		final boolean linkNotificationWithVolume = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
@@ -874,7 +880,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         // notification slider is disabled when vibrate or silent - only ringer slider can be used
         final boolean enableSlider = isNotificationStream ? (!zenMuted && !isRingVibrate && !isRingSilent && !isNotificationSilent) : !zenMuted;
         // update slider value - 0 if silent or vibrate
-        final int vlevel = row.ss.muted && (isRingSilent || isNotificationSilent || isRingVibrate || !isRingStream && !zenMuted) ? 0
+        final int vlevel = row.ss.muted && (isRingSilent || isNotificationSilent || isRingVibrate && !zenMuted) ? 0
                 : row.ss.level;
         updateVolumeRowSliderH(row, enableSlider, vlevel, maxChanged);
     }
