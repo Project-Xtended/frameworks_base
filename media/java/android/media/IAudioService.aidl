@@ -206,7 +206,14 @@ interface IAudioService {
     oneway void playerHasOpPlayAudio(in int piid, in boolean hasOpPlayAudio);
 
     // WARNING: read warning at top of file, it is recommended to add new methods at the end
-    void setStreamMaxVolume(int streamType, int maxVol);
+    /**
+     * Internal DU api to protect Pulse
+     * @hide
+     */
+    void setVisualizerLocked(boolean doLock);
 
-    int getDefaultStreamMaxVolume(int streamType);
+    /**
+     * @hide
+     */
+    boolean isVisualizerLocked(String callingPackage);
 }
