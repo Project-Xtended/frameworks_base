@@ -6212,6 +6212,16 @@ public final class Settings {
         /** @hide */
         private static final Validator STATUSBAR_HIDE_NOTCH_VALIDATOR = BOOLEAN_VALIDATOR;
 
+         /**
+          * Volume dialog timeout
+          * @hide
+          */
+         public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
+
+         /** @hide */
+         private static final Validator VOLUME_DIALOG_TIMEOUT_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(500, 10000);;
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -6304,7 +6314,8 @@ public final class Settings {
             OMNI_ASPECT_RATIO_APPS_ENABLED,
             OMNI_ASPECT_RATIO_APPS_LIST,
             USE_OLD_MOBILETYPE,
-            STATUSBAR_HIDE_NOTCH
+            STATUSBAR_HIDE_NOTCH,
+            VOLUME_DIALOG_TIMEOUT,
         };
 
         /**
@@ -6480,6 +6491,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_RECOGNITION_KEYGUARD);
             PRIVATE_SETTINGS.add(AMBIENT_RECOGNITION_NOTIFICATION);
             PRIVATE_SETTINGS.add(STATUSBAR_HIDE_NOTCH);
+            PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
         }
 
         /**
@@ -6618,6 +6630,7 @@ public final class Settings {
             VALIDATORS.put(AMBIENT_RECOGNITION_KEYGUARD, AMBIENT_RECOGNITION_KEYGUARD_VALIDATOR);
             VALIDATORS.put(AMBIENT_RECOGNITION_NOTIFICATION, AMBIENT_RECOGNITION_NOTIFICATION_VALIDATOR);
             VALIDATORS.put(STATUSBAR_HIDE_NOTCH, STATUSBAR_HIDE_NOTCH_VALIDATOR);
+            VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
         }
 
         /**
