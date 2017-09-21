@@ -107,4 +107,11 @@
   <!-- Pocket Service -->
   <java-symbol type="string" name="config_pocketJudgeVendorSensorName" />
 
+  <!-- HW keys binding -->
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
+
+  <!-- Custom Animations -->
+  <java-symbol type="anim" name="custom_app_in" />
+  <java-symbol type="anim" name="custom_app_out" />
+
 </resources>

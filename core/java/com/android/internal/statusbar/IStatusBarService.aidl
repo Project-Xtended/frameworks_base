@@ -174,4 +174,9 @@ interface IStatusBarService
     void setBlockedGesturalNavigation(boolean blocked);
     // for pulse
     void screenPinningStateChanged(boolean enabled);
+
+    void toggleRecentApps();
+    void toggleSplitScreen();
+    void preloadRecentApps();
+    void cancelPreloadRecentApps();
 }
