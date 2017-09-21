@@ -236,4 +236,10 @@ interface IStatusBarService
 
     /** Used to block or unblock usage of gestural navigation. */
     void setBlockedGesturalNavigation(boolean blocked);
+
+    /** For HW Key Customizations */
+    void toggleRecentApps();
+    void toggleSplitScreen();
+    void preloadRecentApps();
+    void cancelPreloadRecentApps();
 }
