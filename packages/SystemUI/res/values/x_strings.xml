@@ -82,4 +82,8 @@
     <!-- Statusbar tuner -->
     <string name="statusbar_items_title">Statusbar Icons</string>
 
+    <!-- Lockscreen Shortcut Icons -->
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
+
 </resources>
