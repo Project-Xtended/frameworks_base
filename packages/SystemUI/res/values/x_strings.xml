@@ -230,4 +230,10 @@
     <string name="tuner_keyguard_show_battery_bar_summary">Show battery bar on charging in always on display</string>
     <string name="tuner_keyguard_show_battery_bar_always_title">Always show battery bar</string>
     <string name="tuner_keyguard_show_battery_bar_always_summary">Always show battery bar on charging</string>
+
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
+    <string name="custom_hint">Swipe from icon to launch</string>
+
 </resources>
