@@ -213,4 +213,8 @@
     <!-- Name of the ims status bar icon. -->
     <string name="status_bar_ims">VoLTE/VoWiFi</string>
 
+    <!-- Lockscreen tuner -->
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
+
 </resources>
