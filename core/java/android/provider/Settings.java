@@ -5745,6 +5745,13 @@ public final class Settings {
         public static final String LOCKOWNER_FONT_SIZE= "lockowner_font_size";
 
         /**
+         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         *
+         * @hide
+         */
+        public static final String ANBI_ENABLED_OPTION = "anbi_enabled_option";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
