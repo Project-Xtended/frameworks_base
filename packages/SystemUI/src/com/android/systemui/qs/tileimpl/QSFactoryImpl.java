@@ -32,6 +32,7 @@ import com.android.systemui.qs.tiles.CellularTile;
 import com.android.systemui.qs.tiles.CaffeineTile;
 import com.android.systemui.qs.tiles.CPUInfoTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
+import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
@@ -104,6 +105,7 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("cpuinfo")) return new CPUInfoTile(mHost);
         else if (tileSpec.equals("sync")) return new SyncTile(mHost);
         else if (tileSpec.equals("always_on_display")) return new AlwaysOnDisplayTile(mHost);
+        else if (tileSpec.equals("compass")) return new CompassTile(mHost);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(mHost, tileSpec);
