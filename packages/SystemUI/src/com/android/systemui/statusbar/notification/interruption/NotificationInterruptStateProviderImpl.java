@@ -20,10 +20,13 @@ import static com.android.systemui.statusbar.StatusBarState.SHADE;
 import static com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProviderImpl.NotificationInterruptEvent.FSI_SUPPRESSED_NO_HUN_OR_KEYGUARD;
 import static com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProviderImpl.NotificationInterruptEvent.FSI_SUPPRESSED_SUPPRESSIVE_GROUP_ALERT_BEHAVIOR;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+import android.content.Context;
 import android.hardware.display.AmbientDisplayConfiguration;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -32,6 +35,8 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.dreams.IDreamManager;
 import android.service.notification.StatusBarNotification;
+import android.telecom.TelecomManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -78,6 +83,12 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     @VisibleForTesting
     protected boolean mUseHeadsUp = false;
 
+    private TelecomManager mTm;
+    private Context mContext;
+    ActivityManager mAm;
+    private ArrayList<String> mStoplist = new ArrayList<String>();
+    private ArrayList<String> mBlacklist = new ArrayList<String>();
+
     public enum NotificationInterruptEvent implements UiEventLogger.UiEventEnum {
         @UiEvent(doc = "FSI suppressed for suppressive GroupAlertBehavior")
         FSI_SUPPRESSED_SUPPRESSIVE_GROUP_ALERT_BEHAVIOR(1235),
@@ -102,6 +113,7 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
 
     @Inject
     public NotificationInterruptStateProviderImpl(
+            Context context,
             ContentResolver contentResolver,
             PowerManager powerManager,
             IDreamManager dreamManager,
@@ -115,6 +127,9 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
             NotifPipelineFlags flags,
             KeyguardNotificationVisibilityProvider keyguardNotificationVisibilityProvider,
             UiEventLogger uiEventLogger) {
+        mContext = context;
+        mTm = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
+        mAm = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         mContentResolver = contentResolver;
         mPowerManager = powerManager;
         mDreamManager = dreamManager;
@@ -127,6 +142,8 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         mFlags = flags;
         mKeyguardNotificationVisibilityProvider = keyguardNotificationVisibilityProvider;
         mUiEventLogger = uiEventLogger;
+        setHeadsUpStoplist();
+        setHeadsUpBlacklist();
         ContentObserver headsUpObserver = new ContentObserver(mainHandler) {
             @Override
             public void onChange(boolean selfChange) {
@@ -383,6 +400,20 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     private boolean shouldHeadsUpWhenAwake(NotificationEntry entry, boolean log) {
         StatusBarNotification sbn = entry.getSbn();
 
+        // get the info from the currently running task
+        List<ActivityManager.RunningTaskInfo> taskInfo = mAm.getRunningTasks(1);
+        if (taskInfo != null && !taskInfo.isEmpty()) {
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            if (isPackageInStoplist(componentInfo.getPackageName())
+                && !isDialerApp(sbn.getPackageName())) {
+                return false;
+            }
+        }
+
+        if (isPackageBlacklisted(sbn.getPackageName())) {
+            return false;
+        }
+
         if (!mUseHeadsUp) {
             if (log) mLogger.logNoHeadsUpFeatureDisabled();
             return false;
@@ -603,4 +634,43 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     }
 
     public static final long MAX_HUN_WHEN_AGE_MS = 24 * 60 * 60 * 1000;
+
+    private boolean isPackageInStoplist(String packageName) {
+        return mStoplist.contains(packageName);
+    }
+
+    private boolean isPackageBlacklisted(String packageName) {
+        return mBlacklist.contains(packageName);
+    }
+
+    private boolean isDialerApp(String packageName) {
+        return packageName.equals("com.android.dialer")
+            || packageName.equals("com.google.android.dialer");
+    }
+
+    private void splitAndAddToArrayList(ArrayList<String> arrayList,
+            String baseString, String separator) {
+        // clear first
+        arrayList.clear();
+        if (baseString != null) {
+            final String[] array = TextUtils.split(baseString, separator);
+            for (String item : array) {
+                arrayList.add(item.trim());
+            }
+        }
+    }
+
+    @Override
+    public void setHeadsUpStoplist() {
+        final String stopString = Settings.System.getString(mContext.getContentResolver(),
+                    Settings.System.HEADS_UP_STOPLIST_VALUES);
+        splitAndAddToArrayList(mStoplist, stopString, "\\|");
+    }
+
+    @Override
+    public void setHeadsUpBlacklist() {
+        final String blackString = Settings.System.getString(mContext.getContentResolver(),
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES);
+        splitAndAddToArrayList(mBlacklist, blackString, "\\|");
+    }
 }
