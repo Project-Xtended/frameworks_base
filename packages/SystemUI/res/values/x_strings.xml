@@ -60,7 +60,10 @@
     <!-- USB tethering QS tile -->
     <string name="quick_settings_usb_tether_label">USB tethering</string>
 
-    <string name="statusbar_items_title">Statusbar Icons</string>
+    <!-- SystemUI Tuner -->
+    <string name="statusbar_items_title">Statusbar icon</string>
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
 
     <!-- NavBar Tuner -->
     <string name="preview">Preview</string>
