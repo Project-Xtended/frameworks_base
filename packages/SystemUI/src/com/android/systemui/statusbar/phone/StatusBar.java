@@ -219,6 +219,7 @@ import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.qs.car.CarQSFragment;
+import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.recents.events.EventBus;
@@ -514,12 +515,14 @@ public class StatusBar extends SystemUI implements DemoMode,
     int mInitialTouchX;
     int mInitialTouchY;
 
-    private QuickStatusBarHeader mQuickStatusBarHeader;
+    private QuickStatusBarHeader mQuickStatusBarHeaderScroller;
 
     // top bar
     protected KeyguardStatusBarView mKeyguardStatusBar;
     boolean mLeaveOpenOnKeyguardHide;
     KeyguardIndicationController mKeyguardIndicationController;
+
+    private QuickStatusBarHeader mQuickStatusBarHeader;
 
     // Keyguard is going away soon.
     private boolean mKeyguardGoingAway;
@@ -1389,6 +1392,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mQSPanel = ((QSFragment) qs).getQsPanel();
                     mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
+		    mQuickStatusBarHeader = ((QSFragment) qs).getQsHeader();
+                    mQuickStatusBarHeaderScroller = ((QSFragment) qs).getQuickStatusBarHeader();
                 }
             });
         }
@@ -5599,6 +5604,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public void onClosingFinished() {
         runPostCollapseRunnables();
+        if (mQuickStatusBarHeader != null) {
+            mQuickStatusBarHeader.onClosingFinished();
+        }
         if (!isPanelFullyCollapsed()) {
             // if we set it not to be focusable when collapsing, we have to undo it when we aborted
             // the closing
@@ -6670,6 +6678,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.AMBIENT_VISUALIZER_ENABLED),
                     false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_QUICKBAR_SCROLL_ENABLED),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -6688,6 +6699,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.AMBIENT_VISUALIZER_ENABLED))) {
                 setAmbientVis();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.QS_QUICKBAR_SCROLL_ENABLED))) {
+                 setQSTilesScroller();
             }
         }
 
@@ -6710,6 +6724,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setSecurityAlpha();
 	    setFpToDismissNotifications();
 	    updateTickerAnimation();
+	    setQSTilesScroller();
         }
     }
 
@@ -6733,6 +6748,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mQuickStatusBarHeader != null) {
             mQuickStatusBarHeader.updateQsbhClock();
         }
+    }
+
+    public void setQSTilesScroller() {
+
+        if (mQuickStatusBarHeaderScroller != null) {
+            mQuickStatusBarHeaderScroller.updateSettings();
+        }
+
     }
 
     public void updateBatterySettings() {

@@ -56,6 +56,9 @@
     <!-- QS padding -->
     <dimen name="qs_corner_content_padding">8dp</dimen>
 
+    <!-- Quick QS scroller -->
+    <dimen name="qs_scroller_margin">8dp</dimen>
+
     <dimen name="screenrecord_hint_size">48dp</dimen> 
 
     <!-- Status bar notification ticker -->
