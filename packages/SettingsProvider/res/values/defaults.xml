@@ -223,4 +223,7 @@
 
     <!-- Default for Settings.Global.DEVELOPMENT_SETTINGS_ENABLED -->
     <integer  name="def_development_settings">1</integer>
+
+    <!-- Disable PlayStore OTA Check -->
+    <integer name="def_ota_disable_automatic_update">1</integer>
 </resources>
