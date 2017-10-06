@@ -208,6 +208,7 @@ import com.android.systemui.recents.ScreenPinningRequest;
 import com.android.systemui.recents.events.EventBus;
 import com.android.systemui.recents.events.activity.AppTransitionFinishedEvent;
 import com.android.systemui.recents.events.activity.UndockingTaskEvent;
+import com.android.systemui.recents.misc.IconPackHelper;
 import com.android.systemui.recents.misc.SystemServicesProxy;
 import com.android.systemui.settings.BrightnessController;
 import com.android.systemui.stackdivider.Divider;
@@ -405,6 +406,9 @@ public class StatusBar extends SystemUI implements DemoMode,
      * libhwui.
      */
     private static final float SRC_MIN_ALPHA = 0.002f;
+
+    private static final String RECENTS_ICON_PACK =
+            "system:" + Settings.System.RECENTS_ICON_PACK;
 
     static {
         boolean onlyCoreApps;
@@ -1099,6 +1103,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 = (MediaSessionManager) mContext.getSystemService(Context.MEDIA_SESSION_SERVICE);
         // TODO: use MediaSessionManager.SessionListener to hook us up to future updates
         // in session state
+
+        Dependency.get(TunerService.class).addTunable(this,
+                RECENTS_ICON_PACK);
 
         // Lastly, call to the icon policy to install/update all the icons.
         mIconPolicy = new PhoneStatusBarPolicy(mContext, mIconController);
@@ -8335,6 +8342,22 @@ public class StatusBar extends SystemUI implements DemoMode,
             mAssistManager.startAssist(args);
         }
     }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case RECENTS_ICON_PACK:
+                if (newValue != null) {
+                    String currentIconPack = (String) newValue;
+                    IconPackHelper.getInstance(mContext).updatePrefs(currentIconPack);
+                }
+                mRecents.resetIconCache();
+                break;
+            default:
+                break;
+        }
+    }
+
     // End Extra BaseStatusBarMethods.
 
     private final Runnable mAutoDim = () -> {
