@@ -9985,6 +9985,13 @@ public final class Settings {
          */
         public static final String QS_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
 
+	/*
+         * Hide lockscreen shortcuts on secure lock screens
+         *
+         * @hide
+         */
+        public static final String HIDE_LOCK_SHORTCUTS = "hide_lock_shortcuts";
+
         /**
          * This are the settings to be backed up.
          *
