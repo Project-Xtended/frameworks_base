@@ -6733,6 +6733,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
 
+        @Override
+            public void onChange(boolean selfChange) {
+        }
+
         public void update() {
             setLockscreenDoubleTapToSleep();
             setStatusDoubleTapToSleep();
