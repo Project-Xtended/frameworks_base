@@ -23,6 +23,7 @@ import android.app.Fragment;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -44,6 +45,14 @@ import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.KeyguardMonitor;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
+
+import android.widget.ImageView;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
+
 
 /**
  * Contains the collapsed status bar and handles hiding/showing based on disable flags
@@ -81,6 +90,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mWeatherTextView;
     private int mShowWeather;
 
+    private ImageView mXtendedLogo;
+    private ImageView mXtendedLogoRight;
+    private int mLogoStyle;
+    private int mShowLogo;
+    private int mLogoColor;
+
     private class SettingsObserver extends ContentObserver {
        SettingsObserver(Handler handler) {
            super(handler);
@@ -95,14 +110,29 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     false, this, UserHandle.USER_ALL);
          mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
+	            false, this, UserHandle.USER_ALL);
+	 mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO),
                     false, this, UserHandle.USER_ALL);
+	 mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO_STYLE),
+		    false, this, UserHandle.USER_ALL);
+	 mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_LOGO_COLOR),
+		    false, this, UserHandle.USER_ALL);
        }
 
-       @Override
-       public void onChange(boolean selfChange) {
-           updateSettings(true);
-       }
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if ((uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO))) ||
+                (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO_STYLE))) ||
+                (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO_COLOR)))){
+                 updateLogoSettings(true);
+	    }
+            updateSettings(true);
+        }
     }
+
     private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
     private ContentResolver mContentResolver;
 
@@ -146,7 +176,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mWeatherTextView = mStatusBar.findViewById(R.id.weather_temp);
         mWeatherImageView = mStatusBar.findViewById(R.id.weather_image);
+	mXtendedLogo = mStatusBar.findViewById(R.id.status_bar_logo);
+	mXtendedLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
         updateSettings(false);
+	updateLogoSettings(false);	
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
@@ -256,6 +289,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mClockStyle == 2) {
             animateHide(mRightClock, animate, true);
         }
+        if (mShowLogo == 2) {
+            animateHide(mXtendedLogoRight, animate, false);
+        }	
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -264,16 +300,25 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mClockStyle == 2) {
             animateShow(mRightClock, animate);
         }
+        if (mShowLogo == 2) {
+            animateShow(mXtendedLogoRight, animate);
+        }	
     }
 
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate, true);
         animateHide(mCenterClockLayout, animate, true);
+        if (mShowLogo == 1) {
+            animateHide(mXtendedLogo, animate, false);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenterClockLayout, animate);
+         if (mShowLogo == 1) {
+             animateShow(mXtendedLogo, animate);
+         }
     }
 
     public void hideOperatorName(boolean animate) {
@@ -371,6 +416,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void updateSettings(boolean animate) {
+        if (mStatusBar == null) return;
+
+        if (getContext() == null) {
+            return;
+        }
+
+        try {
         mClockStyle = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUSBAR_CLOCK_STYLE, 0, UserHandle.USER_CURRENT);
         mShowCarrierLabel = Settings.System.getIntForUser(
@@ -379,8 +431,149 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mShowWeather = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
-        updateClockStyle(animate);
+        } catch (Exception e) {
+        }
+	updateClockStyle(animate);
         setCarrierLabel(animate);
+
+    }
+
+    public void updateLogoSettings(boolean animate) {
+        Drawable logo = null;
+
+        if (mStatusBar == null) return;
+
+        if (getContext() == null) {
+            return;
+        }
+
+        mShowLogo = Settings.System.getIntForUser(
+                getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO, 0,
+                UserHandle.USER_CURRENT);
+        mLogoColor = Settings.System.getIntForUser(
+                getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO_COLOR, 0xffff7700,
+                UserHandle.USER_CURRENT);
+        mLogoStyle = Settings.System.getIntForUser(
+                getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO_STYLE, 0,
+                UserHandle.USER_CURRENT);
+
+        switch(mLogoStyle) {
+                // Xtnd Old
+            case 1:
+                logo = getContext().getDrawable(R.drawable.ic_xtnd_logo);
+                break;
+                // Android
+            case 2:
+                logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_skull_logo);
+                break;
+                // GZR Circle
+            case 3:
+                logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_circle_logo);
+                break;
+            case 4:
+                logo = getContext().getDrawable(R.drawable.ic_android_logo);
+                break;
+                // Shit
+            case 5:
+                logo = getContext().getDrawable(R.drawable.ic_apple_logo);
+                break;
+                // Shitty Logo
+            case 6:
+                logo = getContext().getDrawable(R.drawable.ic_ios_logo);
+                break;
+                // Others
+            case 7:
+                logo = getContext().getDrawable(R.drawable.ic_blackberry);
+                break;
+            case 8:
+                logo = getContext().getDrawable(R.drawable.ic_cake);
+                break;
+            case 9:
+                logo = getContext().getDrawable(R.drawable.ic_blogger);
+                break;
+            case 10:
+                logo = getContext().getDrawable(R.drawable.ic_biohazard);
+                break;
+            case 11:
+                logo = getContext().getDrawable(R.drawable.ic_linux);
+                break;
+            case 12:
+                logo = getContext().getDrawable(R.drawable.ic_yin_yang);
+                break;
+            case 13:
+                logo = getContext().getDrawable(R.drawable.ic_windows);
+                break;
+            case 14:
+                logo = getContext().getDrawable(R.drawable.ic_robot);
+                break;
+            case 15:
+                logo = getContext().getDrawable(R.drawable.ic_ninja);
+                break;
+            case 16:
+                logo = getContext().getDrawable(R.drawable.ic_heart);
+                break;
+            case 17:
+                logo = getContext().getDrawable(R.drawable.ic_ghost);
+                break;
+            case 18:
+                logo = getContext().getDrawable(R.drawable.ic_google);
+                break;
+            case 19:
+                logo = getContext().getDrawable(R.drawable.ic_human_male);
+                break;
+            case 20:
+                logo = getContext().getDrawable(R.drawable.ic_human_female);
+                break;
+            case 21:
+                logo = getContext().getDrawable(R.drawable.ic_human_male_female);
+                break;
+            case 22:
+                logo = getContext().getDrawable(R.drawable.ic_gender_male);
+                break;
+            case 23:
+                logo = getContext().getDrawable(R.drawable.ic_gender_female);
+                break;
+            case 24:
+                logo = getContext().getDrawable(R.drawable.ic_gender_male_female);
+                break;
+            case 25:
+                logo = getContext().getDrawable(R.drawable.ic_guitar_electric);
+                break;
+                // Default (Xtended Main)
+            case 0:
+            default:
+                logo = getContext().getDrawable(R.drawable.status_bar_logo);
+                break;
+        }
+
+        if (mShowLogo == 1) {
+	    mXtendedLogo.setImageDrawable(null);
+	    mXtendedLogo.setImageDrawable(logo);
+ 	    mXtendedLogo.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
+	} else if (mShowLogo == 2) {
+	    mXtendedLogoRight.setImageDrawable(null);
+	    mXtendedLogoRight.setImageDrawable(logo);
+	    mXtendedLogoRight.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
+	}
+
+        if (mNotificationIconAreaInner != null) {
+            if (mShowLogo == 1) {
+                if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
+                    animateShow(mXtendedLogo, animate);
+                }
+            } else if (mShowLogo != 1) {
+                animateHide(mXtendedLogo, animate, false);
+            }	   
+        }	
+        if (mSystemIconArea != null) {
+            if (mShowLogo == 2) {
+                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
+                    animateShow(mXtendedLogoRight, animate);
+                }
+            } else if (mShowLogo != 2) {
+                   animateHide(mXtendedLogoRight, animate, false);
+            }
+        }	
     }
 
     private void updateClockStyle(boolean animate) {
