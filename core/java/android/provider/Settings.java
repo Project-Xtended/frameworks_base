@@ -6750,6 +6750,26 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_FONT_STYLE = "status_bar_clock_font_style";
 
         /**
+         * 0 = off
+	 * 1 = left
+	 * 2 = right
+         * @hide
+         */
+        public static final String STATUS_BAR_LOGO = "status_bar_logo";
+
+        /**
+	 ** Statusbar logo Style
+	 ** @hide
+	 **/
+	 public static final String STATUS_BAR_LOGO_STYLE = "status_bar_logo_style";
+
+	/**
+	 ** Statusbar logo Color
+	 ** @hide
+         **/
+	public static final String STATUS_BAR_LOGO_COLOR = "status_bar_logo_color";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
