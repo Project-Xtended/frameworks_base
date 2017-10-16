@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2017-2022 The Project-Xtended
+     Copyright (C) 2017 - 2023 The Project-Xtended Rom
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,12 +13,5 @@
      limitations under the License.
 -->
 <resources>
-
-    <!-- Height of the bottom navigation bar frame when hide ime space -->
-    <dimen name="navigation_bar_frame_height_hide_ime">16dp</dimen>
-    <!-- Height of the bottom navigation bar frame in landscape when hide ime space -->
-    <dimen name="navigation_bar_frame_height_landscape_hide_ime">@dimen/navigation_bar_frame_height_hide_ime</dimen>
-
-    <dimen name="quick_qs_total_height">176dp</dimen>
-
+    <dimen name="quick_qs_total_height">152dp</dimen>
 </resources>
