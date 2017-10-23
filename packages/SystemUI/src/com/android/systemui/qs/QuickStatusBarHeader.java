@@ -50,9 +50,10 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
 
-public class QuickStatusBarHeader extends FrameLayout implements StatusBarHeaderMachine.IStatusBarHeaderMachineObserver {
-    private static final String TAG = "QuickStatusBarHeader";
+public class QuickStatusBarHeader extends FrameLayout implements 
+        StatusBarHeaderMachine.IStatusBarHeaderMachineObserver, Tunable {
 
+    private static final String TAG = "QuickStatusBarHeader";
     public static final String QS_SHOW_CARRIER = "qs_show_carrier";
     public static final String QS_SHOW_BATTERY = "qs_show_battery";
     public static final String QS_SHOW_CLOCK = "qs_show_clock";
