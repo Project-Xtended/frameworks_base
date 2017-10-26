@@ -4105,6 +4105,7 @@ public abstract class AbsListView extends AdapterView<ListAdapter> implements Te
         mHasPerformedLongPress = false;
         mActivePointerId = ev.getPointerId(0);
         mInverse.sendEmptyMessageDelayed(0, 100);
+        hideSelector();
         if (mTouchMode == TOUCH_MODE_OVERFLING) {
             // Stopped the fling. It is a scroll.
             mFlingRunnable.endFling();
