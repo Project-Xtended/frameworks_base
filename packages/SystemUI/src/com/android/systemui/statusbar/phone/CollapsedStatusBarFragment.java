@@ -70,6 +70,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private DarkIconManager mDarkIconManager;
     private SignalClusterView mSignalClusterView;
 
+    // Statusbar Weather Image
+    private View mWeatherImageView;
+    private View mWeatherTextView;
+    private int mShowWeather;
+
+
+    // Custom Carrier
     private View mCustomCarrierLabel;
     private int mShowCarrierLabel;
     private LinearLayout mCenterClockLayout;
@@ -131,6 +138,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     false, this, UserHandle.USER_ALL);
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_BATTERY_PERCENT),
+		    false, this, UserHandle.USER_ALL);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -189,6 +199,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mNetworkTraffic = (NetworkTraffic) mStatusBar.findViewById(R.id.networkTraffic);
+	mWeatherTextView = mStatusBar.findViewById(R.id.weather_temp);
+        mWeatherImageView = mStatusBar.findViewById(R.id.weather_image);
         mXtendedSettingsObserver.observe();
         updateSettings(false);
         mNetworkTraffic.updateSettings();
@@ -400,7 +412,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
  	     mShowCarrierLabel = Settings.System.getIntForUser(
                  getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
                  UserHandle.USER_CURRENT);	
-             if (mNotificationIconAreaInner != null) {
+             mShowWeather = Settings.System.getIntForUser(
+                getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                UserHandle.USER_CURRENT);
+	     if (mNotificationIconAreaInner != null) {
                  if (mShowCarrierLabel == 2 || mShowCarrierLabel == 3) {
                      if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
                          animateShow(mCustomCarrierLabel, animate);
