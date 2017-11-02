@@ -102,9 +102,7 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
 
     @Override
     public void handleSetListening(boolean listening) {
-        if (mWeatherClient == null) {
-            return;
-        }
+        if (mWeatherClient == null) return;
         if (DEBUG) Log.d(TAG, "setListening " + listening);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
 
