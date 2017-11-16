@@ -53,6 +53,7 @@ import com.android.systemui.qs.tiles.OneHandedModeTile;
 import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.QRCodeScannerTile;
 import com.android.systemui.qs.tiles.QuickAccessWalletTile;
+import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.ReduceBrightColorsTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenRecordTile;
@@ -112,6 +113,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<VpnTile> mVpnTileProvider;
     private final Provider<AmbientDisplayTile> mAmbientDisplayTileProvider;
+    private final Provider<RebootTile> mRebootTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -156,7 +158,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SyncTile> syncTileProvider,
             Provider<SoundTile> soundTileProvider,
             Provider<VpnTile> vpnTileProvider,
-            Provider<AmbientDisplayTile> ambientDisplayTileProvider) {
+            Provider<AmbientDisplayTile> ambientDisplayTileProvider,
+            Provider<RebootTile> rebootTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
 
@@ -197,6 +200,7 @@ public class QSFactoryImpl implements QSFactory {
         mSoundTileProvider = soundTileProvider;
         mVpnTileProvider = vpnTileProvider;
         mAmbientDisplayTileProvider = ambientDisplayTileProvider;
+        mRebootTileProvider = rebootTileProvider;
     }
 
     /** Creates a tile with a type based on {@code tileSpec} */
@@ -286,6 +290,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mVpnTileProvider.get();
             case "ambient_display":
                 return mAmbientDisplayTileProvider.get();
+            case "reboot":
+                return mRebootTileProvider.get();
         }
 
         // Custom tiles
