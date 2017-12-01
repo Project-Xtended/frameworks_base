@@ -7831,7 +7831,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         if (isWakeKey) {
             wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, "android.policy:KEY",
-                    event.getKeyCode() == KeyEvent.KEYCODE_WAKEUP /* check prox only on wake key*/);
+                    event.getKeyCode() == KeyEvent.KEYCODE_WAKEUP); // Check prox only on wake key
         }
 
         return result;
@@ -8346,7 +8346,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void wakeUpFromPowerKey(long eventTime) {
-        wakeUp(eventTime, mAllowTheaterModeWakeFromPowerKey, "android.policy:POWER");
+        wakeUp(eventTime, mAllowTheaterModeWakeFromPowerKey, "android.policy:POWER", true);
     }
 
     private boolean wakeUp(long wakeTime, boolean wakeInTheaterMode, String reason) {
