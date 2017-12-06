@@ -39,9 +39,9 @@
     <java-symbol type="string" name="reboot_title" />
     <java-symbol type="string" name="reboot_message" />
 
-  <!-- On-The-Go -->
-  <java-symbol type="string" name="global_action_onthego" />
-  <java-symbol type="drawable" name="ic_lock_onthego" />
+    <!-- On-The-Go -->
+    <java-symbol type="string" name="global_action_onthego" />
+    <java-symbol type="drawable" name="ic_lock_onthego" />
 
     <!-- App error dialog -->
     <java-symbol type="id" name="aerr_copy" />
@@ -50,5 +50,7 @@
 
     <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
     <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
+
+    <java-symbol type="array" name="config_vendorPlatformSignatures" />
 
 </resources>
