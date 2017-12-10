@@ -6361,6 +6361,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.STATUS_BAR_BATTERY_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LAST_DOZE_AUTO_BRIGHTNESS),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6372,6 +6375,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setLockscreenDoubleTapToSleep();
             setStatusDoubleTapToSleep();
             setLockscreenMediaMetadata();
+            updateDozeBrightness();
             updateQsPanelResources();
             setBatterySaverWarning();
             setHeadsUpStoplist();
@@ -6447,6 +6451,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         splitAndAddToArrayList(mBlacklist, blackString, "\\|");
 
     }
+    
+    private void updateDozeBrightness() {
+        int defaultDozeBrightness = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_screenBrightnessDoze);
+        int lastValue = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LAST_DOZE_AUTO_BRIGHTNESS, defaultDozeBrightness,
+                UserHandle.USER_CURRENT);
+        mStatusBarWindowManager.updateDozeBrightness(lastValue);
+    }
+
+    
 
     private void setBrightnessSlider() {
         int mode = Settings.System.getIntForUser(mContext.getContentResolver(),
