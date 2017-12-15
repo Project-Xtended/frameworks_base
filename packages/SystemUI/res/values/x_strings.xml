@@ -94,5 +94,6 @@
     <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
 
     <string name="status_bar_vpn">VPN</string>
+    <string name="status_bar_roaming">Roaming</string>
 
 </resources>
