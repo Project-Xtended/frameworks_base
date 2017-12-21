@@ -98,6 +98,25 @@ public class RestrictedLockUtilsTest {
     }
 
     @Test
+    public void checkIfDevicePolicyServiceDisabled_noEnforceAdminForManagedProfile() {
+        when(mContext.getSystemService(Context.DEVICE_POLICY_SERVICE)).thenReturn(null);
+        final EnforcedAdmin enforcedAdmin = RestrictedLockUtils.checkIfAccountManagementDisabled(
+                mContext, "account_type", mUserId);
+
+        assertThat(enforcedAdmin).isEqualTo(null);
+    }
+
+    @Test
+    public void checkIfDeviceAdminFeatureDisabled_noEnforceAdminForManagedProfile() {
+        when(mPackageManager.hasSystemFeature(PackageManager.FEATURE_DEVICE_ADMIN))
+                .thenReturn(false);
+        final EnforcedAdmin enforcedAdmin = RestrictedLockUtils.checkIfAccountManagementDisabled(
+                mContext, "account_type", mUserId);
+
+        assertThat(enforcedAdmin).isEqualTo(null);
+    }
+
+    @Test
     public void checkIfKeyguardFeaturesDisabled_noEnforcedAdminForManagedProfile() {
         setUpManagedProfile(mUserId, new ComponentName[] {mAdmin1, mAdmin2});
 
