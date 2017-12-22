@@ -17620,6 +17620,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                         final long myTotalPss = mi.getTotalPss();
                         final long myTotalSwapPss = mi.getTotalSwappedOutPss();
                         totalPss += myTotalPss;
+                        totalSwapPss += myTotalSwapPss;
                         nativeProcTotalPss += myTotalPss;
 
                         MemItem pssItem = new MemItem(st.name + " (pid " + st.pid + ")",
