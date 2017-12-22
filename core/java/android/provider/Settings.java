@@ -5011,22 +5011,6 @@ public final class Settings {
          */
         public static final String STATUSBAR_CLOCK_DATE_POSITION = "statusbar_clock_date_position";
 
-        /**
-         * Whether the proximity sensor will adjust call to speaker
-         */
-        public static final String PROXIMITY_AUTO_SPEAKER = "proximity_auto_speaker";
-
-        /**
-         * Time delay to activate speaker after proximity sensor triggered
-         */
-        public static final String PROXIMITY_AUTO_SPEAKER_DELAY = "proximity_auto_speaker_delay";
-
-        /**
-         * Whether the proximity sensor will adjust call to speaker,
-         * only while in call (not while ringing on outgoing call)
-         */
-        public static final String PROXIMITY_AUTO_SPEAKER_INCALL_ONLY = "proximity_auto_speaker_incall_only";
-
         /*
          * Change fonts for the system lockscreen clock widget
          *
@@ -5751,6 +5735,39 @@ public final class Settings {
          **/
         public static final String APP_CIRCLE_BAR_SHOW_TRIGGER = "app_circle_bar_show_trigger";
 
+
+	 /**
+         * Whether the proximity sensor will adjust call to speaker
+         */
+        public static final String PROXIMITY_AUTO_SPEAKER = "proximity_auto_speaker";
+
+        /**
+         * Time delay to activate speaker after proximity sensor triggered
+         */
+        public static final String PROXIMITY_AUTO_SPEAKER_DELAY = "proximity_auto_speaker_delay";
+
+        /**
+         * Whether the proximity sensor will adjust call to speaker,
+         * only while in call (not while ringing on outgoing call)
+         */
+        public static final String PROXIMITY_AUTO_SPEAKER_INCALL_ONLY = "proximity_auto_speaker_incall_only";
+
+        /**
+         * Whether the use proximity sensor for answering incoming ring
+         */
+        public static final String PROXIMITY_AUTO_ANSWER_INCALL_ONLY = "proximity_auto_answer_incall_only";
+
+        /**
+         * Time delay to activate auto answer on ring when headset is plugged
+         */
+        public static final String AUTO_ANSWER_DELAY = "auto_answer_delay";
+
+        /**
+         * Whether to enable auto answer on ring when headset is plugged
+         */
+        public static final String AUTO_ANSWER_CALL_KEY = "auto_answer_call_key";
+
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -5995,9 +6012,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_STYLE);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_FORMAT);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_POSITION);
-            PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER);
-            PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_DELAY);
-            PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_INCALL_ONLY);
             PRIVATE_SETTINGS.add(TOAST_ICON);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_STATE);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE);
