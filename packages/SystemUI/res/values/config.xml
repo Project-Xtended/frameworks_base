@@ -108,22 +108,22 @@
     <bool name="quick_settings_wide">false</bool>
 
     <!-- The number of columns in the QuickSettings -->
-    <integer name="quick_settings_num_columns">3</integer>
+    <integer name="quick_settings_num_columns">4</integer>
 
     <!-- The number of rows in the QuickSettings -->
-    <integer name="quick_settings_num_rows">1</integer>
+    <integer name="quick_settings_num_rows">3</integer>
 
     <!-- The number of columns that the top level tiles span in the QuickSettings -->
     <integer name="quick_settings_user_time_settings_tile_span">1</integer>
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,cell,bt,location,hotspot,sync,rotation,flashlight,cpuinfo,airplane,screenstabilization,onthego,caffeine
+        wifi,cell,bt,location,hotspot,sync,rotation,flashlight,cpuinfo,airplane,screenstabilization,onthego
     </string>
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-        wifi,cell,bt,location,hotspot,sync,rotation,flashlight,cpuinfo,airplane,screenstabilization,onthego,caffeine,weather,battery,nfc,inversion,saver,dnd,work,cast,night,screenshot
+        wifi,cell,bt,location,hotspot,sync,rotation,flashlight,cpuinfo,airplane,screenstabilization,onthego,caffeine,weather,battery,nfc,inversion,saver,dnd,work,cast,night,screenshot,hwkeys
     </string>
 
     <!-- The tiles to display in QuickSettings -->
