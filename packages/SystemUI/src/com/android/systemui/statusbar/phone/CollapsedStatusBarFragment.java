@@ -179,9 +179,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mNetworkController = Dependency.get(NetworkController.class);
         mStatusBarComponent = SysUiServiceProvider.getComponent(getContext(), StatusBar.class);
         mXtendedSettingsObserver = new XtendedSettingsObserver(mHandler);
-        mTickerEnabled = Settings.System.getIntForUser(mContentResolver,
-                Settings.System.STATUS_BAR_SHOW_TICKER, 1,
-                UserHandle.USER_CURRENT);
         mTickerObserver = new TickerObserver(new Handler());
     }
 
@@ -246,7 +243,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         initEmergencyCryptkeeperText();
 
         mTickerObserver.observe();
-        initTickerView();
+        mTickerObserver.update();
 
     }
 
