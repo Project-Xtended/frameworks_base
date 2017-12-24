@@ -29,6 +29,7 @@ import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CaffeineTile;
 import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
+import com.android.systemui.qs.tiles.CPUInfoTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
@@ -107,6 +108,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new OnTheGoTile(mHost);
             case "caffeine":
                 return new CaffeineTile(mHost);
+            case "cpuinfo":
+                return new CPUInfoTile(mHost);
         }
 
         // Intent tiles.
