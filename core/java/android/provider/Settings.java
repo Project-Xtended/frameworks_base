@@ -4978,8 +4978,20 @@ public final class Settings {
         public static final String SYSTEMUI_RECENTS_MEM_DISPLAY = "systemui_recents_mem_display";
 
         /**
-         * Color of toast message icon
+         * Transparent power menu and dialogs
          * @hide
+         */
+        public static final String TRANSPARENT_POWER_MENU = "transparent_power_menu";
+
+        /**
+         * Dim amount around power/reboot menu dialogs
+         * @hide
+         */
+        public static final String TRANSPARENT_POWER_DIALOG_DIM = "transparent_power_dialog_dim";
+
+        /**
+	 * Color of toast message icon
+	 * @hide
          */
         public static final String TOAST_ICON_COLOR = "toast_icon_color";
 
