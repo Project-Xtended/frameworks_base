@@ -1577,5 +1577,4 @@ public class NotificationManager {
             default: return defValue;
         }
     }
-
 }
