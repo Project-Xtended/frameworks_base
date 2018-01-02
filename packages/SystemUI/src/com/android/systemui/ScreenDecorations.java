@@ -351,7 +351,8 @@ public class ScreenDecorations extends SystemUI implements Tunable {
     }
 
     private boolean hasRoundedCorners() {
-        return mRoundedDefault > 0 || mRoundedDefaultBottom > 0 || mRoundedDefaultTop > 0;
+	return true;
+       // return mRoundedDefault > 0 || mRoundedDefaultBottom > 0 || mRoundedDefaultTop > 0;
     }
 
     private boolean shouldDrawCutout() {
@@ -371,17 +372,12 @@ public class ScreenDecorations extends SystemUI implements Tunable {
                 R.dimen.rounded_corner_content_padding);
         int padding_alt = mContext.getResources().getDimensionPixelSize(
                 R.dimen.rounded_corner_content_padding_alt);
-        int qsPadding = mContext.getResources().getDimensionPixelSize(
-                R.dimen.qs_corner_content_padding);
-	if (padding != 0 && Build.PRODUCT.matches("taimen|beryllium")) {
-            setupStatusBarPadding(padding, qsPadding);
-        } else {
-            setupStatusBarPadding(padding_alt, qsPadding);
-        }
+
+        setupStatusBarPadding(padding);
 
     }
 
-    private void setupStatusBarPadding(int padding, int qsPadding) {
+    private void setupStatusBarPadding(int padding) {
         // Add some padding to all the content near the edge of the screen.
         StatusBar sb = getComponent(StatusBar.class);
         View statusBar = (sb != null ? sb.getStatusBarWindow() : null);
@@ -392,10 +388,6 @@ public class ScreenDecorations extends SystemUI implements Tunable {
             FragmentHostManager fragmentHostManager = FragmentHostManager.get(statusBar);
             fragmentHostManager.addTagListener(CollapsedStatusBarFragment.TAG,
                     new TunablePaddingTagListener(padding, R.id.status_bar));
-            if (qsPadding != 0) {
-                fragmentHostManager.addTagListener(QS.TAG,
-                        new TunablePaddingTagListener(qsPadding, R.id.header));
-            }
         }
     }
 
