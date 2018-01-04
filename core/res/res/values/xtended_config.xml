@@ -97,4 +97,8 @@
     <!-- for notification overlays to force what they need -->
     <bool name="config_useDarkBgNotificationTinting_override">false</bool>
     <bool name="config_notificationTinting_override">false</bool>
+
+    <!-- Whether the device supports Smart Pixels -->
+    <bool name="config_enableSmartPixels">false</bool>
+
 </resources>
