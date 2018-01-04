@@ -6805,6 +6805,7 @@ public final class Settings {
          */
         public static final String LEFT_PADDING = "statusbar_left_padding";
 
+
         /**
          * Whether to add right padding on statusbar
          * @hide
@@ -6817,6 +6818,14 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
                 "lockscreen_quick_unlock_control";
+
+       /**
+         * Wheter to play notification sound and vibration if screen is ON
+         * 0 - never
+         * 1 - always
+         * @hide
+         */
+        public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
