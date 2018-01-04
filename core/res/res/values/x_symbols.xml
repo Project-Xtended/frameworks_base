@@ -211,4 +211,7 @@
     <!-- Statusbar Brightness -->
     <java-symbol type="dimen" name="quick_qs_total_height" />
 
+    <!-- Whether the device supports Smart Pixels -->
+    <java-symbol type="bool" name="config_supportSmartPixels" />
+    
 </resources>
