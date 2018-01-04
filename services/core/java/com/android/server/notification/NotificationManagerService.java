@@ -312,6 +312,8 @@ public class NotificationManagerService extends SystemService {
     protected boolean mInCall = false;
     private boolean mNotificationPulseEnabled;
 
+    private boolean mSoundVibScreenOn;
+
     private Uri mInCallNotificationUri;
     private AudioAttributes mInCallNotificationAudioAttributes;
     private float mInCallNotificationVolume;
@@ -1027,6 +1029,8 @@ public class NotificationManagerService extends SystemService {
                 = Settings.Global.getUriFor(Settings.Global.MAX_NOTIFICATION_ENQUEUE_RATE);
         private final Uri MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI
                 = Settings.System.getUriFor(Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD);
+        private final Uri NOTIFICATION_SOUND_VIB_SCREEN_ON
+                = Settings.System.getUriFor(Settings.System.NOTIFICATION_SOUND_VIB_SCREEN_ON);
 
         SettingsObserver(Handler handler) {
             super(handler);
@@ -1041,6 +1045,8 @@ public class NotificationManagerService extends SystemService {
             resolver.registerContentObserver(NOTIFICATION_RATE_LIMIT_URI,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD_URI,
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(NOTIFICATION_SOUND_VIB_SCREEN_ON,
                     false, this, UserHandle.USER_ALL);
             update(null);
         }
@@ -1070,8 +1076,12 @@ public class NotificationManagerService extends SystemService {
                 mAnnoyingNotificationThreshold = Settings.System.getLongForUser(resolver,
                        Settings.System.MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD, 0,
                        UserHandle.USER_CURRENT);
+	    }
+            if (uri == null || NOTIFICATION_SOUND_VIB_SCREEN_ON.equals(uri)) {
+                mSoundVibScreenOn = Settings.System.getIntForUser(resolver,
+                            Settings.System.NOTIFICATION_SOUND_VIB_SCREEN_ON, 1, UserHandle.USER_CURRENT) != 0;
             }
-        }
+	}
     }
 
     private SettingsObserver mSettingsObserver;
@@ -4082,7 +4092,8 @@ public class NotificationManagerService extends SystemService {
 
         if (aboveThreshold && isNotificationForCurrentUser(record)) {
 
-            if (mSystemReady && mAudioManager != null && !notificationIsAnnoying(pkg)) {
+            if (mSystemReady && mAudioManager != null && !notificationIsAnnoying(pkg) && !mScreenOn
+                    || (mScreenOn && mSoundVibScreenOn)) {
                 Uri soundUri = record.getSound();
                 hasValidSound = soundUri != null && !Uri.EMPTY.equals(soundUri);
                 long[] vibration = record.getVibration();
