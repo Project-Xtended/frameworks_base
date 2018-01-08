@@ -5769,6 +5769,12 @@ public final class Settings {
 
 
         /**
+         * Force Volume panel in expanded mode
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_FORCE_EXPANDED = "volume_dialog_force_expanded";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

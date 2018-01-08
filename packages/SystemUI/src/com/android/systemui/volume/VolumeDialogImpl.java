@@ -135,6 +135,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
     private boolean mShowing;
     private boolean mExpanded;
     private boolean mShowA11yStream;
+    private boolean mForceExpanded;
 
     private int mActiveStream;
     private int mPrevActiveStream;
@@ -289,6 +290,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         mZenPanel = (TunerZenModePanel) mDialog.findViewById(R.id.tuner_zen_mode_panel);
         mZenPanel.init(mZenModeController);
         mZenPanel.setCallback(mZenPanelCallback);
+        updateForceExpanded();
     }
 
     @Override
@@ -387,6 +389,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         writer.println(VolumeDialogImpl.class.getSimpleName() + " state:");
         writer.print("  mShowing: "); writer.println(mShowing);
         writer.print("  mExpanded: "); writer.println(mExpanded);
+        writer.print("  mForceExpanded: "); writer.println(mForceExpanded);
         writer.print("  mExpandButtonAnimationRunning: ");
         writer.println(mExpandButtonAnimationRunning);
         writer.print("  mActiveStream: "); writer.println(mActiveStream);
@@ -526,7 +529,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         if (mHovering) return 16000;
         if (mSafetyWarning != null) return 5000;
         if (mExpanded || mExpandButtonAnimationRunning) return 5000;
-        if (mActiveStream == AudioManager.STREAM_MUSIC) return 1500;
+        if (mExpanded || mForceExpanded || mExpandButtonAnimationRunning) return 1500;
         if (mZenFooter.shouldShowIntroduction()) {
             return 6000;
         }
@@ -662,13 +665,14 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
             return true;
         }
 
-        return mExpanded && row.view.getVisibility() == View.VISIBLE
+        return mExpanded || mForceExpanded && row.view.getVisibility() == View.VISIBLE
                 || (mExpanded && (row.important || isActive))
                 || !mExpanded && isActive;
     }
 
     private void updateRowsH(final VolumeRow activeRow) {
         if (D.BUG) Log.d(TAG, "updateRowsH");
+        updateForceExpanded();
         if (!mShowing) {
             trimObsoleteH();
         }
@@ -883,7 +887,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
     }
 
     private void updateVolumeRowSliderTintH(VolumeRow row, boolean isActive) {
-        if (isActive && mExpanded) {
+        if (isActive && mForceExpanded) {
             row.slider.requestFocus();
         }
         final ColorStateList tint = isActive && row.slider.isEnabled() ? mActiveSliderTint
@@ -1353,5 +1357,10 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
         private ObjectAnimator anim;  // slider progress animation for non-touch-related updates
         private int animTargetProgress;
         private int lastAudibleLevel = 1;
+    }
+
+    private void updateForceExpanded() {
+        mForceExpanded = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.VOLUME_DIALOG_FORCE_EXPANDED, 0) == 1;
     }
 }
