@@ -127,4 +127,8 @@
 
     <!-- Sound search tile -->
     <string name="quick_settings_sound_search">Sound search</string>
+
+    <!-- Battery saver tile -->
+    <string name="battery_saver_qs_tile_fully_charged">Fully Charged</string>
+
 </resources>
