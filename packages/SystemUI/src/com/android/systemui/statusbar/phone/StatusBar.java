@@ -432,6 +432,9 @@ public class StatusBar extends SystemUI implements DemoMode,
      * This affects the status bar UI. */
     private static final boolean FREEFORM_WINDOW_MANAGEMENT;
 
+    private static final String STATUS_BAR_BATTERY_SAVER_COLOR =
+            Settings.Secure.STATUS_BAR_BATTERY_SAVER_COLOR;
+
     /**
      * How long to wait before auto-dismissing a notification that was kept for remote input, and
      * has now sent a remote input. We auto-dismiss, because the app may not see a reason to cancel
@@ -640,6 +643,10 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private ScreenPinningRequest mScreenPinningRequest;
 
+    private int mBatterySaverColor;
+
+    private final MetricsLogger mMetricsLogger = Dependency.get(MetricsLogger.class);
+
     Runnable mLongPressBrightnessChange = new Runnable() {
         @Override
         public void run() {
@@ -648,8 +655,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             mLinger = BRIGHTNESS_CONTROL_LINGER_THRESHOLD + 1;
         }
     };
-
-    private final MetricsLogger mMetricsLogger = Dependency.get(MetricsLogger.class);
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     private boolean mUserSetup = false;
@@ -4069,7 +4074,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         final boolean anim = !mNoAnimationOnNextBarModeChange && mDeviceInteractive
                 && windowState != WINDOW_STATE_HIDDEN && !powerSave;
         if (powerSave && getBarState() == StatusBarState.SHADE) {
-            mode = MODE_WARNING;
+            mode = MODE_POWERSAVE_WARNING;
+        }
+        if (mode == MODE_POWERSAVE_WARNING) {
+            transitions.setBatterySaverColor(mBatterySaverColor);
         }
         transitions.transitionTo(mode, anim);
     }
@@ -7354,7 +7362,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ANIM_TILE_INTERPOLATOR),
                     false, this, UserHandle.USER_ALL);
-
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.STATUS_BAR_BATTERY_SAVER_COLOR),
+                    false, this, UserHandle.USER_ALL);
 	    update();
         }
 
@@ -7430,7 +7440,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             setStatusDoubleTapToSleep();
             setFpToQuickPulldownQs();
             setLockscreenMediaMetadata();
-	    setQsRowsColumns();
             updateDozeBrightness();
             updateQsPanelResources();
             setHeadsUpStoplist();
@@ -7451,6 +7460,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 	    updateBlurSettings();
 	    updateRoundedCorner(); 
 	    setMaxKeyguardNotifConfig();
+            updateBatterySaverColor();
         }
     }
 
@@ -7482,6 +7492,11 @@ public class StatusBar extends SystemUI implements DemoMode,
             mQuickStatusBarHeaderScroller.updateSettings();
         }
 
+    }
+
+    private void updateBatterySaverColor() {
+        mBatterySaverColor = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.STATUS_BAR_BATTERY_SAVER_COLOR, 0xfff4511e, UserHandle.USER_CURRENT);
     }
 
     private void updateKeyguardStatusSettings() {
