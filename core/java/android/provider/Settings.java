@@ -5052,6 +5052,11 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_MAX_NOTIF_CONFIG = "lockscreen_max_notif_cofig";
 
+	/** Unlock keystore with fingerprint after reboot
+         * @hide
+         */
+        public static final String FP_UNLOCK_KEYSTORE = "fp_unlock_keystore";
+
         /**
          * Whether user can swap navigation lateral keys.
          * <p>
