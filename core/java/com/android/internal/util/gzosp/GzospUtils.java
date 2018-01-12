@@ -156,6 +156,15 @@ public class GzospUtils {
         }
     }
 
+    public static void takeScreenrecord(int mode) {
+        IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.screenRecordAction(mode);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static boolean isAvailableApp(String packageName, Context context) {
         Context mContext = context;
         final PackageManager pm = mContext.getPackageManager();

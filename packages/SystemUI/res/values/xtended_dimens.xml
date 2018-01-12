@@ -56,4 +56,6 @@
     <!-- QS padding -->
     <dimen name="qs_corner_content_padding">8dp</dimen>
 
+    <dimen name="screenrecord_hint_size">48dp</dimen> 
+
 </resources>

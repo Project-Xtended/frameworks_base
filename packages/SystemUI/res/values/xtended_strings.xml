@@ -253,7 +253,13 @@
     <string name="keyguard_indication_fast_charging_time">Fast Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> until full)</string>
     <string name="keyguard_plugged_in_fast_charging">Fast Charging</string>
 
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenrecord_label">Screenrecord</string>
+    <string name="quick_settings_screenrecord_lq_label">Screenrecord LQ</string>
+    <string name="quick_settings_screenrecord_mq_label">Screenrecord MQ</string>
+    <string name="quick_settings_screenrecord_hq_label">Screenrecord HQ</string>
     <string name="screenrecord_notif_final_ticker">Screen recorded successfully</string>
     <string name="screenrecord_notif_completed">Screen recorded successfully</string>
+
 
 </resources>
