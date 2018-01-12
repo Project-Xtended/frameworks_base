@@ -5305,8 +5305,19 @@ public final class Settings {
          */
         public static final String SENSOR_BLOCK = "sensor_block";
 
+        /** @hide */
         private static final Validator SENSOR_BLOCK_VALIDATOR =
                 BOOLEAN_VALIDATOR;
+
+        /**
+         * Defines the screen-off animation to display
+         * @hide
+         */
+        public static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
+
+        /** @hide */
+        private static final Validator SCREEN_OFF_ANIMATION_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -5414,6 +5425,7 @@ public final class Settings {
             OMNI_FAST_CHARGING_LED_ENABLED,
             OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED,
             SENSOR_BLOCK,
+            SCREEN_OFF_ANIMATION,
         };
 
         /**
@@ -5584,6 +5596,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_FAST_CHARGING_LED_ENABLED);
             PRIVATE_SETTINGS.add(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
+            PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
         }
 
         /**
@@ -5721,6 +5734,7 @@ public final class Settings {
             VALIDATORS.put(OMNI_FAST_CHARGING_LED_ENABLED, OMNI_FAST_CHARGING_LED_ENABLED_VALIDATOR);
             VALIDATORS.put(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED, OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED_VALIDATOR);
             VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
+            VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
         }
 
         /**
