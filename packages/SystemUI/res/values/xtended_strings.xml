@@ -64,6 +64,17 @@
     <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> until full)</string>
     <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
 
+    <!-- Always on Display Tile -->
+    <string name="quick_settings_always_on_display_label">Always on display</string>
+    <!-- Content description of the ambient display tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_always_on_display_off">Always on display off.</string>
+    <!-- Content description of the ambient display tile in quick settings when on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_always_on_display_on">Always on display on.</string>
+    <!-- Announcement made when ambient display changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_always_on_display_changed_off">Always on display turned off.</string>
+    <!-- Announcement made when ambient display changes to -on (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_always_on_display_changed_on">Always on display turned on.</string>
+
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE ON </string>
