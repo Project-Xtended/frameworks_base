@@ -76,6 +76,20 @@ class GlobalScreenrecord {
 
     private CaptureThread mCaptureThread;
 
+    private Runnable mFinisher;
+
+    private FrameLayout mFrameLayout;
+    private LayoutInflater mInflater;
+    private WindowManager mWindowManager;
+    private boolean mIsHintAtRight;
+
+    private String mNotifContent = null;
+    private boolean mHintShowing = false;
+
+    private void setFinisher(Runnable finisher) {
+        mFinisher = finisher;
+    }
+
     private class CaptureThread extends Thread {
         public void run() {
             Runtime rt = Runtime.getRuntime();
@@ -199,6 +213,76 @@ class GlobalScreenrecord {
 
         Notification notif = builder.build();
         mNotificationManager.notify(SCREENRECORD_NOTIFICATION_ID, notif);
+    }
+
+    private void showHint() {
+        mHintShowing = true;
+        mIsHintAtRight = true;
+        final int size = (int) (mContext.getResources()
+                .getDimensionPixelSize(R.dimen.screenrecord_hint_size));
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE // don't get softkey inputs
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, // allow outside inputs
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+        params.width = size;
+        params.height = size;
+
+        mFrameLayout = new FrameLayout(mContext);
+
+        mWindowManager.addView(mFrameLayout, params);
+        mInflater.inflate(R.layout.screenrecord_hint, mFrameLayout);
+
+        final ImageView hint = (ImageView) mFrameLayout.findViewById(R.id.hint);
+        hint.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Turn off pointer in all cases
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.SHOW_TOUCHES, 0, UserHandle.USER_CURRENT);
+                Message msg = Message.obtain(mHandler, MSG_TASK_ENDED);
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        hint.setOnLongClickListener(new View.OnLongClickListener() {
+            public boolean onLongClick(View v) {
+                hint.setAnimation(null);
+                WindowManager.LayoutParams params =
+                        (WindowManager.LayoutParams) mFrameLayout.getLayoutParams();
+                params.gravity = Gravity.BOTTOM | (mIsHintAtRight? Gravity.LEFT : Gravity.RIGHT);
+                mIsHintAtRight = !mIsHintAtRight;
+                mWindowManager.updateViewLayout(mFrameLayout, params);
+                hint.startAnimation(getHintAnimation());
+                return true;
+            }
+        });
+
+        hint.startAnimation(getHintAnimation());
+    }
+
+    public void toggleHint() {
+        mHintShowing = !mHintShowing;
+        final ImageView hint = (ImageView) mFrameLayout.findViewById(R.id.hint);
+        if (mHintShowing) {
+            hint.setImageAlpha(255);
+            hint.startAnimation(getHintAnimation());
+        } else  {
+            hint.setImageAlpha(0);
+            hint.setAnimation(null);
+        }
+        updateNotification(-1);
+    }
+
+    private Animation getHintAnimation() {
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(500);
+        anim.setStartOffset(100);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        return anim;
     }
 
     /**
