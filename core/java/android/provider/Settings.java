@@ -4623,6 +4623,14 @@ public final class Settings {
         public static final Validator INCREASING_RING_START_VOLUME_VALIDATOR = ANY_STRING_VALIDATOR;
 
         /**
+         * Force an Ambient notification when a new media track is being played
+         * 0 - disabled
+        * 1 - show track info within normal Ambient Display and force a new Ambient clean layout when skipping tracks
+         * @hide
+         */
+        public static final String FORCE_AMBIENT_FOR_MEDIA = "force_ambient_for_media";
+
+        /**
          * Ramp up time (seconds) for increasing ring
          * @hide
          */

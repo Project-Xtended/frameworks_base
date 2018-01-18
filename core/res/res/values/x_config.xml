@@ -229,4 +229,7 @@
     <!-- Whether to enable oneplus cam hack -->
     <bool name="config_enableOPcamhack">false</bool>
 
+    <!-- Ambient display music ticker -->
+    <bool name="config_canForceDozeNotifications">true</bool>
+
 </resources>
