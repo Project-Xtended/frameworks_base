@@ -279,11 +279,11 @@ void JNICameraContext::copyAndPost(JNIEnv* env, const sp<IMemory>& dataPtr, int 
                     }
                 }
             } else if(msgType == 0x10000) {
-                camera_metadata_t * cMetaData = reinterpret_cast<camera_metadata_t*>(heapBase + offset);
-                *mMeta_ptr=(const camera_metadata_t*)cMetaData;
-                mMeta_ptr->sort();
-            }
-            else {
+                 camera_metadata_t * cMetaData = reinterpret_cast<camera_metadata_t*>(heapBase + offset);
+                 *mMeta_ptr=(const camera_metadata_t*)cMetaData;
+                 mMeta_ptr->sort();
+             }
+             else {
                 ALOGV("Allocating callback buffer");
                 obj = env->NewByteArray(size);
             }
@@ -904,7 +904,6 @@ static void android_hardware_Camera_takePicture(JNIEnv *env, jobject thiz, jint 
     sp<Camera> camera = get_native_camera(env, thiz, &context);
     if (camera == 0) return;
     mMeta_ptr=reinterpret_cast<android::CameraMetadata*>(env->GetLongField(thiz,fields.metadata_ptr));
-
     /*
      * When CAMERA_MSG_RAW_IMAGE is requested, if the raw image callback
      * buffer is available, CAMERA_MSG_RAW_IMAGE is enabled to get the
@@ -1231,6 +1230,7 @@ int register_android_hardware_Camera(JNIEnv *env)
         { "android/hardware/Camera", "mNativeContext",   "J", &fields.context },
         { "android/hardware/Camera", "mMetadataPtr",   "J", &fields.metadata_ptr },
         { "android/hardware/Camera$CameraInfo", "facing",   "I", &fields.facing },
+         { "android/hardware/Camera", "mMetadataPtr",   "J", &fields.metadata_ptr },
         { "android/hardware/Camera$CameraInfo", "orientation",   "I", &fields.orientation },
         { "android/hardware/Camera$CameraInfo", "canDisableShutterSound",   "Z",
           &fields.canDisableShutterSound },
