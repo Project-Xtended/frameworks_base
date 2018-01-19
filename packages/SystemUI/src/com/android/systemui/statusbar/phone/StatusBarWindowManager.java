@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.database.ContentObserver;
 
 import com.android.keyguard.R;
 import com.android.systemui.Dumpable;
@@ -39,6 +40,7 @@ import com.android.systemui.statusbar.RemoteInputController;
 import com.android.systemui.statusbar.StatusBarState;
 
 import java.io.FileDescriptor;
+import android.os.Handler;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 
