@@ -17,5 +17,13 @@
     <!-- Config to enable/diaable qs tile tinting -->
     <bool name="config_enable_qs_tile_tinting">false</bool>
 
+    <!-- Sensitivity of pie gestures controls.
+         Must be minimum 1 and maximum 10 (See @EdgeServiceConstants.java).
+         Default for pie is high sensitivity -->
+    <integer name="pie_gesture_sensitivity">10</integer>
+
+    <!-- Indicates wether device is a tablet or not -->
+    <bool name="config_isTablet">false</bool>
+
 </resources>
 

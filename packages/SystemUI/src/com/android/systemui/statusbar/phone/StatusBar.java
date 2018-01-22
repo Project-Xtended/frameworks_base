@@ -1626,7 +1626,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mNotificationShelf.setStatusBarState(mState);
     }
 
-    @Override
     public NetworkController getNetworkController() {
         return mNetworkController;
     }
@@ -7124,8 +7123,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         return notifs;
     }
 
-    public abstract NetworkController getNetworkController();
-
     private final ContentObserver mEdgeGesturesSettingsObserver = new ContentObserver(mHandler) {
         @Override
         public void onChange(boolean selfChange) {
@@ -7133,7 +7130,13 @@ public class StatusBar extends SystemUI implements DemoMode,
             boolean edgeGesturesEnabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.EDGE_GESTURES_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
             updateEdgeGestures(edgeGesturesEnabled);
+	}
+    };
 
+    private final ContentObserver mPieSettingsObserver = new ContentObserver(mHandler) {
+         @Override
+         public void onChange(boolean selfChange) {
+            ContentResolver resolver = mContext.getContentResolver();				  
             boolean pieEnabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.PIE_STATE, 0, UserHandle.USER_CURRENT) == 1;
             updatePieControls(!pieEnabled);

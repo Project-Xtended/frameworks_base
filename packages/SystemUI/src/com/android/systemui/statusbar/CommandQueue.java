@@ -89,6 +89,7 @@ public class CommandQueue extends IStatusBar.Stub {
     private static final int MSG_TOGGLE_FLASHLIGHT             = 41 << MSG_SHIFT;
     private static final int MSG_TOGGLE_NAVIGATION_EDITOR      = 42 << MSG_SHIFT;
     private static final int MSG_DISPATCH_NAVIGATION_EDITOR_RESULTS = 43 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_PIE_ORIENTATION = 43 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -390,7 +391,10 @@ public class CommandQueue extends IStatusBar.Stub {
     }
 
     public void toggleOrientationListener(boolean enable) {
-        mCallbacks.toggleOrientationListener(enable);
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_TOGGLE_PIE_ORIENTATION);
+            mHandler.obtainMessage(MSG_TOGGLE_PIE_ORIENTATION).sendToTarget();
+        }
     }
 
     public void setWindowState(int window, int state) {
@@ -747,6 +751,11 @@ public class CommandQueue extends IStatusBar.Stub {
                     Intent intent = (Intent) msg.obj;
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).dispatchNavigationEditorResults(intent);
+                    }
+                    break;
+                case MSG_TOGGLE_PIE_ORIENTATION:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).toggleOrientationListener(msg.arg1 != 0);
                     }
                     break;
             }
