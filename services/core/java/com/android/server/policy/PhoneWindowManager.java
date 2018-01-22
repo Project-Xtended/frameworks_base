@@ -734,10 +734,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mPendingKeyguardOccluded;
     private boolean mKeyguardOccludedChanged;
 
-
-    /** Custom system-wide flags deciding what features get enabled. */
-    private int mSystemDesignFlags = 0;
-
     // Pie
     boolean mPieState;
 
@@ -1178,9 +1174,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.PIE_STATE), false, this,
                     UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.SYSTEM_DESIGN_FLAGS), false, this,
-                    UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.CARBON_CUSTOM_GESTURE_RIGHT), false, this,
                     UserHandle.USER_ALL);
@@ -1320,67 +1313,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private String mCarbonGesturesLeftPackage;
     private String mCarbonGesturesUpPackage;
     private String mCarbonGesturesDownPackage;
-
-    private EdgeGestureManager.EdgeGestureActivationListener mEdgeGestureActivationListener
-            = new EdgeGestureManager.EdgeGestureActivationListener() {
-
-        @Override
-        public void onEdgeGestureActivation(int touchX, int touchY,
-                EdgeGesturePosition position, int flags) {
-            WindowState target = null;
-
-            if (position == EdgeGesturePosition.TOP) {
-                target = mStatusBar;
-            } else if ((position == EdgeGesturePosition.BOTTOM) && (mNavigationBarPosition == NAV_BAR_BOTTOM)) {
-                target = mNavigationBar;
-            } else if ((position == EdgeGesturePosition.RIGHT) && (mNavigationBarPosition == NAV_BAR_RIGHT)) {
-                target = mNavigationBar;
-            } else if ((position == EdgeGesturePosition.LEFT) && (mNavigationBarPosition == NAV_BAR_LEFT)) {
-                target = mNavigationBar;
-            }
-
-            if (target != null) {
-                requestTransientBars(target);
-                dropEventsUntilLift();
-                mEdgeListenerActivated = true;
-            } else {
-                restoreListenerState();
-            }
-        }
-    };
-    private EdgeGestureManager mEdgeGestureManager = null;
-    private int mLastEdgePositions = 0;
-    private boolean mEdgeListenerActivated = false;
-    private boolean mUsingEdgeGestureServiceForGestures = false;
-
-    private void updateEdgeGestureListenerState() {
-        int flags = 0;
-        if (mUsingEdgeGestureServiceForGestures) {
-            flags = EdgeServiceConstants.LONG_LIVING | EdgeServiceConstants.UNRESTRICTED;
-            if (mStatusBar != null && !mStatusBar.isVisibleLw()) {
-                flags |= EdgeGesturePosition.TOP.FLAG;
-            }
-            if (mNavigationBar != null && !mNavigationBar.isVisibleLw()
-                     && !isStatusBarKeyguard()) {
-                if (mNavigationBarPosition == NAV_BAR_BOTTOM) {
-                    flags |= EdgeGesturePosition.BOTTOM.FLAG;
-                } else if (mNavigationBarPosition == NAV_BAR_RIGHT){
-                    flags |= EdgeGesturePosition.RIGHT.FLAG;
-                } else if (mNavigationBarPosition == NAV_BAR_LEFT) {
-                    flags |= EdgeGesturePosition.LEFT.FLAG;
-                }
-            }
-        }
-        if (mEdgeListenerActivated) {
-            mEdgeGestureActivationListener.restoreListenerState();
-            mEdgeListenerActivated = false;
-        }
-        if (flags != mLastEdgePositions) {
-            mEdgeGestureManager.updateEdgeGestureActivationListener(mEdgeGestureActivationListener,
-                    flags);
-            mLastEdgePositions = flags;
-        }
-    }
 
     private EdgeGestureManager.EdgeGestureActivationListener mEdgeGestureActivationListener
             = new EdgeGestureManager.EdgeGestureActivationListener() {
@@ -3058,10 +2990,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 updateEdgeGestureListenerState();
             }
-
-            final int systemDesignFlags = mSystemDesignFlags;
-            mSystemDesignFlags = Settings.Secure.getIntForUser(resolver,
-                        Settings.Secure.SYSTEM_DESIGN_FLAGS, 0, UserHandle.USER_CURRENT);
 
             if (mSystemReady) {
                 int pointerLocation = Settings.System.getIntForUser(resolver,
@@ -6354,8 +6282,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private boolean immersiveModeImplementsPie() {
-        return mPieState && mSystemDesignFlags != 0 &&
-                mSystemDesignFlags != View.SYSTEM_DESIGN_FLAG_IMMERSIVE_STATUS;
+        return mPieState;
     }
 
     private void offsetInputMethodWindowLw(WindowState win) {
