@@ -36,8 +36,8 @@
         android:layout_toEndOf="@android:id/icon"
         android:layout_below="@android:id/icon"
         android:textAppearance="@style/TextAppearance.Toast"
-        android:textColor="@color/primary_text_default_material_light"
         android:background="?android:attr/toastFrameBackground"
+        android:textColor="@color/primary_text_default_material_dark"
         />
 
     <ImageView
