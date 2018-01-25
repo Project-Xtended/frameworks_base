@@ -35,7 +35,8 @@
     android:layout_gravity="center_vertical"
         android:layout_toRightOf="@android:id/icon"
         android:textAppearance="@style/TextAppearance.Toast"
-        android:textColor="@color/toast_text"
+        android:textColor="@color/primary_text_default_material_dark"
+        android:background="?android:attr/toastFrameBackground"
         />
 
     <ImageView
