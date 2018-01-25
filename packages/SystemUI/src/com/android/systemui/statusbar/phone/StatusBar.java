@@ -5520,7 +5520,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                         useDarkTheme, mCurrentUserId);
                 mOverlayManager.setEnabled("com.android.dui.theme.dark",
                         useDarkTheme, mCurrentUserId);
-                // Check for black and white accent so we don't end up
+                mOverlayManager.setEnabled("com.android.gboard.theme.dark",
+                        useDarkTheme, mCurrentUserId);
+                 // Check for black and white accent so we don't end up
                 // with white on white or black on black
                 unfuckBlackWhiteAccent();
                 if (useDarkTheme) {
@@ -5538,7 +5540,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                         useBlackTheme, mCurrentUserId);
                 mOverlayManager.setEnabled("com.android.dui.theme.black",
                         useBlackTheme, mCurrentUserId);
-                // Check for black and white accent so we don't end up
+                mOverlayManager.setEnabled("com.android.gboard.theme.black",
+                        useBlackTheme, mCurrentUserId);
+                 // Check for black and white accent so we don't end up
                 // with white on white or black on black
                 unfuckBlackWhiteAccent();
             } catch (RemoteException e) {
@@ -5552,6 +5556,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mOverlayManager.setEnabled("com.android.settings.theme.xtended",
                         useXtendedTheme, mCurrentUserId);
                 mOverlayManager.setEnabled("com.android.dui.theme.xtended",
+                        useXtendedTheme, mCurrentUserId);
+                mOverlayManager.setEnabled("com.android.gboard.theme.xtended",
                         useXtendedTheme, mCurrentUserId);
                 // Check for black and white accent so we don't end up
                // with white on white or black on black
