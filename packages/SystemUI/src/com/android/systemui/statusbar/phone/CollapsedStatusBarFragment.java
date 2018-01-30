@@ -142,9 +142,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
         protected void update() {
             updateSettings(true);
-	    mStatusBarComponent.updateQsbhClock();
-
-            mStatusBarComponent.updateBatterySettings();
         }
     }
 
@@ -440,3 +437,4 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
     }
 }
+

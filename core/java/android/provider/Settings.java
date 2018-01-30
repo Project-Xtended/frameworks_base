@@ -4375,9 +4375,20 @@ public final class Settings {
          */
         public static final String ANBI_ENABLED = "anbi_enabled";
 
+        /*
+         * Custom carrier label font style
+         * @hide
+         */
+        public static final String STATUS_BAR_CARRIER_FONT_STYLE = "status_bar_carrier_font_style";
+        
         /**
-         * Whether the battery light should be enabled (if hardware supports it)
-         * The value is boolean (1 or 0).
+         * Settings for carrier label font size
+         * @hide
+         */
+        public static final String STATUS_BAR_CARRIER_FONT_SIZE = "status_bar_carrier_font_size";
+
+        /**
+         * Enable/Disable screenshot sound
          * @hide
          */
         public static final String BATTERY_LIGHT_ENABLED = "battery_light_enabled";
