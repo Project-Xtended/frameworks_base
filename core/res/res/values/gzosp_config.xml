@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright (C) 2017 GZOSP
 
@@ -28,13 +29,7 @@
 
     <!-- Whether to persist the notification for when a usb drive device is plugged in -->
     <bool name="config_persistUsbDriveNotification">false</bool>
-<<<<<<< HEAD:core/res/res/values/gzosp_config.xml
-=======
-
-    <!-- The duration (in milliseconds) of recent app screen animation. -->
-    <integer name="config_recentDefaultDur">150</integer>
 
     <!-- If this is true, key chords can be used to take a screen record on the device. -->
     <bool name="config_enableScreenrecordChord">true</bool>
->>>>>>> 9376933... base: bring back screenrecord:core/res/res/values/validus_config.xml
 </resources>
