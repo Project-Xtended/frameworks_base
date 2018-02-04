@@ -1097,6 +1097,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mHeadsUpAppearanceController.readFrom(oldController);
                     setAreThereNotifications();
                     checkBarModes();
+ 		            mStatusBarContent = (LinearLayout) mStatusBarView.findViewById(R.id.status_bar_contents);
+                    mCenterClockLayout = mStatusBarView.findViewById(R.id.center_clock_layout);
                     mBurnInProtectionController =
                         new BurnInProtectionController(mContext, this, mStatusBarView);
  		    mStatusBarContent = (LinearLayout) mStatusBarView.findViewById(R.id.status_bar_contents);
