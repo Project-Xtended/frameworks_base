@@ -264,10 +264,10 @@ public class LightBarController implements BatteryController.BatteryStateChangeC
         pw.println(" StatusBarTransitionsController:");
         mStatusBarIconController.getTransitionsController().dump(fd, pw, args);
         pw.println();
-        if (mNavigationBarController != null) {
-            pw.println(" NavigationBarTransitionsController:");
+        pw.println(" NavigationBarTransitionsController:");
+        if ( mNavigationBarController != null ) {
             mNavigationBarController.dump(fd, pw, args);
-            pw.println();
         }
+        pw.println();
     }
 }
