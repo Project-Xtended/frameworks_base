@@ -30,4 +30,5 @@ public interface ToggleSlider {
     void setValue(int value);
     int getValue();
     void setAutoBrightness(boolean enable);
+    void showSideButtons(boolean enable);
 }

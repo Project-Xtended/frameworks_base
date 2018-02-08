@@ -6140,6 +6140,15 @@ public final class Settings {
                BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to show Brightness Buttons On Brightness Slider
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_BUTTONS = "qs_show_brightness_buttons";
+
+        /** @hide */
+        private static final Validator QS_SHOW_BRIGHTNESS_BUTTONS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6233,7 +6242,8 @@ public final class Settings {
             USE_OLD_MOBILETYPE,
             STATUSBAR_HIDE_NOTCH,
             VOLUME_DIALOG_TIMEOUT,
-            VOLUME_KEYS_CONTROL_RING_TONE
+            VOLUME_KEYS_CONTROL_RING_TONE,
+            QS_SHOW_BRIGHTNESS_BUTTONS
         };
 
         /**
@@ -6412,6 +6422,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
             PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
 	    PRIVATE_SETTINGS.add(HEADSET_CONNECT_PLAYER);
+            PRIVATE_SETTINGS.add(QS_SHOW_BRIGHTNESS_BUTTONS);
         }
 
         /**
@@ -6552,6 +6563,7 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_HIDE_NOTCH, STATUSBAR_HIDE_NOTCH_VALIDATOR);
             VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
             VALIDATORS.put(VOLUME_KEYS_CONTROL_RING_TONE,VOLUME_KEYS_CONTROL_RING_TONE_VALIDATOR);
+            VALIDATORS.put(QS_SHOW_BRIGHTNESS_BUTTONS, QS_SHOW_BRIGHTNESS_BUTTONS_VALIDATOR);
         }
 
         /**
