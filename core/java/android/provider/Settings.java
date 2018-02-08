@@ -4026,14 +4026,7 @@ public final class Settings {
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
          * the setting value. See an example above.
          */
-
-        /**
-         * Boolean value whether to link ringtone and notification volume
-         *
-         * @hide
-         */
-        public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
-
+        
         /**
          * show clear all recents button
          * @hide

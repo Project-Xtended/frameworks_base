@@ -421,8 +421,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     /** Amount of time (in milliseconds) a toast window can be shown. */
     public static final int TOAST_WINDOW_TIMEOUT = 3500; // 3.5 seconds
 
-    private DeviceKeyHandler mDeviceKeyHandler;
-
+   
     /**
      * Lock protecting internal state.  Must not call out into window
      * manager with lock held.  (This lock will be acquired in places

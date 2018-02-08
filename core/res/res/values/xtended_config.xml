@@ -23,7 +23,10 @@
     <string-array name="config_disabledComponents" translatable="false">
     </string-array>
 
-    <!-- The list of components which should be forced to be enabled. -->
+    <integer name="config_buttonBrightnessSettingDefault">255</integer>
+    <bool name="config_deviceHasVariableButtonBrightness">false</bool>
+   
+     <!-- The list of components which should be forced to be enabled. -->
     <string-array name="config_forceEnabledComponents" translatable="false">
     </string-array>
 
@@ -45,11 +48,6 @@
     <!-- Whether notify fingerprint client of successful cancelled authentication -->
     <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
 
-    <!-- Path to the library that contains a device specific key handler -->
-    <string name="config_deviceKeyHandlerLib" translatable="false"></string>
-
-    <!-- Name of that key handler class -->
-    <string name="config_deviceKeyHandlerClass" translatable="false"></string>
 
     <!-- Whether device has dash charging support -->
     <bool name="config_hasDashCharger">false</bool>

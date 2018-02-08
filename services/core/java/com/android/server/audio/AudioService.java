@@ -647,8 +647,7 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
-	private boolean mLinkNotificationWithVolume;
-	
+		
     final private IUidObserver mUidObserver = new IUidObserver.Stub() {
         @Override public void onUidStateChanged(int uid, int procState, long procStateSeq) {
         }
