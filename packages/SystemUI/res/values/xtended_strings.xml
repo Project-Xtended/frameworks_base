@@ -125,4 +125,6 @@
     <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering turned on</string>
     <string name="quick_settings_usb_tether_label">USB tethering</string>
 
+    <!-- Sound search tile -->
+    <string name="quick_settings_sound_search">Sound search</string>
 </resources>
