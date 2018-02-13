@@ -76,11 +76,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.internal.messages.nano.SystemMessageProto.SystemMessage;
-<<<<<<< HEAD
 import com.android.internal.util.gzosp.GzospUtils;
-=======
 import com.android.internal.util.nitrogen.NitrogenUtils;
->>>>>>> d5f8656... Append app name to screenshot file
 import com.android.systemui.R;
 import com.android.systemui.SystemUI;
 import com.android.systemui.util.NotificationChannels;
@@ -471,8 +468,6 @@ class GlobalScreenshot {
 
     private Ringtone  mScreenshotSound;
 
-    private final int mSfHwRotation;
-
     /**
      * @param context everything needs a context :(
      */
@@ -586,8 +581,6 @@ class GlobalScreenshot {
         mDisplay.getRealMetrics(mDisplayMetrics);
         float[] dims = {mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels};
         int rot = mDisplay.getRotation();
-        // Allow for abnormal hardware orientation
-        rot = (rot + mSfHwRotation) % 4;
         float degrees = getDegreesForRotation(rot);
         boolean requiresRotation = (degrees > 0);
         if (requiresRotation) {

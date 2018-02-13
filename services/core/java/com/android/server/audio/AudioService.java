@@ -4349,7 +4349,6 @@ public class AudioService extends IAudioService.Stub
             mStreamType = streamType;
             mIndexMin = MIN_STREAM_VOLUME[streamType] * 10;
             mIndexMax = MAX_STREAM_VOLUME[streamType] * 10;
-            mDefaultIndexMax = DEFAULT_MAX_STREAM_VOLUME[streamType] * 10;
             AudioSystem.initStreamVolume(streamType, mIndexMin / 10, mIndexMax / 10);
 
             readSettings();

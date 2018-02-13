@@ -79,6 +79,10 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.TreeSet;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Iterator;
+
 import static android.app.AlarmManager.RTC_WAKEUP;
 import static android.app.AlarmManager.RTC;
 import static android.app.AlarmManager.ELAPSED_REALTIME_WAKEUP;
@@ -172,6 +176,9 @@ class AlarmManagerService extends SystemService {
      * At boot we use SYSTEM_UI_SELF_PERMISSION to look up the definer's uid.
      */
     int mSystemUiUid;
+    private Set<String> mSeenAlarms = new HashSet<String>();
+    private Set<String> mBlockedAlarms = new HashSet<String>();
+    private int mAlarmsBlockingEnabled;
 
     /**
      * The current set of user whitelisted apps for device idle mode, meaning these are allowed
@@ -312,6 +319,14 @@ class AlarmManagerService extends SystemService {
                         DEFAULT_ALLOW_WHILE_IDLE_WHITELIST_DURATION);
                 LISTENER_TIMEOUT = mParser.getLong(KEY_LISTENER_TIMEOUT,
                         DEFAULT_LISTENER_TIMEOUT);
+
+                mAlarmsBlockingEnabled = Settings.System.getIntForUser(mResolver,
+                        Settings.System.ALARM_BLOCKING_ENABLED, 0, UserHandle.USER_CURRENT);
+                String blockedAlarmList = Settings.System.getStringForUser(mResolver,
+                        Settings.System.ALARM_BLOCKING_LIST, UserHandle.USER_CURRENT);
+                setBlockedAlarms(blockedAlarmList);
+                Slog.d(TAG, "mAlarmsBlockingEnabled=" + mAlarmsBlockingEnabled
+                        + " blockedAlarmList=" + blockedAlarmList);
 
                 updateAllowWhileIdleMinTimeLocked();
                 updateAllowWhileIdleWhitelistDurationLocked();
@@ -1204,6 +1219,16 @@ class AlarmManagerService extends SystemService {
         }
     }
 
+    private void setBlockedAlarms(String AlarmTagsString) {
+        mBlockedAlarms = new HashSet<String>();
+        if (AlarmTagsString != null && AlarmTagsString.length() != 0) {
+            String[] parts = AlarmTagsString.split("\\|");
+            for (int i = 0; i < parts.length; i++) {
+                mBlockedAlarms.add(parts[i]);
+            }
+        }
+    }
+
     private void setImplLocked(int type, long when, long whenElapsed, long windowLength,
             long maxWhen, long interval, PendingIntent operation, IAlarmListener directReceiver,
             String listenerTag, int flags, boolean doValidate, WorkSource workSource,
@@ -1457,6 +1482,23 @@ class AlarmManagerService extends SystemService {
         @Override
         public long getNextWakeFromIdleTime() {
             return getNextWakeFromIdleTimeImpl();
+        }
+
+        @Override
+        public String getSeenAlarms() {
+            StringBuffer buffer = new StringBuffer();
+            Iterator<String> nextAlarm = mSeenAlarms.iterator();
+
+            while (nextAlarm.hasNext()) {
+                String alarmTag = nextAlarm.next();
+                buffer.append(alarmTag + "|");
+            }
+
+            if (buffer.length() > 0) {
+                buffer.deleteCharAt(buffer.length() - 1);
+            }
+
+            return buffer.toString();
         }
 
         @Override

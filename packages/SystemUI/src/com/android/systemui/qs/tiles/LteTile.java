@@ -74,7 +74,6 @@ public class LteTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleClick() {
-        toggleLteState();
         refreshState();
     }
 
@@ -100,12 +99,6 @@ public class LteTile extends QSTileImpl<BooleanState> {
                 state.state = Tile.STATE_INACTIVE;
                 break;
         }
-    }
-
-    private void toggleLteState() {
-        TelephonyManager tm = (TelephonyManager)
-                mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        tm.toggleLTE(true);
     }
 
     private int getCurrentPreferredNetworkMode() {

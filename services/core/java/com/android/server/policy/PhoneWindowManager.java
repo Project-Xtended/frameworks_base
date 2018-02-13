@@ -4166,8 +4166,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Specific device key handling
         if (mDeviceKeyHandler != null) {
             try {
-                // The device only will consume known keys.
-                if (mDeviceKeyHandler.canHandleKeyEvent(event)) {
+                // The device only should consume known keys.
+                if (mDeviceKeyHandler.handleKeyEvent(event)) {
                     return -1;
                 }
             } catch (Exception e) {
@@ -6507,44 +6507,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Specific device key handling
         if (mDeviceKeyHandler != null) {
             try {
-                // The device says if we should ignore this event.
-                if (mDeviceKeyHandler.isDisabledKeyEvent(event)) {
-                    result &= ~ACTION_PASS_TO_USER;
-                    return result;
-                }
-                if (mDeviceKeyHandler.isCameraLaunchEvent(event)) {
-                    if (DEBUG_INPUT) {
-                        Slog.i(TAG, "isCameraLaunchEvent from DeviceKeyHandler");
-                    }
-                    GestureLauncherService gestureService = LocalServices.getService(
-                            GestureLauncherService.class);
-                    if (gestureService != null) {
-                        gestureService.doCameraLaunchGesture();
-                    }
-                    result &= ~ACTION_PASS_TO_USER;
-                    return result;
-                }
-                if (!interactive && mDeviceKeyHandler.isWakeEvent(event)) {
-                    if (DEBUG_INPUT) {
-                        Slog.i(TAG, "isWakeEvent from DeviceKeyHandler");
-                    }
-                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, "android.policy:KEY");
-                    result &= ~ACTION_PASS_TO_USER;
-                    return result;
-                }
-                final Intent eventLaunchActivity = mDeviceKeyHandler.isActivityLaunchEvent(event);
-                if (!interactive && eventLaunchActivity != null) {
-                    if (DEBUG_INPUT) {
-                        Slog.i(TAG, "isActivityLaunchEvent from DeviceKeyHandler " + eventLaunchActivity);
-                    }
-                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, "android.policy:KEY");
-                    NitrogenUtils.launchKeyguardDismissIntent(mContext, UserHandle.CURRENT, eventLaunchActivity);
-                    result &= ~ACTION_PASS_TO_USER;
-                    return result;
-                }
+                // The device only should consume known keys.
                 if (mDeviceKeyHandler.handleKeyEvent(event)) {
-                    result &= ~ACTION_PASS_TO_USER;
-                    return result;
+                    return 0;
                 }
             } catch (Exception e) {
                 Slog.w(TAG, "Could not dispatch event to device key handler", e);
