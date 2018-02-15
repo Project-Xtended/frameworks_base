@@ -49,4 +49,7 @@
     <color name="ripple_material_light">#40000000</color>
     <color name="ripple_material_dark">#40ffffff</color>
 
+    <!-- Zen QS panel -->
+    <color name="zen_qs_panel_close_button_color">@android:color/white</color>
+
 </resources>

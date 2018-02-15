@@ -5201,6 +5201,13 @@ public final class Settings {
         public static final String SCREEN_STATE_OFF_DELAY = "screen_state_off_delay";
 
         /**
+         * Select various accents to go along with system themes
+         *
+         * @hide
+         */
+        public static final String ACCENT_PICKER = "accent_picker";
+
+        /**
          * @hide
          */
         public static final String SCREEN_STATE_ON_DELAY = "screen_state_on_delay";
