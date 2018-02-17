@@ -1318,7 +1318,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     mQSPanel = ((QSFragment) qs).getQsPanel();
                     mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
-                    mQuickStatusBarHeader = ((QSFragment) qs).getQsHeader();
                 }
             });
         }
@@ -6330,9 +6329,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
         if (mKeyguardStatusBar != null) {
             mKeyguardStatusBar.updateBatterySettings();
-        }
-        if (mQuickStatusBarHeader != null) {
-            mQuickStatusBarHeader.updateBatterySettings();
         }
     }
 

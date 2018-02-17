@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
+import android.util.Slog;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
@@ -366,7 +367,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
 	public void updateSettings(boolean animate) {
-<<<<<<< HEAD
          try {
  	     mShowCarrierLabel = Settings.System.getIntForUser(
                  getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
