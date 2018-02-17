@@ -43,8 +43,5 @@
     <!-- [CHAR LIMIT=NONE] Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
     <string name="permlab_toggleNavigationEditor">Modifica dei controlli di navigazione</string>
     <!-- [CHAR LIMIT=NONE] Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permdesc_toggleNavigationEditor">Consente a un\'applicazione di controllare le modifiche sulla barra di navigazione.</string>
-
-    <!-- Pocket Lock -->
-    <string name="pocket_lock_message_long_press">Pressione prolungata sul pulsante di accensione per interagire</string>
+    <string name="permdesc_toggleNavigationEditor">Allows an application to control the navigation bar editor.</string>
 </resources>
