@@ -305,8 +305,9 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     // Screen-off animation
     private int mScreenOffAnimation;
     static final int SCREEN_OFF_FADE = 0;
-    static final int SCREEN_OFF_CRT = 1;
-    static final int SCREEN_OFF_SCALE = 2;
+    static final int SCREEN_OFF_COLOR_FADE = 1;
+    static final int SCREEN_OFF_CRT = 2;
+    static final int SCREEN_OFF_SCALE = 3;
 
     /**
      * Creates the display power controller.
@@ -539,7 +540,17 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private int getScreenAnimationModeForDisplayState(int displayState) {
         switch (mScreenOffAnimation) {
             case SCREEN_OFF_FADE:
-                return ScreenStateAnimator.MODE_FADE;
+                if (displayState == Display.STATE_OFF) {
+                    return ScreenStateAnimator.MODE_FADE;
+                } else {
+                    return ScreenStateAnimator.MODE_FADE;
+                }
+            case SCREEN_OFF_COLOR_FADE:
+                if (displayState == Display.STATE_OFF) {
+                    return ScreenStateAnimator.MODE_COOL_DOWN;
+                } else {
+                    return ScreenStateAnimator.MODE_WARM_UP;
+                }
             case SCREEN_OFF_CRT:
                 if (displayState == Display.STATE_OFF) {
                     return ScreenStateAnimator.MODE_COOL_DOWN;
