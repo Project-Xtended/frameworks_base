@@ -439,6 +439,11 @@ public class KeyguardIndicationController implements
                 chargingId = hasChargingTime
                         ? R.string.keyguard_indication_fast_charging_time
                         : R.string.keyguard_plugged_in_fast_charging;
+		break;
+            case KeyguardUpdateMonitor.BatteryStatus.CHARGING_TURBO_POWER:
+                chargingId = hasChargingTime
+                        ? R.string.keyguard_indication_turbo_power_time
+                        : R.string.keyguard_plugged_in_turbo_power_charging;
                 break;
             case KeyguardUpdateMonitor.BatteryStatus.CHARGING_SLOWLY:
                 chargingId = hasChargingTime

@@ -29,6 +29,7 @@ import static android.os.BatteryManager.EXTRA_OEM_FAST_CHARGER;
 import static android.os.BatteryManager.EXTRA_PLUGGED;
 import static android.os.BatteryManager.EXTRA_STATUS;
 import static android.os.BatteryManager.EXTRA_DASH_CHARGER;
+import static android.os.BatteryManager.EXTRA_TURBO_POWER;
 
 import android.app.ActivityManager;
 import android.app.AlarmManager;
@@ -784,10 +785,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
                 }
                 final boolean dashChargeStatus = intent.getBooleanExtra(EXTRA_DASH_CHARGER, false);
                 final boolean oemFastChargeStatus = intent.getBooleanExtra(EXTRA_OEM_FAST_CHARGER, false);
+                final boolean turboPowerStatus = intent.getBooleanExtra(EXTRA_TURBO_POWER, false);
                 final Message msg = mHandler.obtainMessage(
                         MSG_BATTERY_UPDATE, new BatteryStatus(status, level, plugged, health,
                                 maxChargingMicroAmp, maxChargingMicroVolt, maxChargingMicroWatt,
-                                temperature, dashChargeStatus, oemFastChargeStatus));
+                                temperature, dashChargeStatus, oemFastChargeStatus, turboPowerStatus));
                 mHandler.sendMessage(msg);
             } else if (TelephonyIntents.ACTION_SIM_STATE_CHANGED.equals(action)) {
                 SimData args = SimData.fromIntent(intent);
@@ -965,6 +967,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
         public static final int CHARGING_FAST = 2;
         public static final int CHARGING_DASH = 3;
         public static final int CHARGING_OEM_FAST = 4;
+        public static final int CHARGING_TURBO_POWER = 5;
 
         public final int status;
         public final int level;
@@ -976,9 +979,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
         public final int temperature;
         public final boolean dashChargeStatus;
         public final boolean oemFastChargeStatus;
+	public final boolean turboPowerStatus;
         public BatteryStatus(int status, int level, int plugged, int health,
                 int maxChargingCurrent, int maxChargingVoltage, int maxChargingWattage,
-                int temperature, boolean dashChargeStatus, boolean oemFastChargeStatus) {
+                int temperature, boolean dashChargeStatus, boolean oemFastChargeStatus, boolean turboPowerStatus) {
+
             this.status = status;
             this.level = level;
             this.plugged = plugged;
@@ -989,6 +994,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
             this.temperature = temperature;
             this.dashChargeStatus = dashChargeStatus;
             this.oemFastChargeStatus = oemFastChargeStatus;
+            this.turboPowerStatus = turboPowerStatus;
         }
 
         /**
@@ -1022,6 +1028,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
         public final int getChargingSpeed(int slowThreshold, int fastThreshold) {
             return dashChargeStatus ? CHARGING_DASH :
                     oemFastChargeStatus ? CHARGING_OEM_FAST :
+                    turboPowerStatus ? CHARGING_TURBO_POWER :
                     maxChargingWattage <= 0 ? CHARGING_UNKNOWN :
                     maxChargingWattage < slowThreshold ? CHARGING_SLOWLY :
                     maxChargingWattage > fastThreshold ? CHARGING_FAST :
@@ -1175,7 +1182,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
         }
 
         // Take a guess at initial SIM state, battery status and PLMN until we get an update
-        mBatteryStatus = new BatteryStatus(BATTERY_STATUS_UNKNOWN, 100, 0, 0, 0, 0 ,0, 0, false, false);
+        mBatteryStatus = new BatteryStatus(BATTERY_STATUS_UNKNOWN, 100, 0, 0, 0, 0 ,0, 0, false, false, false);
 
         // Watch for interesting updates
         final IntentFilter filter = new IntentFilter();
@@ -1715,6 +1722,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener,
 
         // change in oem fast charging while plugged in
         if (nowPluggedIn && current.oemFastChargeStatus != old.oemFastChargeStatus) {
+	    return true;
+	}
+
+        // change in turbo power charging while plugged in
+        if (nowPluggedIn && current.turboPowerStatus != old.turboPowerStatus) {
             return true;
         }
 
