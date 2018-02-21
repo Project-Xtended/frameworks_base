@@ -111,7 +111,7 @@ public class BatteryMeterDrawableBase extends Drawable {
     private final Path mShapePath = new Path();
     private final Path mOutlinePath = new Path();
     private final Path mTextPath = new Path();
-    private final DashPathEffect mPathEffect = new DashPathEffect(new float[]{3,2},0);
+    private DashPathEffect mPathEffect;
 
     public BatteryMeterDrawableBase(Context context, int frameColor) {
         // Portrait is the default drawable style
@@ -185,8 +185,14 @@ public class BatteryMeterDrawableBase extends Drawable {
         mPowersavePaint.setColor(mPlusPaint.getColor());
         mPowersavePaint.setStyle(Style.STROKE);
 
+        mPathEffect = new DashPathEffect(new float[]{3,2}, 0);
+
         mIntrinsicWidth = context.getResources().getDimensionPixelSize(R.dimen.battery_width);
         mIntrinsicHeight = context.getResources().getDimensionPixelSize(R.dimen.battery_height);
+    }
+
+    public void setDashEffect(float[] intervals, float phase) {
+        mPathEffect = new DashPathEffect(intervals, phase);
     }
 
     @Override
