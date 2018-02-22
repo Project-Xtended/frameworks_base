@@ -53,4 +53,3 @@ public class ThemesUtils {
             "com.android.theme.xtendedclear.systemui",
     };
 }
-
