@@ -4676,6 +4676,12 @@ public final class Settings {
         public static final String SCREENSHOT_CROP_BEHAVIOR = "screenshot_crop_behavior";
 
         /**
+         * Toast icon
+         * @hide
+         */
+        public static final String TOAST_ICON = "toast_icon";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4861,6 +4867,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER);
             PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_DELAY);
             PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_INCALL_ONLY);
+            PRIVATE_SETTINGS.add(TOAST_ICON);
         }
 
         /**
@@ -11440,12 +11447,6 @@ public final class Settings {
          * @hide
          */
         public static final String SHOW_CPU_OVERLAY = "show_cpu_overlay";
-
-        /**
-         * Toast icon switch
-         * @hide
-         */
-        public static final String TOAST_ICON = "toast_icon";
 
         /*
          * Settings to backup. This is here so that it's in the same place as the settings
