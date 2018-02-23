@@ -468,8 +468,7 @@ public class Toast {
                 }
 
                 ImageView appIcon = (ImageView) mView.findViewById(android.R.id.icon);
-                if ((Settings.Global.getInt(context.getContentResolver(),
-                        Settings.Global.TOAST_ICON, 1) == 1)) {
+                if ((Settings.System.getInt(context.getContentResolver(), Settings.System.TOAST_ICON, 0) == 1)) {
                     if (appIcon != null) {
                         PackageManager pm = context.getPackageManager();
                         Drawable icon = null;
@@ -479,7 +478,7 @@ public class Toast {
                             // nothing to do
                         }
                         appIcon.setImageDrawable(icon);
-                    }
+                   }                   
                 }
                 mWM = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
                 // We can resolve the Gravity here by using the Locale for getting
