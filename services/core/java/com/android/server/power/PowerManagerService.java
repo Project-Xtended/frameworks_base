@@ -4909,20 +4909,6 @@ public final class PowerManagerService extends SystemService
         }
 
         @Override
-        public String getSeenWakeLocks() {
-            StringBuffer buffer = new StringBuffer();
-            Iterator<String> nextWakeLock = mSeenWakeLocks.iterator();
-            while (nextWakeLock.hasNext()) {
-                String wakeLockTag = nextWakeLock.next();
-                buffer.append(wakeLockTag + "|");
-            }
-            if (buffer.length() > 0) {
-                buffer.deleteCharAt(buffer.length() - 1);
-            }
-            return buffer.toString();
-        }
-
-        @Override
         /* updates the blocked uids, so if a wake lock is acquired for it
          * can be released.
          */
@@ -4930,6 +4916,17 @@ public final class PowerManagerService extends SystemService
             synchronized(mLock) {
                 qcNsrmPowExt.processPmsBlockedUid(uid, isBlocked,
                                                              mWakeLocks);
+            }
+        }
+    }
+
+    private void setBlockedWakeLocks(String wakeLockTagsString) {
+        mBlockedWakeLocks = new HashSet<String>();
+
+        if (wakeLockTagsString != null && wakeLockTagsString.length() != 0) {
+            String[] parts = wakeLockTagsString.split("\\|");
+            for (int i = 0; i < parts.length; i++) {
+                mBlockedWakeLocks.add(parts[i]);
             }
         }
     }
