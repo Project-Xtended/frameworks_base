@@ -121,11 +121,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             updateSettings(true);
         }
     }
-        protected void update() {
-            ((Clock)mClock).updateSettings();
-            ((Clock)mLeftClock).updateSettings();
-            mStatusBarComponent.updateQsbhClock();
-        }
 
     private XtendedSettingsObserver mXtendedSettingsObserver = new XtendedSettingsObserver(mHandler);
     private ContentResolver mContentResolver;
@@ -384,16 +379,16 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                  } else {
                      animateHide(mCustomCarrierLabel, animate, false);
                  }
-             }
 			((Clock)mClock).updateSettings();
             ((Clock)mCenterClock).updateSettings();
             ((Clock)mLeftClock).updateSettings();
             mStatusBarComponent.updateBatterySettings();
-         } catch (Exception e) {    
-             // never ever crash here
-             Slog.e(TAG, "updateSettings(animate)", e);
+        } catch (Exception e) {
+            // never ever crash here
+            Slog.e(TAG, "updateSettings(animate)", e);
+           }
          }
- 	}
+        }
 
     private void setCarrierLabel(boolean animate) {
         if (mShowCarrierLabel == 2 || mShowCarrierLabel == 3) {
