@@ -67,24 +67,18 @@
 
             <LinearLayout
                 android:id="@+id/layout_work_mode_draw"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/crop_buttons"
                 android:layout_height="@dimen/crop_buttons"
                 android:background="@drawable/selector_light"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:gravity="center" >
 
                 <ImageButton
                     android:id="@+id/drawColor"
-                    android:layout_width="@dimen/crop_buttons"
-                    android:layout_height="@dimen/crop_buttons"
+                    android:layout_width="@dimen/crop_color_rect"
+                    android:layout_height="@dimen/crop_color_rect"
                     android:background="@drawable/selector_light"
-                    android:scaleType="center" />
-
-                <ImageButton
-                    android:id="@+id/penSize"
-                    android:layout_width="@dimen/crop_buttons"
-                    android:layout_height="@dimen/crop_buttons"
-                    android:background="@drawable/selector_light"
-                    android:scaleType="center" />
+                    android:scaleType="centerInside" />
 
             </LinearLayout>
 
