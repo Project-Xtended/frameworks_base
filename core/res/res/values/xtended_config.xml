@@ -90,4 +90,8 @@
     <bool name="config_dozeAlwaysOnDisplayEnabledDefault">false</bool>
 
     <bool name="config_allowNotificationIconTextTinting">true</bool>
+
+    <!-- Wheter to enable doze always on -->
+    <bool name="config_enableDozeAlwaysOn">false</bool>
+
 </resources>

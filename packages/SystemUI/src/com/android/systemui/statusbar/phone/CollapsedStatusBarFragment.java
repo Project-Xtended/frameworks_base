@@ -88,9 +88,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                     Settings.System.STATUS_BAR_SHOW_CARRIER),
                     false, this, UserHandle.USER_ALL);
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_SHOW_CARRIER),
-                    false, this, UserHandle.USER_ALL);
-            mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUSBAR_CLOCK_STYLE),
                     false, this, UserHandle.USER_ALL);
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
@@ -119,6 +116,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         @Override
         public void onChange(boolean selfChange) {
             updateSettings(true);
+        }
+
+        protected void update() {
+            ((Clock)mClock).updateSettings();
+            ((Clock)mCenterClock).updateSettings();
+            ((Clock)mLeftClock).updateSettings();
+            mStatusBarComponent.updateQsbhClock();
+
+            mStatusBarComponent.updateBatterySettings();
         }
     }
 
@@ -379,16 +385,18 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                  } else {
                      animateHide(mCustomCarrierLabel, animate, false);
                  }
+             }
 			((Clock)mClock).updateSettings();
             ((Clock)mCenterClock).updateSettings();
             ((Clock)mLeftClock).updateSettings();
+			mStatusBarComponent.updateQsbhClock();
+			
             mStatusBarComponent.updateBatterySettings();
-        } catch (Exception e) {
-            // never ever crash here
-            Slog.e(TAG, "updateSettings(animate)", e);
-           }
+         } catch (Exception e) {    
+             // never ever crash here
+             Slog.e(TAG, "updateSettings(animate)", e);
          }
-        }
+ 	}
 
     private void setCarrierLabel(boolean animate) {
         if (mShowCarrierLabel == 2 || mShowCarrierLabel == 3) {
