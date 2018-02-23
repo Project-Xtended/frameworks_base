@@ -386,28 +386,6 @@
             android:process=":screenshot"
             android:exported="false" />
 
-        <!-- Springboard for launching the share activity -->
-        <receiver android:name=".screenrecord.GlobalScreenrecord$ShareReceiver"
-            android:process=":screenrecord"
-            android:exported="false" />
-
-        <!-- Callback for dismissing screenrecord notification after a share target is picked -->
-        <receiver android:name=".screenrecord.GlobalScreenrecord$TargetChosenReceiver"
-            android:process=":screenrecord"
-            android:exported="false" />
-
-        <!-- Callback for deleting screenrecord notification -->
-        <receiver android:name=".screenrecord.GlobalScreenrecord$DeleteScreenrecordReceiver"
-            android:process=":screenrecord"
-            android:exported="false" />
-
-        <!-- Callback for editing screenshot notification -->
-        <activity android:name=".screenshot.GlobalScreenshot$EditScreenshotActivity"
-                  android:process=":screenshot"
-                  android:exported="false"
-                  android:taskAffinity=""
-                  android:excludeFromRecents="true" />
-
         <!-- started from UsbDeviceSettingsManager -->
         <activity android:name=".usb.UsbConfirmActivity"
             android:exported="true"
@@ -659,7 +637,8 @@
         </receiver>
         <service
             android:name=".screenshot.ScreenshotEditor"
-            android:theme="@style/ScreenshotEditorStyle" />
+            android:enabled="true"
+            android:exported="true" />
 
     </application>
 </manifest>
