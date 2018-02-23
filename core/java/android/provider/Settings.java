@@ -4657,18 +4657,6 @@ public final class Settings {
          */
         public static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";
 
-        /*
-         * Define if screenshot crop & share is active
-         * @hide
-         */
-        public static final String SCREENSHOT_CROP_AND_SHARE = "screenshot_crop_and_share";
-
-        /**
-         * Define the crop behavior of screenshot crop & share
-         * @hide
-         */
-        public static final String SCREENSHOT_CROP_BEHAVIOR = "screenshot_crop_behavior";
-
         /**
          * Toast icon
          * @hide
