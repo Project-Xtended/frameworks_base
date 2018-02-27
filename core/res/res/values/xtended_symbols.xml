@@ -122,4 +122,7 @@
   <java-symbol type="id" name="pocket_hint_image" />
   <java-symbol type="id" name="pocket_hint_message" />
 
+  <!-- System fonts -->
+  <java-symbol type="array" name="config_fontPackages" />
+
 </resources>
