@@ -4627,6 +4627,12 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_DATE_FORMAT = "statusbar_clock_date_format";
 
         /**
+         * Whether to show a notification when the battery is charged at the set level and screen is off
+         * @hide
+         */
+        public static final String ALERT_ON_CHARGED_LEVEL = "alert_on_charged_level";
+
+        /**
          * Position of date
          * 0 - Left of clock
          * 1 - Right of clock
@@ -8250,6 +8256,13 @@ public final class Settings {
          * @hide
          */
         public static final String FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES = "force_authorize_substratum_packages";
+
+        /**
+         * Lockscreen Visualizer
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_VISUALIZER_ENABLED = "lockscreen_visualizer";
 
         /**
          * This are the settings to be backed up.

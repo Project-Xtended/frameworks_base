@@ -125,6 +125,25 @@
     <string name="accessibility_quick_settings_usb_tether_changed_on">USB tethering turned on</string>
     <string name="quick_settings_usb_tether_label">USB tethering</string>
 
+    <!-- Sound search tile -->
+    <string name="quick_settings_sound_search">Sound search</string>
+
+    <!-- Battery saver tile -->
+    <string name="battery_saver_qs_tile_fully_charged">Fully Charged</string>
+
+    <!-- Optimal battery level alert -->
+    <string name="alert_on_charged_level">You can disconnect the charger ( ">"<xliff:g id="percentage">%s</xliff:g> )</string>
+    <string name="battery_level_good_title">Optimal battery level</string>
+    <string name="battery_level_good_sound" translatable="false">/system/media/audio/ui/GoodBattery.ogg</string>
+    <string name="notification_channel_charge_alert">Optimal battery charge level</string>
+
+    <!-- Navigation bar Tile -->
+    <string name="quick_settings_navigation_bar">Navigation bar</string>
+    <string name="quick_settings_smartbar">SmartBar</string>
+    <string name="quick_settings_fling">Fling</string>
+    <string name="quick_settings_navigation_default">Stock</string>
+    <string name="quick_settings_navigation_disabled">Disabled</string>
+
     <!-- CPUInfo tile --> 
     <string name="quick_settings_cpuinfo_label">CPU Info</string> 
 
@@ -134,7 +153,4 @@
     <string name="accessibility_quick_settings_sync_on">Sync on</string>
     <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
     <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
-
-    <string name="quick_settings_sound_search">Sound search</string>
-
 </resources>
