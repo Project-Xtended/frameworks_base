@@ -332,9 +332,7 @@ public class NotificationManagerService extends SystemService {
     // The last key in this list owns the hardware.
     ArrayList<String> mLights = new ArrayList<>();
 
-    @GuardedBy("mNotificationLock")
     private HashMap<String, Long> mAnnoyingNotifications = new HashMap<String, Long>();
-
     private long mAnnoyingNotificationThreshold = -1;
 
     private AppOpsManager mAppOps;
@@ -3967,23 +3965,22 @@ public class NotificationManagerService extends SystemService {
         }
     }
 
-    @GuardedBy("mNotificationLock")
-    private boolean notificationIsAnnoying(String key, String pkg) {
-        if (key == null
+    private boolean notificationIsAnnoying(String pkg) {
+        if (pkg == null
                 || mAnnoyingNotificationThreshold <= 0
-                || (pkg != null && "android".equals(pkg))) {
+                || "android".equals(pkg)) {
             return false;
         }
 
         long currentTime = System.currentTimeMillis();
-        if (mAnnoyingNotifications.containsKey(key)
-                && (currentTime - mAnnoyingNotifications.get(key)
+        if (mAnnoyingNotifications.containsKey(pkg)
+                && (currentTime - mAnnoyingNotifications.get(pkg)
                 < mAnnoyingNotificationThreshold)) {
             // less than threshold; it's an annoying notification!!
             return true;
         } else {
             // not in map or time to re-add
-            mAnnoyingNotifications.put(key, currentTime);
+            mAnnoyingNotifications.put(pkg, currentTime);
             return false;
         }
     }
@@ -4084,12 +4081,8 @@ public class NotificationManagerService extends SystemService {
         }
 
         if (aboveThreshold && isNotificationForCurrentUser(record)) {
-            boolean notificationIsAnnoying = notificationIsAnnoying(key, pkg);
-            boolean beNoisy = (!mScreenOn && !notificationIsAnnoying)
-                    // if mScreenOn && mSoundVibScreenOn == 0 never be noisy
-                    || (mScreenOn && mSoundVibScreenOn == 1 && !notificationIsAnnoying)
-                    || (mScreenOn && mSoundVibScreenOn == 2 && !mIsMediaPlaying && !notificationIsAnnoying);
-            if (mSystemReady && mAudioManager != null && beNoisy) {
+
+            if (mSystemReady && mAudioManager != null && !notificationIsAnnoying(pkg)) {
                 Uri soundUri = record.getSound();
                 hasValidSound = soundUri != null && !Uri.EMPTY.equals(soundUri);
                 long[] vibration = record.getVibration();
