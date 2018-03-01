@@ -4908,6 +4908,14 @@ public final class Settings {
         public static final String BATTERY_BAR_BATTERY_LOW_COLOR_WARNING = "battery_bar_battery_low_color_warning";
 
         /**
+         * Whether to show the kill app button in notification guts
+         *
+         * @hide
+         */
+        public static final String NOTIFICATION_GUTS_KILL_APP_BUTTON =
+                "notification_guts_kill_app_button";
+
+        /**
          * @hide
          */
         public static final String BATTERY_BAR_HIGH_COLOR = "battery_bar_high_color";
