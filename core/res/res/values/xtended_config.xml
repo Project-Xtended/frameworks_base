@@ -23,7 +23,7 @@
     <string-array name="config_disabledComponents" translatable="false">
     </string-array>
 
-    <integer name="config_buttonBrightnessSettingDefault">255</integer>
+    <integer name="config_buttonBrightnessSettingDefault">148</integer>
     <bool name="config_deviceHasVariableButtonBrightness">false</bool>
    
      <!-- The list of components which should be forced to be enabled. -->
@@ -89,10 +89,5 @@
     <bool name="config_dozeAlwaysOnDisplayEnabledDefault">true</bool>
 
     <bool name="config_allowNotificationIconTextTinting">true</bool>
-
-    <bool name="config_allowNotificationIconTextTinting">true</bool>
-
-    <!-- Wheter to enable doze always on -->
-    <bool name="config_enableDozeAlwaysOn">false</bool>
 
 </resources>
