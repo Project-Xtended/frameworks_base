@@ -261,5 +261,12 @@
     <string name="screenrecord_notif_final_ticker">Screen recorded successfully</string>
     <string name="screenrecord_notif_completed">Screen recorded successfully</string>
     <string name="screenrecord_notif_duration">Total:</string>
+	
+	<!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Force stop?</string>
+    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
+    <string name="dlg_ok">@android:string/ok</string>
+    <string name="dlg_cancel">@android:string/cancel</string>
+    <string name="kill">Kill App</string>
 
 </resources>
