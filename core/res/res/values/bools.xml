@@ -30,4 +30,11 @@
          <p>The main purpose is for OEMs to customize the rendering of the
          lockscreen, setting this to true should come with customized drawables. -->
     <bool name="use_lock_pattern_drawable">false</bool>
+
+    <!-- Whether device supports an alt. ambient display -->
+    <bool name="config_alt_ambient_display">true</bool>
+
+    <!-- Whether to enable doze always on -->
+    <bool name="config_enableDozeAlwaysOn">true</bool>
+
 </resources>
