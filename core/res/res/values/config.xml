@@ -1929,10 +1929,10 @@
     <bool name="config_dozePulsePickup">true</bool>
 
     <!-- Type of the double tap sensor. Empty if double tap is not supported. -->
-    <string name="config_dozeDoubleTapSensorType" translatable="false"></string>
+    <string name="config_dozeDoubleTapSensorType" translatable="false">true</string>
 
     <!-- Type of the long press sensor. Empty if long press is not supported. -->
-    <string name="config_dozeLongPressSensorType" translatable="false"></string>
+    <string name="config_dozeLongPressSensorType" translatable="false">true</string>
 
     <!-- Control whether the always on display mode is available. This should only be enabled on
          devices where the display has be tuned to be power efficient in DOZE and/or DOZE_SUSPEND
