@@ -83,6 +83,7 @@ import static android.os.Process.readProcFile;
 import static android.os.Process.removeAllProcessGroups;
 import static android.os.Process.sendSignal;
 import static android.os.Process.setProcessGroup;
+import static android.os.Process.setCgroupProcsProcessGroup;
 import static android.os.Process.setThreadPriority;
 import static android.os.Process.setThreadScheduler;
 import static android.os.Process.startWebView;
@@ -1704,6 +1705,8 @@ public class ActivityManagerService extends IActivityManager.Stub
     static ServiceThread sKillThread = null;
     static KillHandler sKillHandler = null;
 
+    static final int UPDATE_OOMADJ_MSG = 99999;
+
     CompatModeDialog mCompatModeDialog;
     UnsupportedDisplaySizeDialog mUnsupportedDisplaySizeDialog;
     long mLastMemUsageReportTime = 0;
@@ -1717,6 +1720,9 @@ public class ActivityManagerService extends IActivityManager.Stub
     // Enable B-service aging propagation on memory pressure.
     boolean mEnableBServicePropagation =
             SystemProperties.getBoolean("ro.vendor.qti.sys.fw.bservice_enable", false);
+    // Process in same process Group keep in same cgroup
+    boolean mEnableProcessGroupCgroupFollow =
+            SystemProperties.getBoolean("ro.vendor.qti.cgroup_follow.enable",false);
 
     /**
      * Flag whether the current user is a "monkey", i.e. whether
@@ -2448,6 +2454,11 @@ public class ActivityManagerService extends IActivityManager.Stub
                             }
                         }
                     }
+                }
+            } break;
+            case UPDATE_OOMADJ_MSG: {
+                synchronized (ActivityManagerService.this) {
+                    updateOomAdjLocked();
                 }
             } break;
             }
@@ -5490,7 +5501,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             handleAppDiedLocked(app, false, true);
 
             if (doOomAdj) {
-                updateOomAdjLocked();
+                mHandler.removeMessages(UPDATE_OOMADJ_MSG);
+                mHandler.sendEmptyMessage(UPDATE_OOMADJ_MSG);
             }
             if (doLowMem) {
                 doLowMemReportIfNeededLocked(app);
@@ -22099,7 +22111,11 @@ public class ActivityManagerService extends IActivityManager.Stub
                 }
                 long oldId = Binder.clearCallingIdentity();
                 try {
-                    setProcessGroup(app.pid, processGroup);
+                    if (mEnableProcessGroupCgroupFollow) {
+                        setCgroupProcsProcessGroup(app.info.uid, app.pid, processGroup);
+                    } else {
+                        setProcessGroup(app.pid, processGroup);
+                    }
                     if (app.curSchedGroup == ProcessList.SCHED_GROUP_TOP_APP) {
                         // do nothing if we already switched to RT
                         if (oldSchedGroup != ProcessList.SCHED_GROUP_TOP_APP) {

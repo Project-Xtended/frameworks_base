@@ -151,6 +151,9 @@ public class Process {
      */
     public static final int OTA_UPDATE_UID = 1061;
 
+    /** {@hide} */
+    public static final int NOBODY_UID = 9999;
+
     /**
      * Defines the start of a range of UIDs (and GIDs), going from this
      * number to {@link #LAST_APPLICATION_UID} that are reserved for assigning
@@ -717,6 +720,30 @@ public class Process {
      * Always sets cpusets.
      */
     public static final native void setProcessGroup(int pid, int group)
+            throws IllegalArgumentException, SecurityException;
+
+    /**
+     * Sets the scheduling group for processes in the same cgroup.procs of uid and pid
+     * @hide
+     * @param uid The user identifier of the process to change.
+     * @param pid The identifier of the process to change.
+     * @param group The target group for this process from THREAD_GROUP_*.
+     *
+     * @throws IllegalArgumentException Throws IllegalArgumentException if
+     * <var>tid</var> does not exist.
+     * @throws SecurityException Throws SecurityException if your process does
+     * not have permission to modify the given thread, or to use the given
+     * priority.
+     *
+     * group == THREAD_GROUP_DEFAULT means to move all non-background priority
+     * threads to the foreground scheduling group, but to leave background
+     * priority threads alone.  group == THREAD_GROUP_BG_NONINTERACTIVE moves all
+     * threads, regardless of priority, to the background scheduling group.
+     * group == THREAD_GROUP_FOREGROUND is not allowed.
+     *
+     * Always sets cpusets.
+     */
+    public static final native void setCgroupProcsProcessGroup(int uid, int pid, int group)
             throws IllegalArgumentException, SecurityException;
 
     /**
