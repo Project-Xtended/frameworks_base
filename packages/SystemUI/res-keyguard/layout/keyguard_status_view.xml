@@ -62,11 +62,27 @@
                 android:contentDescription="@string/accessibility_ambient_display_charging"
             />-->
 
+            <TextView
+                android:id="@+id/ambient_display_battery_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/clock_view"
+                android:drawablePadding="2dp"
+                android:drawableStart="@drawable/ic_battery_full"
+                android:textColor="?attr/wallpaperTextColor"
+                style="@style/widget_label"
+                android:visibility="gone"
+                />
+
             <include layout="@layout/keyguard_status_area"
                 android:id="@+id/keyguard_status_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/clock_view" />
+                android:layout_below="@id/ambient_display_battery_view"
+                android:layout_marginTop="6dp" />
+
         </RelativeLayout>
 
         <include layout="@layout/keyguard_weather_view"
