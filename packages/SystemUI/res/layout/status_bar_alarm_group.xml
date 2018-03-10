@@ -33,6 +33,7 @@
         android:textSize="@dimen/qs_time_collapsed_size"
         android:gravity="center_vertical"
         systemui:datePattern="@string/abbrev_wday_month_day_no_year_alarm"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:paddingEnd="6dp" />
 
     <com.android.systemui.statusbar.AlphaOptimizedImageView
