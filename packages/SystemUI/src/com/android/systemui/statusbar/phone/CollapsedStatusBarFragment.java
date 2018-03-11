@@ -116,16 +116,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         @Override
         public void onChange(boolean selfChange) {
             updateSettings(true);
-			mStatusBarComponent.updateQsbhClock();
         }
 
         protected void update() {
-            ((Clock)mClock).updateSettings();
-            ((Clock)mCenterClock).updateSettings();
-            ((Clock)mLeftClock).updateSettings();
-            mStatusBarComponent.updateQsbhClock();
-
-            mStatusBarComponent.updateBatterySettings();
+            updateSettings(true);
         }
     }
 
@@ -390,8 +384,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 			((Clock)mClock).updateSettings();
             ((Clock)mCenterClock).updateSettings();
             ((Clock)mLeftClock).updateSettings();
-			mStatusBarComponent.updateQsbhClock();
-			
+			mStatusBarComponent.updateQsbhClock();	
             mStatusBarComponent.updateBatterySettings();
          } catch (Exception e) {    
              // never ever crash here

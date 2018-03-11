@@ -66,6 +66,25 @@ public class AmbientIndicationContainer extends AutoReinflateContainer implement
         updatePosition();
     }
 
+    public void setTickerMarquee(boolean enable) {
+        if (enable) {
+            setTickerMarquee(false);
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mText.setEllipsize(TruncateAt.MARQUEE);
+                    mText.setMarqueeRepeatLimit(2);
+                    mText.setSelected(true);
+                    mScrollingInfo = true;
+                }
+            }, 1600);
+        } else {
+            mText.setEllipsize(null);
+            mText.setSelected(false);
+            mScrollingInfo = false;
+        }
+    }
+
     public void setCleanLayout(int reason) {
         mForcedMediaDoze =
                 reason == DozeLog.PULSE_REASON_FORCED_MEDIA_NOTIFICATION;
