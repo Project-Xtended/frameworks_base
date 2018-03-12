@@ -39,7 +39,7 @@
         android:paddingBottom="@dimen/qs_panel_footer_height" >
 
         <ImageView android:id="@+id/qs_header_image"
-            android:layout_width="match_parent"
+    	    android:layout_width="@dimen/notification_panel_width"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:visibility="gone" />
@@ -53,6 +53,7 @@
         <include layout="@layout/quick_status_bar_header_system_icons" />
 
         <com.android.systemui.qs.HorizontalClippingLinearLayout
+            android:id="@+id/quick_qs_panel_scroll_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
