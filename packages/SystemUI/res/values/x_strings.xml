@@ -32,6 +32,7 @@
     <string name="notification_channel_screenrecord">Screenrecords</string>
 
     <!-- On The Go -->
+    <string name="global_action_onthego">On-The-Go</string>
     <string name="onthego_notif_ticker">On-The-Go activated</string>
     <string name="onthego_notif_title">On-The-Go is active</string>
     <string name="onthego_notif_stop">Stop</string>

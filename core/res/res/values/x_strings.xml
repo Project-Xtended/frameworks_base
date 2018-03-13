@@ -26,7 +26,4 @@
     <string name="reboot_title">Reboot</string>
     <string name="reboot_message">Rebooting system</string>
 
-    <!-- On-The-Go -->
-    <string name="global_action_onthego">On-The-Go</string>
-
 </resources>
