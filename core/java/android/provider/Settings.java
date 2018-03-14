@@ -4754,8 +4754,12 @@ public final class Settings {
         public static final String SENSOR_BLOCK = "sensor_block";
         
         /**
-         * Whether to change the transparency of the qs panel
-         * @hide
+        * Whether to show battery percent on ambient bottom
+        * @hide
+        */
+        public static final String AMBIENT_BATTERY_PERCENT = "ambient_battery_percent";
+
+        /**
          */
         public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
 
