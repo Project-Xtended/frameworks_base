@@ -1541,11 +1541,11 @@ public final class SystemServer {
 
             traceBeginAndSlog("StartLauncherAppsService");
             mSystemServiceManager.startService(LauncherAppsService.class);
+            traceEnd();
 
-            try {
-                Slog.i(TAG, "Starting ScreenStabilization Service");
+            traceBeginAndSlog("Starting ScreenStabilization Service");
             mSystemServiceManager.startService(ScreenStabilization.class);
-        }
+            traceEnd();
 
         if (!disableNonCoreServices && !disableMediaProjection) {
             traceBeginAndSlog("StartMediaProjectionManager");
@@ -1917,6 +1917,7 @@ public final class SystemServer {
             }
             traceEnd();
         }, BOOT_TIMINGS_TRACE_LOG);
+      }
     }
 
     static final void startSystemUi(Context context, WindowManagerService windowManager) {

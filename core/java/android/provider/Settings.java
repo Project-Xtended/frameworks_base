@@ -4471,32 +4471,8 @@ public final class Settings {
         /**
          * @hide
          */
-<<<<<<< HEAD
         public static final String BATTERY_BAR_THICKNESS = "battery_bar_thickness";
-=======
-        public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
         
-        
-        /**
-         * XOSP Blur personalization settings
-         * @hide
-         */
-        public static final String STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY = "blurred_status_bar_expanded_enabled_pref";
-   
-        public static final String BLUR_SCALE_PREFERENCE_KEY = "blurred_expanded_panel_scale_pref";
-   
-        public static final String BLUR_RADIUS_PREFERENCE_KEY = "blurred_expanded_panel_radius_pref";
-  
-        public static final String TRANSLUCENT_NOTIFICATIONS_PRECENTAGE_PREFERENCE_KEY = "translucent_notifications_percentage_pref";
-
-        public static final String TRANSLUCENT_QUICK_SETTINGS_PRECENTAGE_PREFERENCE_KEY = "translucent_quick_settings_percentage_pref";
-   
-        public static final String TRANSLUCENT_QUICK_SETTINGS_PREFERENCE_KEY = "translucent_quick_settings_pref";
-   
-        public static final String TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY = "translucent_notifications_pref";
-        
-        public static final String RECENT_APPS_ENABLED_PREFERENCE_KEY = "blurred_recent_app_enabled_pref";
->>>>>>> be782f8... Screen stabiization
 
         /**
          * @hide
@@ -4520,30 +4496,17 @@ public final class Settings {
          */
         public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
 
-<<<<<<< HEAD
         /**
          * @hide
          */
         public static final String BATTERY_BAR_BATTERY_LOW_COLOR_WARNING = "battery_bar_battery_low_color_warning";
-=======
-        public static final String BLUR_MIXED_COLOR_PREFERENCE_KEY = "blur_mixed_color_pref";
-
-        public static final String LOCK_BLUR_PREFERENCE_KEY = "lockscreen_blur";
->>>>>>> be782f8... Screen stabiization
 
         /**
          * @hide
          */
         public static final String BATTERY_BAR_HIGH_COLOR = "battery_bar_high_color";
 
-<<<<<<< HEAD
         /**
-=======
-        public static final String LOCK_BLUR_RADIUS_PREFERENCE_KEY = "lockscreen_blur_radius";
-
-        /**
-         * show clear all recents button
->>>>>>> be782f8... Screen stabiization
          * @hide
          */
         public static final String BATTERY_BAR_LOW_COLOR = "battery_bar_low_color";

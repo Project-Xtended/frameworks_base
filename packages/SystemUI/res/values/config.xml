@@ -89,12 +89,12 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_default" translatable="false">
-        wifi,cell,bt,location,hotspot,sync,sound,flashlight,airplane,rotation,screenstabilization
+        wifi,cell,bt,location,hotspot,sync,sound,flashlight,airplane,rotation,cpuinfo
     </string>
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-        wifi,cell,bt,location,hotspot,sync,sound,flashlight,airplane,rotation,cpuinfo,battery,dnd,nfc,inversion,saver,work,cast,night,lte,caffeine,reboot,pip,screenshot,adb_network,heads_up,screenrecord,hwkeys,volume,usb_tether,soundsearch,navigation,always_on_display,screenstabilization
+        wifi,cell,bt,location,hotspot,sync,sound,flashlight,airplane,rotation,cpuinfo,battery,dnd,nfc,inversion,saver,work,cast,night,lte,caffeine,reboot,pip,screenshot,adb_network,heads_up,screenrecord,hwkeys,volume,usb_tether,soundsearch,navigation,always_on_display
     </string>
 
     <!-- The tiles to display in QuickSettings -->
