@@ -72,6 +72,7 @@ public class ScreenStabilizationTile extends QSTileImpl<BooleanState> {
         state.value = (Settings.System.getInt(mContext.getContentResolver(), Settings.System.STABILIZATION_ENABLE, 0) == 1);
         state.label = mContext.getString(R.string.quick_settings_stabilization_label);
         state.icon = new DrawableIcon(state.value ? mEnable : mDisable);
+        state.expandedAccessibilityClassName = Switch.class.getName();
         state.contentDescription = state.label;
     }
 
