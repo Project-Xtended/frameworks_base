@@ -77,6 +77,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mCenterClock;
     private View mLeftClock;
     private int mClockStyle;
+    private boolean mShowNetworkTraffic;
+    private NetworkTraffic mNetworkTraffic;
     private final Handler mHandler = new Handler();
 
     private class XtendedSettingsObserver extends ContentObserver {
@@ -129,9 +131,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         @Override
         public void onChange(boolean selfChange) {
             updateSettings(true);
-            if (mNetworkTraffic != null) {
                 mNetworkTraffic.updateSettings();
-            }
         }
 
         protected void update() {
@@ -182,6 +182,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCenterClock = mStatusBar.findViewById(R.id.center_clock);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mSignalClusterView);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
+        mNetworkTraffic = (NetworkTraffic) mStatusBar.findViewById(R.id.networkTraffic);
         mXtendedSettingsObserver.observe();
         updateSettings(false);
         mNetworkTraffic.updateSettings();
@@ -300,6 +301,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (((Clock)mLeftClock).isEnabled()) {
             animateHide(mLeftClock, animate, true);
         }
+
+        if (mShowNetworkTraffic) {
+            animateHide(mNetworkTraffic, animate, true);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
@@ -403,6 +408,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             ((Clock)mLeftClock).updateSettings();
 			mStatusBarComponent.updateQsbhClock();	
             mStatusBarComponent.updateBatterySettings();
+            mNetworkTraffic.updateSettings();
          } catch (Exception e) {    
              // never ever crash here
              Slog.e(TAG, "updateSettings(animate)", e);

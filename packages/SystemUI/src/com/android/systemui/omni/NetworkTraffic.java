@@ -26,24 +26,26 @@ import android.util.TypedValue;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import com.android.systemui.statusbar.policy.DarkIconDispatcher;
-
 import com.android.systemui.Dependency;
-import com.android.systemui.R;
+import com.android.systemui.statusbar.policy.DarkIconDispatcher;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
+
+import com.android.systemui.R;
+
 /*
 *
 * Seeing how an Integer object in java requires at least 16 Bytes, it seemed awfully wasteful
 * to only use it for a single boolean. 32-bits is plenty of room for what we need it to do.
 *
 */
-public class NetworkTraffic extends TextView implements DarkReceiver {
+public class NetworkTraffic extends TextView implements DarkReceiver{
+    public static final int MASK_UP = 0x00000001;        // Least valuable bit
+    public static final int MASK_DOWN = 0x00000002;      // Second least valuable bit
+    public static final int MASK_UNIT = 0x00000004;      // Third least valuable bit
+    public static final int MASK_PERIOD = 0xFFFF0000;    // Most valuable 16 bits
 
-    private static final int INTERVAL = 1500; //ms
-    private static final int KB = 1024;
-    private static final int MB = KB * KB;
-    private static final int GB = MB * KB;
-    private static final String symbol = "B/s";
+    private static final int KILOBIT = 1000;
+    private static final int KILOBYTE = 1024;
 
     private static DecimalFormat decimalFormat = new DecimalFormat("##0.#");
     static {
@@ -51,13 +53,18 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         decimalFormat.setMaximumFractionDigits(1);
     }
 
-    private boolean mIsEnabled;
+    private int mState = 0;
     private boolean mAttached;
     private long totalRxBytes;
     private long totalTxBytes;
     private long lastUpdateTime;
-    private int txtSize;
+    private int txtSizeSingle;
+    private int txtSizeMulti;
     private int txtImgPadding;
+    private int KB = KILOBIT;
+    private int MB = KB * KB;
+    private int GB = MB * KB;
+    private boolean mAutoHide;
     private int mAutoHideThreshold;
     private int mTintColor;
     private boolean mEnabled;
@@ -67,7 +74,7 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         public void handleMessage(Message msg) {
             long timeDelta = SystemClock.elapsedRealtime() - lastUpdateTime;
 
-            if (timeDelta < INTERVAL * .95) {
+            if (timeDelta < getInterval(mState) * .95) {
                 if (msg.what != 1) {
                     // we just updated the view, nothing further to do
                     return;
@@ -88,16 +95,39 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
             if (shouldHide(rxData, txData, timeDelta)) {
                 setVisibility(View.GONE);
             } else {
+                // If bit/s convert from Bytes to bits
+                String symbol;
+                if (KB == KILOBYTE) {
+                    symbol = "B/s";
+                } else {
+                    symbol = "b/s";
+                    rxData = rxData * 8;
+                    txData = txData * 8;
+                }
+
                 // Get information for uplink ready so the line return can be added
-                String output = formatOutput(timeDelta, txData, symbol);
+                String output = "";
+                if (isSet(mState, MASK_UP)) {
+                    output = formatOutput(timeDelta, txData, symbol);
+                }
+
                 // Ensure text size is where it needs to be
-                output += "\n";
+                int textSize;
+                if (isSet(mState, MASK_UP + MASK_DOWN)) {
+                    output += "\n";
+                    textSize = txtSizeMulti;
+                } else {
+                    textSize = txtSizeSingle;
+                }
+
                 // Add information for downlink if it's called for
-                output += formatOutput(timeDelta, rxData, symbol);
+                if (isSet(mState, MASK_DOWN)) {
+                    output += formatOutput(timeDelta, rxData, symbol);
+                }
 
                 // Update view if there's anything new to show
                 if (! output.contentEquals(getText())) {
-                    setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
+                    setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)textSize);
                     setText(output);
                 }
                 setVisibility(View.VISIBLE);
@@ -107,7 +137,7 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
             totalRxBytes = newTotalRxBytes;
             totalTxBytes = newTotalTxBytes;
             clearHandlerCallbacks();
-            mTrafficHandler.postDelayed(mRunnable, INTERVAL);
+            mTrafficHandler.postDelayed(mRunnable, getInterval(mState));
         }
 
         private String formatOutput(long timeDelta, long data, String symbol) {
@@ -182,7 +212,7 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         ConnectivityManager connManager =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo network = (connManager != null) ? connManager.getActiveNetworkInfo() : null;
-        return network != null;
+        return network != null && network.isConnected();
     }
 
     public void updateSettings() {
@@ -243,14 +273,13 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         }
     }
 
-    private void setMode() {
-        ContentResolver resolver = mContext.getContentResolver();
-        mIsEnabled = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_STATE, 1,
-                UserHandle.USER_CURRENT) == 1;
-        mAutoHideThreshold = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 1,
-                UserHandle.USER_CURRENT);
+    private static boolean isSet(int intState, int intMask) {
+        return (intState & intMask) == intMask;
+    }
+
+    private static int getInterval(int intState) {
+        int intInterval = intState >>> 16;
+        return (intInterval >= 250 && intInterval <= 32750) ? intInterval : 1000;
     }
 
     private void clearHandlerCallbacks() {
@@ -264,6 +293,10 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
 
         if (isSet(mState, MASK_UP + MASK_DOWN)) {
             intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
+        } else if (isSet(mState, MASK_UP)) {
+            intTrafficDrawable = R.drawable.stat_sys_network_traffic_up;
+        } else if (isSet(mState, MASK_DOWN)) {
+            intTrafficDrawable = R.drawable.stat_sys_network_traffic_down;
         } else {
             intTrafficDrawable = 0;
         }
@@ -275,6 +308,12 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         } else {
             setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }*/
+    }
+
+    public void setIconTint(int color) {
+        mTintColor = color;
+        setTextColor(color);
+        updateTrafficDrawable();
     }
 
     public void onDensityOrFontScaleChanged() {
@@ -292,7 +331,7 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)textSize);
         //setCompoundDrawablePadding(txtImgPadding);
     }
-
+    
     @Override
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mTintColor = DarkIconDispatcher.getTint(area, this, tint);
@@ -300,3 +339,4 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         updateTrafficDrawable();
     }
 }
+
