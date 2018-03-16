@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.SoundSearchTIle;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.SoundSearchTIle;
+import com.android.systemui.qs.tiles.ScreenStabilizationTile;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.SyncTile;
@@ -106,6 +107,7 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("sync")) return new SyncTile(mHost);
         else if (tileSpec.equals("always_on_display")) return new AlwaysOnDisplayTile(mHost);
         else if (tileSpec.equals("compass")) return new CompassTile(mHost);
+        else if (tileSpec.equals("screenstabilization")) return new ScreenStabilizationTile(mHost);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(mHost, tileSpec);
