@@ -385,15 +385,15 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @Override
     public boolean onLongClick(View v) {
         if (v == mSettingsButton) {
-            startNitrogenActivity();
+            startXtensionsActivity();
         }
         return false;
     }
 
-    private void startNitrogenActivity() {
+    private void startXtensionsActivity() {
         Intent nIntent = new Intent(Intent.ACTION_MAIN);
         nIntent.setClassName("com.android.settings",
-            "com.android.settings.Settings$NitrogenSettingsActivity");
+            "com.android.settings.Settings$XtensionsActivity");
         mActivityStarter.startActivity(nIntent, true /* dismissShade */);
     }
 
