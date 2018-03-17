@@ -150,7 +150,7 @@ public class QuickQSPanel extends QSPanel {
     };
 
     public static int getNumQuickTiles(Context context) {
-        return Dependency.get(TunerService.class).getValue(NUM_QUICK_TILES, 4);
+        return Dependency.get(TunerService.class).getValue(NUM_QUICK_TILES, 5);
     }
 
     private static class HeaderTileLayout extends LinearLayout implements QSTileLayout {
