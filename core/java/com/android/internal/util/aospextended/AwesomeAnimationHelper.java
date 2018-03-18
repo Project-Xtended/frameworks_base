@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AwesomeAnimationHelper {
 
@@ -39,6 +40,7 @@ public class AwesomeAnimationHelper {
     public final static int ANIMATION_GROW_SHRINK_RIGHT = 13;
     public final static int ANIMATION_ANDROID_P = 14;
     public final static int ANIMATION_ETHANS = 15;
+    public final static int ANIMATION_RANDOM = 16;
 
     public static final int TRANSIT_ACTIVITY_OPEN = 6;
     public static final int TRANSIT_ACTIVITY_CLOSE = 7;
@@ -71,6 +73,7 @@ public class AwesomeAnimationHelper {
         animList.add(ANIMATION_GROW_SHRINK_RIGHT);
         animList.add(ANIMATION_ANDROID_P);
         animList.add(ANIMATION_ETHANS);
+        animList.add(ANIMATION_RANDOM);
         int length = animList.size();
         int[] anim = new int[length];
         for (int i = 0; i < length; i++) {
@@ -80,6 +83,10 @@ public class AwesomeAnimationHelper {
     }
 
     public static int[] getAnimations(int mAnim, int transit) {
+        if(mAnim == ANIMATION_RANDOM){
+            mAnim = (new Random()).nextInt(16);
+            // Random number from 0 to 15
+        }
         int[] anim = new int[2];
         switch (mAnim) {
             case ANIMATION_FADE:
@@ -245,6 +252,9 @@ public class AwesomeAnimationHelper {
                 break;
             case ANIMATION_ETHANS:
                 value = res.getString(com.android.internal.R.string.animation_ethans);
+		break;
+            case ANIMATION_RANDOM:
+                value = res.getString(com.android.internal.R.string.animation_random);
                 break;
             default:
                 value = res.getString(com.android.internal.R.string.action_null);
