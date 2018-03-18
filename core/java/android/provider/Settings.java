@@ -6624,6 +6624,15 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to change the transparency of the qs panel
+         * @hide
+         */
+        public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
+
+        /** @hide */
+        private static final Validator QS_PANEL_BG_ALPHA_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6741,6 +6750,7 @@ public final class Settings {
 	    THEMING_SETTINGS_DASHBOARD_ICONS,
             DISPLAY_CUTOUT_MODE,
             STOCK_STATUSBAR_IN_HIDE,
+	    QS_PANEL_BG_ALPHA,
 
 	};
 
@@ -6940,6 +6950,7 @@ public final class Settings {
 	    PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_MODE);
             PRIVATE_SETTINGS.add(STOCK_STATUSBAR_IN_HIDE);
+	    PRIVATE_SETTINGS.add(QS_PANEL_BG_ALPHA);
 	}
 
         /**
@@ -7105,6 +7116,7 @@ public final class Settings {
 	    VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
             VALIDATORS.put(DISPLAY_CUTOUT_MODE, DISPLAY_CUTOUT_MODE_VALIDATOR);
             VALIDATORS.put(STOCK_STATUSBAR_IN_HIDE, STOCK_STATUSBAR_IN_HIDE_VALIDATOR);
+            VALIDATORS.put(QS_PANEL_BG_ALPHA, QS_PANEL_BG_ALPHA_VALIDATOR);
         }
 
         /**
