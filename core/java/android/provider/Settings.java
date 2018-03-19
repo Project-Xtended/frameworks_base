@@ -4731,6 +4731,15 @@ public final class Settings {
         public static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";
 
         /**
+        * Whether to show info battery percent on ambient bottom
+        * 0 disabled_print_services
+        * 1 battery percentage
+        * 2 weather temp + condition
+        * @hide
+        */
+        public static final String AMBIENT_BOTTOM_DISPLAY = "ambient_bottom_display";
+
+        /**
          * Toast icon
          * @hide
          */
