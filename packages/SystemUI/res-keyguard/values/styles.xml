@@ -33,8 +33,7 @@
         <item name="android:gravity">center_horizontal|center_vertical</item>
         <item name="android:background">@null</item>
         <item name="android:textSize">32sp</item>
-        <item name="android:fontFamily">@*android:string/config_headlineFontFamilyLight</item>
-        <item name="android:textColor">?attr/wallpaperTextColor</item>
+	<item name="android:textColor">?attr/wallpaperTextColor</item>
         <item name="android:paddingBottom">-16dp</item>
     </style>
     <style name="Keyguard.ImageButton.NumPadEnter" parent="@android:style/Widget.ImageButton">
@@ -42,7 +41,6 @@
     </style>
     <style name="Widget.TextView.NumPadKey.Klondike" parent="Widget.TextView.NumPadKey">
         <item name="android:textSize">12sp</item>
-        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">?attr/wallpaperTextColorSecondary</item>
         <item name="android:paddingBottom">0dp</item>
     </style>
@@ -53,17 +51,6 @@
     </style>
     <style name="widget_big_thin">
         <item name="android:textSize">@dimen/widget_big_font_size</item>
-        <item name="android:fontFeatureSettings">@*android:string/config_headlineFontFeatureSettings</item>
-    </style>
-
-    <style name="BouncerSecurityContainer">
-        <item name="android:layout_gravity">center_horizontal|bottom</item>
-    </style>
-
-    <style name="PasswordTheme" parent="Theme.SystemUI">
-        <item name="android:textColor">?attr/wallpaperTextColor</item>
-        <item name="android:colorControlNormal">?attr/wallpaperTextColor</item>
-        <item name="android:colorControlActivated">?attr/wallpaperTextColor</item>
     </style>
 
     <style name="PasswordTheme.Light" parent="Theme.SystemUI.Light">
