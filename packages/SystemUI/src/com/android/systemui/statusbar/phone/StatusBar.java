@@ -161,7 +161,6 @@ import com.android.internal.utils.du.DUPackageMonitor.PackageChangedListener;
 import com.android.internal.utils.du.DUPackageMonitor.PackageState;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardHostView.OnDismissAction;
-import com.android.keyguard.KeyguardStatusView;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.keyguard.ViewMediatorCallback;
@@ -488,7 +487,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     // top bar
     protected KeyguardStatusBarView mKeyguardStatusBar;
-    KeyguardStatusView mKeyguardStatusView;
     boolean mLeaveOpenOnKeyguardHide;
     KeyguardIndicationController mKeyguardIndicationController;
 
@@ -1168,7 +1166,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mAboveShelfObserver.setListener(mStatusBarWindow.findViewById(
                 R.id.notification_container_parent));
         mKeyguardStatusBar = (KeyguardStatusBarView) mStatusBarWindow.findViewById(R.id.keyguard_header);
-        mKeyguardStatusView = (KeyguardStatusView) mStatusBarWindow.findViewById(R.id.keyguard_status_view);
 
         mNotificationIconAreaController = SystemUIFactory.getInstance()
                 .createNotificationIconAreaController(context, this);
@@ -5153,7 +5150,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mNotificationPanel.setDark(mDozing, animate);
         updateQsExpansionEnabled();
         mDozeScrimController.setDozing(mDozing, animate);
-        mKeyguardStatusView.setDozing(mDozing);
         mVisualizerView.setDozing(mDozing);
         updateRowStates();
         Trace.endSection();

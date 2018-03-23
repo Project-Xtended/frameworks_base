@@ -53,7 +53,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.GestureDetector;
 import android.widget.FrameLayout;
 
 import com.android.internal.logging.MetricsLogger;

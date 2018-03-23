@@ -4737,16 +4737,6 @@ public final class Settings {
         public static final String TOAST_ICON = "toast_icon";
        
         /**
-         * @hide
-         */
-        public static final String AMBIENT_DISPLAY_SHOW_BATTERY = "ambient_display_show_battery";
-
-        /**
-         * @hide
-         */
-        public static final String AMBIENT_DISPLAY_SHOW_BATTERY_TEXT = "ambient_display_show_battery_text";
-
-        /**
          * Whether to use partial screenshot when using volume keys
          * Force an Ambient notification when a new media track is being played
          * 0 - disabled
