@@ -44,7 +44,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:textColor="?attr/wallpaperTextColor"
+                android:textColor="@color/keyguard_default_primary_text_color"
                 android:singleLine="true"
                 style="@style/widget_big_thin"
                 android:format12Hour="@string/keyguard_widget_12_hours_format"

@@ -530,6 +530,7 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     public void setDark(float darkAmount) {
+        final Resources res = getContext().getResources();
         if (mDarkAmount == darkAmount) {
             return;
         }
@@ -550,10 +551,10 @@ public class KeyguardStatusView extends GridLayout implements
 
         updateDozeVisibleViews();
         //mBatteryDoze.setDark(dark);
-        mClockView.setTextColor(ColorUtils.blendARGB(mTextColor, Color.WHITE, darkAmount));
-        mDateView.setTextColor(ColorUtils.blendARGB(mDateTextColor, Color.WHITE, darkAmount));
+        //mClockView.setAlpha(dark ? 0 : 1);
+        //mDateView.set(dark ? 0 : 1);
+        //mAlarmStatusView.setTextColor(mAlarmTextColor, darkAmount);
         int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.WHITE, darkAmount);
-        mAlarmStatusView.setTextColor(blendedAlarmColor);
         mAlarmStatusView.setCompoundDrawableTintList(ColorStateList.valueOf(blendedAlarmColor));
         mWeatherView.setAlpha(dark ? 0 : 1);
     }
