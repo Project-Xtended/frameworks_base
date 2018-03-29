@@ -572,9 +572,9 @@ public class KeyguardStatusView extends GridLayout implements
         //mClockView.setAlpha(dark ? 0 : 1);
         //mDateView.set(dark ? 0 : 1);
         //mAlarmStatusView.setTextColor(mAlarmTextColor, darkAmount);
-        int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.WHITE, darkAmount);
-        mAlarmStatusView.setCompoundDrawableTintList(ColorStateList.valueOf(blendedAlarmColor));
-        mWeatherView.setAlpha(dark ? 0 : 1);
+        //int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.WHITE, darkAmount);
+        //mAlarmStatusView.setCompoundDrawableTintList(ColorStateList.valueOf(blendedAlarmColor));
+        //mWeatherView.setAlpha(dark ? 0 : 1);
     }
 
     public void setPulsing(boolean pulsing) {

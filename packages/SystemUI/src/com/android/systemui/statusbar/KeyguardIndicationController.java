@@ -339,7 +339,6 @@ public class KeyguardIndicationController implements
                 if (!TextUtils.isEmpty(mTransientIndication)) {
                     // When dozing we ignore any text color and use white instead, because
                     // colors can be hard to read in low brightness.
-                    mTextView.setTextColor(Color.WHITE);
                     mTextView.switchIndication(mTransientIndication);
                 } else {
                     // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
