@@ -15,5 +15,5 @@
 -->
 <resources>
     <!-- Keyguard weather colors -->
-    <color name="keyguard_default_primary_text_color">@*android:color/accent_device_default_light</color>
+    <color name="keyguard_default_primary_text_color">#ffffffff</color>
 </resources>
