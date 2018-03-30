@@ -4487,8 +4487,7 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String BATTERY_BAR_THICKNESS = "battery_bar_thickness";
-        
+        public static final String BATTERY_BAR_THICKNESS = "battery_bar_thickness";        
 
         /**
          * @hide
@@ -4789,6 +4788,18 @@ public final class Settings {
          * @hide
          */
         public static final String HIDE_LOCKSCREEN_ALARM = "hide_lockscreen_alarm";
+
+    	/**
+         * change lockscreen alpha color
+         * @hide
+         */
+        public static final String LOCKSCREEN_ALPHA = "lockscreen_alpha";
+
+        /**
+         * change lockscreen security alpha color
+         * @hide
+         */
+        public static final String LOCKSCREEN_SECURITY_ALPHA = "lockscreen_security_alpha";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

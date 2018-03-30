@@ -6383,6 +6383,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LAST_DOZE_AUTO_BRIGHTNESS),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ALPHA),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_SECURITY_ALPHA),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6404,6 +6410,24 @@ public class StatusBar extends SystemUI implements DemoMode,
             setQsPanelOptions();
             setForceAmbient();
             updateBatterySettings();
+            setNewOverlayAlpha();
+            setSecurityAlpha();
+        }
+    }
+
+    public void setNewOverlayAlpha() {
+        float overlayalpha = Settings.System.getFloatForUser(mContext.getContentResolver(),
+        Settings.System.LOCKSCREEN_ALPHA, 0.45f, UserHandle.USER_CURRENT);
+        if (mScrimController != null) {
+        mScrimController.setOverlayAlpha(overlayalpha);
+	}
+    }
+
+    public void setSecurityAlpha() {
+        float securityoverlayalpha = Settings.System.getFloatForUser(mContext.getContentResolver(),
+        Settings.System.LOCKSCREEN_SECURITY_ALPHA, 0.75f, UserHandle.USER_CURRENT);
+        if (mScrimController != null) {
+        mScrimController.setSecurityOverlayAlpha(securityoverlayalpha);
         }
     }
 
