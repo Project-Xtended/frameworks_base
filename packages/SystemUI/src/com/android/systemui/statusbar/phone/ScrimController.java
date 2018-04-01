@@ -442,7 +442,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener,
             setScrimInFrontAlpha(fraction * mSecurityOverlayAlpha);
             setScrimBehindAlpha(behindFraction * mOverlayAlpha);
         } else if (mBouncerShowing && !mBouncerIsKeyguard) {
-            setScrimInFrontAlpha(mSecurityOverlayAlpha)
+            setScrimInFrontAlpha(mSecurityOverlayAlpha);
             updateScrimNormal();
         } else if (mBouncerShowing) {
             setScrimInFrontAlpha(mSecurityOverlayAlpha);
