@@ -172,7 +172,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
         @Override
         public void onChange(boolean selfChange) {
             final boolean enabled = System.getIntForUser(mContext.getContentResolver(),
-                    POCKET_JUDGE, 0 /* default */, UserHandle.USER_CURRENT) != 0;
+                    POCKET_JUDGE, 1 /* default */, UserHandle.USER_CURRENT) != 0;
             setEnabled(enabled);
         }
 
@@ -440,7 +440,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
 
         if (!mProximityRegistered) {
             mSensorManager.registerListener(mProximityListener, mProximitySensor,
-                    PROXIMITY_SENSOR_DELAY, mHandler);
+                    SensorManager.SENSOR_DELAY_NORMAL, mHandler);
             mProximityRegistered = true;
         }
     }
@@ -473,7 +473,7 @@ public class PocketService extends SystemService implements IBinder.DeathRecipie
 
         if (!mLightRegistered) {
             mSensorManager.registerListener(mLightListener, mLightSensor,
-                    LIGHT_SENSOR_DELAY, mHandler);
+                    SensorManager.SENSOR_DELAY_NORMAL, mHandler);
             mLightRegistered = true;
         }
     }
