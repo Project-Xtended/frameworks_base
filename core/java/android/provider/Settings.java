@@ -4500,11 +4500,6 @@ public final class Settings {
         public static final String BATTERY_BAR_ANIMATE = "battery_bar_animate";
 
         /**
-         * @hide
-         */
-        public static final String BATTERY_BAR_CHARGING_COLOR = "battery_bar_charging_color";
-
-        /**
          * Applications list where heasdup should't show
          *
          * @hide
