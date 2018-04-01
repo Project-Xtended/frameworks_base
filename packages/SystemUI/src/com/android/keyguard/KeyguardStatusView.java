@@ -53,6 +53,8 @@ import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.android.internal.util.gzosp.ImageHelper;
+
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.systemui.doze.DozeLog;
@@ -119,9 +121,7 @@ public class KeyguardStatusView extends GridLayout implements
         @Override
         public void onTimeChanged() {
             if (mEnableRefresh) {
-                refresh();
-                updateClockColor();
-                updateClockDateColor();
+            refresh();
             }
         }
 
@@ -133,6 +133,7 @@ public class KeyguardStatusView extends GridLayout implements
                 updateOwnerInfo();
                 updateClockColor();
                 updateClockDateColor();
+                refreshLockFont();
             }
         }
 
@@ -141,8 +142,6 @@ public class KeyguardStatusView extends GridLayout implements
             setEnableMarquee(true);
             mEnableRefresh = true;
             refresh();
-            updateClockColor();
-            updateClockDateColor();
         }
 
         @Override
@@ -157,6 +156,7 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfo();
             updateClockColor();
             updateClockDateColor();
+            refreshLockFont();
         }
     };
 
@@ -225,6 +225,7 @@ public class KeyguardStatusView extends GridLayout implements
         updateOwnerInfo();
         updateClockColor();
         updateClockDateColor();
+        refreshLockFont();
 
         // Disable elegant text height because our fancy colon makes the ymin value huge for no
         // reason.
@@ -382,8 +383,14 @@ public class KeyguardStatusView extends GridLayout implements
                     mWeatherClient.queryWeather();
                     mWeatherData = mWeatherClient.getWeatherInfo();
                     mWeatherCity.setText(mWeatherData.city);
-                    mWeatherConditionImage.setImageDrawable(
-                        mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode));
+                    if (mIconColor == -2) {
+                        mWeatherConditionImage.setImageDrawable(
+                                        mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode));
+                    } else {
+                            Bitmap coloredWeatherIcon = ImageHelper.getColoredBitmap(
+                                        mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode), mIconColor);
+                        mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
+                    }
                     mWeatherCurrentTemp.setText(mWeatherData.temp + mWeatherData.tempUnits);
                     mWeatherConditionText.setText(mWeatherData.condition);
                     updateSettings(false);
@@ -422,14 +429,6 @@ public class KeyguardStatusView extends GridLayout implements
         }
         if (mWeatherCity != null) {
             mWeatherCity.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
-        }
-        if (mIconColor == -2) {
-            mWeatherConditionImage.setImageDrawable(
-			    mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode));
-        } else {
-	        Bitmap coloredWeatherIcon = ImageHelper.getColoredBitmap(
-                            mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode), mIconColor);
-            mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
         }
         if (mWeatherCity != null) {
             mWeatherCity.setTextColor(mCityColor);
@@ -542,19 +541,7 @@ public class KeyguardStatusView extends GridLayout implements
         }
     }
 
-    private void updateClockColor() {
-        if (mClockView != null) {
-            mClockView.setTextColor(mLockColor);
-        }
-    }
-
-    private void updateClockDateColor() {
-        if (mDateView != null) {
-            mDateView.setTextColor(mDateColor);
-        }
-    }
-
-    // DateFormat.getBestDateTimePattern is extremely expensive, and refresh is called often.
+     // DateFormat.getBestDateTimePattern is extremely expensive, and refresh is called often.
     // This is an optimization to ensure we only recompute the patterns when the inputs change.
     private static final class Patterns {
         static String dateViewSkel;
@@ -647,10 +634,6 @@ public class KeyguardStatusView extends GridLayout implements
          void observe() {
              ContentResolver resolver = mContext.getContentResolver();
              resolver.registerContentObserver(Settings.System.getUriFor(
-                     Settings.System.LOCKSCREEN_CLOCK_COLOR), false, this, UserHandle.USER_ALL);
-             resolver.registerContentObserver(Settings.System.getUriFor(
-                     Settings.System.LOCKSCREEN_CLOCK_DATE_COLOR), false, this, UserHandle.USER_ALL);
-             resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.LOCK_SCREEN_SHOW_WEATHER), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.OMNIJAWS_WEATHER_ICON_PACK), false, this, UserHandle.USER_ALL);
@@ -702,12 +685,6 @@ public class KeyguardStatusView extends GridLayout implements
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR))) {
                  refresh();
-             } else if (uri.equals(Settings.System.getUriFor(
-                     Settings.System.LOCKSCREEN_CLOCK_COLOR,))) {
-                 updateClockColor(false);
-             } else if (uri.equals(Settings.System.getUriFor(
-                     Settings.System.LOCKSCREEN_CLOCK_DATE_COLOR,))) {
-                 updateClockDateColor(false);
              }
              update();
          }
@@ -734,10 +711,26 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCKSCREEN_ALARM_COLOR, 0xFFFFFFFF);
            ownerInfoColor = Settings.System.getInt(resolver,
                 Settings.System.LOCKSCREEN_OWNER_INFO_COLOR, 0xFFFFFFFF);
-           mLockColor = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_CLOCK_COLOR, 0xFFFFFFFF);
-           mDateColor = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_CLOCK_DATE_COLOR, 0xFFFFFFFF);
          }
      }
+
+    private void updateClockColor() {
+        ContentResolver resolver = getContext().getContentResolver();
+        int color = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_CLOCK_COLOR, 0xFFFFFFFF);
+
+        if (mClockView != null) {
+            mClockView.setTextColor(color);
+        }
+    }
+
+    private void updateClockDateColor() {
+        ContentResolver resolver = getContext().getContentResolver();
+        int color = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_CLOCK_DATE_COLOR, 0xFFFFFFFF);
+
+        if (mDateView != null) {
+            mDateView.setTextColor(color);
+        }
+    }
 }
