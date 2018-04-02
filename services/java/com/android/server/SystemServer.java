@@ -1550,7 +1550,6 @@ public final class SystemServer {
 
             Slog.i(TAG, "Starting PocketService");
             mSystemServiceManager.startService(PocketService.class);
-        }
 
         if (!disableNonCoreServices && !disableMediaProjection) {
             traceBeginAndSlog("StartMediaProjectionManager");

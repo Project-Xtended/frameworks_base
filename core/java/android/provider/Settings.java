@@ -4509,6 +4509,11 @@ public final class Settings {
         public static final String BATTERY_BAR_ANIMATE = "battery_bar_animate";
 
         /**
+         * @hide
+         */
+        public static final String BATTERY_BAR_CHARGING_COLOR = "battery_bar_charging_color";
+
+        /**
          * Applications list where heasdup should't show
          *
          * @hide
@@ -4914,6 +4919,20 @@ public final class Settings {
          * @hide
          */
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+
+        /**
+         * Change font size for the system lockscreen date
+         *
+         * @hide
+         */
+        public static final String LOCKDATE_FONT_SIZE= "lockdate_font_size";
+
+        /**
+         * Change font size for the system lockscreen clock widget
+         *
+         * @hide
+         */
+        public static final String LOCKCLOCK_FONT_SIZE = "lockclock_font_size";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
