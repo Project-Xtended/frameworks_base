@@ -68,4 +68,6 @@
 
   <java-symbol type="bool" name="config_useDefaultBatchingForAccel" />
 
+  <java-symbol type="bool" name="config_multiColorNotificationLed" />
+
 </resources>
