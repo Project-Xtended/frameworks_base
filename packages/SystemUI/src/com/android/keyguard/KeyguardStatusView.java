@@ -959,9 +959,9 @@ public class KeyguardStatusView extends GridLayout implements
 
         updateDozeVisibleViews();
         //mBatteryDoze.setDark(dark);
-        mClockView.setTextColor(ColorUtils.blendARGB(mTextColor, Color.WHITE, darkAmount));
-        mDateView.setTextColor(ColorUtils.blendARGB(mDateTextColor, Color.WHITE, darkAmount));
-        int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.WHITE, darkAmount);
+        mClockView.setTextColor(ColorUtils.blendARGB(mTextColor, Color.RED, darkAmount));
+        mDateView.setTextColor(ColorUtils.blendARGB(mDateTextColor, Color.RED, darkAmount));
+        int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.RED, darkAmount);
         mAlarmStatusView.setTextColor(blendedAlarmColor);
         mAlarmStatusView.setCompoundDrawableTintList(ColorStateList.valueOf(blendedAlarmColor));
         mWeatherView.setAlpha(dark ? 0 : 1);
@@ -994,6 +994,8 @@ public class KeyguardStatusView extends GridLayout implements
 
          void observe() {
              ContentResolver resolver = mContext.getContentResolver();
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.LOCK_DATE_FONTS), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.LOCK_SCREEN_SHOW_WEATHER), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1050,6 +1052,9 @@ public class KeyguardStatusView extends GridLayout implements
               } else if (uri.equals(Settings.System.getUriFor(
                       Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR))) {
                   refresh();
+              } else if (uri.equals(Settings.System.getUriFor(
+                      Settings.System.LOCK_DATE_FONTS))) {
+                 refreshdatesize();
               } else if (uri.equals(Settings.System.getUriFor(
                       Settings.System.LOCKCLOCK_FONT_SIZE))) {
                   updateclocksize();
