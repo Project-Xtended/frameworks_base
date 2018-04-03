@@ -242,7 +242,9 @@
     <string name="qs_show_carrier">Show carrier names</string>
     <string name="qs_show_clock">Show clock</string>
     <string name="qs_show_mini">Mini mode</string>
+    <string name="tuner_brightness_position_bottom">Brightness slider on bottom</string>
     <string name="qs_header">Header</string>
+
 
     <!-- Expanded desktop QS Tile -->
     <string name="quick_settings_expanded_desktop_label">Expanded desktop</string>
