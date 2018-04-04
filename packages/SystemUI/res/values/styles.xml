@@ -489,4 +489,10 @@
         <item name="android:colorBackground">?android:attr/colorSecondary</item>
     </style>
 
+    <style name="PasswordTheme" parent="Theme.SystemUI">
+        <item name="android:textColor">?attr/wallpaperTextColor</item>
+        <item name="android:colorControlNormal">?attr/wallpaperTextColor</item>
+        <item name="android:colorControlActivated">?attr/wallpaperTextColor</item>
+    </style>
+
 </resources>
