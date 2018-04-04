@@ -50,4 +50,7 @@
     <!-- Membar spacing -->
     <dimen name="recents_membar_spacing">12dp</dimen>
 
+    <!-- QS padding -->
+    <dimen name="qs_corner_content_padding">8dp</dimen>
+
 </resources>
