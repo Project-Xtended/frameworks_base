@@ -84,9 +84,9 @@
         <item>com.snapchat.android</item>
     </string-array>
 
-    <bool name="config_canForceDozeNotifications">true</bool>
+    <bool name="config_canForceDozeNotifications">false</bool>
 
-    <bool name="config_dozeAlwaysOnDisplayEnabledDefault">true</bool>
+    <bool name="config_dozeAlwaysOnDisplayEnabledDefault">false</bool>
 
     <bool name="config_allowNotificationIconTextTinting">true</bool>
 
