@@ -134,7 +134,7 @@ public class KeyguardIndicationController implements
         mIndicationArea = indicationArea;
         mTextView = (KeyguardIndicationTextView) indicationArea.findViewById(
                 R.id.keyguard_indication_text);
-        mInitialTextColor = mTextView != null ? mTextView.getCurrentTextColor() : Color.RED;
+        mInitialTextColor = mTextView != null ? mTextView.getCurrentTextColor() : Color.WHITE;
         mDisclosure = (KeyguardIndicationTextView) indicationArea.findViewById(
                 R.id.keyguard_indication_enterprise_disclosure);
         mLockIcon = lockIcon;
@@ -339,7 +339,7 @@ public class KeyguardIndicationController implements
                 if (!TextUtils.isEmpty(mTransientIndication)) {
                     // When dozing we ignore any text color and use white instead, because
                     // colors can be hard to read in low brightness.
-                    mTextView.setTextColor(Color.RED);
+                    mTextView.setTextColor(Color.WHITE);
     		    mTextView.switchIndication(mTransientIndication);
                 } else {
                     // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system

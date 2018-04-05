@@ -967,9 +967,9 @@ public class KeyguardStatusView extends GridLayout implements
 
         updateDozeVisibleViews();
         //mBatteryDoze.setDark(dark);
-        mClockView.setTextColor(ColorUtils.blendARGB(mTextColor, Color.RED, darkAmount));
-        mDateView.setTextColor(ColorUtils.blendARGB(mDateTextColor, Color.RED, darkAmount));
-        int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.RED, darkAmount);
+        mClockView.setTextColor(ColorUtils.blendARGB(mTextColor, Color.WHITE, darkAmount));
+        mDateView.setTextColor(ColorUtils.blendARGB(mDateTextColor, Color.WHITE, darkAmount));
+        int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.WHITE, darkAmount);
         mAlarmStatusView.setTextColor(blendedAlarmColor);
         mAlarmStatusView.setCompoundDrawableTintList(ColorStateList.valueOf(blendedAlarmColor));
         mWeatherView.setAlpha(dark ? 0 : 1);
