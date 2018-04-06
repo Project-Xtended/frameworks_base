@@ -69,5 +69,6 @@
     <string name="animation_grow_shrink_left">Grow in (Left)</string>
     <string name="animation_grow_shrink_right">Grow in (Right)</string>
     <string name="animation_android_p">Android P</string>
+    <string name="animation_ethans">Ethans</string>
     <string name="action_null">Blank</string>
 </resources>

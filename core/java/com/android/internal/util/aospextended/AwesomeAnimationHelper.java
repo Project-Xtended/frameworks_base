@@ -38,6 +38,20 @@ public class AwesomeAnimationHelper {
     public final static int ANIMATION_GROW_SHRINK_LEFT = 12;
     public final static int ANIMATION_GROW_SHRINK_RIGHT = 13;
     public final static int ANIMATION_ANDROID_P = 14;
+    public final static int ANIMATION_ETHANS = 15;
+
+    public static final int TRANSIT_ACTIVITY_OPEN = 6;
+    public static final int TRANSIT_ACTIVITY_CLOSE = 7;
+    public static final int TRANSIT_DOCK_TASK_FROM_RECENTS = 19;
+    public static final int TRANSIT_TASK_OPEN = 8;
+    public static final int TRANSIT_TASK_CLOSE = 9;
+    public static final int TRANSIT_WALLPAPER_CLOSE = 12;
+    public static final int TRANSIT_WALLPAPER_OPEN = 13;
+    public static final int TRANSIT_WALLPAPER_INTRA_OPEN = 14;
+    public static final int TRANSIT_WALLPAPER_INTRA_CLOSE = 15;
+    public static final int TRANSIT_TASK_OPEN_BEHIND = 16;
+    public static final int TRANSIT_TASK_TO_FRONT = 10;
+    public static final int TRANSIT_TASK_TO_BACK = 11;
 
     public static int[] getAnimationsList() {
         ArrayList<Integer> animList = new ArrayList<Integer>();
@@ -56,6 +70,7 @@ public class AwesomeAnimationHelper {
         animList.add(ANIMATION_GROW_SHRINK_LEFT);
         animList.add(ANIMATION_GROW_SHRINK_RIGHT);
         animList.add(ANIMATION_ANDROID_P);
+        animList.add(ANIMATION_ETHANS);
         int length = animList.size();
         int[] anim = new int[length];
         for (int i = 0; i < length; i++) {
@@ -64,7 +79,7 @@ public class AwesomeAnimationHelper {
         return anim;
     }
 
-    public static int[] getAnimations(int mAnim) {
+    public static int[] getAnimations(int mAnim, int transit) {
         int[] anim = new int[2];
         switch (mAnim) {
             case ANIMATION_FADE:
@@ -119,9 +134,61 @@ public class AwesomeAnimationHelper {
                 anim[0] = com.android.internal.R.anim.shrink_fade_out_from_bottom_ribbon;
                 anim[1] = com.android.internal.R.anim.grow_fade_in_from_bottom_ribbon;
                 break;
-            case ANIMATION_ANDROID_P:
-                anim[0] = com.android.internal.R.anim.slow_fade_out;
-                anim[1] = com.android.internal.R.anim.slow_fade_in;
+            case ANIMATION_ETHANS:
+                switch (transit) {
+                    case TRANSIT_ACTIVITY_OPEN:
+                        anim[1] = com.android.internal.R.anim.ethans_activity_open_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_activity_open_exit;
+                        break;
+
+                    case TRANSIT_ACTIVITY_CLOSE:
+                        anim[1] = com.android.internal.R.anim.ethans_activity_close_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_activity_close_exit;
+                        break;
+
+                    case TRANSIT_DOCK_TASK_FROM_RECENTS:
+                    case TRANSIT_TASK_OPEN:
+                        anim[1] = com.android.internal.R.anim.ethans_task_open_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_task_open_exit;
+                        break;
+
+                    case TRANSIT_TASK_CLOSE:
+                        anim[1] = com.android.internal.R.anim.ethans_task_close_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_task_close_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_OPEN:
+                        anim[1] = com.android.internal.R.anim.ethans_wallpaper_open_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_wallpaper_open_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_CLOSE:
+                        anim[1] = com.android.internal.R.anim.ethans_wallpaper_close_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_wallpaper_close_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_INTRA_OPEN:
+                        anim[1] = com.android.internal.R.anim.ethans_wallpaper_intra_open_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_wallpaper_intra_open_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_INTRA_CLOSE:
+                        anim[1] = com.android.internal.R.anim.ethans_wallpaper_intra_close_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_wallpaper_intra_close_exit;
+                        break;
+                    case TRANSIT_TASK_TO_FRONT:
+                        anim[1] = com.android.internal.R.anim.ethans_task_open_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_task_open_exit;
+                        break;
+                    case TRANSIT_TASK_TO_BACK:
+                        anim[1] = com.android.internal.R.anim.ethans_task_close_enter;
+                        anim[0] = com.android.internal.R.anim.ethans_task_close_exit;
+                        break;
+                    case TRANSIT_TASK_OPEN_BEHIND:
+                        anim[1] = com.android.internal.R.anim.ethans_launch_task_behind_source;
+                        anim[0] = com.android.internal.R.anim.ethans_launch_task_behind_target;
+                        break;
+                }
                 break;
         }
         return anim;
@@ -175,6 +242,9 @@ public class AwesomeAnimationHelper {
                 break;
             case ANIMATION_ANDROID_P:
                 value = res.getString(com.android.internal.R.string.animation_android_p);
+                break;
+            case ANIMATION_ETHANS:
+                value = res.getString(com.android.internal.R.string.animation_ethans);
                 break;
             default:
                 value = res.getString(com.android.internal.R.string.action_null);
