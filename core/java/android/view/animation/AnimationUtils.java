@@ -28,11 +28,14 @@ import android.os.SystemClock;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Xml;
 import android.util.PathParser;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+
+import com.android.internal.util.aospextended.AwesomeAnimationHelper;
 
 import java.io.IOException;
 
@@ -120,45 +123,45 @@ public class AnimationUtils {
 
         switch (name) {
             case "activity_open_enter":
-                if (mActivityAnimations[0] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[0] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getActivityOpenEnterAnim();
                 }
-                return getActivityOpenEnterAnim();
+                return loadAnimationFromXml(context, id);
             case "activity_open_exit":
-                if (mActivityAnimations[0] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[0] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getActivityOpenExitAnim();
                 }
-                return getActivityOpenExitAnim();
+                return loadAnimationFromXml(context, id);
             case "activity_close_enter":
-                if (mActivityAnimations[1] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[1] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getActivityCloseEnterAnim();
                 }
-                return getActivityCloseEnterAnim();
+                return loadAnimationFromXml(context, id);
             case "activity_close_exit":
-                if (mActivityAnimations[1] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[1] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getActivityCloseExitAnim();
                 }
-                return getActivityCloseExitAnim();
+                return loadAnimationFromXml(context, id);
             case "task_open_enter":
-                if (mActivityAnimations[2] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[2] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getTaskOpenEnterAnim();
                 }
-                return getTaskOpenEnterAnim();
+                return loadAnimationFromXml(context, id);
             case "task_open_exit":
-                if (mActivityAnimations[2] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[2] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getTaskOpenExitAnim();
                 }
-                return getTaskOpenExitAnim();
+                return loadAnimationFromXml(context, id);
             case "task_close_enter":
-                if (mActivityAnimations[3] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[3] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getTaskCloseEnterAnim();
                 }
-                return getTaskCloseEnterAnim();
+                return loadAnimationFromXml(context, id);
             case "task_close_exit":
-                if (mActivityAnimations[3] < 14) {
-                    return loadAnimationFromXml(context, id);
+                if (mActivityAnimations[3] == AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
+                    return getTaskCloseExitAnim();
                 }
-                return getTaskCloseExitAnim();
+                return loadAnimationFromXml(context, id);
             default:
                 return loadAnimationFromXml(context, id);
         }

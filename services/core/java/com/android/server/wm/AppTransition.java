@@ -67,6 +67,7 @@ import android.os.RemoteException;
 import android.provider.Settings;
 import android.os.SystemProperties;
 import android.util.ArraySet;
+import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.view.AppTransitionAnimationSpec;
@@ -1627,9 +1628,9 @@ public class AppTransition implements Dump {
             int animAttr = 0;
             switch (transit) {
                 case TRANSIT_ACTIVITY_OPEN:
-                    if (mActivityAnimations[0] != 0) {
+                    if (mActivityAnimations[0] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[0] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[0]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[0], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1640,9 +1641,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_ACTIVITY_CLOSE:
-                    if (mActivityAnimations[1] != 0) {
+                    if (mActivityAnimations[1] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[1] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[1]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[1], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1654,9 +1655,9 @@ public class AppTransition implements Dump {
                     break;
                 case TRANSIT_DOCK_TASK_FROM_RECENTS:
                 case TRANSIT_TASK_OPEN:
-                    if (mActivityAnimations[2] != 0) {
+                    if (mActivityAnimations[2] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[2] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[2]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[2], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1667,9 +1668,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_TASK_CLOSE:
-                    if (mActivityAnimations[3] != 0) {
+                    if (mActivityAnimations[3] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[3] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[3]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[3], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1680,9 +1681,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_TASK_TO_FRONT:
-                    if (mActivityAnimations[4] != 0) {
+                    if (mActivityAnimations[4] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[4] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[4]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[4], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1693,9 +1694,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_TASK_TO_BACK:
-                    if (mActivityAnimations[5] != 0) {
+                    if (mActivityAnimations[5] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[5] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[5]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[5], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1706,9 +1707,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_WALLPAPER_OPEN:
-                    if (mActivityAnimations[6] != 0) {
+                    if (mActivityAnimations[6] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[6] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[6]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[6], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1719,9 +1720,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_WALLPAPER_CLOSE:
-                    if (mActivityAnimations[7] != 0) {
+                    if (mActivityAnimations[7] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[7] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[7]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[7], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1732,9 +1733,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_WALLPAPER_INTRA_OPEN:
-                    if (mActivityAnimations[8] != 0) {
+                    if (mActivityAnimations[8] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[8] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[8]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[8], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1745,9 +1746,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_WALLPAPER_INTRA_CLOSE:
-                    if (mActivityAnimations[9] != 0) {
+                    if (mActivityAnimations[9] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[9] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[9]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[9], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
@@ -1758,9 +1759,9 @@ public class AppTransition implements Dump {
                     }
                     break;
                 case TRANSIT_TASK_OPEN_BEHIND:
-                    if (mActivityAnimations[10] != 0) {
+                    if (mActivityAnimations[10] != AwesomeAnimationHelper.ANIMATION_DEFAULT && mActivityAnimations[10] != AwesomeAnimationHelper.ANIMATION_ANDROID_P) {
                         mIsResId = true;
-                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[10]);
+                        int[] animArray = AwesomeAnimationHelper.getAnimations(mActivityAnimations[10], transit);
                         animAttr = enter
                                 ? animArray[1]
                                 : animArray[0];
