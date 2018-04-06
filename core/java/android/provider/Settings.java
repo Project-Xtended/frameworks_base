@@ -6296,11 +6296,28 @@ public final class Settings {
         public static final String QS_FOOTER_WARNINGS = "qs_footer_warnings";
 
         /**
-         * IMPORTANT: If you add a new public settings you also have to add it to
-         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
-         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
-         * the setting value. See an example above.
+         * Show Settings icon in QS Footer
+         * @hide
          */
+        public static final String QS_FOOTER_SHOW_SETTINGS = "qs_footer_show_settings";
+
+        /**
+         * Show User switcher icon in QS Footer.
+         * @hide
+         */
+        public static final String QS_FOOTER_SHOW_USER = "qs_footer_show_user";
+
+        /**
+         * Show power menu icon in QS Footer.
+         * @hide
+         */
+        public static final String QS_FOOTER_SHOW_POWER_MENU = "qs_footer_show_power_menu";
+
+        /**
+         * Show Edit icon in QS Footer.
+         * @hide
+         */
+        public static final String QS_FOOTER_SHOW_EDIT = "qs_footer_show_edit";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
