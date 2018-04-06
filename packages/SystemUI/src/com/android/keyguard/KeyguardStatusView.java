@@ -888,6 +888,21 @@ public class KeyguardStatusView extends GridLayout implements
         if (lockClockFont == 24) {
                 mClockView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
         }
+        if (lockClockFont == 25) {
+            mClockView.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
+        }
+        if (lockClockFont == 26) {
+            mClockView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+        }
+        if (lockClockFont == 27) {
+            mClockView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+        }
+        if (lockClockFont == 28) {
+            mClockView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+        }
+        if (lockClockFont == 29) {
+            mClockView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+        }
     }
 
     private void updateClockColor() {
