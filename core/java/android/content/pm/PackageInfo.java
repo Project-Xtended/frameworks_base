@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2007 The Android Open Source Project
  *
@@ -286,7 +287,7 @@ public class PackageInfo implements Parcelable {
     /** @hide */
     public int overlayPriority;
 
-
+	public boolean isStaticOverlay;
     /**
      * Flag for use with {@link #overlayFlags}. Marks the overlay as static, meaning it cannot
      * be enabled/disabled at runtime.
