@@ -1259,11 +1259,18 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
     }
 
     private boolean shouldListenForFingerprint() {
-        return (mKeyguardIsVisible || !mDeviceInteractive ||
-                (mBouncer && !mKeyguardGoingAway) || mGoingToSleep ||
-                shouldListenForFingerprintAssistant() || (mKeyguardOccluded && mIsDreaming))
-                && !mSwitchingUser && !isFingerprintDisabled(getCurrentUser())
-                && !mKeyguardGoingAway && !mIsDeviceInPocket;
+        if (!isWakeAndUnlockEnabled()) {
+            return (mKeyguardIsVisible || mBouncer || shouldListenForFingerprintAssistant() ||
+                    (mKeyguardOccluded && mIsDreaming)) && mDeviceInteractive && !mGoingToSleep
+                    && !mSwitchingUser && !isFingerprintDisabled(getCurrentUser())
+                    && !mKeyguardGoingAway;
+        } else {
+            return (mKeyguardIsVisible || !mDeviceInteractive ||
+                    (mBouncer && !mKeyguardGoingAway) || mGoingToSleep ||
+                    shouldListenForFingerprintAssistant() || (mKeyguardOccluded && mIsDreaming))
+                    && !mSwitchingUser && !isFingerprintDisabled(getCurrentUser())
+                    && !mKeyguardGoingAway;
+        }
     }
 
     private void startListeningForFingerprint() {
@@ -1305,6 +1312,13 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
     private boolean isDeviceProvisionedInSettingsDb() {
         return Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.DEVICE_PROVISIONED, 0) != 0;
+    }
+
+    private boolean isWakeAndUnlockEnabled() {
+        return (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FP_WAKE_AND_UNLOCK, 1) != 0 &&
+                mContext.getResources().getBoolean(
+                    com.android.keyguard.R.bool.config_fingerprintWakeAndUnlock));
     }
 
     private void watchForDeviceProvisioning() {
