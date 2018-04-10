@@ -3899,6 +3899,8 @@ public class PackageManagerService extends IPackageManager.Stub
             return null;
         }
 
+        mayFakeSignature(p, packageInfo, permissions);
+
         packageInfo.packageName = packageInfo.applicationInfo.packageName =
                 resolveExternalPackageNameLPr(p);
 
