@@ -152,8 +152,10 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
     @Override
     protected void handleUpdateState(SignalState state, Object arg) {
-        if (mSignalCallback == null) return;
-        CallbackInfo cb = (CallbackInfo) arg;
+        if (mSignalCallback == null) {
+            return;
+        }
+	CallbackInfo cb = (CallbackInfo) arg;
         if (cb == null) {
             cb = mSignalCallback.mInfo;
         }

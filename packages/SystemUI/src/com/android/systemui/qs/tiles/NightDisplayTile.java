@@ -78,6 +78,9 @@ public class NightDisplayTile extends QSTileImpl<BooleanState>
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        if (mController == null) {
+            return;
+        }
         if (state.slash == null) {
             state.slash = new SlashState();
         }
