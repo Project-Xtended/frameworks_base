@@ -95,6 +95,7 @@ public class AirplaneModeTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        if (mSetting == null) return;
         checkIfRestrictionEnforcedByAdminOnly(state, UserManager.DISALLOW_AIRPLANE_MODE);
         final int value = arg instanceof Integer ? (Integer)arg : mSetting.getValue();
         final boolean airplaneMode = value != 0;
@@ -125,6 +126,9 @@ public class AirplaneModeTile extends QSTileImpl<BooleanState> {
     }
 
     public void handleSetListening(boolean listening) {
+        if (mReceiver == null) {
+            return;
+        }
         if (mListening == listening) return;
         mListening = listening;
         if (listening) {

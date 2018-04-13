@@ -178,6 +178,7 @@ public class CaffeineTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        if (mWakeLock == null) return;
         state.value = mWakeLock.isHeld();
         state.icon = ResourceIcon.get(R.drawable.ic_qs_caffeine);
         if (state.value) {
