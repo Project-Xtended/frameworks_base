@@ -268,6 +268,9 @@ public class NavigationBarInflaterView extends FrameLayout
         if (newLayout == null) {
             newLayout = getDefaultLayout();
         }
+        if (mInverseLayout) {
+            newLayout = newLayout.replace("recent", "back").replaceFirst("back", "recent");
+        }
         String[] sets = newLayout.split(GRAVITY_SEPARATOR, 3);
         if (sets.length != 3) {
             Log.d(TAG, "Invalid layout.");
