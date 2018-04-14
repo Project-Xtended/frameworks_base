@@ -36,6 +36,8 @@ import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.content.ContentResolver;
+import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -45,8 +47,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
+import android.net.Uri;
+import android.os.UserHandle;
 import android.os.Handler;
 import android.os.IRemoteCallback;
+import android.provider.Settings;
 import android.util.ArraySet;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -1630,7 +1635,9 @@ public class RecentsView extends FrameLayout {
                      Settings.System.RECENTS_DATE_COLOR), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
-             update();
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.RECENTS_LAYOUT_STYLE), false, this, UserHandle.USER_ALL);
+	     update();
          }
 
          void unobserve() {
@@ -1671,6 +1678,11 @@ public class RecentsView extends FrameLayout {
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.MEM_TEXT_COLOR))) {
                  checkcolors();
+	     } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.RECENTS_LAYOUT_STYLE))) {
+                 try {
+                 mTaskStackView.reloadOnConfigurationChange();
+                 } catch (Exception e) {}
              }
              update();
          }

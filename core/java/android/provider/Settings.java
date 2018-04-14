@@ -5766,16 +5766,14 @@ public final class Settings {
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
         /**
-         * Which component to use for Recents UI
+         * Which kind of style you might want to see on Recents UI
          * 0 - Pie Recents (Quickstep)
          * 1 - Oreo Recents (SystemUI)
+         * 2 - Grid Recents (SystemUI)
+         * 3 - Android Go Recents (SystemUI)
          * @hide
          */
-        public static final String RECENTS_COMPONENT = "recents_component";
-
-        /** @hide */
-        public static final Validator RECENTS_COMPONENT_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
+	public static final String RECENTS_LAYOUT_STYLE  = "recents_layout_style";
 
         /**
          * Disable dashboard conditions in settings
@@ -6629,7 +6627,6 @@ public final class Settings {
             SMART_PIXELS_PATTERN,
             SMART_PIXELS_SHIFT_TIMEOUT,
             SMART_PIXELS_ON_POWER_SAVE,
-            RECENTS_COMPONENT,
             ONE_HAND_MODE_ENABLED,
             STATUS_BAR_SHOW_TICKER,
             STATUS_BAR_TICKER_ANIMATION_MODE,
@@ -6810,7 +6807,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SMART_PIXELS_PATTERN);
             PRIVATE_SETTINGS.add(SMART_PIXELS_SHIFT_TIMEOUT);
             PRIVATE_SETTINGS.add(SMART_PIXELS_ON_POWER_SAVE);
-            PRIVATE_SETTINGS.add(RECENTS_COMPONENT);
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
             PRIVATE_SETTINGS.add(QS_ROWS_PORTRAIT);
             PRIVATE_SETTINGS.add(QS_ROWS_LANDSCAPE);
@@ -6968,7 +6964,6 @@ public final class Settings {
             VALIDATORS.put(SMART_PIXELS_PATTERN, SMART_PIXELS_PATTERN_VALIDATOR);
             VALIDATORS.put(SMART_PIXELS_SHIFT_TIMEOUT, SMART_PIXELS_SHIFT_TIMEOUT_VALIDATOR);
             VALIDATORS.put(SMART_PIXELS_ON_POWER_SAVE, SMART_PIXELS_ON_POWER_SAVE_VALIDATOR);
-            VALIDATORS.put(RECENTS_COMPONENT,RECENTS_COMPONENT_VALIDATOR);
             VALIDATORS.put(ONE_HAND_MODE_ENABLED, ONE_HAND_MODE_ENABLED_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_SHOW_TICKER, STATUS_BAR_SHOW_TICKER_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_ANIMATION_MODE,
