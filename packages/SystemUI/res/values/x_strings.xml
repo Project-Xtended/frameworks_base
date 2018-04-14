@@ -133,4 +133,7 @@
     <string name="quick_settings_screenshot_label">Screenshot</string>
     <string name="quick_settings_region_screenshot_label">Partial screenshot</string>
 
+    <!-- Nav Bar Swipe -->
+    <string name="nav_bar_layout_inverse">Swap back and recents</string>
+
 </resources>
