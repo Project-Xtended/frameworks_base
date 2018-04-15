@@ -269,7 +269,7 @@ public class KeyguardStatusView extends GridLayout implements
 
     private int getLockClockFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_CLOCK_FONTS, 0);
+                Settings.System.LOCK_CLOCK_FONTS, 23);
     }
 
     public void refreshTime() {
@@ -811,7 +811,7 @@ public class KeyguardStatusView extends GridLayout implements
     private void refreshLockFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockClockFont = isPrimary ? getLockClockFont() : 0;
+        int lockClockFont = isPrimary ? getLockClockFont() : 23;
 
         if (lockClockFont == 0) {
             mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
@@ -1104,7 +1104,7 @@ public class KeyguardStatusView extends GridLayout implements
                 getResources().getDimensionPixelSize(R.dimen.widget_label_font_size),
                 UserHandle.USER_CURRENT);
            dateFont = Settings.System.getIntForUser(resolver,
-                Settings.System.LOCK_DATE_FONTS, 8, UserHandle.USER_CURRENT);
+                Settings.System.LOCK_DATE_FONTS, 24, UserHandle.USER_CURRENT);
                 updateclocksize();
                 refreshdatesize();
                 updateSettings(false);
