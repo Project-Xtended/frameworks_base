@@ -82,6 +82,13 @@
         <item>org.telegram.messenger</item>
         <item>org.telegram.messenger.plus</item>
         <item>com.snapchat.android</item>
+        <item>com.instagram.android</item>
+        <item>com.facebook.katana</item>
+        <item>com.android.vending</item>
+        <item>com.google.android.gms</item>
+        <item>com.facebook.lite</item>
+        <item>com.csam.icici.bank.imobile</item>
+        <item>com.linkedin.android</item>
     </string-array>
 
     <bool name="config_canForceDozeNotifications">false</bool>
