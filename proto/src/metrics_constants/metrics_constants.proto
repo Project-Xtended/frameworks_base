@@ -7434,6 +7434,13 @@ message MetricsEvent {
     // Beginning of Custom Constants
     //Xtended Metrics
     XTENDED = 1800;
+    
+    // OPEN: QS AOD tile shown
+    // ACTION: QS AOD tile tapped
+    //  SUBTYPE: 0 is off, 1 is on
+    // CATEGORY: QUICK_SETTINGS
+    // OS: 6.0
+    TILE_AOD = 1801;
 
     XTENSIONS = 2000;
 
