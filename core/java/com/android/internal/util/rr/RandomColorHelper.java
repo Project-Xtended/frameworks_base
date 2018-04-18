@@ -38,6 +38,6 @@ public class RandomColorHelper {
 
     public static int getToastTextColor(Context context) {
         return Settings.System.getInt(context.getContentResolver(),
-                Settings.System.TOAST_TEXT_COLOR, Color.WHITE);
+                Settings.System.TOAST_TEXT_COLOR, Color.BLACK);
     }
 }
