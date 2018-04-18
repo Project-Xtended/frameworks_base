@@ -26,6 +26,7 @@ import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTileView;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.qs.external.CustomTile;
+import com.android.systemui.qs.tiles.AODTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
 import com.android.systemui.qs.tiles.BatterySaverTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
@@ -94,6 +95,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<UiModeNightTile> mUiModeNightTileProvider;
     private final Provider<CaffeineTile> mCaffeineTileProvider;
     private final Provider<AmbientDisplayTile> mAmbientDisplayTileProvider;
+    private final Provider<AODTile> mAODTileProvider;
     private final Provider<UsbTetherTile> mUsbTetherTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<RebootTile> mRebootTileProvider;
@@ -140,6 +142,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<LteTile> lteTileProvider,
             Provider<ScreenStabilizationTile> screenStabilizationTileProvider,
+            Provider<AODTile> aodTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -162,6 +165,7 @@ public class QSFactoryImpl implements QSFactory {
         mUiModeNightTileProvider = uiModeNightTileProvider;
         mCaffeineTileProvider = caffeineTileProvider;
         mAmbientDisplayTileProvider = ambientDisplayTileProvider;
+        mAODTileProvider = aodTileProvider;
         mUsbTetherTileProvider = usbTetherTileProvider;
         mSoundTileProvider = soundTileProvider;
         mRebootTileProvider = rebootTileProvider;
@@ -234,6 +238,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCaffeineTileProvider.get();
             case "ambient_display":
                 return mAmbientDisplayTileProvider.get();
+            case "aod":
+                return mAODTileProvider.get();
             case "usb_tether":
                 return mUsbTetherTileProvider.get();
             case "sound":
