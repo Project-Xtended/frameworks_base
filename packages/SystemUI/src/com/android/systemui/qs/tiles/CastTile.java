@@ -164,6 +164,7 @@ public class CastTile extends QSTileImpl<BooleanState> {
             state.slash = new SlashState();
         }
         state.icon = mIcon;
+        if (mController == null) return;
         state.label = mContext.getString(R.string.quick_settings_cast_title);
         state.contentDescription = state.label;
         state.value = false;

@@ -3615,7 +3615,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
             }
         }
-        if (mBrightnessChanged && upOrCancel) {
+        if (mBrightnessChanged && upOrCancel && !mNotificationPanel.isQsExpanded()) {
             mBrightnessChanged = false;
                 if (mJustPeeked && mExpandedVisible) {
                 mNotificationPanel.fling(10, false);
@@ -7691,7 +7691,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 if (!mNotificationPanel.isFullyCollapsed()) {
                     // close the shade if it was open
                     animateCollapsePanels(CommandQueue.FLAG_EXCLUDE_RECENTS_PANEL,
-                            true /* force */, true /* delayed */);
+                            true /* force */, true /* delayed */,
+                            NotificationPanelView.SPEED_UP_FACTOR_CLICKED);
                     visibilityChanged(false);
 
                     return true;
