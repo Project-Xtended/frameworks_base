@@ -351,6 +351,7 @@ public class KeyguardIndicationController implements
                         CharSequence chargeIndicator = (mPowerPluggedIn ? (bolt + " ") : "") +
                                 NumberFormat.getPercentInstance().format(mLevel / 100f);
                         mTextView.switchIndication(chargeIndicator);
+			mTextView.setTextColor(Color.WHITE);
                     } else if (showAmbientBottomInfo == AMBIENT_BOTTOM_DISPLAY_WEATHER){
                         if (mWeatherEnabled && !mPowerPluggedIn) {
                             CharSequence weatherIndicator = String.format(mContext.getResources().getString(R.string.ambient_weather_info),
