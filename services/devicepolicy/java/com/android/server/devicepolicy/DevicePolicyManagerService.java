@@ -11196,4 +11196,5 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                     new ArrayList<>(getUserData(userId).mOwnerInstalledCaCerts));
         }
     }
+
 }

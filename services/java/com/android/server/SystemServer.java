@@ -60,6 +60,7 @@ import com.android.internal.notification.SystemNotificationChannels;
 import com.android.internal.os.BinderInternal;
 import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.util.ConcurrentUtils;
+import com.android.internal.util.lineageos.app.ContextConstants;
 import com.android.internal.widget.ILockSettings;
 import com.android.server.accessibility.AccessibilityManagerService;
 import com.android.server.am.ActivityManagerService;
@@ -104,6 +105,7 @@ import com.android.server.policy.PhoneWindowManager;
 import com.android.server.power.PowerManagerService;
 import com.android.server.power.ShutdownThread;
 import com.android.server.broadcastradio.BroadcastRadioService;
+import com.android.server.profiles.ProfileManagerService;
 import com.android.server.restrictions.RestrictionsManagerService;
 import com.android.server.security.KeyAttestationApplicationIdProviderService;
 import com.android.server.security.KeyChainSystemService;
@@ -1626,6 +1628,11 @@ public final class SystemServer {
             mSystemServiceManager.startService(AUTO_FILL_MANAGER_SERVICE_CLASS);
             traceEnd();
         }
+
+        traceBeginAndSlog("StartProfileManagerService");
+        mSystemServiceManager.startService(com.android.server.profiles.ProfileManagerService.class);
+        //ServiceManager.addService(ContextConstants.LINEAGE_PROFILE_SERVICE, new ProfileManagerService(context));
+        traceEnd();
 
         // It is now time to start up the app processes...
 

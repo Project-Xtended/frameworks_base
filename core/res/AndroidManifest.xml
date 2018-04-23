@@ -26,6 +26,9 @@
     <!-- ================================================ -->
     <eat-comment />
 
+    <uses-sdk
+        android:minSdkVersion="27" android:targetSdkVersion="27"/>
+
     <protected-broadcast android:name="android.intent.action.SCREEN_OFF" />
     <protected-broadcast android:name="android.intent.action.SCREEN_ON" />
     <protected-broadcast android:name="android.intent.action.USER_PRESENT" />
@@ -3588,6 +3591,19 @@
         android:description="@string/permdesc_accessFontManager"
         android:protectionLevel="signatureOrSystem" />
 
+    <!-- Allows an application to modify system profiles -->
+    <permission android:name="android.permission.MODIFY_PROFILES"
+        android:protectionLevel="normal" />
+    <permission android:name="android.permission.MANAGE_REMOTE_PREFERENCES"
+        android:protectionLevel="normal" />
+
+    <protected-broadcast android:name="lineageos.intent.action.UPDATE_PREFERENCE" />
+    <protected-broadcast android:name="lineageos.intent.action.REFRESH_PREFERENCE" />
+
+    <protected-broadcast android:name="lineageos.platform.intent.action.PROFILE_SELECTED" />
+    <protected-broadcast android:name="lineageos.platform.intent.action.PROFILE_UPDATED" />
+    <protected-broadcast android:name="lineageos.platform.intent.action.INTENT_ACTION_PROFILE_TRIGGER_STATE_CHANGED" />
+
     <application android:process="system"
                  android:persistent="true"
                  android:hasCode="false"
@@ -3934,5 +3950,6 @@
         <service android:name="com.android.server.smartpixels.SmartPixelsService"
                  android:exported="true" />
     </application>
+
 
 </manifest>

@@ -4737,3 +4737,10 @@ sun.util.logging.LoggingSupport$1
 sun.util.logging.PlatformLogger
 sun.util.logging.PlatformLogger$1
 sun.util.logging.PlatformLogger$Level
+
+com.android.internal.util.lineageos.app.IProfileManager
+com.android.internal.util.lineageos.app.IProfileManager$Stub
+com.android.internal.util.lineageos.app.IProfileManager$Stub$Proxy
+
+com.android.internal.util.lineageos.app.Profile
+com.android.internal.util.lineageos.app.ProfileManager

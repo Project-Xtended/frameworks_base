@@ -212,6 +212,17 @@
   <java-symbol type="anim" name="ethans_launch_task_behind_source" />
   <java-symbol type="anim" name="ethans_launch_task_behind_target" />
 
+  <!-- Profiles -->
+  <java-symbol type="xml" name="profile_default" />
+  <java-symbol type="string" name="wildcardProfile" />
+
+  <java-symbol type="string" name="profileNameDefault" />
+  <java-symbol type="string" name="profileNameWork" />
+  <java-symbol type="string" name="profileNameHome" />
+  <java-symbol type="string" name="profileNameSilent" />
+  <java-symbol type="string" name="profileNameNight" />
+  <java-symbol type="string" name="profileNameAutomobile" />
+
   <!-- Path to fast charging status file to detect whether an oem fast charger is active -->
   <java-symbol type="array" name="config_oemFastChargerStatusPaths" />
 

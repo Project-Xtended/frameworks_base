@@ -5555,6 +5555,9 @@ public final class Settings {
          */
         public static final String DIALER_OPENCNAM_AUTH_TOKEN = "dialer_opencnam_auth_token";
 
+
+        public static final String SYSTEM_PROFILES_ENABLED = "system_profiles_enabled";
+
         /**
          * These are all public system settings
          *

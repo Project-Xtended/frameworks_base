@@ -67,6 +67,7 @@ LOCAL_SRC_FILES += \
 LOCAL_SRC_FILES += \
 	core/java/android/accessibilityservice/IAccessibilityServiceConnection.aidl \
 	core/java/android/accessibilityservice/IAccessibilityServiceClient.aidl \
+	core/java/com/android/internal/util/lineageos/app/IProfileManager.aidl \
 	core/java/android/accounts/IAccountManager.aidl \
 	core/java/android/accounts/IAccountManagerResponse.aidl \
 	core/java/android/accounts/IAccountAuthenticator.aidl \
@@ -802,6 +803,7 @@ aidl_files := \
 	frameworks/base/core/java/android/app/usage/UsageEvents.aidl \
 	frameworks/base/core/java/android/app/Notification.aidl \
 	frameworks/base/core/java/android/app/NotificationManager.aidl \
+	frameworks/base/core/java/android/app/NotificationGroup.aidl \
 	frameworks/base/core/java/android/app/WallpaperInfo.aidl \
 	frameworks/base/core/java/android/app/AppOpsManager.aidl \
 	frameworks/base/core/java/android/app/ActivityManager.aidl \

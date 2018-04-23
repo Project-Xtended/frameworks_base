@@ -97,6 +97,9 @@ import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import com.android.internal.util.lineageos.app.Profile;
+import com.android.internal.util.lineageos.app.ProfileManager;
+
 /**
  * Mediates requests related to the keyguard.  This includes queries about the
  * state of the keyguard, power management events that effect whether the keyguard
@@ -212,6 +215,8 @@ public class KeyguardViewMediator extends SystemUI {
     private boolean mBootCompleted;
     private boolean mBootSendUserPresent;
     private boolean mShuttingDown;
+
+    private ProfileManager mProfileManager;
 
     /** High level access to the power manager for WakeLocks */
     private PowerManager mPM;
@@ -1010,17 +1015,6 @@ public class KeyguardViewMediator extends SystemUI {
         }
     }
 
-    private boolean isKeyguardDisabled(int userId) {
-        if (!mExternallyEnabled) {
-            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled externally");
-            return true;
-        }
-        if (mLockPatternUtils.isLockScreenDisabled(userId)) {
-            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by setting");
-            return true;
-        }
-        return false;
-    }
 
     private boolean isCryptKeeperEnabled() {
         if (mCyrptKeeperEnabledState == -1) {
@@ -2192,5 +2186,45 @@ public class KeyguardViewMediator extends SystemUI {
                 Slog.w(TAG, "Failed to call to IKeyguardStateCallback", e);
             }
         }
+    }
+
+    public void refreshSounds() {
+        ContentResolver cr = mContext.getContentResolver();
+        String soundPath = Settings.Global.getString(cr, Settings.Global.LOCK_SOUND);
+        if (soundPath != null) {
+            mLockSoundId = mLockSounds.load(soundPath, 1);
+        }
+        if (soundPath == null || mLockSoundId == 0) {
+            Log.w(TAG, "failed to load lock sound from " + soundPath);
+        }
+        soundPath = Settings.Global.getString(cr, Settings.Global.UNLOCK_SOUND);
+        if (soundPath != null) {
+            mUnlockSoundId = mLockSounds.load(soundPath, 1);
+        }
+        if (soundPath == null || mUnlockSoundId == 0) {
+            Log.w(TAG, "failed to load unlock sound from " + soundPath);
+        }
+    }
+
+    private boolean isProfileDisablingKeyguard() {
+        Profile profile = mProfileManager.getActiveProfile();
+        return profile != null &&
+                profile.getScreenLockMode().getValue() == Profile.LockMode.DISABLE;
+    }
+
+    private boolean isKeyguardDisabled(int userId) {
+        if (!mExternallyEnabled) {
+            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled externally");
+            return true;
+        }
+        if (mLockPatternUtils.isLockScreenDisabled(userId)) {
+            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by setting");
+            return true;
+        }
+        if (isProfileDisablingKeyguard()) {
+            if (DEBUG) Log.d(TAG, "isKeyguardDisabled: keyguard is disabled by profile");
+            return true;
+        }
+        return false;
     }
 }
