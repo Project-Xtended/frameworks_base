@@ -65,7 +65,7 @@ public class LteTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.NITROGEN_SETTINGS;
+        return MetricsEvent.XTENDED;
     }
 
     @Override
@@ -74,6 +74,7 @@ public class LteTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleClick() {
+        toggleLteState();
         refreshState();
     }
 
@@ -101,11 +102,15 @@ public class LteTile extends QSTileImpl<BooleanState> {
         }
     }
 
+    private void toggleLteState() {
+        TelephonyManager tm = (TelephonyManager)
+                mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        tm.toggleLTE(true);
+    }
+
     private int getCurrentPreferredNetworkMode() {
         final int subId = SubscriptionManager.getDefaultDataSubscriptionId();
         return Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.PREFERRED_NETWORK_MODE + subId, -1);
     }
 }
-
-

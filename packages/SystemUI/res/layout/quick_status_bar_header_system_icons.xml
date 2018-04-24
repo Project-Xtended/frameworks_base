@@ -23,8 +23,8 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:gravity="center"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
     android:orientation="horizontal">
 
     <com.android.systemui.statusbar.policy.ClockLeft

@@ -6698,6 +6698,17 @@ public class TelephonyManager {
     }
 
     /**
+     * {@hide}
+     */
+    public void toggleLTE(boolean on) {
+        try {
+            getITelephony().toggleLTE(on);
+        } catch (RemoteException e) {
+            //Silently fail
+        }
+    }
+
+    /**
      * Get the allowed carrier list for slotIndex.
      * Require system privileges. In the future we may add this to carrier APIs.
      *
