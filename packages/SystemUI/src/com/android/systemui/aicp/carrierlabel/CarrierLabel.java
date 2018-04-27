@@ -99,6 +99,7 @@ public class CarrierLabel extends TextView implements DarkReceiver {
         mXSettingsObserver.observe();
         updateSize();
         updateFont();
+        updateColor();
     }
 
     @Override
@@ -191,10 +192,13 @@ public class CarrierLabel extends TextView implements DarkReceiver {
 
         protected void observe() {
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                   Settings.System.STATUS_BAR_CARRIER_FONT_STYLE), 
+                   Settings.System.STATUS_BAR_CARRIER_FONT_STYLE),
                    false, this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                   Settings.System.STATUS_BAR_CARRIER_FONT_SIZE), 
+                   Settings.System.STATUS_BAR_CARRIER_FONT_SIZE),
+                   false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                   Settings.System.STATUS_BAR_CARRIER_COLOR),
                    false, this, UserHandle.USER_ALL);
             update();
         }
@@ -208,6 +212,7 @@ public class CarrierLabel extends TextView implements DarkReceiver {
         protected void update() {
             updateSize();
             updateFont();
+           updateColor();
         }
 
         @Override
@@ -338,5 +343,20 @@ public class CarrierLabel extends TextView implements DarkReceiver {
 
         getFontStyle(mCarrierLabelFontStyle);
     }
+
+    private void updateColor() {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        int defaultColor = getResources().getColor(R.color.status_bar_clock_color);
+        mCarrierColor = Settings.System.getInt(resolver,
+                Settings.System.STATUS_BAR_CARRIER_COLOR, defaultColor
+                UserHandle.USER_CURRENT);
+
+        if  (mCarrierColor == Integer.MIN_VALUE) {
+             mCarrierColor = defaultColor;
+        }
+        setTextColor(mCarrierColor);
+    }
+
 }
 
