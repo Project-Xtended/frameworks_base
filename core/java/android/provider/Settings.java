@@ -5269,8 +5269,15 @@ public final class Settings {
         public static final String HIDE_LOCKSCREEN_INDICATOR_DISPLAY = "hide_lockscreen_indicator_display";
 
         /**
+         * Hide lockscreen icon
+         *
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_ICON = "hide_lockscreen_icon";
+
+        /**
          * 0 - wallpaper based
-	 * 1 - force light
+	 * 1- force light
 	 * 2 - force dark
          * @hide
          */
@@ -5968,6 +5975,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_COLUMNS_LANDSCAPE);
             PRIVATE_SETTINGS.add(ONE_HAND_MODE_ENABLED);
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_INDICATOR_DISPLAY);
+	    PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_ICON);
         }
 
 
