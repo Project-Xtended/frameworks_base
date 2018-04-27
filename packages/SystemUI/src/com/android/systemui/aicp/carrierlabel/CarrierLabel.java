@@ -82,6 +82,7 @@ public class CarrierLabel extends TextView implements DarkReceiver {
     public static final int FONT_NOTOSERIF_BOLD = 23;
     public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
     private int mCarrierFontSize;
+    private int mCarrierColor;
 
     public CarrierLabel(Context context) {
         this(context, null);
@@ -345,16 +346,10 @@ public class CarrierLabel extends TextView implements DarkReceiver {
     }
 
     private void updateColor() {
-        ContentResolver resolver = mContext.getContentResolver();
-
-        int defaultColor = getResources().getColor(R.color.status_bar_clock_color);
-        mCarrierColor = Settings.System.getInt(resolver,
-                Settings.System.STATUS_BAR_CARRIER_COLOR, defaultColor
+        mCarrierColor = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.STATUS_BAR_CARRIER_COLOR, 0xaaffffff,
                 UserHandle.USER_CURRENT);
 
-        if  (mCarrierColor == Integer.MIN_VALUE) {
-             mCarrierColor = defaultColor;
-        }
         setTextColor(mCarrierColor);
     }
 

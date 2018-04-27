@@ -52,6 +52,10 @@ import com.android.systemui.statusbar.policy.SecurityController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
+import android.telephony.SubscriptionManager;
+import android.telephony.TelephonyManager;
+import android.provider.Settings;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -339,8 +343,8 @@ public class SignalClusterView extends LinearLayout implements NetworkController
             return;
         }
 
-        final int slotId = SubscriptionManager.getSlotId(subId);
-        final int simState = SubscriptionManager.getSimStateForSlotIdx(slotId);
+        final int slotId = SubscriptionManager.getSlotIndex(subId);
+        final int simState = SubscriptionManager.getSimStateForSlotIndex(slotId);
         final boolean mIsRequired = isNosimRequired() && simState == TelephonyManager.SIM_STATE_NOT_READY;
         state.mMobileVisible = statusIcon.visible && !mBlockMobile &&
               !mIsRequired;
