@@ -4936,6 +4936,14 @@ public final class Settings {
         public static final String HIDE_LOCKSCREEN_INDICATOR_DISPLAY = "hide_lockscreen_indicator_display";
 
         /**
+         * Hide lockscreen icon
+         *
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_ICON = "hide_lockscreen_icon";
+
+        /**
+         * Hold current font name and name of the originating package Uses "|" as a delimiter
          *
          * @hide
          */
@@ -5574,6 +5582,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_STATUS_BAR);
             PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_INDICATOR_DISPLAY);
+	    PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_ICON);
         }
 
         /**
