@@ -68,4 +68,7 @@
     <!-- Settings icon tint color -->
     <color name="settings_icon_tint_color">#737373</color>
 
+    <!-- Two target preference vertical divider color -->
+    <color name="list_divider_dark">#64000000</color>
+
 </resources>
