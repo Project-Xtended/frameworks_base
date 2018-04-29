@@ -135,9 +135,6 @@ public class SignalClusterView extends LinearLayout implements NetworkController
     private boolean mIsKeyguard;
 
     private final IconLogger mIconLogger = Dependency.get(IconLogger.class);
-    private static final String DISABLE_NO_SIM =
-            "system:" + Settings.System.DISABLE_NO_SIM;
-    private boolean mShowNoSims;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -221,14 +218,6 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
             apply();
         }
-          case DISABLE_NO_SIM:
-               mShowNoSims = 
-                      newValue != null && Integer.parseInt(newValue) != 0;
-                    apply();
-               break;
-           default:
-               break;
-        }
     }
 
     @Override
@@ -289,8 +278,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
         int endPadding = mMobileSignalGroup.getChildCount() > 0 ? mMobileSignalGroupEndPadding : 0;
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
 
-        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST, STATUS_BAR_BATTERY_STYLE,
-		   DIABALE_NO_SIM);
+        Dependency.get(TunerService.class).addTunable(this, StatusBarIconController.ICON_BLACKLIST, STATUS_BAR_BATTERY_STYLE);
 
         apply();
         applyIconTint();
@@ -613,7 +601,7 @@ public class SignalClusterView extends LinearLayout implements NetworkController
 
         if (mNoSimsVisible && !mIsAirplaneMode) {
             mIconLogger.onIconShown(SLOT_MOBILE);
-            mNoSimsCombo.setVisibility(!mShowNoSims ? View.VISIBLE : View.GONE);
+            mNoSimsCombo.setVisibility(View.VISIBLE);
             if (!Objects.equals(mSimDetected, mNoSimsCombo.getTag())) {
                 mNoSimsCombo.setTag(mSimDetected);
                 if (mSimDetected) {
