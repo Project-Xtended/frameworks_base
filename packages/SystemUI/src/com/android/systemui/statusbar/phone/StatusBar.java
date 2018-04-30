@@ -145,6 +145,7 @@ import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.os.Process;
 import android.widget.DateTimeView;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -280,6 +281,7 @@ import com.android.systemui.volume.VolumeComponent;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import android.os.Process;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -6422,7 +6424,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             update();
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NO_SIM_CLUSTER_SWITCH))) {
-                    trytoinflateclusters();
+		    restartSystemUI(mContext);
              }
         }
 
@@ -8424,10 +8426,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         return lp;
     }
 
-   public void trytoinflateclusters() {
-        try {
-             inflateSignalClusters();
-        } catch (Exception e) {
-        }
-   }
+    public static void restartSystemUI(Context ctx) {
+        Process.killProcess(Process.myPid());
+    }
+
 }
