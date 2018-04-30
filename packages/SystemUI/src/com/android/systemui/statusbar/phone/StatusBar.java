@@ -121,13 +121,6 @@ import android.util.ArraySet;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
 import android.util.Log;
-import android.util.Pair;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.os.Process;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -286,7 +279,7 @@ import com.android.systemui.volume.VolumeComponent;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
-import java.io.StringWriter;import android.os.Process;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -6429,7 +6422,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             update();
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NO_SIM_CLUSTER_SWITCH))) {
-                    restartSystemUI(mContext);
+                    trytoinflateclusters();
              }
         }
 
@@ -8431,178 +8424,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         return lp;
     }
 
-   protected void addAppCircleSidebar() {
-        if (mAppCircleSidebar == null) {
-            mAppCircleSidebar = (AppCircleSidebar) View.inflate(mContext, R.layout.app_circle_sidebar, null);
-            mWindowManager.addView(mAppCircleSidebar, getAppCircleSidebarLayoutParams());
-        }
-    }
-
-    protected void removeAppCircleSidebar() {
-         if (mAppCircleSidebar != null) {
-             mWindowManager.removeView(mAppCircleSidebar);
-         }
-     }
- 
-    protected WindowManager.LayoutParams getAppCircleSidebarLayoutParams() {
-         int maxWidth =
-                 mContext.getResources().getDimensionPixelSize(R.dimen.app_sidebar_trigger_width);
- 
-         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
-                 maxWidth,
-                 ViewGroup.LayoutParams.MATCH_PARENT,
-                 WindowManager.LayoutParams.TYPE_STATUS_BAR_SUB_PANEL,
-                 0
-                 | WindowManager.LayoutParams.FLAG_TOUCHABLE_WHEN_WAKING
-                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                 | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                 | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
-                 | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
-                 PixelFormat.TRANSLUCENT);
-         lp.privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_NO_MOVE_ANIMATION;
-         lp.gravity = Gravity.TOP | Gravity.RIGHT;
-         lp.setTitle("AppCircleSidebar");
- 
-         return lp;
-    }
-
-
-     public void updatePieControls(boolean reset) {
-         ContentResolver resolver = mContext.getContentResolver();
- 
-         if (reset) {
-             Settings.Secure.putIntForUser(resolver,
-                     Settings.Secure.PIE_GRAVITY, 0, UserHandle.USER_CURRENT);
-             toggleOrientationListener(false);
-         } else {
-             getOrientationListener();
-             toggleOrientationListener(true);
-         }
- 
-         if (mPieController == null) {
-             mPieController = PieController.getInstance();
-             mPieController.init(mContext, mWindowManager, this);
-         }
- 
-         int gravity = Settings.Secure.getInt(resolver,
-                 Settings.Secure.PIE_GRAVITY, 0);
-         mPieController.resetPie(!reset, gravity);
-     }
- 
-     public void toggleOrientationListener(boolean enable) {
-         if (mOrientationListener == null) {
-             if (!enable) {
-                 // Do nothing if listener has already dropped
-                 return;
-             } else {
-                 boolean shouldEnable = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                         Settings.Secure.PIE_STATE, 0, UserHandle.USER_CURRENT) == 1;
-                 if (shouldEnable) {
-                     // Re-init Orientation listener for later action
-                     getOrientationListener();
-                 } else {
-                     return;
-                 }
-             }
-         }
- 
-         if (enable && mPowerManager.isScreenOn()) {
-             mOrientationListener.enable();
-         } else {
-             mOrientationListener.disable();
-             // if it has been disabled, then don't leave it to
-             // prevent called from PhoneWindowManager
-             mOrientationListener = null;
-         }
-     }
-
-     private void getOrientationListener() {
-         if (mOrientationListener == null)
-             mOrientationListener = new OrientationEventListener(mContext,
-                     SensorManager.SENSOR_DELAY_NORMAL) {
-                 @Override
-                 public void onOrientationChanged(int orientation) {
-                     int rotation = mDisplay.getRotation();
-                     if (rotation != mOrientation) {
-                         if (mPieController != null) mPieController.detachPie();
-                         mOrientation = rotation;
-                     }
-                 }
-            };
-     }
-
-    public static void updatePreferences(Context mContext) {
-        RecentsActivity.updatePreferences(mContext);
-        if (mNotificationData == null)
-            return;
-
-        for (Entry entry : mNotificationData.getActiveNotifications()) {
-            NotificationBackgroundView mBackgroundNormal = (NotificationBackgroundView) getObjectField(entry.row, "mBackgroundNormal");
-            NotificationBackgroundView mBackgroundDimmed = (NotificationBackgroundView) getObjectField(entry.row, "mBackgroundDimmed");
-
-            mBackgroundNormal.postInvalidate();
-            mBackgroundDimmed.postInvalidate();
-        }
-    }
-
-    public static Object getObjectField(Object obj, String fieldName) {
+   public void trytoinflateclusters() {
         try {
-            return findField(obj.getClass(), fieldName).get(obj);
-        } catch (IllegalAccessException e) {
-            throw new IllegalAccessError(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            throw e;
+             inflateSignalClusters();
+        } catch (Exception e) {
         }
-    }
-
-    /**
-     * Look up a field in a class and set it to accessible. The result is cached.
-     * If the field was not found, a {@link NoSuchFieldError} will be thrown.
-     */
-    public static Field findField(Class<?> clazz, String fieldName) {
-        StringBuilder sb = new StringBuilder(clazz.getName());
-        sb.append('#');
-        sb.append(fieldName);
-        String fullFieldName = sb.toString();
-
-        if (fieldCache.containsKey(fullFieldName)) {
-            Field field = fieldCache.get(fullFieldName);
-            if (field == null)
-                throw new NoSuchFieldError(fullFieldName);
-            return field;
-        }
-
-        try {
-            Field field = findFieldRecursiveImpl(clazz, fieldName);
-            field.setAccessible(true);
-            fieldCache.put(fullFieldName, field);
-            return field;
-        } catch (NoSuchFieldException e) {
-            fieldCache.put(fullFieldName, null);
-            throw new NoSuchFieldError(fullFieldName);
-        }
-    }
-
-    private static Field findFieldRecursiveImpl(Class<?> clazz, String fieldName) throws NoSuchFieldException {
-        try {
-            return clazz.getDeclaredField(fieldName);
-        } catch (NoSuchFieldException e) {
-            while (true) {
-                clazz = clazz.getSuperclass();
-                if (clazz == null || clazz.equals(Object.class))
-                    break;
-
-                try {
-                    return clazz.getDeclaredField(fieldName);
-                } catch (NoSuchFieldException ignored) {
-                }
-            }
-            throw e;
-        }
-    }
-
-    public static void restartSystemUI(Context ctx) {
-        Process.killProcess(Process.myPid());
-    }
->>>>>>> 22fa690ac4c... Restart SystemUI on signal cluster re-inflation [1/2]
+   }
 }
