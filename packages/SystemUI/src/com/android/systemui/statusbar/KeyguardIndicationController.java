@@ -240,7 +240,6 @@ public class KeyguardIndicationController implements
             if  (!mHandler.hasMessages(MSG_HIDE_TRANSIENT)) {
                 hideTransientIndication();
             }
-            updateIndication();
         } else if (!isReallyVisible()) {
             // If we unlock and return to keyguard quickly, previous error should not be shown
             hideTransientIndication();
@@ -332,8 +331,8 @@ public class KeyguardIndicationController implements
         if (mTransientIndication != null) {
             mTransientIndication = null;
             mHandler.removeMessages(MSG_HIDE_TRANSIENT);
-            updateIndication();
         }
+        updateIndication();
     }
 
     protected final void updateIndication() {
@@ -508,11 +507,10 @@ public class KeyguardIndicationController implements
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (msg.what == MSG_HIDE_TRANSIENT) {
-                hideTransientIndication();
-            } else if (msg.what == MSG_CLEAR_FP_MSG) {
+            if (msg.what == MSG_CLEAR_FP_MSG) {
                 mLockIcon.setTransientFpError(false);
             }
+            hideTransientIndication();
         }
     };
 
@@ -641,9 +639,7 @@ public class KeyguardIndicationController implements
 
         @Override
         public void onUserUnlocked() {
-            if (isReallyVisible()) {
-                updateIndication();
-            }
+            updateIndication();
         }
     };
 }
