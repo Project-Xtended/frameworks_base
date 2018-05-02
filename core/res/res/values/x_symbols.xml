@@ -151,4 +151,7 @@
   <java-symbol type="anim" name="custom_app_in" />
   <java-symbol type="anim" name="custom_app_out" />
 
+  <!-- Device Hardware Wake Keys -->
+  <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
+
 </resources>
