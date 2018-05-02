@@ -308,4 +308,7 @@
   <!-- DC Dimming -->
   <java-symbol type="string" name="config_deviceDcDimmingSysfsNode" />
 
+  <!-- Device Hardware Wake Keys -->
+  <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
+
 </resources>
