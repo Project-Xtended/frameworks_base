@@ -65,6 +65,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import libcore.io.IoUtils;
 
 /**
  * <p>BatteryService monitors the charging status, and charge level of the device
@@ -152,6 +153,9 @@ public final class BatteryService extends SystemService {
     private boolean mDashCharger;
     private boolean mHasDashCharger;
     private boolean mLastDashCharger;
+
+    private boolean mOemFastCharger;
+    private boolean mLastOemFastCharger;
 
     private long mDischargeStartTime;
     private int mDischargeStartLevel;
@@ -477,6 +481,7 @@ public final class BatteryService extends SystemService {
         shutdownIfOverTempLocked();
 
         mDashCharger = mHasDashCharger && isDashCharger();
+        mOemFastCharger = isOemFastCharger();
 
         if (force || (mBatteryProps.batteryStatus != mLastBatteryStatus ||
                 mBatteryProps.batteryHealth != mLastBatteryHealth ||
@@ -489,7 +494,8 @@ public final class BatteryService extends SystemService {
                 mBatteryProps.maxChargingVoltage != mLastMaxChargingVoltage ||
                 mBatteryProps.batteryChargeCounter != mLastChargeCounter ||
                 mInvalidCharger != mLastInvalidCharger ||
-                mDashCharger != mLastDashCharger)) {
+                mDashCharger != mLastDashCharger ||
+                mOemFastCharger != mLastOemFastCharger)) {
 
             if (mPlugType != mLastPlugType) {
                 if (mLastPlugType == BATTERY_PLUGGED_NONE) {
@@ -631,6 +637,7 @@ public final class BatteryService extends SystemService {
             mLastBatteryLevelCritical = mBatteryLevelCritical;
             mLastInvalidCharger = mInvalidCharger;
             mLastDashCharger = mDashCharger;
+            mLastOemFastCharger = mOemFastCharger;
         }
     }
 
@@ -658,6 +665,7 @@ public final class BatteryService extends SystemService {
         intent.putExtra(BatteryManager.EXTRA_MAX_CHARGING_VOLTAGE, mBatteryProps.maxChargingVoltage);
         intent.putExtra(BatteryManager.EXTRA_CHARGE_COUNTER, mBatteryProps.batteryChargeCounter);
         intent.putExtra(BatteryManager.EXTRA_DASH_CHARGER, mDashCharger);
+        intent.putExtra(BatteryManager.EXTRA_OEM_FAST_CHARGER, mOemFastCharger);
 
         if (DEBUG) {
             Slog.d(TAG, "Sending ACTION_BATTERY_CHANGED.  level:" + mBatteryProps.batteryLevel +
@@ -674,7 +682,8 @@ public final class BatteryService extends SystemService {
                     ", maxChargingCurrent:" + mBatteryProps.maxChargingCurrent +
                     ", maxChargingVoltage:" + mBatteryProps.maxChargingVoltage +
                     ", chargeCounter:" + mBatteryProps.batteryChargeCounter +
-                    ", dashCharger:" + mDashCharger);
+                    ", dashCharger:" + mDashCharger +
+                    ", mOemFastCharger:" + mOemFastCharger);
         }
 
         mHandler.post(new Runnable() {
@@ -695,6 +704,33 @@ public final class BatteryService extends SystemService {
             return "1".equals(state);
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
+        }
+        return false;
+    }
+
+    private boolean isOemFastCharger() {
+        for (String path : mContext.getResources().getStringArray(
+                com.android.internal.R.array.config_oemFastChargerStatusPaths)) {
+            FileReader statusReader = null;
+            BufferedReader br = null;
+            try {
+                statusReader = new FileReader(path);
+                br = new BufferedReader(statusReader);
+
+                final String state = br.readLine();
+                if ("1".equals(state)) {
+                    return true;
+                }
+            } catch (FileNotFoundException e) {
+                Slog.e(TAG, "Could not find oem fast charger status path: "
+                    + path);
+            } catch (IOException e) {
+                Slog.e(TAG, "Failed to read oem fast charger status path: "
+                    + path);
+            } finally {
+                IoUtils.closeQuietly(br);
+                IoUtils.closeQuietly(statusReader);
+            }
         }
         return false;
     }
