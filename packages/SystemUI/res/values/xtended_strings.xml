@@ -236,4 +236,10 @@
     <string name="quick_settings_google_assist_label">Assistant</string>
     <string name="quick_settings_google_voice_assist_label">Voice assist</string>
     <string name="quick_settings_google_now_label">Google feed</string>
+
+    <string name="tuner_quick_settings">Quick settings</string>
+    <string name="qs_show_battery">Show battery</string>
+    <string name="qs_show_carrier">Show carrier names</string>
+    <string name="qs_show_clock">Show clock</string>
+
 </resources>

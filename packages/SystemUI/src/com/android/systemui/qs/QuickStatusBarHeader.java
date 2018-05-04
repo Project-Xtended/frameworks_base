@@ -35,9 +35,15 @@ import com.android.systemui.qs.QSDetail.Callback;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
+import com.android.systemui.tuner.TunerService;
+import com.android.systemui.tuner.TunerService.Tunable;
 
 
-public class QuickStatusBarHeader extends RelativeLayout {
+public class QuickStatusBarHeader extends RelativeLayout implements Tunable {
+
+    public static final String QS_SHOW_CARRIER = "qs_show_carrier";
+    public static final String QS_SHOW_BATTERY = "qs_show_battery";
+    public static final String QS_SHOW_CLOCK = "qs_show_clock";
 
     private ActivityStarter mActivityStarter;
 
@@ -74,7 +80,6 @@ public class QuickStatusBarHeader extends RelativeLayout {
         float intensity = colorForeground == Color.WHITE ? 0 : 1;
         Rect tintArea = new Rect(0, 0, 0, 0);
 
-        applyDarkness(R.id.battery, tintArea, intensity, colorForeground);
         applyDarkness(R.id.clock, tintArea, intensity, colorForeground);
 
         mBatteryView = findViewById(R.id.battery);
@@ -144,9 +149,18 @@ public class QuickStatusBarHeader extends RelativeLayout {
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Dependency.get(TunerService.class).addTunable(this, QS_SHOW_CARRIER);
+        Dependency.get(TunerService.class).addTunable(this, QS_SHOW_CLOCK);
+        Dependency.get(TunerService.class).addTunable(this, QS_SHOW_BATTERY);
+    }
+
+    @Override
     @VisibleForTesting
     public void onDetachedFromWindow() {
         setListening(false);
+        Dependency.get(TunerService.class).removeTunable(this);
         super.onDetachedFromWindow();
     }
 
@@ -176,5 +190,24 @@ public class QuickStatusBarHeader extends RelativeLayout {
 
     public void setCallback(Callback qsPanelCallback) {
         mHeaderQsPanel.setCallback(qsPanelCallback);
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (QS_SHOW_CARRIER.equals(key)) {
+            findViewById(R.id.qs_carrier_text).setVisibility(newValue == null || Integer.parseInt(newValue) != 0
+                    ? VISIBLE : INVISIBLE);
+        }
+        if (QS_SHOW_CLOCK.equals(key)) {
+            boolean hideClock = newValue != null && Integer.parseInt(newValue) == 0;
+            mClock.setForceHide(hideClock);
+            mLeftClock.setForceHide(hideClock);
+            mClock.updateClockVisibility();
+            mLeftClock.updateClockVisibility();
+        }
+        if (QS_SHOW_BATTERY.equals(key)) {
+            mBatteryViewManager.setBatteryVisibility(newValue == null || Integer.parseInt(newValue) != 0
+                    ? true : false);
+        }
     }
 }
