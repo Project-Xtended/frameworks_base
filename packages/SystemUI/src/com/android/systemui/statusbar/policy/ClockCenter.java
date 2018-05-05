@@ -52,7 +52,7 @@ public class ClockCenter extends Clock {
                 && mClockVisibleByPolicy && mClockVisibleByUser;
      }
 
-    protected void updateClockVisibility() {
+    public void updateClockVisibility() {
         boolean visible = mClockStyle == STYLE_CLOCK_CENTER && mShowClock
                 && mClockVisibleByPolicy && mClockVisibleByUser;
         Dependency.get(IconLogger.class).onIconVisibility("center_clock", visible);

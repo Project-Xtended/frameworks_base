@@ -92,5 +92,4 @@
         android:key="battery"
         android:title="@string/battery" />
     -->   
-
 </PreferenceScreen>

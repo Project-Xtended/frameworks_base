@@ -205,9 +205,5 @@ public class QuickStatusBarHeader extends RelativeLayout implements Tunable {
             mClock.updateClockVisibility();
             mLeftClock.updateClockVisibility();
         }
-        if (QS_SHOW_BATTERY.equals(key)) {
-            mBatteryViewManager.setBatteryVisibility(newValue == null || Integer.parseInt(newValue) != 0
-                    ? true : false);
-        }
     }
 }
