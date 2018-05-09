@@ -269,7 +269,7 @@ public class KeyguardStatusView extends GridLayout implements
 
     private int getLockClockFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_CLOCK_FONTS, 23);
+                Settings.System.LOCK_CLOCK_FONTS, 26);
     }
 
     public void refreshTime() {
@@ -788,7 +788,22 @@ public class KeyguardStatusView extends GridLayout implements
         if (dateFont == 24) {
                 mDateView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
         }
-
+        if (dateFont == 25) {
+                mDateView.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
+        }
+        if (dateFont == 26) {
+                mDateView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+        }
+        if (dateFont == 27) {
+                mDateView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+        }
+        if (dateFont == 28) {
+                mDateView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+        }
+        if (dateFont == 29) {
+                mDateView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+        }
+					
         AlarmManager.AlarmClockInfo nextAlarm =
                 mAlarmManager.getNextAlarmClock(UserHandle.USER_CURRENT);
         boolean showAlarm = Settings.System.getIntForUser(resolver,
@@ -811,7 +826,7 @@ public class KeyguardStatusView extends GridLayout implements
     private void refreshLockFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockClockFont = isPrimary ? getLockClockFont() : 23;
+        int lockClockFont = isPrimary ? getLockClockFont() : 26;
 
         if (lockClockFont == 0) {
             mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
@@ -1119,7 +1134,7 @@ public class KeyguardStatusView extends GridLayout implements
                 getResources().getDimensionPixelSize(R.dimen.widget_label_font_size),
                 UserHandle.USER_CURRENT);
            dateFont = Settings.System.getIntForUser(resolver,
-                Settings.System.LOCK_DATE_FONTS, 24, UserHandle.USER_CURRENT);
+                Settings.System.LOCK_DATE_FONTS, 26, UserHandle.USER_CURRENT);
                 updateclocksize();
                 refreshdatesize();
                 updateSettings(false);
