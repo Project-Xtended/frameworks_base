@@ -33,6 +33,10 @@ import android.net.ConnectivityManager;
 import android.util.DisplayMetrics;
 import android.view.DisplayInfo;
 import android.view.WindowManager;
+import android.view.IWindowManager;
+import android.view.WindowManagerGlobal;
+import com.android.internal.statusbar.IStatusBarService;
+import android.os.RemoteException;
 
 import java.util.List;
 import java.util.Locale;
