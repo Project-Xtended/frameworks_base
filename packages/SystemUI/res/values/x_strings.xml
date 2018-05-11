@@ -301,4 +301,6 @@
     <string name="quick_settings_font_label">Fonts</string>
     <string name="quick_settings_font_detail_label">Select a font</string>
 
+    <!-- Text for switch default data sub in expanded CellularTile -->
+    <string name="use_data">Use %s for data</string>
 </resources>
