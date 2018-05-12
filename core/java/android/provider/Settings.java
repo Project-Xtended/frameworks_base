@@ -4601,6 +4601,24 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String OMNI_ASPECT_RATIO_APPS_LIST = "aspect_ratio_apps_list";
+
+        /** @hide */
+        private static final Validator OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_ASPECT_RATIO_APPS_ENABLED = "aspect_ratio_apps_enabled";
+
+        /** @hide */
+        private static final Validator OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
@@ -6089,6 +6107,8 @@ public final class Settings {
             LESS_BORING_HEADS_UP,
             WIRELESS_CHARGING_ANIMATION,
             NOTIFICATION_GUTS_KILL_APP_BUTTON,
+            OMNI_ASPECT_RATIO_APPS_ENABLED,
+            OMNI_ASPECT_RATIO_APPS_LIST,
         };
 
         /**
@@ -6287,6 +6307,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(WIRELESS_CHARGING_ANIMATION);
             PRIVATE_SETTINGS.add(NOTIFICATION_GUTS_KILL_APP_BUTTON);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
+            PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_ENABLED);
+            PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
         }
 
         /**
@@ -6451,6 +6473,8 @@ public final class Settings {
             VALIDATORS.put(LESS_BORING_HEADS_UP, LESS_BORING_HEADS_UP_VALIDATOR);
             VALIDATORS.put(WIRELESS_CHARGING_ANIMATION, WIRELESS_CHARGING_ANIMATION_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON, NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
+            VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_ENABLED, OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR);
+            VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_LIST, OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
         }
 
         /**
