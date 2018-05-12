@@ -5910,6 +5910,24 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String OMNI_ASPECT_RATIO_APPS_LIST = "aspect_ratio_apps_list";
+
+        /** @hide */
+        private static final Validator OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String OMNI_ASPECT_RATIO_APPS_ENABLED = "aspect_ratio_apps_enabled";
+
+        /** @hide */
+        private static final Validator OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5997,7 +6015,9 @@ public final class Settings {
             ONE_HAND_MODE_ENABLED,
             STATUS_BAR_SHOW_TICKER,
             STATUS_BAR_TICKER_ANIMATION_MODE,
-            STATUS_BAR_TICKER_TICK_DURATION
+            STATUS_BAR_TICKER_TICK_DURATION,
+            OMNI_ASPECT_RATIO_APPS_ENABLED,
+            OMNI_ASPECT_RATIO_APPS_LIST
         };
 
         /**
@@ -6165,6 +6185,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_TICKER);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
+            PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_ENABLED);
+            PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
         }
 
 
@@ -6295,6 +6317,10 @@ public final class Settings {
                     STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_TICK_DURATION,
                     STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR);
+            VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_ENABLED,
+                    OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR);
+            VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_LIST,
+                    OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
         }
 
         /**
