@@ -5176,7 +5176,17 @@ public final class Settings {
         public static final String CARBON_CUSTOM_GESTURE_RIGHT = "carbon_custom_gesture_right";
 
         /**
-         * left gesture for CarbonGestures
+         * @hide
+         */
+        public static final String ASPECT_RATIO_APPS_LIST = "aspect_ratio_apps_list";
+
+        /**
+         * @hide
+         */
+        public static final String ASPECT_RATIO_APPS_ENABLED = "aspect_ratio_apps_enabled";
+
+        /**
+         * left gestures for CarbonGestures
          * @hide
          */
         public static final String CARBON_CUSTOM_GESTURE_LEFT = "carbon_custom_gesture_left";
@@ -5814,6 +5824,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_VISUALIZER_ENABLED);
             PRIVATE_SETTINGS.add(AMBIENT_VISUALIZER_ENABLED);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
+	    PRIVATE_SETTINGS.add(ASPECT_RATIO_APPS_LIST);
+	    PRIVATE_SETTINGS.add(ASPECT_RATIO_APPS_ENABLED);
         }
 
         /**
