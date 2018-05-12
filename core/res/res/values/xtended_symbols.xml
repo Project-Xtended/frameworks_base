@@ -252,4 +252,8 @@
   <java-symbol type="drawable" name="ic_wifi_signal_round_3" />
   <java-symbol type="drawable" name="ic_wifi_signal_round_4" />
 
+  <!-- Full screen aspect ratio -->
+  <java-symbol type="bool" name="config_haveHigherAspectRatioScreen" />
+  <java-symbol type="dimen" name="config_screenAspectRatio" />
+
 </resources>
