@@ -6316,7 +6316,6 @@ public final class Settings {
          */
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
 
-
         /**
          * @hide
          */
@@ -6339,6 +6338,23 @@ public final class Settings {
          * @hide
          */
         public static final String FONT_PACKAGES = "font_packages";
+
+        /**
+         * Whether user can swap the order of the Alert Slider.
+         * * Whether user can invert the order of the Alert Slider.
+         * 0: Default
+         * 1: Inverted
+         * @hide
+         */
+        public static final String ALERT_SLIDER_ORDER = "alert_slider_order";
+
+        /**
+         * Preferred silent mode for Alert Slider..
+         * 0: Alarms only.
+         * 1: Total silence
+         * @hide
+         */
+        public static final String ALERT_SLIDER_SILENT_MODE = "alert_slider_silent_mode";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
