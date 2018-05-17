@@ -4976,6 +4976,18 @@ public final class Settings {
         public static final String LOCKSCREEN_LOCK_ICON_COLOR = "lockscreen_lock_icon_color";
 
         /**
+         * Disable dashboard conditions in settings
+         * @hide
+         */
+        public static final String ENABLE_CONDITIONS = "enable_conditions";
+
+        /**
+         * Disable dashboard suggestions in settings
+         * @hide
+         */
+        public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
+
+        /**
          * Change the color of the lockscreen indication text
          *
          * @hide
