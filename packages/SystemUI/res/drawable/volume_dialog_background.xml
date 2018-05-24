@@ -16,6 +16,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="rectangle">
      <solid android:color="?android:attr/colorBackgroundFloating" />
-     <corners android:radius="@*com.android.systemui:dimen/recents_task_view_rounded_corners_radius" />
+     <corners android:radius="@*com.android.systemui:dimen/rounded_corner_fuckedup_radius" />
 
 </shape>
