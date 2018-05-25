@@ -22,7 +22,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.PowerManager;
+import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
@@ -40,6 +43,8 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
 
     private static final Intent SMART_PIXELS_SETTINGS =
             new Intent().setComponent(SMART_PIXELS_SETTING_COMPONENT);
+
+    private final String substratum = "projekt.substratum";
 
     private boolean mSmartPixelsEnable;
     private boolean mSmartPixelsOnPowerSave;
@@ -68,7 +73,7 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
 
     @Override
     public boolean isAvailable() {
-        return mContext.getResources().
+        return !isPackageInstalled() && mContext.getResources().
                 getBoolean(com.android.internal.R.bool.config_enableSmartPixels);
     }
 
@@ -145,4 +150,14 @@ public class SmartPixelsTile extends QSTileImpl<BooleanState> {
             refreshState();
         }
     };
+
+    private boolean isPackageInstalled() {
+        try {
+            PackageInfo info = mContext.getPackageManager()
+                    .getPackageInfo(substratum, PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+        return true;
+    }
 }
