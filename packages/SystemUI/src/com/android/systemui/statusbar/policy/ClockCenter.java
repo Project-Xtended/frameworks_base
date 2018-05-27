@@ -39,6 +39,7 @@ public class ClockCenter extends Clock {
 
     public ClockCenter(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        updateSettings();
     }
 
     public void setClockVisibilityByPolicy(boolean visible) {
@@ -54,7 +55,7 @@ public class ClockCenter extends Clock {
 
     public void updateClockVisibility() {
         boolean visible = mClockStyle == STYLE_CLOCK_CENTER && mShowClock
-                && mClockVisibleByPolicy && mClockVisibleByUser;
+                && mClockVisibleByPolicy && mClockVisibleByUser && !mForceHide;
         Dependency.get(IconLogger.class).onIconVisibility("center_clock", visible);
         setVisibility(visible ? View.VISIBLE : View.GONE);
     }

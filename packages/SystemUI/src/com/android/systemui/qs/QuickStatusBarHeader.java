@@ -72,6 +72,7 @@ public class QuickStatusBarHeader extends FrameLayout implements
     private BatteryMeterView mBatteryView;
     private Clock mClock;
     private Clock mLeftClock;
+    private Clock mCenterClock;
 
     private HorizontalScrollView mQuickQsPanelScroller;
     private ImageView mBackgroundImage;
@@ -113,6 +114,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
         ((Clock)mClock).setIsQshb(true);
         mLeftClock = findViewById(R.id.left_clock);
         ((Clock)mLeftClock).setIsQshb(true);
+        mCenterClock = findViewById(R.id.center_clock);
+        ((Clock)mCenterClock).setIsQshb(true);
 
         mActivityStarter = Dependency.get(ActivityStarter.class);
 
@@ -134,6 +137,9 @@ public class QuickStatusBarHeader extends FrameLayout implements
         }
         if (mLeftClock != null) {
             ((Clock)mLeftClock).updateSettings();
+        }
+        if (mCenterClock != null) {
+            ((Clock)mCenterClock).updateSettings();
         }
     }
 
@@ -236,8 +242,10 @@ public class QuickStatusBarHeader extends FrameLayout implements
             boolean hideClock = newValue != null && Integer.parseInt(newValue) == 0;
             mClock.setForceHide(hideClock);
             mLeftClock.setForceHide(hideClock);
+	    mCenterClock.setForceHide(hideClock);
             mClock.updateClockVisibility();
             mLeftClock.updateClockVisibility();
+	    mCenterClock.updateClockVisibility();
         }
         if (QS_SHOW_MINI.equals(key)) {
             mMiniMode = newValue != null && Integer.parseInt(newValue) == 1;
