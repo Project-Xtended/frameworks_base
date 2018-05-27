@@ -49,4 +49,6 @@
     <integer name="quick_settings_onthego_dialog_short_timeout">3000</integer>
     <integer name="quick_settings_onthego_dialog_long_timeout">6000</integer>
 
+    <!-- Config to enable/diaable qs tile tinting -->
+    <bool name="config_enable_qs_tile_tinting">false</bool>
 </resources>
