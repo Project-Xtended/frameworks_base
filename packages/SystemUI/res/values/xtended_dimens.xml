@@ -74,4 +74,7 @@
     <dimen name="ticker_text_top_padding">2dp</dimen>
     <dimen name="ticker_text_end_padding">10dp</dimen>
 
+    <!-- Big clock dozing -->
+    <dimen name="dozing_big_clock_padding" format="float">0.38</dimen>
+
 </resources>
