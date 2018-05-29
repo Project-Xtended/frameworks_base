@@ -120,6 +120,9 @@
     <family name="googlesans-sys">
         <font weight="300" style="normal">GoogleSans-Medium.ttf</font>
     </family>
+    <family name="neoneon-sys">
+        <font weight="300" style="normal">Neoneon-Regular.ttf</font>
+    </family>
     <family name="themeable-sys">
         <font weight="300" style="normal">ThemeableFont-Regular.ttf</font>
     </family>

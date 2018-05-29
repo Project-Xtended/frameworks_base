@@ -50,6 +50,9 @@ import java.util.TimeZone;
 
 public class CarrierLabel extends TextView implements DarkReceiver {
 
+    private static final String STATUS_BAR_CARRIER_COLOR =
+           "system:" + Settings.System.STATUS_BAR_CARRIER_COLOR;
+
     private Context mContext;
     private boolean mAttached;
     private static boolean isCN;
@@ -81,6 +84,13 @@ public class CarrierLabel extends TextView implements DarkReceiver {
     public static final int FONT_NOTOSERIF_ITALIC = 22;
     public static final int FONT_NOTOSERIF_BOLD = 23;
     public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
+    public static final int GOBOLD_LIGHT = 25;
+    public static final int ROADRAGE = 26;
+    public static final int SNOWSTORM = 27;
+    public static final int GOOGLESANS = 28;
+    public static final int NEONEON = 29;
+    public static final int THEMEABLE = 30;
+
     private int mCarrierFontSize;
     private int mCarrierColor;
 
@@ -326,14 +336,37 @@ public class CarrierLabel extends TextView implements DarkReceiver {
                 setTypeface(Typeface.create("serif",
                     Typeface.BOLD_ITALIC));
                 break;
+            case GOBOLD_LIGHT:
+                setTypeface(Typeface.create("gobold-light-sys",
+                    Typeface.NORMAL));
+                break;
+            case ROADRAGE:
+                setTypeface(Typeface.create("roadrage-sys",
+		   Typeface.NORMAL));
+                break;
+            case SNOWSTORM:
+                setTypeface(Typeface.create("snowstorm-sys",
+                    Typeface.NORMAL));
+                break;
+            case GOOGLESANS:
+                setTypeface(Typeface.create("googlesans-sys",
+                    Typeface.NORMAL));
+                break;
+            case NEONEON:
+                setTypeface(Typeface.create("neoneon-sys",
+                    Typeface.NORMAL));
+                break;
+            case THEMEABLE:
+                setTypeface(Typeface.create("themeable-sys",
+                    Typeface.NORMAL));
+                break;
         }
     }
 
     private void updateSize() {
         mCarrierFontSize = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CARRIER_FONT_SIZE, 10,
+                Settings.System.STATUS_BAR_CARRIER_FONT_SIZE, 14,
                 UserHandle.USER_CURRENT);
-
         setTextSize(mCarrierFontSize);
     }
 
@@ -341,15 +374,13 @@ public class CarrierLabel extends TextView implements DarkReceiver {
         mCarrierLabelFontStyle = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.STATUS_BAR_CARRIER_FONT_STYLE, FONT_NORMAL,
                 UserHandle.USER_CURRENT);
-
         getFontStyle(mCarrierLabelFontStyle);
     }
 
     private void updateColor() {
         mCarrierColor = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.STATUS_BAR_CARRIER_COLOR, 0xaaffffff,
+                Settings.System.STATUS_BAR_CARRIER_COLOR, 0xffffffff,
                 UserHandle.USER_CURRENT);
-
         setTextColor(mCarrierColor);
     }
 
