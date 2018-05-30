@@ -32,4 +32,8 @@
     <color name="screen_pinning_button_text">@android:color/white</color>
     <color name="screen_pinning_bg_circ_color">#40FFFFFF</color>
     <color name="screen_pinning_nav_icon_hightlight_outer_color">@android:color/white</color>
+
+    <!-- Power menu wallpaper tint off color -->
+    <color name="power_menu_wallpaper_tint_off_color">#80202020</color>
+
 </resources>
