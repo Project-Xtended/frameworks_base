@@ -5818,6 +5818,41 @@ public class StatusBar extends SystemUI implements DemoMode,
             } catch (RemoteException e) {
                 Log.w(TAG, "Can't change theme", e);
             }
+        } else if (accentSetting == 21) {
+            try {
+                mOverlayManager.setEnabled("com.accents.candyred",
+                        true, mCurrentUserId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change theme", e);
+            }
+        } else if (accentSetting == 22) {
+            try {
+                mOverlayManager.setEnabled("com.accents.palered",
+                        true, mCurrentUserId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change theme", e);
+            }
+        } else if (accentSetting == 23) {
+            try {
+                mOverlayManager.setEnabled("com.accents.extendedgreen",
+                        true, mCurrentUserId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change theme", e);
+            }
+        } else if (accentSetting == 24) {
+            try {
+                mOverlayManager.setEnabled("com.accents.paleblue",
+                        true, mCurrentUserId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change theme", e);
+            }
+        } else if (accentSetting == 25) {
+            try {
+                mOverlayManager.setEnabled("com.accents.jadegreen",
+                        true, mCurrentUserId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change theme", e);
+            }
         }
     }
 
@@ -5866,6 +5901,16 @@ public class StatusBar extends SystemUI implements DemoMode,
             mOverlayManager.setEnabled("com.accents.black",
                     false /*disable*/, mCurrentUserId);
             mOverlayManager.setEnabled("com.accents.white",
+                    false /*disable*/, mCurrentUserId);
+            mOverlayManager.setEnabled("com.accents.candyred",
+                    false /*disable*/, mCurrentUserId);
+            mOverlayManager.setEnabled("com.accents.palered",
+                    false /*disable*/, mCurrentUserId);
+            mOverlayManager.setEnabled("com.accents.extendedgreen",
+                    false /*disable*/, mCurrentUserId);
+            mOverlayManager.setEnabled("com.accents.paleblue",
+                    false /*disable*/, mCurrentUserId);
+            mOverlayManager.setEnabled("com.accents.jadegreen",
                     false /*disable*/, mCurrentUserId);
         } catch (RemoteException e) {
             e.printStackTrace();
