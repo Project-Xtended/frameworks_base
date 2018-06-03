@@ -3256,6 +3256,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         return themeInfo != null && themeInfo.isEnabled();
     }
 
+    public boolean isUsingXtendedTheme() {
+        OverlayInfo themeInfo = null;
+        try {
+            themeInfo = mOverlayManager.getOverlayInfo("com.android.system.theme.xtended",
+                    mCurrentUserId);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return themeInfo != null && themeInfo.isEnabled();
+    }
+  
     // Unloads the stock dark theme
     public void unloadStockDarkTheme() {
         OverlayInfo themeInfo = null;
@@ -3275,7 +3286,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void unfuckBlackWhiteAccent() {
         OverlayInfo themeInfo = null;
         try {
-            if (isUsingDarkTheme() || isUsingBlackTheme()) {
+            if (isUsingDarkTheme() || isUsingBlackTheme() || isUsingXtendedTheme()) {
                 themeInfo = mOverlayManager.getOverlayInfo("com.accents.black",
                         mCurrentUserId);
                 if (themeInfo != null && themeInfo.isEnabled()) {
@@ -5422,6 +5433,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 Settings.Secure.DEVICE_THEME, 0, mCurrentUserId);
         boolean useBlackTheme = false;
         boolean useDarkTheme = false;
+	boolean useXtendedTheme = false;
         if (userThemeSetting == 0) {
             // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -5434,6 +5446,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         } else {
             useDarkTheme = userThemeSetting == 2;
             useBlackTheme = userThemeSetting == 3;
+	    useXtendedTheme = userThemeSetting == 4;
             // Check for black and white accent so we don't end up
             // with white on white or black on black
             unfuckBlackWhiteAccent();
@@ -5471,7 +5484,21 @@ public class StatusBar extends SystemUI implements DemoMode,
                 Log.w(TAG, "Can't change theme", e);
             }
         }
-
+        if (isUsingXtendedTheme() != useXtendedTheme) {
+            try {
+                mOverlayManager.setEnabled("com.android.system.theme.xtended",
+                        useXtendedTheme, mCurrentUserId);
+                mOverlayManager.setEnabled("com.android.settings.theme.xtended",
+                        useXtendedTheme, mCurrentUserId);
+                mOverlayManager.setEnabled("com.android.dui.theme.xtended",
+                        useXtendedTheme, mCurrentUserId);
+                // Check for black and white accent so we don't end up
+               // with white on white or black on black
+                unfuckBlackWhiteAccent();
+           } catch (RemoteException e) {
+               Log.w(TAG, "Can't change theme", e);
+           }
+        }
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
         // to set our default theme.
         final boolean lockDarkText = mColorExtractor.getColors(WallpaperManager.FLAG_LOCK, true
@@ -5651,7 +5678,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         } else if (accentSetting == 20) {
             try {
                 // If using a dark, black theme we use the white accent, otherwise use the black accent
-                if (isUsingDarkTheme() || isUsingBlackTheme()) {
+                if (isUsingDarkTheme() || isUsingBlackTheme() || isUsingXtendedTheme()) {
                     mOverlayManager.setEnabled("com.accents.white",
                             true, mCurrentUserId);
                 } else {
