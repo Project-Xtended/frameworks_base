@@ -22,8 +22,8 @@
         android:id="@+id/keyguard_weather_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="14dp"
-        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical" >
 
     <LinearLayout
@@ -56,14 +56,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:orientation="vertical" >
 
             <ImageView
                 android:id="@+id/weather_image"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="56dp"
+                android:layout_height="42dp"
                 android:scaleType="centerInside"
                 android:adjustViewBounds="true" />
 

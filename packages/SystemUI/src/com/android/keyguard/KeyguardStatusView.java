@@ -300,7 +300,7 @@ public class KeyguardStatusView extends GridLayout implements
 
     private int getLockClockFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_CLOCK_FONTS, 26);
+                Settings.System.LOCK_CLOCK_FONTS, 29);
     }
 
     public void refreshTime() {
@@ -335,7 +335,7 @@ public class KeyguardStatusView extends GridLayout implements
         if (nextAlarm != null) {
             String alarm = formatNextAlarm(mContext, nextAlarm);
             mAlarmStatusView.setText(alarm);
-            mAlarmStatusView.setContentDescription(
+	    mAlarmStatusView.setContentDescription(
                     getResources().getString(R.string.keyguard_accessibility_next_alarm, alarm));
             mAvailableAlarm = true;
         } else {
@@ -343,6 +343,7 @@ public class KeyguardStatusView extends GridLayout implements
         }
         mAlarmStatusView.setVisibility(mDarkAmount != 1 ? (mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE)
                 : mAvailableAlarm ? View.VISIBLE : View.GONE);
+	mAlarmStatusView.setTextColor(alarmColor);
     }
 
     public int getClockBottom() {
@@ -972,7 +973,7 @@ public class KeyguardStatusView extends GridLayout implements
     private void refreshLockFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockClockFont = isPrimary ? getLockClockFont() : 26;
+        int lockClockFont = isPrimary ? getLockClockFont() : 29;
 
         if (lockClockFont == 0) {
             mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
@@ -1146,21 +1147,18 @@ public class KeyguardStatusView extends GridLayout implements
         if (mOwnerInfo != null) {
             mOwnerInfo.setAlpha(dark ? 0 : 1);
         }
-
+  
+	updateDozeVisibleViews();
         //mBatteryDoze.setDark(dark);
-        mClockView.setTextColor(ColorUtils.blendARGB(mTextColor, Color.WHITE, darkAmount));
-        mDateView.setTextColor(ColorUtils.blendARGB(mDateTextColor, Color.WHITE, darkAmount));
-        int blendedAlarmColor = ColorUtils.blendARGB(mAlarmTextColor, Color.WHITE, darkAmount);
-        mAlarmStatusView.setTextColor(blendedAlarmColor);
-        mAlarmStatusView.setCompoundDrawableTintList(ColorStateList.valueOf(blendedAlarmColor));
+	mAnalogClockView.setDark(dark);
+	mDeadPoolClockView.setDark(dark);
         mWeatherView.setAlpha(dark ? 0 : 1);
-        mAnalogClockView.setDark(dark);
-        mDeadPoolClockView.setDark(dark);
         updateVisibilities(); // with updated mDarkAmount value
     }
 
     public void setPulsing(boolean pulsing) {
         mPulsing = pulsing;
+	updateDozeVisibleViews();
     }
 
     public void setCleanLayout(int reason) {
@@ -1281,11 +1279,11 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCKSCREEN_OWNER_INFO_COLOR, 0xFFFFFFFF);
            mLockClockFontSize = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCKCLOCK_FONT_SIZE,
-                getResources().getDimensionPixelSize(R.dimen.widget_big_font_size),
+                getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_84),
                 UserHandle.USER_CURRENT);
            mLockDateFontSize = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCKDATE_FONT_SIZE,
-                getResources().getDimensionPixelSize(R.dimen.widget_label_font_size),
+                getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_21),
                 UserHandle.USER_CURRENT);
            dateFont = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCK_DATE_FONTS, 26, UserHandle.USER_CURRENT);
