@@ -299,6 +299,8 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 import com.android.systemui.volume.VolumeComponent;
 
+import com.android.internal.statusbar.DuClockUtils;
+
 import java.lang.reflect.Field;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -3291,6 +3293,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateTheme();
     }
 
+	
     // Check for the dark system theme
     public boolean isUsingDarkTheme() {
         OverlayInfo themeInfo = null;
@@ -5811,7 +5814,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    // Unload all the theme accents
+    // Unload all the theme accents overlays
     public void unloadAccents() {
         OverlayInfo themeInfo = null;
         try {
@@ -5860,6 +5863,18 @@ public class StatusBar extends SystemUI implements DemoMode,
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    // Switches the analog clock from one to another or back to stock
+    public void updateClocks() {
+        int clockSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_CLOCK_SELECTION, 0, mCurrentUserId);
+        DuClockUtils.updateClocks(mOverlayManager, mCurrentUserId, clockSetting, mContext);
+    }
+
+    // Unload all the analog overlays
+    public void unloadClocks() {
+        DuClockUtils.unloadClocks(mOverlayManager, mCurrentUserId, mContext);
     }
 
     private void updateDozingState() {
@@ -7221,8 +7236,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.HIDE_LOCKSCREEN_ALARM)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.HIDE_LOCKSCREEN_CLOCK)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.HIDE_LOCKSCREEN_DATE)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK_SELECTION)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_DATE_SELECTION))) {
+                updateKeyguardStatusSettings();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_CLOCK_SELECTION))) {
+                unloadClocks();
+                updateClocks();
                 updateKeyguardStatusSettings();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.ACCENT_PICKER))){
                 // Unload the accents and update the accent only when the user asks.

@@ -85,5 +85,4 @@
         to communicate pocket state to the pocket judge kernel driver. -->
     <string name="config_pocketBridgeSysfsInpocket"></string>
 
-
 </resources>

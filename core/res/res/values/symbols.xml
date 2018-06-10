@@ -3161,4 +3161,7 @@
   <!-- Multicolor Led -->
   <java-symbol type="bool" name="config_multicolorled" />
 
+  <!-- Custom clocks -->
+  <java-symbol type="string" name="custom_clock_styles" />
+
 </resources>
