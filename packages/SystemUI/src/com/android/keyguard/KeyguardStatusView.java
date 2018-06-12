@@ -295,7 +295,6 @@ public class KeyguardStatusView extends GridLayout implements
                     getResources().getDimensionPixelSize(R.dimen.widget_label_font_size));
             mOwnerInfo.setTypeface(tf);
         }
-        mAlarmStatusView.setTypeface(tf);
     }
 
     private int getLockClockFont() {
@@ -800,100 +799,132 @@ public class KeyguardStatusView extends GridLayout implements
         if (mWeatherCurrentTemp != null) {
             mWeatherCurrentTemp.setTextColor(mTempColor);
         }
+					
         if (dateFont == 0) {
-            mDateView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         }
         if (dateFont == 1) {
-            mDateView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+             mDateView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD));
         }
         if (dateFont == 2) {
-            mDateView.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
         }
         if (dateFont == 3) {
-            mDateView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
         }
         if (dateFont == 4) {
-            mDateView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
         }
         if (dateFont == 5) {
-                mDateView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
         }
         if (dateFont == 6) {
-            mDateView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
         }
         if (dateFont == 7) {
-                mDateView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
         }
         if (dateFont == 8) {
-            mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         }
         if (dateFont == 9) {
-            mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
         }
         if (dateFont == 10) {
-            mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+             mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
         }
         if (dateFont == 11) {
-            mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
         }
         if (dateFont == 12) {
-            mDateView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         }
         if (dateFont == 13) {
-            mDateView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
         }
         if (dateFont == 14) {
-                mDateView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
         }
         if (dateFont == 15) {
-                mDateView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
         }
         if (dateFont == 16) {
-                mDateView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
         }
         if (dateFont == 17) {
-                mDateView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
         }
         if (dateFont == 18) {
-                mDateView.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("cursive", Typeface.NORMAL));
         }
         if (dateFont == 19) {
-                mDateView.setTypeface(Typeface.create("cursive", Typeface.BOLD));
+             mDateView.setTypeface(Typeface.create("cursive", Typeface.BOLD));
+             mAlarmStatusView.setTypeface(Typeface.create("cursive", Typeface.BOLD));
         }
         if (dateFont == 20) {
-                mDateView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
         }
         if (dateFont == 21) {
-                mDateView.setTypeface(Typeface.create("serif", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("serif", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("serif", Typeface.NORMAL));
         }
         if (dateFont == 22) {
-                mDateView.setTypeface(Typeface.create("serif", Typeface.ITALIC));
+             mDateView.setTypeface(Typeface.create("serif", Typeface.ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("serif", Typeface.ITALIC));
         }
         if (dateFont == 23) {
-                mDateView.setTypeface(Typeface.create("serif", Typeface.BOLD));
+             mDateView.setTypeface(Typeface.create("serif", Typeface.BOLD));
+             mAlarmStatusView.setTypeface(Typeface.create("serif", Typeface.BOLD));
         }
         if (dateFont == 24) {
-                mDateView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
+             mDateView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
+             mAlarmStatusView.setTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
         }
         if (dateFont == 25) {
-                mDateView.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
         }
         if (dateFont == 26) {
-                mDateView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
         }
         if (dateFont == 27) {
-                mDateView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
         }
         if (dateFont == 28) {
-                mDateView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
         }
-	if (dateFont == 29) {
-                mDateView.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+    	if (dateFont == 29) {
+             mDateView.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
         }
         if (dateFont == 30) {
-                mDateView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+             mDateView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
         }
-					
+		
         AlarmManager.AlarmClockInfo nextAlarm =
                 mAlarmManager.getNextAlarmClock(UserHandle.USER_CURRENT);
 
@@ -1148,17 +1179,15 @@ public class KeyguardStatusView extends GridLayout implements
             mOwnerInfo.setAlpha(dark ? 0 : 1);
         }
   
-	updateDozeVisibleViews();
         //mBatteryDoze.setDark(dark);
-	mAnalogClockView.setDark(dark);
-	mDeadPoolClockView.setDark(dark);
+    	mAnalogClockView.setDark(dark);
+	    mDeadPoolClockView.setDark(dark);
         mWeatherView.setAlpha(dark ? 0 : 1);
         updateVisibilities(); // with updated mDarkAmount value
     }
 
     public void setPulsing(boolean pulsing) {
         mPulsing = pulsing;
-	updateDozeVisibleViews();
     }
 
     public void setCleanLayout(int reason) {
@@ -1293,3 +1322,4 @@ public class KeyguardStatusView extends GridLayout implements
          }
      }
 }
+
