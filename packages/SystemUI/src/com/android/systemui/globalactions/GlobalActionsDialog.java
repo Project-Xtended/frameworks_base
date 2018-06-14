@@ -36,6 +36,7 @@ import android.content.IntentFilter;
 import android.content.pm.UserInfo;
 import android.content.ServiceConnection;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -155,6 +156,9 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private static final int RESTART_RECOVERY_BUTTON = 2;
     private static final int RESTART_BOOTLOADER_BUTTON = 3;
     private static final int RESTART_UI_BUTTON = 4;
+
+    // Default scrim color
+    private static final int SCRIM_DEFAULT_COLOR = Color.BLACK;
 
     private final Context mContext;
     private final GlobalActionsManager mWindowManagerFuncs;
@@ -2110,7 +2114,7 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         private void updateColors(GradientColors colors, boolean animate) {
             if (Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.POWER_MENU_BG, 0) == 0) {
-                mGradientDrawable.setColors(colors, animate);
+            mGradientDrawable.setColors(getDarkGradientColor(colors), animate);
             }
             View decorView = getWindow().getDecorView();
             if (colors.supportsDarkText()) {
@@ -2119,6 +2123,14 @@ class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else {
                 decorView.setSystemUiVisibility(0);
             }
+        }
+
+        private GradientColors getDarkGradientColor(GradientColors fromWallpaper) {
+            GradientColors colors = new GradientColors();
+            colors.setMainColor(SCRIM_DEFAULT_COLOR);
+            colors.setSecondaryColor(SCRIM_DEFAULT_COLOR);
+            colors.setSupportsDarkText(fromWallpaper.supportsDarkText());
+            return colors;
         }
 
         @Override
