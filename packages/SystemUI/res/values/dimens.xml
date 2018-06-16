@@ -755,16 +755,16 @@
 
     <!-- The height of a task view bar.  This has to be large enough to cover the action bar
          height in either orientation at this smallest width. -->
-    <dimen name="recents_task_view_header_height">56dp</dimen>
-    <dimen name="recents_task_view_header_height_tablet_land">64dp</dimen>
+    <dimen name="recents_task_view_header_height">50dp</dimen>
+    <dimen name="recents_task_view_header_height_tablet_land">60dp</dimen>
 
     <!-- The padding of a button in the recents task view header. -->
-    <dimen name="recents_task_view_header_button_padding">16dp</dimen>
-    <dimen name="recents_task_view_header_button_padding_tablet_land">20dp</dimen>
+    <dimen name="recents_task_view_header_button_padding">20dp</dimen>
+    <dimen name="recents_task_view_header_button_padding_tablet_land">28dp</dimen>
 
     <!-- The radius of the rounded corners on a task view and its shadow (which can be larger
          to create a softer corner effect. -->
-    <dimen name="recents_task_view_rounded_corners_radius">2dp</dimen>
+    <dimen name="recents_task_view_rounded_corners_radius">8dp</dimen>
     <dimen name="recents_task_view_shadow_rounded_corners_radius">6dp</dimen>
     <dimen name="tooltip_corner_radius">8.0dip</dimen>
 
