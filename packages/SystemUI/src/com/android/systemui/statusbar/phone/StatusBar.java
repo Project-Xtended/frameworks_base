@@ -1701,6 +1701,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void inflateSignalClusters() {
         if (mKeyguardStatusBar != null) reinflateSignalCluster(mKeyguardStatusBar);
+        if (mStatusBarView != null) reinflateSignalCluster(mStatusBarView);
     }
 
     public static SignalClusterView reinflateSignalCluster(View view) {
@@ -7205,9 +7206,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor( 
                     Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY),  
                     false, this, UserHandle.USER_ALL); 
-	  mContext.getContentResolver().registerContentObserver(Settings.Secure.getUriFor(
-                     Settings.Secure.SYSUI_ROUNDED_FWVALS),
-                     false, this, UserHandle.USER_ALL);
+ 	    resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.SYSUI_ROUNDED_FWVALS),
+                    false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ACTIVITY_INDICATORS),
+                    false, this, UserHandle.USER_ALL);    
 
             update();
         }
@@ -7255,7 +7259,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                                     Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY, 
                                     0, UserHandle.USER_CURRENT) == 1; 
                 RecentsActivity.startBlurTask(); 
-                updatePreferences(mContext); 
+                updatePreferences(mContext);
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.ACTIVITY_INDICATORS))) {
+                try {
+                    inflateSignalClusters();
+                } catch (Exception e) {
+                    Log.e(TAG, "Unable to inflate Signal Clusters: " + e);
+                }
 	   }
         }
 
