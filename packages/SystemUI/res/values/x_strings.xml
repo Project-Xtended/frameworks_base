@@ -152,6 +152,13 @@
     <!-- Statusbar Tuner -->
     <string name="statusbar_items_title">Statusbar Icons</string>
 
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="accessibility_quick_settings_onthego_off">On-The-Go off</string>
+    <string name="accessibility_quick_settings_onthego_on">On-The-Go on</string>
+    <string name="accessibility_quick_settings_onthego_changed_off">On-The-Go turned off</string>
+    <string name="accessibility_quick_settings_onthego_changed_on">On-The-Go turned on</string>
+
     <!-- Advanced restart -->
     <string name="global_action_reboot">Restart</string>
     <string name="global_action_reboot_system">System</string>
