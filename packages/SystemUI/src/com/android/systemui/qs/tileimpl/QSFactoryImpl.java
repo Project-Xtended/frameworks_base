@@ -40,6 +40,7 @@ import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
+import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.SyncTile;
@@ -173,6 +174,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mUiModeNightTileProvider.get();
             case "sync":
                 return new SyncTile(mHost);
+            case "onthego":
+                return new OnTheGoTile(mHost);
         }
 
         // Intent tiles.
