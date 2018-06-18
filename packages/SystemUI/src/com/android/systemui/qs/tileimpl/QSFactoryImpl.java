@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MicrophoneToggleTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
+import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.QuickAccessWalletTile;
 import com.android.systemui.qs.tiles.ReduceBrightColorsTile;
 import com.android.systemui.qs.tiles.RefreshRateTile;
@@ -110,6 +111,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<AODTile> mAODTileProvider;
     private final Provider<RefreshRateTile> mRefreshRateTileProvider;
+    private final Provider<OnTheGoTile> mOnTheGoTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -154,7 +156,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CompassTile> compassTileProvider,
             Provider<HeadsUpTile> headsupTileProvider,
             Provider<AODTile> aodTileProvider,
-            Provider<RefreshRateTile> refreshRateTileProvider) {
+            Provider<RefreshRateTile> refreshRateTileProvider,
+            Provider<OnTheGoTile> onTheGoTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
 
@@ -195,6 +198,7 @@ public class QSFactoryImpl implements QSFactory {
         mHeadsUpTileProvider = headsupTileProvider;
         mAODTileProvider = aodTileProvider;
         mRefreshRateTileProvider = refreshRateTileProvider;
+        mOnTheGoTileProvider = onTheGoTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -281,6 +285,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mAODTileProvider.get();
             case "refresh_rate":
                 return mRefreshRateTileProvider.get();
+            case "onthego":
+                return mOnTheGoTileProvider.get();
         }
 
         // Custom tiles
