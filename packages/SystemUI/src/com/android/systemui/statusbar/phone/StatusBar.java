@@ -7221,7 +7221,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             update();
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.NO_SIM_CLUSTER_SWITCH))) {
-		    restartSystemUI(mContext);
+		    trytoinflateclusters();
             } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.FP_QUICK_PULLDOWN_QS))) {
                 setFpToQuickPulldownQs();
@@ -9354,10 +9354,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         return lp;
     }
 
-    public static void restartSystemUI(Context ctx) {
-        Process.killProcess(Process.myPid());
-    }
-
     public void updateEdgeGestures(boolean enabled) {
         Log.d(TAG, "updateEdgeGestures: Updating edge gestures");
         if (enabled) {
@@ -9384,6 +9380,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             mBackgroundDimmed.postInvalidate();
         }
     }
+
 
     public static Object getObjectField(Object obj, String fieldName) {
         try {
@@ -9440,4 +9437,11 @@ public class StatusBar extends SystemUI implements DemoMode,
             throw e;
         }
     }
+
+   public void trytoinflateclusters() {
+        try {
+             inflateSignalClusters();
+        } catch (Exception e) {
+        }
+   }
 }
