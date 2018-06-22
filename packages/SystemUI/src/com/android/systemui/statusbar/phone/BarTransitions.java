@@ -153,7 +153,7 @@ public class BarTransitions {
         private final int mSemiTransparent;
         private final int mTransparent;
         private final int mPowerSaveWarning;
-        private final int mWarning;
+        private int mWarning;
         private final Drawable mGradient;
 
         private int mMode = -1;
