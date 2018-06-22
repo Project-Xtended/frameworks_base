@@ -64,6 +64,11 @@ public class Build {
     public static final String DATE = getString("ro.build.date");
 
     /**
+     * @hide
+     */
+    public static final String XTENDED_DISPLAY_VERSION = getString("ro.xtended.display.version");
+
+    /**
      * The name of the instruction set (CPU type + ABI convention) of native code.
      *
      * @deprecated Use {@link #SUPPORTED_ABIS} instead.
