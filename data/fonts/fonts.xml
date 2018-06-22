@@ -111,6 +111,9 @@
     <alias name="google-sans-medium" to="google-sans" weight="500" />
 
     <!-- Lockscren Fonts -->
+    <family name="gobold-sys">
+	<font weight="300" style="normal">Gobold.ttf</font>
+    </family>
     <family name="roadrage-sys">
         <font weight="300" style="normal">RoadRage-Regular.ttf</font>
     </family>
