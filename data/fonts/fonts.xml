@@ -126,6 +126,9 @@
     <family name="themeable-sys">
         <font weight="300" style="normal">ThemeableFont-Regular.ttf</font>
     </family>
+    <family name="samsung-sys">
+	<font weight="300" style="normal">Shamshung.ttf</font>
+    </family>
 
     <!-- fallback fonts -->
     <family lang="und-Arab" variant="elegant">

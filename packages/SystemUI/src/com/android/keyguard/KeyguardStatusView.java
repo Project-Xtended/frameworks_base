@@ -903,6 +903,10 @@ public class KeyguardStatusView extends GridLayout implements
              mDateView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
              mAlarmStatusView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
         }
+	if (dateFont == 30) {
+	     mDateView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+	}
 		
         AlarmManager.AlarmClockInfo nextAlarm =
                 mAlarmManager.getNextAlarmClock(UserHandle.USER_CURRENT);
@@ -1070,6 +1074,9 @@ public class KeyguardStatusView extends GridLayout implements
         }
         if (lockClockFont == 30) {
             mClockView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+	}
+	if (lockClockFont == 31) {
+            mClockView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
         }
     }
 
