@@ -903,6 +903,10 @@ public class KeyguardStatusView extends GridLayout implements
              mDateView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
              mAlarmStatusView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
         }
+	if (dateFont == 31) {
+	     mDateView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+             mAlarmStatusView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+	}
 		
         AlarmManager.AlarmClockInfo nextAlarm =
                 mAlarmManager.getNextAlarmClock(UserHandle.USER_CURRENT);
@@ -959,15 +963,73 @@ public class KeyguardStatusView extends GridLayout implements
             default:
                 mDateView.setBackgroundResource(0);
                 mDateView.setPadding(0,0,0,0);
+                mDateView.setLetterSpacing(0.05f);
+                mDateView.setAllCaps(false);
                 break;
             case 1: // semi-transparent box
                 mDateView.setBackground(getResources().getDrawable(R.drawable.date_box_str_border));
                 mDateView.setPadding(40,20,40,20);
+                mDateView.setLetterSpacing(0.05f);
+                mDateView.setAllCaps(false);
                 break;
             case 2: // semi-transparent box (round)
                 mDateView.setBackground(getResources().getDrawable(R.drawable.date_str_border));
                 mDateView.setPadding(40,20,40,20);
+                mDateView.setLetterSpacing(0.05f);
+                mDateView.setAllCaps(false);
                 break;
+            case 3: // accent box
+                mDateView.setBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                mDateView.setPadding(30,10,30,10);
+                mDateView.setLetterSpacing(0.15f);
+                mDateView.setAllCaps(true);
+                break;
+            case 4: // accent box but just the day
+                mDateView.setBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                mDateView.setPadding(30,10,30,10);
+                mDateView.setLetterSpacing(0.15f);
+                mDateView.setAllCaps(true);
+                break;
+            case 5: // accent box transparent
+                mDateView.setBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                mDateView.getBackground().setAlpha(160);
+                mDateView.setPadding(30,10,30,10);
+                mDateView.setLetterSpacing(0.15f);
+                mDateView.setAllCaps(true);
+                break;
+            case 6: // accent box transparent but just the day
+                mDateView.setBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                mDateView.getBackground().setAlpha(160);
+                mDateView.setPadding(30,10,30,10);
+                mDateView.setLetterSpacing(0.15f);
+                mDateView.setAllCaps(true);
+                break;
+	    case 7: // sammy style
+                mDateView.setBackgroundResource(0);
+                mDateView.setPadding(0,0,0,0);
+                mDateView.setLetterSpacing(0.05f);
+                mDateView.setAllCaps(true);
+                 break;
+            case 8: // Short style
+		mDateView.setBackgroundResource(0);
+                mDateView.setPadding(0,0,0,0);
+                mDateView.setLetterSpacing(0.05f);
+                mDateView.setAllCaps(true);
+                 break;
+            case 9: // sammy style and accent box transparent
+                mDateView.setBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                mDateView.getBackground().setAlpha(160);
+                mDateView.setPadding(30,10,30,10);
+                mDateView.setLetterSpacing(0.15f);
+                mDateView.setAllCaps(true);
+                 break;
+            case 10: // short style and accent box transparent
+                mDateView.setBackground(getResources().getDrawable(R.drawable.date_str_accent));
+                mDateView.getBackground().setAlpha(160);
+                mDateView.setPadding(30,10,30,10);
+                mDateView.setLetterSpacing(0.15f);
+                mDateView.setAllCaps(true);
+                 break;
 	}
 	updateVisibilities();
 	updateDozeVisibleViews();
@@ -1070,6 +1132,9 @@ public class KeyguardStatusView extends GridLayout implements
         }
         if (lockClockFont == 30) {
             mClockView.setTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+	}
+	if (lockClockFont == 31) {
+            mClockView.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
         }
     }
 
@@ -1109,10 +1174,30 @@ public class KeyguardStatusView extends GridLayout implements
         static void update(Context context, boolean hasAlarm) {
             final Locale locale = Locale.getDefault();
             final Resources res = context.getResources();
+            final int mDateSelectionStatic = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.LOCKSCREEN_DATE_SELECTION, 0, UserHandle.USER_CURRENT);
 
+            if (mDateSelectionStatic == 3 || mDateSelectionStatic == 5) {
+            dateViewSkel = res.getString(hasAlarm
+                    ? R.string.abbrev_wday_month_day_no_year_alarm
+                    : R.string.abbrev_wday_day_no_year);
+            } else if (mDateSelectionStatic == 4 || mDateSelectionStatic == 6) {
+            dateViewSkel = res.getString(hasAlarm
+                    ? R.string.abbrev_wday_month_day_no_year_alarm
+                    : R.string.abbrev_wday_no_year);
+	    } else if (mDateSelectionStatic == 7 || mDateSelectionStatic == 9) {
+	    dateViewSkel = res.getString(hasAlarm
+		    ? R.string.abbrev_wday_month_day_no_year_alarm
+		    : R.string.wday_no_year_abbrev_mnth_day);
+            } else if (mDateSelectionStatic == 8 || mDateSelectionStatic == 10) {
+	    dateViewSkel = res.getString(hasAlarm
+		    ? R.string.abbrev_wday_month_day_no_year_alarm
+		    : R.string.wday_day_no_year_mnth);
+            } else {
             dateViewSkel = res.getString(hasAlarm
                     ? R.string.abbrev_wday_month_day_no_year_alarm
                     : R.string.abbrev_wday_month_day_no_year);
+            }
             final String clockView12Skel = res.getString(R.string.clock_12hr_format);
             final String clockView24Skel = res.getString(R.string.clock_24hr_format);
             final String key = locale.toString() + dateViewSkel + clockView12Skel + clockView24Skel;
