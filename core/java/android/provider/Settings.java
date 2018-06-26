@@ -5609,6 +5609,14 @@ public final class Settings {
         public static final String ACTIVITY_INDICATORS = "activity_indicators";
 
         /**
+         * Status bar ticker duration in milliseconds.
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_TICKER_TICK_DURATION =
+                "status_bar_ticker_tick_duration";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

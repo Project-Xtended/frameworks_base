@@ -587,6 +587,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private Ticker mTicker;
     private boolean mTicking;
     private int mTickerAnimationMode;
+    private int mTickerTickDuration;
 
     // LS visualizer on Ambient Display
     private boolean mAmbientVisualizer;
@@ -4205,7 +4206,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         public View mTickerView;
 
         MyTicker(Context context, View sb) {
-            super(context, sb, mTickerAnimationMode);
+            super(context, sb, mTickerAnimationMode, mTickerTickDuration);
             if (mTickerEnabled == 0) {
                 Log.w(TAG, "MyTicker instantiated with mTickerEnabled=0", new Throwable());
             }
@@ -7205,6 +7206,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     false, this, UserHandle.USER_ALL);
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_QUICKBAR_SCROLL_ENABLED),
+	            false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TICKER_TICK_DURATION),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENTS_ICON_PACK),
@@ -7291,6 +7295,9 @@ public class StatusBar extends SystemUI implements DemoMode,
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.QS_QUICKBAR_SCROLL_ENABLED))) {
                  setQSTilesScroller();
+	    } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TICKER_TICK_DURATION))) {
+                updateTickerTickDuration();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.RECENTS_ICON_PACK))) {
                 updateRecentsIconPack();
@@ -7343,6 +7350,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setBrightnessSlider();
             updateTheme();
             setQsPanelOptions();
+            updateTickerTickDuration();
             setForceAmbient();
             updateBatterySettings();
             setNewOverlayAlpha();
@@ -7539,6 +7547,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         mAmbientVisualizer = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.AMBIENT_VISUALIZER_ENABLED, 0,
                 UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void updateTickerTickDuration() {
+        mTickerTickDuration = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_TICKER_TICK_DURATION, 3000, UserHandle.USER_CURRENT);
+        if (mTicker != null) {
+            mTicker.updateTickDuration(mTickerTickDuration);
+        }
     }
 
     protected final ContentObserver mNavbarObserver = new ContentObserver(mHandler) {
