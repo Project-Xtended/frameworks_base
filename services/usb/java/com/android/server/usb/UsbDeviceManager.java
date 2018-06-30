@@ -1125,13 +1125,6 @@ public class UsbDeviceManager {
                 id = SystemMessage.NOTE_USB_AUDIO_ACCESSORY_NOT_SUPPORTED;
             } else if (mConnected) {
 
-                if (Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.MTP_DIRTY_HACK, 1) == 1
-                        && ("".equals(SystemProperties.get("mtp_hack")))) {
-                    mUsbDataUnlocked = true;
-                    setCurrentFunctions(UsbManager.USB_FUNCTION_MTP, mUsbDataUnlocked);
-                }
-
                 if (!mUsbDataUnlocked) {
                     if (mSourcePower) {
                         titleRes = com.android.internal.R.string.usb_supplying_notification_title;
