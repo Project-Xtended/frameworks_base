@@ -324,6 +324,7 @@ public class NotificationPanelView extends PanelView implements
                 new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
+		mStatusBar.stopBrightnessControl();
                 NitrogenUtils.switchScreenOff(context);
                 return true;
             }
