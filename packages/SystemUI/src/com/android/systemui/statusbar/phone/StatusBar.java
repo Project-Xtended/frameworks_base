@@ -4037,7 +4037,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         final boolean anim = !mNoAnimationOnNextBarModeChange && mDeviceInteractive
                 && windowState != WINDOW_STATE_HIDDEN && !powerSave;
         if (powerSave && getBarState() == StatusBarState.SHADE) {
-            mode = MODE_POWERSAVE_WARNING;
+            mode = MODE_WARNING;
         }
         if (mode == MODE_WARNING) {
             transitions.setWarningColor(mBatterySaverWarningColor);
