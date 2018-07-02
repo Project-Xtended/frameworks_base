@@ -665,9 +665,17 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
             return true;
         }
 
-        return mExpanded || mForceExpanded && row.view.getVisibility() == View.VISIBLE
-                || (mExpanded && (row.important || isActive))
-                || !mExpanded && isActive;
+        final boolean isForceExpanded = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.VOLUME_DIALOG_FORCE_EXPANDED, 1) == 1;
+        if (isForceExpanded) {
+                    return mExpanded && row.view.getVisibility() == View.VISIBLE
+                        || (mForceExpanded && (row.important || isActive))
+                        || !mForceExpanded && isActive;
+        }
+
+        return mExpanded && row.view.getVisibility() == View.VISIBLE
+                 || (mExpanded && (row.important || isActive))
+                 || !mExpanded && isActive;
     }
 
     private void updateRowsH(final VolumeRow activeRow) {
@@ -1084,6 +1092,7 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
             updateWindowWidthH();
             mConfigurableTexts.update();
             mZenFooter.onConfigurationChanged();
+            updateForceExpanded();
         }
 
         @Override
@@ -1361,6 +1370,6 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
 
     private void updateForceExpanded() {
         mForceExpanded = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.VOLUME_DIALOG_FORCE_EXPANDED, 0) == 1;
+                Settings.System.VOLUME_DIALOG_FORCE_EXPANDED, 1) == 1;
     }
 }
