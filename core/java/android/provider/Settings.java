@@ -5169,6 +5169,20 @@ public final class Settings {
         public static final String LOCK_DATE_FONTS = "lock_date_fonts";
 
         /**
+	 ** Change fonts for the system lockscreen Owner info
+	 **
+	 ** @hide
+	 **/
+        public static final String LOCK_OWNERINFO_FONTS = "lock_ownerinfo_fonts";
+	
+        /**
+	 ** Change font size for the system lockscreen owner
+	 **
+	 ** @hide
+	 **/
+        public static final String LOCKOWNER_FONT_SIZE= "lockowner_font_size";
+
+        /**
          * Finger amount for CarbonGestures
          * @hide
          */
