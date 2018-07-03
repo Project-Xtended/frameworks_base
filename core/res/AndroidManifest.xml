@@ -97,6 +97,9 @@
     <protected-broadcast android:name="android.os.action.POWER_SAVE_TEMP_WHITELIST_CHANGED" />
     <protected-broadcast android:name="android.os.action.POWER_SAVE_MODE_CHANGED_INTERNAL" />
 
+    <!-- Used to notify when SU is used. -->
+    <protected-broadcast android:name="android.intent.action.SU_SESSION_CHANGED" />
+
     <!-- @deprecated This is rarely used and will be phased out soon. -->
     <protected-broadcast android:name="android.os.action.SCREEN_BRIGHTNESS_BOOST_CHANGED" />
 
