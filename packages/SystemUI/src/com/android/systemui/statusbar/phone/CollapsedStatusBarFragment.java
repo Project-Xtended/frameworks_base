@@ -107,7 +107,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private int mLogoStyle;
     private boolean mShowLogo;
     private int mLogoColor;
-	    
+
     private class XtendedSettingsObserver extends ContentObserver {
         XtendedSettingsObserver(Handler handler) {
             super(handler);
@@ -499,27 +499,28 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
 	public void updateSettings(boolean animate) {
+            if (mStatusBar == null) return;
 
+            if (getContext() == null) {
+                return;
+            }
+
+             try {
  	     mShowCarrierLabel = Settings.System.getIntForUser(
-                 getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
-                 UserHandle.USER_CURRENT);	
-	     setCarrierLabel(animate);
-
+                 mContentResolver, Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
+                 UserHandle.USER_CURRENT);
              mShowWeather = Settings.System.getIntForUser(
-                getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
+                mContentResolver, Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
                 UserHandle.USER_CURRENT);
-
-             if (mStatusBar == null) return;
- 
-             if (getContext() == null) {
-                 return;
-	     }
-			((Clock)mClock).updateSettings();
-            ((Clock)mCenterClock).updateSettings();
-            ((Clock)mLeftClock).updateSettings();
-			mStatusBarComponent.updateQsbhClock();	
-            mStatusBarComponent.updateBatterySettings();
-            mNetworkTraffic.updateSettings();
+            } catch (Exception e) {
+            }
+                setCarrierLabel(animate);
+                ((Clock)mClock).updateSettings();
+                ((Clock)mCenterClock).updateSettings();
+                ((Clock)mLeftClock).updateSettings();
+   	        mStatusBarComponent.updateQsbhClock();
+                mStatusBarComponent.updateBatterySettings();
+                mNetworkTraffic.updateSettings();
       }
 
     public void updateLogoSettings(boolean animate) {
