@@ -84,6 +84,7 @@
         <item>org.telegram.messenger.Telegram</item>
 	<item>org.telegram.ui.LaunchActivity</item>
         <item>com.snapchat.android</item>
+	<item>com.snapchat.android.LandingPageActivity</item>
 	<item>com.instagram.android</item>
 	<item>com.instagram.android.MainTabActivity</item>
 	<item>com.facebook.katana</item>
@@ -97,13 +98,22 @@
         <item>com.facebook.lite</item>
         <item>com.csam.icici.bank.imobile</item>
 	<item>com.linkedin.android</item>
-	<item>com.snapchat.android</item>
-        <item>com.snapchat.android.LandingPageActivity</item>
         <item>com.spotify</item>
         <item>com.spotify.music</item>
         <item>com.spotify.music.MainActivity</item>
         <item>com.spotify.music.Spotify</item>
         <item>com.bsb.hike</item>					   
+	<item>tugapower.codeaurora.browser</item>
+        <item>org.mozilla.firefox</item>
+        <item>com.android.chrome</item>
+        <item>com.amazon.mShop.android.shopping</item>
+        <item>com.google.android.inputmethod.latin</item>
+        <item>com.google.android.apps.plus</item>
+        <item>com.google.android.apps.maps</item>
+        <item>ru.ok.android</item>
+        <item>com.trtf.blue</item>
+        <item>com.google.android.youtube</item>
+	<item>com.Slack</item>
     </string-array>
 
     <bool name="config_canForceDozeNotifications">false</bool>
