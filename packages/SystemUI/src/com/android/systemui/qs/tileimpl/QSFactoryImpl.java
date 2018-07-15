@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LocationTile;
+import com.android.systemui.qs.tiles.LogTile;
 import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.NavigationBarTile;
 import com.android.systemui.qs.tiles.NfcTile;
@@ -129,6 +130,8 @@ public class QSFactoryImpl implements QSFactory {
         else if (tileSpec.equals("read")) return new ReadingModeTile(mHost);
         else if (tileSpec.equals("onthego")) return new OnTheGoTile(mHost);
         else if (tileSpec.equals("gaming")) return new GamingModeTile(mHost);
+        else if (tileSpec.equals("logtile")) return new LogTile(mHost);
+
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(mHost, tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(mHost, tileSpec);
