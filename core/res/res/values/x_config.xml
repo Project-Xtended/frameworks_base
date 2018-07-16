@@ -226,4 +226,7 @@
          before setting power profiles on boot. -->
     <bool name="config_waitForMpctlOnBoot">false</bool>
 
+    <!-- Whether device ignores the RSSNR signal implementation -->
+    <bool name="config_ignoreRssnrSignalLevel">false</bool>
+
 </resources>
