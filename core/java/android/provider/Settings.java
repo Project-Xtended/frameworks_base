@@ -10878,7 +10878,15 @@ public final class Settings {
          */
         public static final String NIGHT_BRIGHTNESS_VALUE = "night_brightness_value";
 
-	/**
+        /**
+         * Ambient Display Visualizer
+         * @hide
+         */
+        public static final String AMBIENT_VISUALIZER_ENABLED = "ambient_visualizer";
+
+        private static final Validator AMBIENT_VISUALIZER_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * @hide
          */
         public static final String NAVIGATION_BAR_HEIGHT_LANDSCAPE = "navigation_bar_height_landscape";
@@ -11381,6 +11389,7 @@ public final class Settings {
             WIFI_DISCONNECT_DELAY_DURATION,
             FP_SWIPE_TO_DISMISS_NOTIFICATIONS,
             VOLUME_LINK_NOTIFICATION,
+            AMBIENT_VISUALIZER_ENABLED,
         };
 
         /**
@@ -11534,6 +11543,7 @@ public final class Settings {
             VALIDATORS.put(VOLUME_LINK_NOTIFICATION, VOLUME_LINK_NOTIFICATION_VALIDATOR);
             VALIDATORS.put(LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS, BOOLEAN_VALIDATOR);
             VALIDATORS.put(LOCK_SCREEN_SHOW_NOTIFICATIONS, BOOLEAN_VALIDATOR);
+            VALIDATORS.put(AMBIENT_VISUALIZER_ENABLED, AMBIENT_VISUALIZER_ENABLED_VALIDATOR);
         }
 
         /**
