@@ -2360,6 +2360,10 @@ final class ActivityRecord extends ConfigurationContainer implements AppWindowCo
             }
         }
 
+        if (service.mWindowManager.isGestureButtonEnabled()) {
+            return;
+        }
+
         final ActivityStack stack = getStack();
         if (task == null || stack == null || !task.mFullscreen || maxAspectRatio == 0
                 || isInVrUiMode(getConfiguration())) {
