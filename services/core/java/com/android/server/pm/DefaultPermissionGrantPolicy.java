@@ -870,6 +870,8 @@ final class DefaultPermissionGrantPolicy {
             grantRuntimePermissionsLPw(dialerPackage, SMS_PERMISSIONS, userId);
             grantRuntimePermissionsLPw(dialerPackage, MICROPHONE_PERMISSIONS, userId);
             grantRuntimePermissionsLPw(dialerPackage, CAMERA_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(dialerPackage, STORAGE_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(dialerPackage, LOCATION_PERMISSIONS, userId);				  
         }
     }
 
