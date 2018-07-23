@@ -1021,7 +1021,8 @@ public final class DefaultPermissionGrantPolicy {
             grantPermissionsToSystemPackage(pm, dialerPackage, userId, PHONE_PERMISSIONS);
         }
         grantPermissionsToSystemPackage(pm, dialerPackage, userId,
-                CONTACTS_PERMISSIONS, SMS_PERMISSIONS, MICROPHONE_PERMISSIONS, CAMERA_PERMISSIONS);
+                CONTACTS_PERMISSIONS, SMS_PERMISSIONS, MICROPHONE_PERMISSIONS, CAMERA_PERMISSIONS,
+                STORAGE_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS);
     }
 
     private void grantDefaultPermissionsToDefaultSystemSmsApp(PackageManagerWrapper pm,
