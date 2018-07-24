@@ -322,15 +322,14 @@ public class KeyguardStatusView extends GridLayout implements
         if (nextAlarm != null) {
             String alarm = formatNextAlarm(mContext, nextAlarm);
             mAlarmStatusView.setText(alarm);
+	    mAlarmStatusView.setTextColor(alarmColor);
 	    mAlarmStatusView.setContentDescription(
                     getResources().getString(R.string.keyguard_accessibility_next_alarm, alarm));
             mAvailableAlarm = true;
         } else {
             mAvailableAlarm = false;
         }
-        mAlarmStatusView.setVisibility(mDarkAmount != 1 ? (mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE)
-                : mAvailableAlarm ? View.VISIBLE : View.GONE);
-	mAlarmStatusView.setTextColor(alarmColor);
+	mAlarmStatusView.setVisibility(mDarkAmount != 1 ? (mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE) : View.VISIBLE);
     }
 
     public int getClockBottom() {
@@ -826,8 +825,7 @@ public class KeyguardStatusView extends GridLayout implements
 
         mDateView.setVisibility(mDarkAmount != 1 ? (mShowDate ? View.VISIBLE : View.GONE) : View.VISIBLE);
 
-        mAlarmStatusView.setVisibility(mDarkAmount != 1 ? (mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE)
-                : mAvailableAlarm ? View.VISIBLE : View.GONE);
+        mAlarmStatusView.setVisibility(mDarkAmount != 1 ? (mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE) : View.VISIBLE);
     }
 
     private void updateSettings() {
