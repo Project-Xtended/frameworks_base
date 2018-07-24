@@ -322,15 +322,14 @@ public class KeyguardStatusView extends GridLayout implements
         if (nextAlarm != null) {
             String alarm = formatNextAlarm(mContext, nextAlarm);
             mAlarmStatusView.setText(alarm);
+	    mAlarmStatusView.setTextColor(alarmColor);
 	    mAlarmStatusView.setContentDescription(
                     getResources().getString(R.string.keyguard_accessibility_next_alarm, alarm));
             mAvailableAlarm = true;
         } else {
             mAvailableAlarm = false;
         }
-        mAlarmStatusView.setVisibility(mDarkAmount != 1 ? (mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE)
-                : mAvailableAlarm ? View.VISIBLE : View.GONE);
-	mAlarmStatusView.setTextColor(alarmColor);
+	mAlarmStatusView.setVisibility(mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE);
     }
 
     public int getClockBottom() {
@@ -799,35 +798,34 @@ public class KeyguardStatusView extends GridLayout implements
     private void updateVisibilities() {
         switch (mClockSelection) {
             case 0: // default digital
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE : View.GONE) : View.VISIBLE);
+                mClockView.setVisibility(mShowClock ? View.VISIBLE : View.GONE);
                 mAnalogClockView.setVisibility(View.GONE);
                 break;
             case 1: // digital (bold)
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE : View.GONE) : View.VISIBLE);
+                mClockView.setVisibility(mShowClock ? View.VISIBLE : View.GONE);
                 mAnalogClockView.setVisibility(View.GONE);
                 break;
             case 2: // sammy
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE : View.GONE) : View.VISIBLE);
+                mClockView.setVisibility(mShowClock ? View.VISIBLE : View.GONE);
                 mAnalogClockView.setVisibility(View.GONE);
                 break;
             case 3: // sammy (bold)
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE : View.GONE) : View.VISIBLE);
+                mClockView.setVisibility(mShowClock ? View.VISIBLE : View.GONE);
                 mAnalogClockView.setVisibility(View.GONE);
                 break;
             case 4: // analog
-                mAnalogClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE : View.GONE) : View.VISIBLE);
+                mAnalogClockView.setVisibility(mShowClock ? View.VISIBLE : View.GONE);
                 mClockView.setVisibility(View.GONE);
                 break;
             default: // custom analog styles (int > 4)
-                mAnalogClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE : View.GONE) : View.VISIBLE);
+                mAnalogClockView.setVisibility(mShowClock ? View.VISIBLE : View.GONE);
                 mClockView.setVisibility(View.GONE);
                 break;
         }
 
-        mDateView.setVisibility(mDarkAmount != 1 ? (mShowDate ? View.VISIBLE : View.GONE) : View.VISIBLE);
+        mDateView.setVisibility(mShowDate ? View.VISIBLE : View.GONE);
 
-        mAlarmStatusView.setVisibility(mDarkAmount != 1 ? (mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE)
-                : mAvailableAlarm ? View.VISIBLE : View.GONE);
+        mAlarmStatusView.setVisibility(mShowAlarm && mAvailableAlarm ? View.VISIBLE : View.GONE);
     }
 
     private void updateSettings() {
