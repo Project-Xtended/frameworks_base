@@ -130,8 +130,10 @@ import android.app.ActivityManagerInternal;
 import android.app.ActivityManagerInternal.SleepToken;
 import android.app.ActivityOptions;
 import android.app.ActivityThread;
+import android.app.AlarmManager;
 import android.app.AppOpsManager;
 import android.app.IUiModeManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.app.StatusBarManager;
@@ -157,6 +159,9 @@ import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
 import android.hardware.display.DisplayManager;
 import android.hardware.hdmi.HdmiControlManager;
 import android.hardware.hdmi.HdmiPlaybackClient;
@@ -398,6 +403,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final String SYSUI_SCREENSHOT_ERROR_RECEIVER =
             "com.android.systemui.screenshot.ScreenshotServiceErrorReceiver";
 
+    private static final String ACTION_TORCH_OFF =
+            "com.android.server.policy.PhoneWindowManager.ACTION_TORCH_OFF";
+
     /**
      * Keyguard stuff
      */
@@ -460,6 +468,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     AccessibilityManager mAccessibilityManager;
     BurnInProtectionHelper mBurnInProtectionHelper;
     AppOpsManager mAppOpsManager;
+    AlarmManager mAlarmManager;
 
     ANBIHandler mANBIHandler;
 
@@ -951,6 +960,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mClearedBecauseOfForceShow;
     private boolean mTopWindowIsKeyguard;
 
+    private CameraManager mCameraManager;
+    private String mRearFlashCameraId;
+    private boolean mTorchLongPressPowerEnabled;
+    private boolean mTorchEnabled;
+    private int mTorchTimeout;
+    private PendingIntent mTorchOffPendingIntent;
+
     // BoostFramework constants
     private static final int MSG_DISPATCH_KEYPRESS_BOOST_UNBLOCK = 100;
     private static final int MSG_RELEASE_ROTATION_LOCK = 101;
@@ -1056,7 +1072,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 case MSG_TOGGLE_TORCH:
                     performHapticFeedbackLw(null, HapticFeedbackConstants.LONG_PRESS, true);
-                    NitrogenUtils.toggleCameraFlash();
+                    toggleTorch();
                     break;
                 case HardkeyActionHandler.MSG_FIRE_HOME:
                     launchHomeFromHotKey();
@@ -1134,6 +1150,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.TORCH_POWER_BUTTON_GESTURE), false, this,
                     UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+	            Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT), false, this,
+	            UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.VOLUME_WAKE_SCREEN), false, this,
                     UserHandle.USER_ALL);
@@ -2328,6 +2347,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mHasFeatureLeanback = mContext.getPackageManager().hasSystemFeature(FEATURE_LEANBACK);
         mAccessibilityShortcutController =
                 new AccessibilityShortcutController(mContext, new Handler(), mCurrentUserId);
+	mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         // Initialise Keypress Boost
         mBoostParamValWeak = context.getResources().getIntArray(
                 com.android.internal.R.array.qboost_weak_param_value);
@@ -2383,6 +2403,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 });
 
         mHandler = new PolicyHandler();
+	mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+	mCameraManager.registerTorchCallback(new TorchModeCallback(), mHandler);
         mWakeGestureListener = new MyWakeGestureListener(mContext, mHandler);
         mOrientationListener = new MyOrientationListener(mContext, mHandler);
         try {
@@ -2663,7 +2685,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 		       + deviceKeyHandlerClasses[i], e);
            }
         }
-        if (DEBUG) Slog.d(TAG, "" + mDeviceKeyHandlers.size() + " device key handlers loaded");					
+        if (DEBUG) Slog.d(TAG, "" + mDeviceKeyHandlers.size() + " device key handlers loaded");
+
+        // Register for torch off events
+        BroadcastReceiver torchReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mTorchOffPendingIntent = null;
+                if (mTorchEnabled) {
+                    mHandler.removeMessages(MSG_TOGGLE_TORCH);
+                    Message msg = mHandler.obtainMessage(MSG_TOGGLE_TORCH);
+                    msg.setAsynchronous(true);
+                    msg.sendToTarget();
+                }
+            }
+        };
+        filter = new IntentFilter();
+        filter.addAction(ACTION_TORCH_OFF);
+        context.registerReceiver(torchReceiver, filter);
     }
 
     /**
@@ -3036,6 +3075,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mTorchActionMode = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.TORCH_POWER_BUTTON_GESTURE, 0,
                     UserHandle.USER_CURRENT);
+
+            mTorchTimeout = Settings.System.getIntForUser(resolver,
+	            Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT, 0,
+		    UserHandle.USER_CURRENT);
 
             mVolumeWakeSupport = Settings.System.getIntForUser(resolver,
                     Settings.System.VOLUME_WAKE_SCREEN,0,
@@ -9861,6 +9904,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+
     /**
      * @return Whether music is being played right now "locally" (e.g. on the device's speakers
      *    or wired headphones) or "remotely" (e.g. on a device using the Cast protocol and
@@ -9891,5 +9935,66 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 return mVolumeWakeSupport;
         }
         return false;
+    }
+
+    private void cancelTorchOff() {
+        if (mTorchOffPendingIntent != null) {
+            mAlarmManager.cancel(mTorchOffPendingIntent);
+            mTorchOffPendingIntent = null;
+        }
+    }
+
+    private void toggleTorch() {
+        cancelTorchOff();
+        final boolean origEnabled = mTorchEnabled;
+        try {
+            final String rearFlashCameraId = getRearFlashCameraId();
+            if (rearFlashCameraId != null) {
+                mCameraManager.setTorchMode(rearFlashCameraId, !mTorchEnabled);
+                mTorchEnabled = !mTorchEnabled;
+            }
+        } catch (CameraAccessException e) {
+            // Ignore
+        }
+        // Setup torch off alarm
+        if (mTorchEnabled && !origEnabled && mTorchTimeout > 0) {
+            Intent torchOff = new Intent(ACTION_TORCH_OFF);
+            torchOff.addFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY
+                    | Intent.FLAG_RECEIVER_FOREGROUND);
+            mTorchOffPendingIntent = PendingIntent.getBroadcast(mContext, 0, torchOff, 0);
+            mAlarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + mTorchTimeout * 1000, mTorchOffPendingIntent);
+        }
+    }
+
+    private String getRearFlashCameraId() throws CameraAccessException {
+        if (mRearFlashCameraId != null) return mRearFlashCameraId;
+        for (final String id : mCameraManager.getCameraIdList()) {
+            CameraCharacteristics c = mCameraManager.getCameraCharacteristics(id);
+            boolean flashAvailable = c.get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+            int lensDirection = c.get(CameraCharacteristics.LENS_FACING);
+            if (flashAvailable && lensDirection == CameraCharacteristics.LENS_FACING_BACK) {
+                mRearFlashCameraId = id;
+            }
+        }
+        return mRearFlashCameraId;
+    }
+
+    private class TorchModeCallback extends CameraManager.TorchCallback {
+        @Override
+        public void onTorchModeChanged(String cameraId, boolean enabled) {
+            if (!cameraId.equals(mRearFlashCameraId)) return;
+            mTorchEnabled = enabled;
+            if (!mTorchEnabled) {
+                cancelTorchOff();
+            }
+        }
+
+        @Override
+        public void onTorchModeUnavailable(String cameraId) {
+            if (!cameraId.equals(mRearFlashCameraId)) return;
+            mTorchEnabled = false;
+            cancelTorchOff();
+        }
     }
 }

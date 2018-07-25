@@ -305,6 +305,9 @@
     <protected-broadcast android:name="android.intent.action.DREAMING_STOPPED" />
     <protected-broadcast android:name="android.intent.action.ANY_DATA_STATE" />
 
+    <!-- Used for long press power torch feature - automatic turn off on timeout -->
+    <protected-broadcast android:name="com.android.server.policy.PhoneWindowManager.ACTION_TORCH_OFF" />
+
     <protected-broadcast android:name="com.android.server.WifiManager.action.START_SCAN" />
     <protected-broadcast android:name="com.android.server.WifiManager.action.START_PNO" />
     <protected-broadcast android:name="com.android.server.WifiManager.action.DELAYED_DRIVER_STOP" />
