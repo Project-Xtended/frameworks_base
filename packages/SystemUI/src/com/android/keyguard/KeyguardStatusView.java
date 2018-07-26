@@ -278,11 +278,6 @@ public class KeyguardStatusView extends GridLayout implements
                 R.dimen.bottom_text_spacing_digital);
         mAnalogClockView.setLayoutParams(customlayoutParams);
 
-        // OwnerInfo
-        if (mOwnerInfo != null) {
-            mOwnerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_21));
-        }
     }
 
     private int getLockClockFont() {
