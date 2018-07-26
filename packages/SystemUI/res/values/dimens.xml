@@ -766,7 +766,7 @@
          to create a softer corner effect. -->
     <dimen name="recents_task_view_rounded_corners_radius">8dp</dimen>
     <dimen name="recents_task_view_shadow_rounded_corners_radius">6dp</dimen>
-    <dimen name="tooltip_corner_radius">8.0dip</dimen>
+    <dimen name="tooltip_corner_radius">0.5dp</dimen>
 
     <!-- The amount of highlight to make on each task view. -->
     <dimen name="recents_task_view_highlight">1dp</dimen>

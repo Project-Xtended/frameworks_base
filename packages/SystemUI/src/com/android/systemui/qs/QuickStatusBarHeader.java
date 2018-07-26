@@ -108,7 +108,7 @@ public class QuickStatusBarHeader extends FrameLayout implements
         applyDarkness(R.id.clock, tintArea, intensity, colorForeground);
 
         mBatteryView = findViewById(R.id.battery);
-        mBatteryView.setIsQuickSbHeaderOrKeyguard(true);
+	mBatteryView.setForceShowPercent(true);
 
         mClock = findViewById(R.id.clock);
         ((Clock)mClock).setIsQshb(true);
