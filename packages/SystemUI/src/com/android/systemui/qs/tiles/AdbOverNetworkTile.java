@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 The CyanogenMod Open Source Project
+ * Copyright (C) 2015 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.android.systemui.qs.tiles;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
@@ -27,15 +26,23 @@ import android.net.wifi.WifiManager;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
-import com.android.systemui.R;
+import android.widget.Toast;
+
+import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.systemui.qs.QSHost;
+import com.android.systemui.R;
+import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
+import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 import java.net.InetAddress;
 
 public class AdbOverNetworkTile extends QSTileImpl<BooleanState> {
+
+
+    private boolean mActive = false;
+    private boolean mListening;
 
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_network_adb_on);
 
@@ -50,25 +57,25 @@ public class AdbOverNetworkTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleClick() {
-        Settings.Secure.putIntForUser(mContext.getContentResolver(),
-                Settings.Secure.ADB_PORT, getState().value ? -1 : 5555,
-                UserHandle.USER_CURRENT);
-    }
-
-    @Override
-    public Intent getLongClickIntent() {
-        return new Intent().setComponent(new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$DevelopmentSettingsActivity"));
+        if (!isAdbEnabled()) {
+           Toast.makeText(mContext, mContext.getString(
+                    R.string.quick_settings_network_adb_toast), Toast.LENGTH_LONG).show();
+        } else {
+            Settings.Secure.putIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.ADB_PORT, isAdbNetworkEnabled() ? -1 : 5555,
+                    UserHandle.USER_CURRENT);
+        }
+        refreshState();
     }
 
     @Override
     public CharSequence getTileLabel() {
-        return mContext.getString(R.string.quick_settings_adb_network);
+        return mContext.getString(R.string.quick_settings_network_adb_label);
     }
 
     @Override
-    public int getMetricsCategory() {
-        return MetricsEvent.NITROGEN_SETTINGS;
+    public Intent getLongClickIntent() {
+        return new Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS);
     }
 
     @Override
@@ -85,10 +92,10 @@ public class AdbOverNetworkTile extends QSTileImpl<BooleanState> {
             if (wifiInfo != null) {
                 // if wifiInfo is not null, set the label to "hostAddress"
                 InetAddress address = NetworkUtils.intToInetAddress(wifiInfo.getIpAddress());
-                state.label = address.getHostAddress() + ":5555";
+                state.label = address.getHostAddress();
             } else {
                 // if wifiInfo is null, set the label without host address
-                state.label = mContext.getString(R.string.quick_settings_network_adb_enabled_label);
+                state.label = mContext.getString(R.string.quick_settings_network_adb_label);
             }
             state.slash.isSlashed = false;
             state.state = Tile.STATE_ACTIVE;
@@ -98,6 +105,11 @@ public class AdbOverNetworkTile extends QSTileImpl<BooleanState> {
             state.slash.isSlashed = true;
             state.state = Tile.STATE_INACTIVE;
         }
+    }
+
+    @Override
+    public int getMetricsCategory() {
+        return MetricsEvent.NITROGEN_SETTINGS;
     }
 
     private boolean isAdbEnabled() {
@@ -118,25 +130,23 @@ public class AdbOverNetworkTile extends QSTileImpl<BooleanState> {
     };
 
     @Override
-    public void destroy() {
-        mContext.getContentResolver().unregisterContentObserver(mObserver);
-    }
-
-    @Override
     public void handleSetListening(boolean listening) {
         if (mObserver == null) {
             return;
         }
-        if (listening) {
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.ADB_PORT),
-                    false, mObserver);
-            mContext.getContentResolver().registerContentObserver(
-                    Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
-                    false, mObserver);
-        } else {
-            mContext.getContentResolver().unregisterContentObserver(mObserver);
+        if (mListening != listening) {
+            mListening = listening;
+            if (listening) {
+                mContext.getContentResolver().registerContentObserver(
+                        Settings.Secure.getUriFor(Settings.Secure.ADB_PORT),
+                        false, mObserver);
+                mContext.getContentResolver().registerContentObserver(
+                        Settings.Global.getUriFor(Settings.Global.ADB_ENABLED),
+                        false, mObserver);
+            } else {
+                mContext.getContentResolver().unregisterContentObserver(mObserver);
+            }
         }
     }
-
 }
+
