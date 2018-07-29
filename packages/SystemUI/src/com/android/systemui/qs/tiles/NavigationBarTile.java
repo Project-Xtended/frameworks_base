@@ -46,10 +46,14 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.qs.*;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 
+import android.service.quicksettings.Tile;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NavigationBarTile extends QSTileImpl<BooleanState> {
+
+    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_stock);
 
     private static final String NAVBAR_MODE_ENTRIES_NAME = "systemui_navbar_mode_entries";
     private static final String NAVBAR_MODE_VALUES_NAME = "systemui_navbar_mode_values";
@@ -190,33 +194,36 @@ public class NavigationBarTile extends QSTileImpl<BooleanState> {
 
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
+        if (state.slash == null) {
+            state.slash = new SlashState();
+        }
         if (mAnimationList.isEmpty() && mShowingDetail && arg == null) {
             return;
         }
 
         int navMode = getNavigationBar();
 
+	state.icon = mIcon;
         if (navbarEnabled()) {
             if (navMode == NAVIGATION_MODE_DEFAULT) {
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_stock);
                 state.label = mContext.getString(R.string.quick_settings_navigation_default);
+		state.value = true;
             } else if (navMode == NAVIGATION_MODE_SMARTBAR){
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_smartbar);
                 state.label = mContext.getString(R.string.quick_settings_smartbar);
+		state.value = true;
             } else if (navMode == NAVIGATION_MODE_FLING){
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_screwd_fling);
                 state.label = mContext.getString(R.string.quick_settings_fling);
+		state.value = true;
             }
         } else {
-            state.label = mContext.getString(R.string.quick_settings_navigation_disabled);
-            if (navMode == NAVIGATION_MODE_DEFAULT) {
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_stock_off);
-            } else if (navMode == NAVIGATION_MODE_SMARTBAR){
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_smartbar_off);
-            } else if (navMode == NAVIGATION_MODE_FLING){
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_screwd_fling_off);
-            }
+            state.label = mContext.getString(R.string.quick_settings_navigation_bar);
+            state.value = false;
         }
+        state.slash.isSlashed = !state.value;
+        state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
     }
 
     @Override
