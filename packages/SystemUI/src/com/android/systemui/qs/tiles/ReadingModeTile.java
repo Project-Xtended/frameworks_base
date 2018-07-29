@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
+import android.service.quicksettings.Tile;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 
@@ -33,6 +34,8 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 public class ReadingModeTile extends QSTileImpl<BooleanState> {
 
     private final SecureSetting mSetting;
+
+    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_read_on);
 
     public ReadingModeTile(QSHost host) {
         super(host);
@@ -57,7 +60,7 @@ public class ReadingModeTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
-    public void handleClick() {
+    protected void handleClick() {
         mHost.collapsePanels();
         setEnabled(!mState.value);
         refreshState();
@@ -85,16 +88,23 @@ public class ReadingModeTile extends QSTileImpl<BooleanState> {
         if (mSetting == null) return;
         final int value = arg instanceof Integer ? (Integer)arg : mSetting.getValue();
         final boolean enable = value != 0;
+        if (state.slash == null) {
+            state.slash = new SlashState();
+        }
         state.value = enable;
         state.label = mContext.getString(R.string.accessibility_reading_mode);
+        state.icon = mIcon;
+        state.slash.isSlashed = !state.value;
         if (enable) {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_read_on);
+            /*state.icon = ResourceIcon.get(R.drawable.ic_qs_read_on);*/
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_reading_mode_on);
+            state.state = Tile.STATE_ACTIVE;
         } else {
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_read_off);
+            /*state.icon = ResourceIcon.get(R.drawable.ic_qs_read_off);*/
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_reading_mode_off);
+            state.state = Tile.STATE_INACTIVE;
         }
     }
 
