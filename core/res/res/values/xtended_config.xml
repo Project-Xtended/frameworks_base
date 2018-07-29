@@ -177,4 +177,7 @@
     -->
     <integer name="config_LTE_RSRP_threshold_type">0</integer>
 
+    <!-- Whether device has a notch -->
+    <bool name="config_haveNotch">false</bool>
+
 </resources>
