@@ -5823,6 +5823,14 @@ public final class Settings {
          public static final String TORCH_LONG_PRESS_POWER_TIMEOUT = "torch_long_press_power_timeout";
 
         /**
+	 ** Whether to show Device Accent on QS on the screen.
+	 ** 0 = OFF
+	 ** 1 = ON
+	 ** @hide
+	 **/
+         public static final String QS_TILE_TINTING_ENABLE = "qs_tile_tinting_enable";
+		 
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *

@@ -27,6 +27,8 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.provider.Settings;
+import android.os.Handler;
 
 import com.android.systemui.R;
 import com.android.systemui.plugins.qs.QSIconView;
@@ -162,13 +164,14 @@ public class QSIconViewImpl extends QSIconView {
                     .setFinalImageTintList(ColorStateList.valueOf(toColor));
         }
 
+        boolean enableQsTileTinting = Settings.System.getInt(mContext.getContentResolver(), 
+		           Settings.System.QS_TILE_TINTING_ENABLE, 1) == 1;
+
         if (ValueAnimator.areAnimatorsEnabled()) {
             final float fromAlpha = Color.alpha(fromColor);
             final float toAlpha = Color.alpha(toColor);
             final float fromChannel = Color.red(fromColor);
             final float toChannel = Color.red(toColor);
-
-            boolean enableQsTileTinting = getContext().getResources().getBoolean(R.bool.config_enable_qs_tile_tinting);
 
             ValueAnimator anim = ValueAnimator.ofFloat(0, 1);
             anim.setDuration(QS_ANIM_LENGTH);
@@ -177,12 +180,12 @@ public class QSIconViewImpl extends QSIconView {
                 int alpha = (int) (fromAlpha + (toAlpha - fromAlpha) * fraction);
                 int channel = (int) (fromChannel + (toChannel - fromChannel) * fraction);
 
-                if (!enableQsTileTinting) {
-                    setTint(iv, Color.argb(alpha, channel, channel, channel));
-                } else {
-                    setTint(iv, toColor);
-                }
-            });
+                if (enableQsTileTinting) {
+			setTint(iv, toColor);
+		 } else {
+                        setTint(iv, Color.argb(alpha, channel, channel, channel));
+	 	    }
+		});
 
             anim.start();
         } else {
