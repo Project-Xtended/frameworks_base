@@ -1370,6 +1370,6 @@ public class VolumeDialogImpl implements VolumeDialog, TunerService.Tunable {
 
     private void updateForceExpanded() {
         mForceExpanded = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.VOLUME_DIALOG_FORCE_EXPANDED, 1) == 1;
+                Settings.System.VOLUME_DIALOG_FORCE_EXPANDED, 0) == 1;
     }
 }

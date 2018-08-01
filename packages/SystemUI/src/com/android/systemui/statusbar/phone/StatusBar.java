@@ -5578,10 +5578,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         final boolean inflated = mStackScroller != null;
 
         int userThemeSetting = Settings.Secure.getIntForUser(mContext.getContentResolver(),
-                Settings.Secure.DEVICE_THEME, 0, mCurrentUserId);
+                Settings.Secure.DEVICE_THEME, 4, mCurrentUserId);
         boolean useBlackTheme = false;
         boolean useDarkTheme = false;
-	boolean useXtendedTheme = false;
+	boolean useXtendedTheme = true;
         if (userThemeSetting == 0) {
             // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -5716,7 +5716,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Switches theme accent from to another or back to stock
     public void updateAccents() {
         int accentSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ACCENT_PICKER, 0, mCurrentUserId);
+                Settings.System.ACCENT_PICKER, 21, mCurrentUserId);
         if (accentSetting == 0) {
             unloadAccents();
         } else if (accentSetting == 1) {
@@ -5967,7 +5967,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Switches the analog clock from one to another or back to stock
     public void updateClocks() {
         int clockSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_CLOCK_SELECTION, 0, mCurrentUserId);
+                Settings.System.LOCKSCREEN_CLOCK_SELECTION, 3, mCurrentUserId);
         DuClockUtils.updateClocks(mOverlayManager, mCurrentUserId, clockSetting, mContext);
     }
 
@@ -7175,7 +7175,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setZenMode(mode);
 
             mIsAlwaysHeadsupDialer = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.ALWAYS_HEADSUP_DIALER, 0, UserHandle.USER_CURRENT) == 1;
+                    Settings.System.ALWAYS_HEADSUP_DIALER, 1, UserHandle.USER_CURRENT) == 1;
 
             updateLockscreenNotificationSetting();
         }
@@ -7451,7 +7451,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public void setNewOverlayAlpha() {
         float overlayalpha = Settings.System.getFloatForUser(mContext.getContentResolver(),
-        Settings.System.LOCKSCREEN_ALPHA, 0.72f, UserHandle.USER_CURRENT);
+        Settings.System.LOCKSCREEN_ALPHA, 0.45f, UserHandle.USER_CURRENT);
         if (mScrimController != null) {
         mScrimController.setOverlayAlpha(overlayalpha);
 	}
@@ -7565,17 +7565,17 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void updateBlurSettings() { 
         ContentResolver resolver = mContext.getContentResolver(); 
         mBlurScale = Settings.System.getInt(mContext.getContentResolver(), 
-                Settings.System.BLUR_SCALE_PREFERENCE_KEY, 10); 
+                Settings.System.BLUR_SCALE_PREFERENCE_KEY, 6); 
         mBlurRadius = Settings.System.getInt(mContext.getContentResolver(), 
-                Settings.System.BLUR_RADIUS_PREFERENCE_KEY, 5); 
+                Settings.System.BLUR_RADIUS_PREFERENCE_KEY, 3); 
         mBlurredStatusBarExpandedEnabled = Settings.System.getIntForUser(resolver, 
-                Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1; 
+                Settings.System.STATUS_BAR_EXPANDED_ENABLED_PREFERENCE_KEY, 1, UserHandle.USER_CURRENT) == 1; 
         mTranslucentNotifications = Settings.System.getIntForUser(resolver, 
-                Settings.System.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1; 
+                Settings.System.TRANSLUCENT_NOTIFICATIONS_PREFERENCE_KEY, 1, UserHandle.USER_CURRENT) == 1; 
         mNotTranslucencyPercentage = Settings.System.getInt(mContext.getContentResolver(), 
                 Settings.System.TRANSLUCENT_NOTIFICATIONS_PRECENTAGE_PREFERENCE_KEY, 70); 
         mBlurredRecents = Settings.System.getIntForUser(resolver, 
-                Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY, 0, UserHandle.USER_CURRENT) == 1; 
+                Settings.System.RECENT_APPS_ENABLED_PREFERENCE_KEY, 1, UserHandle.USER_CURRENT) == 1; 
         mScaleRecents = Settings.System.getInt(mContext.getContentResolver(), 
                 Settings.System.RECENT_APPS_SCALE_PREFERENCE_KEY, 6); 
         mRadiusRecents = Settings.System.getInt(mContext.getContentResolver(), 

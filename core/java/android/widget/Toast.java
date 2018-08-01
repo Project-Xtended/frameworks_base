@@ -478,7 +478,7 @@ public class Toast {
                 ImageView appIcon = (ImageView) mView.findViewById(android.R.id.icon);
                 final ColorStateList iconColor = RandomColorHelper.getToastIconColorList(tContext);
                 if ((Settings.System.getInt(context.getContentResolver(),
-                        Settings.System.TOAST_ICON, 1) == 1)) {
+                        Settings.System.TOAST_ICON, 0) == 1)) {
                     if (appIcon != null) {
                         PackageManager pm = context.getPackageManager();
                         Drawable icon = null;
