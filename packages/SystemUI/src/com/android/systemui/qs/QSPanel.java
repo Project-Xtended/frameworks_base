@@ -314,7 +314,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private void setBrightnessIcon() {
         boolean brightnessIconEnabled = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.QS_SHOW_BRIGHTNESS_ICON,
-                0, UserHandle.USER_CURRENT) == 1;
+                1, UserHandle.USER_CURRENT) == 1;
         mBrightnessIcon.setVisibility(brightnessIconEnabled ? View.VISIBLE : View.GONE);
         updateResources();
     }

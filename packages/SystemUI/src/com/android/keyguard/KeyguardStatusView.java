@@ -1093,9 +1093,9 @@ public class KeyguardStatusView extends GridLayout implements
         mShowDate = Settings.System.getIntForUser(resolver,
                 Settings.System.HIDE_LOCKSCREEN_DATE, 1, UserHandle.USER_CURRENT) == 1;
         mClockSelection = Settings.System.getIntForUser(resolver,
-                Settings.System.LOCKSCREEN_CLOCK_SELECTION, 0, UserHandle.USER_CURRENT);
+                Settings.System.LOCKSCREEN_CLOCK_SELECTION, 3, UserHandle.USER_CURRENT);
         mDateSelection = Settings.System.getIntForUser(resolver,
-                Settings.System.LOCKSCREEN_DATE_SELECTION, 0, UserHandle.USER_CURRENT);
+                Settings.System.LOCKSCREEN_DATE_SELECTION, 8, UserHandle.USER_CURRENT);
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mKeyguardStatusArea.getLayoutParams();
         switch (mClockSelection) {
@@ -1350,7 +1350,7 @@ public class KeyguardStatusView extends GridLayout implements
             final Locale locale = Locale.getDefault();
             final Resources res = context.getResources();
             final int mDateSelectionStatic = Settings.System.getIntForUser(context.getContentResolver(),
-                Settings.System.LOCKSCREEN_DATE_SELECTION, 0, UserHandle.USER_CURRENT);
+                Settings.System.LOCKSCREEN_DATE_SELECTION, 3, UserHandle.USER_CURRENT);
 
             if (mDateSelectionStatic == 3 || mDateSelectionStatic == 5) {
             dateViewSkel = res.getString(hasAlarm
