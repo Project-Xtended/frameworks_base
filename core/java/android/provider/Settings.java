@@ -5943,6 +5943,13 @@ public final class Settings {
          */
         public static final String REMOVE_SETTINGS_TILE_SUMMARY = "remove_settings_tile_summary";
 
+	/**
+	 * Enable Device Accent in In-Call UI
+	 * @hide
+	 *
+	 **/
+        public static final String DIALER_ACCENT_ENABLE = "dialer_accent_enable";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
