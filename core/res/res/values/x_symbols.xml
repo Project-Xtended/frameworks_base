@@ -249,4 +249,7 @@
   <!-- NightLight FOD -->
   <java-symbol type="bool" name="disable_fod_night_light"/>
 
+  <!-- Whether the device supports Smart Pixels -->
+  <java-symbol type="bool" name="config_supportSmartPixels" />
+
 </resources>
