@@ -187,7 +187,6 @@ import com.android.keyguard.KeyguardHostView.OnDismissAction;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.keyguard.ViewMediatorCallback;
-import com.android.settingslib.Utils;
 import com.android.systemui.ActivityStarterDelegate;
 import com.android.systemui.AutoReinflateContainer;
 import com.android.systemui.DejankUtils;
@@ -521,7 +520,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     // settings
     private QSPanel mQSPanel;
-    private int mBatterySaverWarningColor;
 
     private boolean mAutomaticBrightness;
     private boolean mBrightnessControl;
@@ -4073,9 +4071,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (powerSave && getBarState() == StatusBarState.SHADE) {
             mode = MODE_WARNING;
         }
-        if (mode == MODE_WARNING) {
-            transitions.setWarningColor(mBatterySaverWarningColor);
-        }
         transitions.transitionTo(mode, anim);
     }
 
@@ -7223,9 +7218,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_COLUMNS_LANDSCAPE),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.BATTERY_SAVER_MODE_COLOR),
-                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.FP_QUICK_PULLDOWN_QS),
                     false, this, UserHandle.USER_ALL);
@@ -7438,9 +7430,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             setStatusDoubleTapToSleep();
             setFpToQuickPulldownQs();
             setLockscreenMediaMetadata();
+	    setQsRowsColumns();
             updateDozeBrightness();
             updateQsPanelResources();
-            setBatterySaverWarning();
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
             setBrightnessSlider();
@@ -7533,16 +7525,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void updateQsPanelResources() {
         if (mQSPanel != null) {
             mQSPanel.updateResources();
-        }
-    }
-
-    private void setBatterySaverWarning() {
-        mBatterySaverWarningColor = Settings.System.getIntForUser(
-            mContext.getContentResolver(),
-                Settings.System.BATTERY_SAVER_MODE_COLOR, 0,
-                UserHandle.USER_CURRENT);
-        if (mBatterySaverWarningColor != 0) {
-            mBatterySaverWarningColor = Utils.getColorAttr(mContext, android.R.attr.colorError);
         }
     }
 
@@ -9280,14 +9262,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 tick(notification, false, false, null);
             }
         }
-
-        mBatterySaverWarningColor = Settings.System.getIntForUser(
-                mContext.getContentResolver(),
-                Settings.System.BATTERY_SAVER_MODE_COLOR, 0,
-                UserHandle.USER_CURRENT);
-        if (mBatterySaverWarningColor != 0) {
-            mBatterySaverWarningColor = Utils.getColorAttr(mContext, android.R.attr.colorError);
-         }
 
         setAreThereNotifications();
     }

@@ -4502,7 +4502,6 @@ public final class Settings {
         public static final String BATTERY_SAVER_MODE_COLOR = "battery_save_mode_color";
 
         /**
-         * Custom icon pack name to use for Slim Recents
          * Pie toggles torch
          * @hide
          */
