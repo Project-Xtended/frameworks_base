@@ -303,6 +303,7 @@ import com.android.internal.annotations.GuardedBy;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto;
+import com.android.internal.os.AlternativeDeviceKeyHandler;
 import com.android.internal.os.DeviceKeyHandler;
 import com.android.internal.policy.IKeyguardDismissCallback;
 import com.android.internal.policy.IShortcutService;
@@ -922,6 +923,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mAodShowing;
     private final List<DeviceKeyHandler> mDeviceKeyHandlers = new ArrayList<>();
     private HardkeyActionHandler mKeyHandler;
+    private AlternativeDeviceKeyHandler mAlternativeDeviceKeyHandler;
 
     private int mTorchActionMode;
     private static final float PROXIMITY_DISTANCE_THRESHOLD = 5.0f;
@@ -2972,8 +2974,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 com.android.internal.R.array.config_deviceKeyHandlerLibs);
         final String[] deviceKeyHandlerClasses = res.getStringArray(
                 com.android.internal.R.array.config_deviceKeyHandlerClasses);
+        boolean defaultKeyHandlerLoaded = false;
 
-        for (int i = 0;
+         for (int i = 0;
                 i < deviceKeyHandlerLibs.length && i < deviceKeyHandlerClasses.length; i++) {
             try {
                 PathClassLoader loader = new PathClassLoader(
@@ -2981,6 +2984,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 Class<?> klass = loader.loadClass(deviceKeyHandlerClasses[i]);
                 Constructor<?> constructor = klass.getConstructor(Context.class);
                 mDeviceKeyHandlers.add((DeviceKeyHandler) constructor.newInstance(mContext));
+                defaultKeyHandlerLoaded = true;
             } catch (Exception e) {
                 Slog.w(TAG, "Could not instantiate device key handler "
                         + deviceKeyHandlerLibs[i] + " from class "
@@ -2988,6 +2992,32 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
         if (DEBUG) Slog.d(TAG, "" + mDeviceKeyHandlers.size() + " device key handlers loaded");
+
+        if (!defaultKeyHandlerLoaded){
+            String alternativeDeviceKeyHandlerLib = res.getString(
+                    com.android.internal.R.string.config_alternativeDeviceKeyHandlerLib);
+
+            String alternativeDeviceKeyHandlerClass = res.getString(
+                    com.android.internal.R.string.config_alternativeDeviceKeyHandlerClass);
+
+            if (!alternativeDeviceKeyHandlerLib.isEmpty() && !alternativeDeviceKeyHandlerClass.isEmpty()) {
+                try {
+                    PathClassLoader loader =  new PathClassLoader(alternativeDeviceKeyHandlerLib,
+                            getClass().getClassLoader());
+
+                    Class<?> klass = loader.loadClass(alternativeDeviceKeyHandlerClass);
+                    Constructor<?> constructor = klass.getConstructor(Context.class);
+                    mAlternativeDeviceKeyHandler = (AlternativeDeviceKeyHandler) constructor.newInstance(
+                            mContext);
+                    if(DEBUG) Slog.d(TAG, "Alternative Device key handler loaded");
+                } catch (Exception e) {
+                    Slog.w(TAG, "Could not instantiate alternative device key handler "
+                            + alternativeDeviceKeyHandlerClass + " from class "
+                            + alternativeDeviceKeyHandlerLib, e);
+                }
+            }
+        }
+
 
         // Register for torch off events
         BroadcastReceiver torchReceiver = new BroadcastReceiver() {
@@ -5087,6 +5117,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Specific device key handling
         if (dispatchKeyToKeyHandlers(event)) {
             return -1;
+        }
+
+        // Alternative specific device key handling
+        if (mAlternativeDeviceKeyHandler != null) {
+            try {
+                // The device only will consume known keys.
+                if (mAlternativeDeviceKeyHandler.canHandleKeyEvent(event)) {
+                    return -1;
+                }
+            } catch (Exception e) {
+                Slog.w(TAG, "Could not dispatch event to alternative device key handler", e);
+            }
         }
 
         if (down) {
@@ -7213,6 +7255,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         }
     }
 
+    void launchKeyguardDismissIntent(Context context, UserHandle user, Intent launchIntent) {
+        Intent keyguardIntent = new Intent("com.android.systemui.ACTION_DISMISS_KEYGUARD");
+        keyguardIntent.setPackage("com.android.systemui");
+        keyguardIntent.putExtra("launch", launchIntent);
+        context.sendBroadcastAsUser(keyguardIntent, user);
+    }
+
     private boolean isHwKeysDisabled() {
         return mKeyHandler != null ? mKeyHandler.isHwKeysDisabled() : false;
     }
@@ -7355,6 +7404,53 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         // Specific device key handling
         if (dispatchKeyToKeyHandlers(event)) {
             return 0;
+        }
+
+        // Alternative specific device key handling
+        if (mAlternativeDeviceKeyHandler != null) {
+            try {
+                // The device says if we should ignore this event.
+                if (mAlternativeDeviceKeyHandler.isDisabledKeyEvent(event)) {
+                    result &= ~ACTION_PASS_TO_USER;
+                    return result;
+                }
+                if (mAlternativeDeviceKeyHandler.isCameraLaunchEvent(event)) {
+                    if (DEBUG_INPUT) {
+                        Slog.i(TAG, "isCameraLaunchEvent from AlternativeDeviceKeyHandler");
+                    }
+                    GestureLauncherService gestureService = LocalServices.getService(
+                            GestureLauncherService.class);
+                    if (gestureService != null) {
+                        gestureService.doCameraLaunchGesture();
+                    }
+                    result &= ~ACTION_PASS_TO_USER;
+                    return result;
+                }
+                if (!interactive && mAlternativeDeviceKeyHandler.isWakeEvent(event)) {
+                    if (DEBUG_INPUT) {
+                        Slog.i(TAG, "isWakeEvent from AlternativeDeviceKeyHandler");
+                    }
+                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, "android.policy:KEY");
+                    result &= ~ACTION_PASS_TO_USER;
+                    return result;
+                }
+                final Intent eventLaunchActivity = mAlternativeDeviceKeyHandler.isActivityLaunchEvent(event);
+                if (!interactive && eventLaunchActivity != null) {
+                    if (DEBUG_INPUT) {
+                        Slog.i(TAG, "isActivityLaunchEvent from AlternativeDeviceKeyHandler " + eventLaunchActivity);
+                    }
+                    wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey, "android.policy:KEY");
+                    launchKeyguardDismissIntent(mContext, UserHandle.CURRENT, eventLaunchActivity);
+                    result &= ~ACTION_PASS_TO_USER;
+                    return result;
+                }
+                if (mAlternativeDeviceKeyHandler.handleKeyEvent(event)) {
+                    result &= ~ACTION_PASS_TO_USER;
+                    return result;
+                }
+            } catch (Exception e) {
+                Slog.w(TAG, "Could not dispatch event to device key handler", e);
+            }
         }
 
         // Handle special keys.
