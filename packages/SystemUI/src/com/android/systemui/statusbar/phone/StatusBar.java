@@ -935,6 +935,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 ServiceManager.getService(Context.FINGERPRINT_SERVICE));
     }
 
+    private boolean mShowNavBar;
+
     @Override
     public void start() {
         mScreenLifecycle.addObserver(mScreenObserver);
@@ -1240,7 +1242,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mNotificationPanelViewController.setHeadsUpManager(mHeadsUpManager);
         mNotificationLogger.setHeadsUpManager(mHeadsUpManager);
 
-        createNavigationBar(result);
+        updateNavigationBar(true);
 
         if (ENABLE_LOCKSCREEN_WALLPAPER && mWallpaperSupported) {
             mLockscreenWallpaper = mLockscreenWallpaperLazy.get();
@@ -2349,6 +2351,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.GAMING_MODE_HEADSUP_TOGGLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.FORCE_SHOW_NAVBAR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2394,7 +2399,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 handleCutout(null);
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.SYSUI_ROUNDED_FWVALS))) {
                 updateCorners();
-
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.FORCE_SHOW_NAVBAR))) {
+                updateNavigationBar(false);
             }
         }
 
@@ -2414,6 +2421,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             handleCutout(null);
             updateCorners();
             setGamingMode();
+            updateNavigationBar(false);
         }
     }
 
@@ -4620,6 +4628,24 @@ public class StatusBar extends SystemUI implements DemoMode,
         setBlackStatusBar(immerseMode);
         setCutoutOverlay(hideCutoutMode);
         setStatusBarStockOverlay(hideCutoutMode && statusBarStock);
+    }
+
+    private void updateNavigationBar(boolean init) {
+        boolean showNavBar = XtendedUtils.deviceSupportNavigationBar(mContext);
+        if (init) {
+            if (showNavBar) {
+                mNavigationBarController.createNavigationBars(true, null);
+            }
+        } else {
+            if (showNavBar != mShowNavBar) {
+                if (showNavBar) {
+                    mNavigationBarController.createNavigationBars(true, null);
+                } else {
+                    mNavigationBarController.removeNavigationBar(mDisplayId);
+                }
+            }
+        }
+        mShowNavBar = showNavBar;
     }
 
     public int getWakefulnessState() {

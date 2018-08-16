@@ -871,6 +871,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.CLICK_PARTIAL_SCREENSHOT), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.System.FORCE_SHOW_NAVBAR), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -2331,6 +2334,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Global.POWER_BUTTON_VERY_LONG_PRESS,
                     mContext.getResources().getInteger(
                             com.android.internal.R.integer.config_veryLongPressOnPowerBehavior));
+
+            mDefaultDisplayPolicy.updatehasNavigationBar();
+
             mHideGlobalActionsOnSecure = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.POWER_MENU_HIDE_ON_SECURE,
                             0, UserHandle.USER_CURRENT) != 0;
