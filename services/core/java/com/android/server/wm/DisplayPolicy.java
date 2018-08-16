@@ -701,19 +701,7 @@ public class DisplayPolicy {
 
         if (mDisplayContent.isDefaultDisplay) {
             mHasStatusBar = true;
-            mHasNavigationBar = mContext.getResources().getBoolean(R.bool.config_showNavigationBar);
-
-            // Allow a system property to override this. Used by the emulator.
-            // See also hasNavigationBar().
-            String navBarOverride = SystemProperties.get("qemu.hw.mainkeys");
-            if ("1".equals(navBarOverride)) {
-                mHasNavigationBar = false;
-            } else if ("0".equals(navBarOverride)) {
-                mHasNavigationBar = true;
-            }
-
-            // Register content observer only for main display
-            mSettingsObserver = new SettingsObserver(mHandler);
+            mHasNavigationBar = XtendedUtils.deviceSupportNavigationBar(mContext);
         } else {
             mHasStatusBar = false;
             mHasNavigationBar = mDisplayContent.supportsSystemDecorations();
@@ -787,6 +775,15 @@ public class DisplayPolicy {
 
     public boolean hasNavigationBar() {
         return mHasNavigationBar;
+    }
+
+    /**
+     * @hide
+     */
+    public void updatehasNavigationBar() {
+        if (mDisplayContent.isDefaultDisplay) {
+            mHasNavigationBar = XtendedUtils.deviceSupportNavigationBar(mContext);
+        }
     }
 
     public boolean hasStatusBar() {
