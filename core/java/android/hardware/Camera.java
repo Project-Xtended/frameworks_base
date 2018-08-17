@@ -47,6 +47,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.os.SystemProperties;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.app.IAppOpsCallback;
@@ -643,6 +644,22 @@ public class Camera {
     Camera() {}
 
     private void initAppOps() {
+        boolean isAppAllowed = false;
+        String packageName = ActivityThread.currentOpPackageName();
+        String packageList = SystemProperties.get("camera.shutter_sound.blacklist", "");
+        if (packageList.length() > 0) {
+            TextUtils.StringSplitter splitter = new TextUtils.SimpleStringSplitter(',');
+            splitter.setString(packageList);
+            for (String str : splitter) {
+                if (packageName.equals(str)) {
+                    isAppAllowed = true;
+                    break;
+                }
+            }
+        }
+        if (isAppAllowed){
+            return;
+        }
         IBinder b = ServiceManager.getService(Context.APP_OPS_SERVICE);
         mAppOps = IAppOpsService.Stub.asInterface(b);
         // initialize mHasAppOpsPlayAudio
