@@ -60,4 +60,8 @@
          and in layout xml as: "@*android:<type>/<name>"
     -->
     <java-symbol type="array" name="config_customPermissionsList" />
+
+    <!-- Max visible notification icons -->
+    <java-symbol type="integer" name="config_maxVisibleNotificationIcons" />
+    <java-symbol type="integer" name="config_maxVisibleNotificationIconsOnLock" />
 </resources>
