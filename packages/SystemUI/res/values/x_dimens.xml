@@ -79,4 +79,7 @@
     <!-- App Lock -->
     <dimen name="applock_icon_dimension">54dp</dimen>
 
+    <!-- OmniJaws Weather -->
+    <dimen name="current_weather_image_size">42dp</dimen>
+
 </resources>
