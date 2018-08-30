@@ -3853,6 +3853,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return 0;
         }
 
+        // Disable hw keys in Ambient
+        if (isDozeMode() && (appSwitchKey || homeKey || menuKey || backKey)) {
+            return 0;
+        }
+
         // Basic policy based on interactive state.
         boolean isVolumeRockerWake = !isScreenOn()
                 && mVolumeRockerWake
