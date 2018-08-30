@@ -102,5 +102,6 @@ public class SystemSettings {
         Settings.System.QQS_LAYOUT,
         Settings.System.QS_PANEL_STYLE,
         Settings.System.OMNIJAWS_WEATHER_ICON_PACK,
+        Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED,
     };
 }
