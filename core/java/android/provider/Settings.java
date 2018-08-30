@@ -4854,6 +4854,17 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_WEATHER_TEMP = "status_bar_show_weather_temp";
 
         /**
+         * @hide
+         */
+        public static final String OMNI_LOCKSCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
+
+        /**
+         * @hide
+         */
+        private static final Validator OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -4937,6 +4948,7 @@ public final class Settings {
             POWERMENU_USERS,
             POWERMENU_LOGOUT,
             POWERMENU_TORCH,
+            OMNI_LOCKSCREEN_WEATHER_ENABLED,
         };
 
         /**
@@ -5085,6 +5097,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(POWERMENU_TORCH);
             PRIVATE_SETTINGS.add(SWAP_VOLUME_BUTTONS);
             PRIVATE_SETTINGS.add(TOAST_ICON);
+            PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
         }
 
         /**
@@ -5200,6 +5213,7 @@ public final class Settings {
             VALIDATORS.put(POWERMENU_USERS, POWERMENU_USERS_VALIDATOR);
             VALIDATORS.put(POWERMENU_LOGOUT, POWERMENU_LOGOUT_VALIDATOR);
             VALIDATORS.put(POWERMENU_TORCH, POWERMENU_TORCH_VALIDATOR);
+            VALIDATORS.put(OMNI_LOCKSCREEN_WEATHER_ENABLED, OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
         }
 
         /**
