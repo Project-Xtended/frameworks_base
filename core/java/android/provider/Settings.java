@@ -4476,9 +4476,18 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
         /**
-	 * weather to enable or disable vibration on successful fingerprint auth
+         * @hide
+         */
+        public static final String OMNI_LOCKSCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
+
+        /** @hide */
+        private static final Validator OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+	 *wether to enable fingerprint vibration on successful auth
 	 *
-	 * @hide	 
+	 * @hide
          */
         public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
 
@@ -4544,7 +4553,8 @@ public final class Settings {
             INCREASING_RING,
             INCREASING_RING_START_VOLUME,
             INCREASING_RING_RAMP_UP_TIME,
-            OMNIJAWS_WEATHER_ICON_PACK
+            OMNIJAWS_WEATHER_ICON_PACK,
+            OMNI_LOCKSCREEN_WEATHER_ENABLED
         };
 
         /**
@@ -4660,6 +4670,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
+            PRIVATE_SETTINGS.add(OMNI_LOCKSCREEN_WEATHER_ENABLED);
         }
 
 
@@ -4760,6 +4771,8 @@ public final class Settings {
             VALIDATORS.put(INCREASING_RING_START_VOLUME	, INCREASING_RING_START_VOLUME_VALIDATOR);
             VALIDATORS.put(INCREASING_RING_RAMP_UP_TIME, INCREASING_RING_RAMP_UP_TIME_VALIDATOR);
             VALIDATORS.put(OMNIJAWS_WEATHER_ICON_PACK, OMNIJAWS_WEATHER_ICON_PACK_VALIDATOR);
+            VALIDATORS.put(OMNI_LOCKSCREEN_WEATHER_ENABLED,
+                    OMNI_LOCKSCREEN_WEATHER_ENABLED_VALIDATOR);
         }
 
         /**
