@@ -110,4 +110,7 @@
     <dimen name="status_bar_battery_icon_height_landscape_buddy">28.0dip</dimen>
     <dimen name="status_bar_battery_icon_width_landscape_buddy">22.0dip</dimen>
 
+    <!-- OmniWeather image size -->
+    <dimen name="current_weather_image_size">42dp</dimen>
+
 </resources>
