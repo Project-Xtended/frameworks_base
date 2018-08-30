@@ -4786,8 +4786,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private boolean isVolumeKey(int keyCode) {
-        return keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
-                || keyCode == KeyEvent.KEYCODE_VOLUME_UP;
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ||
+                keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            return true;
+        }
+        return false;
     }
 
     private void dispatchDirectAudioEvent(KeyEvent event) {
