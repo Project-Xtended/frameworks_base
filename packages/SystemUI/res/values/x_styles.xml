@@ -14,4 +14,7 @@
 -->
 <resources>
 
+    <!-- Label for area where tiles can be added to the qs panel -->
+    <string name="drag_or_tap_to_add_tiles">Halten &amp; ziehen oder tippen zum Hinzufügen oder Entfernen</string>
+
 </resources>

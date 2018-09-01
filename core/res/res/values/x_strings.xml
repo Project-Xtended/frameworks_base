@@ -17,5 +17,8 @@
     <string name="alert_slider_state_path"></string>
     <string name="alert_slider_uevent_match_path"></string>
 
+    <!-- Label for area where tiles can be added to the qs panel -->
+    <string name="drag_or_tap_to_add_tiles">Hold &amp; drag or tap to add tiles</string>
+
 </resources>
 
