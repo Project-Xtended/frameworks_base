@@ -2634,6 +2634,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.Global.TETHER_DUN_REQUIRED,
                     R.integer.def_tether_dun_required);
 
+            loadIntegerSetting(stmt, Global.DEVELOPMENT_SETTINGS_ENABLED,
+                    R.integer.def_development_settings);
+
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
              * secure, and system settings are no longer stored in a database
