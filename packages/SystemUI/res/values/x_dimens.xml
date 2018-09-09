@@ -64,5 +64,8 @@
 
     <!-- QS tile text visibility -->
     <dimen name="qs_tile_height_wo_label">48dp</dimen>
-	
+
+    <!-- Hide header -->
+    <dimen name="quick_status_bar_system_icons_margin_top">8dp</dimen>
+
 </resources>
