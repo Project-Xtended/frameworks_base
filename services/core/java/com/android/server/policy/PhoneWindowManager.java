@@ -7007,6 +7007,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 keyCode != KeyEvent.KEYCODE_VOLUME_MUTE) {
                 return 0;
             }
+	 }
+
+        // Disable hw keys in Ambient and when screen off
+        if ((isDozeMode() || !isScreenOn()) && (appSwitchKey || homeKey || menuKey || backKey)) {
+            return 0;
         }
 
         // Basic policy based on interactive state.
