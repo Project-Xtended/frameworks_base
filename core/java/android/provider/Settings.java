@@ -8555,8 +8555,10 @@ public final class Settings {
          * 0: Display the battery an icon in portrait mode
          * 1: Display the battery as a circle
          * 2: Display the battery as a dotted circle
-         * 3: Display the battery as text
-         * 4: Do not display the battery
+	 * 3: Display the battery as big circle
+	 * 4: Display the battery as big dotted circle
+         * 5: Display the battery as text
+         * 6: Do not display the battery
          * default: 0
          * @hide
          */
@@ -8564,7 +8566,7 @@ public final class Settings {
 
         /** @hide */
         public static final Validator STATUS_BAR_BATTERY_STYLE_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(0, 4);
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 6);
 
 	/**
          * Enable face auto unlock on secure lock screens
