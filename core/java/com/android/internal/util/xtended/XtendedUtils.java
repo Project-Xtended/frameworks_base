@@ -51,6 +51,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.android.internal.statusbar.IStatusBarService;
 
@@ -159,5 +160,11 @@ public class XtendedUtils {
                 throws RemoteException {
             return mService.getOverlayInfosForTarget(target, userId);
         }
+    }
+
+    // Check for Chinese language
+    public static boolean isChineseLanguage() {
+       return Resources.getSystem().getConfiguration().locale.getLanguage().startsWith(
+               Locale.CHINESE.getLanguage());
     }
 }
