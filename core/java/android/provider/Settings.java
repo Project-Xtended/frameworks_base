@@ -5343,6 +5343,12 @@ public final class Settings {
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
         /**
+	 ** Whether to use partial screenshot when using volume keys
+	 ** @hide
+	 **/
+        public static final String SCREENSHOT_TYPE = "screenshot_type";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5506,6 +5512,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_QS_TILE_TITLE_VISIBILITY);
             PRIVATE_SETTINGS.add(OMNI_QS_LAYOUT_ROWS);
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
+            PRIVATE_SETTINGS.add(SCREENSHOT_TYPE);
         }
 
         /**
