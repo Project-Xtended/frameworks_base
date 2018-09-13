@@ -4921,7 +4921,16 @@ public final class Settings {
 	 ** remove tile summaries in settings
 	 ** @hide
 	 **/
-        public static final String REMOVE_TILE_SUMMARY = "remove_tile_summary";
+        public static final String ENABLE_TILE_SUMMARY = "enable_tile_summary";
+
+        /**
+         * Xtended OTA support
+         * @hide
+         */
+        public static final String OTA_LAST_CHECK = "ota_last_check";
+        public static final String OTA_LATEST_VERSION = "ota_latest_version";
+        public static final String OTA_MAINTAINER = "ota_maintainer";
+        public static final String OTA_UPDATE_INTERVAL = "ota_update_interval";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
