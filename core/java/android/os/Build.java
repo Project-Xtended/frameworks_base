@@ -1001,6 +1001,13 @@ public class Build {
     /** A string that uniquely identifies this build.  Do not attempt to parse this value. */
     public static final String FINGERPRINT = deriveFingerprint();
 
+    /** @hide */
+    public static final String PROP_XTENDED_FINGERPRINT = "com.xtended.fingerprint";
+
+    /** @hide */
+    public static final String XTENDED_FINGERPRINT = SystemProperties.get(PROP_XTENDED_FINGERPRINT,
+            deriveFingerprint());
+
     /**
      * Some devices split the fingerprint components between multiple
      * partitions, so we might derive the fingerprint at runtime.
