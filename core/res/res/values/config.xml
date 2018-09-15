@@ -2993,7 +2993,7 @@
 
     <!-- Allow the gesture power + volume up to change the ringer mode while the device
          is interactive. -->
-    <bool name="config_volumeHushGestureEnabled">true</bool>
+    <bool name="config_volumeHushGestureEnabled">false</bool>
 
     <!-- Name of the component to handle network policy notifications. If present,
          disables NetworkPolicyManagerService's presentation of data-usage notifications. -->
