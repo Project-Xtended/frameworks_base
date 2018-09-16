@@ -5586,7 +5586,13 @@ public final class Settings {
         public static final String BLUETOOTH_QS_SHOW_BATTERY = "bluetooth_qs_show_battery";
 
         /**
-         * Charging symbol near battery text percentage
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
+	 * Charging symbol near battery text percentage
          * @hide
          */
         public static final String TEXT_CHARGING_SYMBOL = "text_charging_symbol";
