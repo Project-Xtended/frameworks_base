@@ -7747,4 +7747,5 @@ public class WindowManagerService extends IWindowManager.Stub
             scheduleAnimationLocked();
         }
     }
+
 }
