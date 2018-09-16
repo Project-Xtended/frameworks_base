@@ -5110,6 +5110,14 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_WEATHER_TEMP = "status_bar_show_weather_temp";
 
         /**
+         * Show Weather on
+         * 0 - Statusbar (default)
+         * 1 - QS Header
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_WEATHER_LOCATION = "status_bar_show_weather_location";
+
+        /**
          * @hide
          */
         public static final String OMNI_LOCKSCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
