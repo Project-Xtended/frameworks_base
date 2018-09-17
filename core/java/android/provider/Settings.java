@@ -5320,6 +5320,16 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+         * Force show navigation bar setting.
+         * @hide
+         */
+        public static final String FORCE_SHOW_NAVBAR = "force_show_navbar";
+
+         /** @hide */
+        public static final Validator FORCE_SHOW_NAVBAR_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5597,6 +5607,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
+            PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
         }
 
         /**
@@ -5735,6 +5746,7 @@ public final class Settings {
             VALIDATORS.put(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED, OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED_VALIDATOR);
             VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
             VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
+            VALIDATORS.put(FORCE_SHOW_NAVBAR, FORCE_SHOW_NAVBAR_VALIDATOR);
         }
 
         /**
