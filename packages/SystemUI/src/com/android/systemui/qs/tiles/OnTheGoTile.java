@@ -74,7 +74,7 @@ public class OnTheGoTile extends QSTileImpl<BooleanState> {
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.contentDescription =  mContext.getString(
                 R.string.quick_settings_onthego_label);
-        state.label = mContext.getString(R.string.quick_settings_onthego_label);
+	state.label = mContext.getString(R.string.quick_settings_onthego_label);
         state.icon = ResourceIcon.get(R.drawable.ic_qs_onthego);
     }
 
@@ -88,3 +88,4 @@ public class OnTheGoTile extends QSTileImpl<BooleanState> {
         return mContext.getString(R.string.quick_settings_onthego_label);
     }
 }
+
