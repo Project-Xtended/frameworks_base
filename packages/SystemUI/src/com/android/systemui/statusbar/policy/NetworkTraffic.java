@@ -38,6 +38,9 @@ import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
 public class NetworkTraffic extends TextView implements DarkReceiver {
 
     private static final int INTERVAL = 1500; //ms
+    private static final int BOTH = 0;
+    private static final int UP = 1;
+    private static final int DOWN = 2;
     private static final int KB = 1024;
     private static final int MB = KB * KB;
     private static final int GB = MB * KB;
@@ -56,6 +59,7 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
     private long lastUpdateTime;
     private int txtSize;
     private int txtImgPadding;
+    private int mTrafficType;
     private int mAutoHideThreshold;
     private int mTintColor;
 
@@ -86,13 +90,21 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
                 setText("");
                 setVisibility(View.GONE);
             } else {
-                // Get information for uplink ready so the line return can be added
-                String output = formatOutput(timeDelta, txData, symbol);
-                // Ensure text size is where it needs to be
-                output += "\n";
-                // Add information for downlink if it's called for
-                output += formatOutput(timeDelta, rxData, symbol);
 
+                     String output;
+
+                   if (mTrafficType == UP){
+                     output = formatOutput(timeDelta, txData, symbol);
+                   } else if (mTrafficType == DOWN){
+                     output = formatOutput(timeDelta, rxData, symbol);
+                   } else {
+                     // Get information for uplink ready so the line return can be added
+                     output = formatOutput(timeDelta, txData, symbol);
+                     // Ensure text size is where it needs to be
+                     output += "\n";
+                     // Add information for downlink if it's called for
+                     output += formatOutput(timeDelta, rxData, symbol);
+                   }
                 // Update view if there's anything new to show
                 if (! output.contentEquals(getText())) {
                     setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
@@ -113,7 +125,7 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
             if (speed < KB) {
                 return decimalFormat.format(speed) + symbol;
             } else if (speed < MB) {
-                return decimalFormat.format(speed / (float)KB) + 'k' + symbol;
+                return decimalFormat.format(speed / (float)KB) + 'K' + symbol;
             } else if (speed < GB) {
                 return decimalFormat.format(speed / (float)MB) + 'M' + symbol;
             }
@@ -123,9 +135,15 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         private boolean shouldHide(long rxData, long txData, long timeDelta) {
             long speedTxKB = (long)(txData / (timeDelta / 1000f)) / KB;
             long speedRxKB = (long)(rxData / (timeDelta / 1000f)) / KB;
+           if (mTrafficType == UP) {
+            return !getConnectAvailable() || speedTxKB < mAutoHideThreshold;
+           } else if (mTrafficType == DOWN) {
+            return !getConnectAvailable() || speedRxKB < mAutoHideThreshold;
+           } else {
             return !getConnectAvailable() ||
                     (speedRxKB < mAutoHideThreshold &&
                     speedTxKB < mAutoHideThreshold);
+           }
         }
     };
 
@@ -145,6 +163,9 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_STATE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_TYPE), false,
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD), false,
@@ -181,7 +202,9 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
     public NetworkTraffic(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
-        txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
+        txtSize = resources.getDimensionPixelSize((mTrafficType == BOTH)
+					          ? R.dimen.net_traffic_multi_text_size
+						  : R.dimen.net_traffic_single_text_size);
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         mTintColor = resources.getColor(android.R.color.white);
         Handler mHandler = new Handler();
@@ -251,8 +274,11 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
     private void setMode() {
         ContentResolver resolver = mContext.getContentResolver();
         mIsEnabled = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_STATE, 1,
+                Settings.System.NETWORK_TRAFFIC_STATE, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mTrafficType = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_TYPE, 0,
+                UserHandle.USER_CURRENT);
         mAutoHideThreshold = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 1,
                 UserHandle.USER_CURRENT);
@@ -267,13 +293,19 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
     private void updateTrafficDrawable() {
         int intTrafficDrawable;
         if (mIsEnabled) {
+          if (mTrafficType == UP) {
+            intTrafficDrawable = R.drawable.stat_sys_network_traffic_up;
+          } else if (mTrafficType == DOWN) {
+            intTrafficDrawable = R.drawable.stat_sys_network_traffic_down;
+          } else {
             intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
+          }
         } else {
             intTrafficDrawable = 0;
         }
         if (intTrafficDrawable != 0) {
             Drawable d = getContext().getDrawable(intTrafficDrawable);
-            d.setColorFilter(mTintColor, Mode.SRC_ATOP);
+            d.setColorFilter(mTintColor, Mode.MULTIPLY);
             setCompoundDrawablePadding(txtImgPadding);
             setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
         } else {
@@ -283,8 +315,10 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
 
     public void onDensityOrFontScaleChanged() {
         final Resources resources = getResources();
-        txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
-        txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
+        txtSize = resources.getDimensionPixelSize((mTrafficType == BOTH)
+						  ? R.dimen.net_traffic_multi_text_size
+						  : R.dimen.net_traffic_single_text_size);
+        txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, (float)txtSize);
         setCompoundDrawablePadding(txtImgPadding);
     }
@@ -296,3 +330,4 @@ public class NetworkTraffic extends TextView implements DarkReceiver {
         updateTrafficDrawable();
     }
 }
+
