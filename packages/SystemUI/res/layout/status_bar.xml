@@ -60,7 +60,8 @@
             android:layout_width="@dimen/status_bar_icon_size"
             android:layout_height="@dimen/status_bar_icon_size"
             android:src="@drawable/status_bar_logo"
-            android:scaleType="centerInside"
+	    android:scaleType="centerInside"
+	    android:paddingStart="2dp"
             android:padding="2dp"
             android:visibility="gone" />
 
@@ -69,7 +70,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="start|center_vertical"
+	    android:gravity="start|center_vertical"
+	    android:paddingStart="2dp"
             android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
             android:visibility="gone"
             android:singleLine="true"/>
