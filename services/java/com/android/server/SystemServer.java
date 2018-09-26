@@ -272,8 +272,6 @@ public final class SystemServer {
 
     private LcdPowerSaveService mLcdPowerSaveService;
 
-    private LcdPowerSaveService mLcdPowerSaveService;
-
     private boolean mOnlyCore;
     private boolean mFirstBoot;
     private final boolean mRuntimeRestart;
