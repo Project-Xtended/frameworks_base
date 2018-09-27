@@ -451,4 +451,11 @@ interface IWindowManager
      * Call screen record from WindowManager.
      */
     void screenRecordAction(int mode);
+
+    /**
+     * OP Navigation Gesture
+     **/
+    boolean isGestureButtonEnabled();
+
+    boolean isGestureButtonRegion(int i, int i2);
 }
