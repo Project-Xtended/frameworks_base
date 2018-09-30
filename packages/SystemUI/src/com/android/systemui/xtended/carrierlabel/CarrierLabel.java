@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -55,6 +56,7 @@ public class CarrierLabel extends TextView implements DarkReceiver {
     private static boolean isCN;
     private int mCarrierFontSize = 14;
     private int mCarrierColor = 0xffffffff;
+    private int mTintColor = Color.WHITE;
 
     private int mCarrierLabelFontStyle = FONT_NORMAL;
     public static final int FONT_NORMAL = 0;
@@ -159,6 +161,12 @@ public class CarrierLabel extends TextView implements DarkReceiver {
 
     @Override
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
+        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+        if (mCarrierColor == 0xFFFFFFFF) {
+            setTextColor(mTintColor);
+        } else {
+            setTextColor(mCarrierColor);
+        }
     }
 
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
@@ -349,7 +357,11 @@ public class CarrierLabel extends TextView implements DarkReceiver {
     private void updateColor() {
         mCarrierColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CARRIER_COLOR, 0xffffffff);
-        setTextColor(mCarrierColor);
+        if (mCarrierColor == 0xFFFFFFFF) {
+            setTextColor(mTintColor);
+        } else {
+            setTextColor(mCarrierColor);
+        }
     }
 
     private void updateSize() {

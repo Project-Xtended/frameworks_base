@@ -47,6 +47,7 @@ import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
 
 import android.widget.ImageView;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -95,6 +96,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private int mLogoStyle;
     private int mShowLogo;
     private int mLogoColor;
+    private int mTintColor = Color.WHITE;
 
     private class SettingsObserver extends ContentObserver {
        SettingsObserver(Handler handler) {
@@ -549,13 +551,17 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 1) {
 	    mXtendedLogo.setImageDrawable(null);
 	    mXtendedLogo.setImageDrawable(logo);
- 	    mXtendedLogo.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
 	} else if (mShowLogo == 2) {
 	    mXtendedLogoRight.setImageDrawable(null);
 	    mXtendedLogoRight.setImageDrawable(logo);
-	    mXtendedLogoRight.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
 	}
 
+        if (mLogoColor == 0xFFFFFFFF) {
+            logo.setTint(mTintColor);
+        } else {
+            logo.setColorFilter(mLogoColor, PorterDuff.Mode.SRC_IN);
+        }
+	
         if (mNotificationIconAreaInner != null) {
             if (mShowLogo == 1) {
                 if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
