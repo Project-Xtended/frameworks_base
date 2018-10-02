@@ -4600,6 +4600,9 @@ public final class Settings {
         /** @hide */
         public static final Validator STATUSBAR_CLOCK_DATE_FORMAT_VALIDATOR = ANY_STRING_VALIDATOR;
 
+        /** @hide */
+        public static final String IGNORE_RSSNR = "ignore_rssnr";        
+
         /**
          * Clock font size
          * @hide
