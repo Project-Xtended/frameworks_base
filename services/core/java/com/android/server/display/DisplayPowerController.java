@@ -100,7 +100,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private static final int COLOR_FADE_ON_ANIMATION_DURATION_MILLIS = 250;
     private static final int COLOR_FADE_OFF_ANIMATION_DURATION_MILLIS = 400;
 
-    private static final int SCREEN_OFF_DELAY_MILLIS = 1000;
+    private static final int SCREEN_OFF_DELAY_MILLIS = 200;
 
     private static final int MSG_UPDATE_POWER_STATE = 1;
     private static final int MSG_PROXIMITY_SENSOR_DEBOUNCED = 2;
