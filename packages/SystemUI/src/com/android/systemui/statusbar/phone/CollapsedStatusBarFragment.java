@@ -84,6 +84,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mOperatorNameFrame;
     private LinearLayout mCenterClockLayout;
     private final Handler mHandler = new Handler();
+    private ContentResolver mContentResolver;
 
     // custom carrier label
     private View mCustomCarrierLabel;
@@ -142,7 +143,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
-    private ContentResolver mContentResolver;
 
     private int mTickerEnabled;
     private View mTickerViewFromStub;
@@ -436,8 +436,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         try {
         mClockStyle = Settings.System.getIntForUser(mContentResolver,
                 Settings.System.STATUSBAR_CLOCK_STYLE, 0, UserHandle.USER_CURRENT);
-        mShowCarrierLabel = Settings.System.getIntForUser(
-                getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
+        mShowCarrierLabel = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.STATUS_BAR_SHOW_CARRIER, 1,
                 UserHandle.USER_CURRENT);
         mShowWeather = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP, 0,
