@@ -233,7 +233,7 @@ public class OmniJawsClient {
     public Intent getSettingsIntent() {
         if (isOmniJawsServiceInstalled()) {
             Intent settings = new Intent(Intent.ACTION_MAIN)
-                    .setClassName("com.android.settings", "com.android.settings.Settings$OmniJawsSettingsActivity");
+                    .setClassName("com.msm.xtended", "com.msm.xtended.Xtensions$OmniJawsSettingsActivity");
             return settings;
         }
         return null;
