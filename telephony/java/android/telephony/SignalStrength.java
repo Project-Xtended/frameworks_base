@@ -593,6 +593,15 @@ public class SignalStrength implements Parcelable {
     }
 
     /**
+     * Old function without parameter, need for google Pixel setup
+     * com.google.android.setupwizard, eg
+     * https://ibb.co/f2ry8e
+     */
+    public int getLevel() {
+        return getLevel(false);
+    }
+
+    /**
      * Get the signal level as an asu value between 0..31, 99 is unknown
      *
      * @hide
