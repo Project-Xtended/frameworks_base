@@ -189,6 +189,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private ImageView mMinBrightness;
     private ImageView mMaxBrightness;
 
+    private boolean mHideDragHandle;
+
     private PrivacyItemController mPrivacyItemController;
 
     private TextView mSystemInfoText;
@@ -382,7 +384,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         Dependency.get(TunerService.class).addTunable(this,
                 QS_SHOW_AUTO_BRIGHTNESS,
                 QQS_SHOW_BRIGHTNESS_SLIDER,
-                QS_SHOW_BRIGHTNESS_BUTTONS);
+                QS_SHOW_BRIGHTNESS_BUTTONS,
+                QSFooterImpl.QS_SHOW_DRAG_HANDLE);
         updateSettings();
     }
 
@@ -544,6 +547,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                       + mContext.getResources().getDimensionPixelSize(
                 R.dimen.quick_qs_drag_handle_height);
 
+        if (mHideDragHandle) {
+            qqsHeight -= mContext.getResources().getDimensionPixelSize(
+                    R.dimen.quick_qs_drag_handle_height);
+        }
         if (mBrightnessSlider != 0) {
            if (!mHeaderImageEnabled) {
                qqsHeight += mContext.getResources().getDimensionPixelSize(
@@ -613,6 +620,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
             if (mHeaderImageEnabled) {
                 qsHeight += mHeaderImageHeight;
+            }
+
+            if (mHideDragHandle) {
+                qsHeight -= resources.getDimensionPixelSize(
+                        R.dimen.quick_qs_drag_handle_height);
             }
 
             // always add the margin below the statusbar with or without image
@@ -1057,6 +1069,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 break;
             case QS_SHOW_BRIGHTNESS_BUTTONS:
                 mBrightnessButton = TunerService.parseIntegerSwitch(newValue, true);
+                updateResources();
+                break;
+            case QSFooterImpl.QS_SHOW_DRAG_HANDLE:
+                mHideDragHandle =
+                        TunerService.parseIntegerSwitch(newValue, true);
                 updateResources();
                 break;
             default:
