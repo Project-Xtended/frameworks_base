@@ -213,4 +213,8 @@
   <!-- Device Wake Keys -->
   <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
 
+  <!-- SystemUI Restart -->
+  <java-symbol type="string" name="systemui_restart_title" />
+  <java-symbol type="string" name="systemui_restart_message" />
+
 </resources>
