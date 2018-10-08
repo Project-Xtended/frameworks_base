@@ -187,5 +187,8 @@
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
     <integer name="config_deviceHardwareWakeKeys">64</integer>
+
+    <!-- Component name for the activity that will be presenting the Oreo's Recents UI -->
+    <string name="config_recentsComponentNameOreo" translatable="false">com.android.systemui/.recents.RecentsActivity</string>
     
 </resources>
