@@ -55,4 +55,8 @@
     <string name="gaming_mode_enabled_toast">Gaming mode turned on</string>
     <string name="gaming_mode_disabled_toast">Gaming mode turned off</string>
 
+    <!-- SystemUI Restart -->
+    <string name="systemui_restart_title">Restart SystemUI</string>
+    <string name="systemui_restart_message">For the changes to take effect, a SystemUI restart is required. Restart SystemUI now?</string>
+
 </resources>
