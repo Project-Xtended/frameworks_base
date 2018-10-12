@@ -303,6 +303,9 @@
   <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
   <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
 
+  <!-- NLP Combo -->
+  <java-symbol type="string" name="config_comboNetworkLocationProvider" />
+
   <java-symbol type="bool" name="config_FastChargingLedSupported" />
   <java-symbol type="integer" name="config_notificationsFastBatteryARGB" />
 
