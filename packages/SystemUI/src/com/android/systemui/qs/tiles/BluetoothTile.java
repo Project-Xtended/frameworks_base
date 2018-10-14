@@ -23,9 +23,16 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.RemoteException;
+import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings;
 import android.service.quicksettings.Tile;
 import android.text.TextUtils;
@@ -60,6 +67,42 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
     private final BluetoothController mController;
     private final BluetoothDetailAdapter mDetailAdapter;
     private final ActivityStarter mActivityStarter;
+    private boolean mShowBluetoothQsBattery;
+
+    private SettingsObserver mSettingsObserver;
+
+    protected class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+           ContentResolver resolver = mContext.getContentResolver();
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.BLUETOOTH_QS_SHOW_BATTERY),
+                  false, this, UserHandle.USER_ALL);
+           updateSettings();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BLUETOOTH_QS_SHOW_BATTERY))) {
+                    mShowBluetoothQsBattery = Settings.System.getIntForUser(
+                            mContext.getContentResolver(),
+                            Settings.System.BLUETOOTH_QS_SHOW_BATTERY,
+                            0, UserHandle.USER_CURRENT) == 1;
+            }
+            updateSettings();
+        }
+
+        public void updateSettings() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mShowBluetoothQsBattery = Settings.System.getIntForUser(resolver,
+                    Settings.System.BLUETOOTH_QS_SHOW_BATTERY, 0, UserHandle.USER_CURRENT) == 1;
+        }
+    }
 
     public BluetoothTile(QSHost host) {
         super(host);
@@ -204,7 +247,7 @@ public class BluetoothTile extends QSTileImpl<BooleanState> {
             CachedBluetoothDevice lastDevice = connectedDevices.get(0);
             final int batteryLevel = lastDevice.getBatteryLevel();
 
-            if (batteryLevel != BluetoothDevice.BATTERY_LEVEL_UNKNOWN) {
+            if (mShowBluetoothQsBattery && batteryLevel != BluetoothDevice.BATTERY_LEVEL_UNKNOWN) {
                 return mContext.getString(
                         R.string.quick_settings_bluetooth_secondary_label_battery_level,
                         Utils.formatPercentage(batteryLevel));

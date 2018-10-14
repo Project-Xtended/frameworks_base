@@ -32,6 +32,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.SynchronousUserSwitchObserver;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -39,10 +40,12 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
+import android.database.ContentObserver;
 import android.graphics.drawable.Icon;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -139,6 +142,8 @@ public class PhoneStatusBarPolicy implements Callback, Callbacks,
     private final ArraySet<Pair<String, Integer>> mCurrentNotifs = new ArraySet<>();
     private final UiOffloadThread mUiOffloadThread = Dependency.get(UiOffloadThread.class);
 
+    private boolean mShowBluetoothBattery;
+
     // Assume it's all good unless we hear otherwise.  We don't always seem
     // to get broadcasts that it *is* there.
     IccCardConstants.State mSimState = IccCardConstants.State.READY;
@@ -154,6 +159,42 @@ public class PhoneStatusBarPolicy implements Callback, Callbacks,
 
     private BluetoothController mBluetooth;
     private AlarmManager.AlarmClockInfo mNextAlarm;
+
+    private SettingsObserver mSettingsObserver;
+
+    protected class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+           ContentResolver resolver = mContext.getContentResolver();
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.BLUETOOTH_SHOW_BATTERY),
+                  false, this, UserHandle.USER_ALL);
+           updateSettings();
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.BLUETOOTH_SHOW_BATTERY))) {
+                    mShowBluetoothBattery = Settings.System.getIntForUser(
+                            mContext.getContentResolver(),
+                            Settings.System.BLUETOOTH_SHOW_BATTERY,
+                            0, UserHandle.USER_CURRENT) == 1;
+                    updateBluetooth();
+            }
+            updateSettings();
+        }
+
+        public void updateSettings() {
+            ContentResolver resolver = mContext.getContentResolver();
+            mShowBluetoothBattery = Settings.System.getIntForUser(resolver,
+                    Settings.System.BLUETOOTH_SHOW_BATTERY, 0, UserHandle.USER_CURRENT) == 1;
+        }
+    }
 
     public PhoneStatusBarPolicy(Context context, StatusBarIconController iconController) {
         mContext = context;
@@ -206,6 +247,12 @@ public class PhoneStatusBarPolicy implements Callback, Callbacks,
         } catch (RemoteException e) {
             // Ignore
         }
+
+        // Bluetooth battery level monitor
+        if (mSettingsObserver == null) {
+            mSettingsObserver = new SettingsObserver(new Handler());
+        }
+        mSettingsObserver.observe();
 
         // TTY status
         updateTTY();
@@ -470,7 +517,9 @@ public class PhoneStatusBarPolicy implements Callback, Callbacks,
         if (mBluetooth != null) {
             if (mBluetooth.isBluetoothConnected()) {
                 int batteryLevel = mBluetooth.getConnectedDevices().get(0).getBatteryLevel();
-                if (batteryLevel >= 88) {
+                if (!mShowBluetoothBattery) {
+                    iconId = R.drawable.stat_sys_data_bluetooth_connected;
+                } else if (batteryLevel >= 88) {
                     iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_5;
                 } else if (batteryLevel >= 63) {
                     iconId = R.drawable.stat_sys_data_bluetooth_connected_battery_4;
