@@ -4918,6 +4918,12 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+	 ** remove tile summaries in settings
+	 ** @hide
+	 **/
+        public static final String REMOVE_TILE_SUMMARY = "remove_tile_summary";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
