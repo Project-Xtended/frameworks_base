@@ -88,6 +88,7 @@ public class BatteryMeterView extends LinearLayout implements
 
     private int mShowPercentText;
     private boolean mCharging;
+    private int mTextChargingSymbol;
 
     private final int mEndPadding;
 
@@ -260,15 +261,27 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     private void updatePercentText() {
-        if (mBatteryPercentView != null) {
-            // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
-            // to load its emoji colored variant with the uFE0E flag
-            String bolt = "\u26A1\uFE0E";
-            CharSequence mChargeIndicator =
-                    mCharging && mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT ? (bolt + " ") : "";
-            mBatteryPercentView.setText(mChargeIndicator +
-                    NumberFormat.getPercentInstance().format(mLevel / 100f));
+        if (mBatteryPercentView == null)
+ 	    return;
+
+        String pct = NumberFormat.getPercentInstance().format(mLevel / 100f);
+
+        if (mCharging && mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT
+                && mTextChargingSymbol > 0) {
+            switch (mTextChargingSymbol) {
+                case 1:
+                default:
+                    pct = "⚡️ " + pct;
+                   break;
+                case 2:
+                    pct = "~ " + pct;
+                    break;
+            }
         }
+
+        if (mBatteryIconView != null) pct = pct + " ";
+
+        mBatteryPercentView.setText(pct);
     }
 
     public void setIsQuickSbHeaderOrKeyguard(boolean qs) {
@@ -390,6 +403,9 @@ public class BatteryMeterView extends LinearLayout implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SHOW_BATTERY_PERCENT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.TEXT_CHARGING_SYMBOL),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
         @Override
@@ -403,6 +419,8 @@ public class BatteryMeterView extends LinearLayout implements
                 SHOW_BATTERY_PERCENT, 0, mUser);
             mStyle = Settings.Secure.getIntForUser(resolver,
                 STATUS_BAR_BATTERY_STYLE, BatteryMeterDrawableBase.BATTERY_STYLE_PORTRAIT, mUser);
+            mTextChargingSymbol = Settings.System.getIntForUser(resolver,
+                Settings.System.TEXT_CHARGING_SYMBOL, 0, mUser);
             updateBatteryStyle();
             updateShowPercent();
             mDrawable.refresh();
