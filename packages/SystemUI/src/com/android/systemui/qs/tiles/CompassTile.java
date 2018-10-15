@@ -189,6 +189,11 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
     }
 
     @Override
+    public boolean isAvailable() {
+        return XtendedUtils.deviceHasCompass(mContext);
+    }
+
+    @Override
     public void handleSetListening(boolean listening) {
         if (!listening) {
             setListeningSensors(false);
