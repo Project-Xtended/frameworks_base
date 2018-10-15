@@ -270,7 +270,9 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
 
         @Override
         public void toggleRecentApps() {
-            if (mBar != null) {
+            enforceStatusBarService();
+
+	if (mBar != null) {
                 try {
                     mBar.toggleRecentApps();
                 } catch (RemoteException ex) {}
@@ -500,7 +502,7 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
             }
         }
     }
-
+    
     @Override
     public void restartUI() {
         mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RESTART_UI,
@@ -991,6 +993,17 @@ public class StatusBarManagerService extends IStatusBarService.Stub {
                         }
                     }
                 });
+        }
+    }
+
+    @Override
+    public void toggleOrientationListener(boolean enable) {
+        if (mBar != null) {
+            try {
+                mBar.toggleOrientationListener(enable);
+            } catch (RemoteException ex) {
+                // system is dead
+            }
         }
     }
 
