@@ -94,6 +94,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mWeatherImageView;
     private View mWeatherTextView;
     private int mShowWeather;
+    // network traffic
+    private View mNetworkTraffic;
+    private int mShowNetworkTraffic;
 
     private ImageView mXtendedLogo;
     private ImageView mXtendedLogoRight;
@@ -128,6 +131,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 		    false, this, UserHandle.USER_ALL);
          mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_TICKER),
+                    false, this, UserHandle.USER_ALL);
+         mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NETWORK_TRAFFIC_STATE),
                     false, this, UserHandle.USER_ALL);
        }
 
@@ -186,14 +192,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mWeatherTextView = mStatusBar.findViewById(R.id.weather_temp);
         mWeatherImageView = mStatusBar.findViewById(R.id.weather_image);
+	mNetworkTraffic = mStatusBar.findViewById(R.id.networkTraffic);
 	mXtendedLogo = mStatusBar.findViewById(R.id.status_bar_logo);
 	mXtendedLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
 	updateLogoSettings(false);	
         showSystemIconArea(false);
+	updateSettings(false);
+	mSettingsObserver.observe();
         initEmergencyCryptkeeperText();
         initOperatorName();
-        mSettingsObserver.observe();
-        updateSettings(false);
     }
 
     @Override
@@ -319,6 +326,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate, true);
         animateHide(mCenterClockLayout, animate, true);
+	animateHide(mNetworkTraffic, animate, true);
         if (mShowLogo == 1) {
             animateHide(mXtendedLogo, animate, false);
         }
@@ -327,6 +335,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenterClockLayout, animate);
+	updateNetworkTraffic(animate);
          if (mShowLogo == 1) {
              animateShow(mXtendedLogo, animate);
          }
@@ -353,6 +362,14 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void showCarrierName(boolean animate) {
         if (mCustomCarrierLabel != null) {
             setCarrierLabel(animate);
+        }
+    }
+
+    public void updateNetworkTraffic(boolean animate) {
+        if (mNetworkTraffic != null) {
+            if (mShowNetworkTraffic != 0) {
+                animateShow(mNetworkTraffic, animate);
+            }
         }
     }
 
@@ -445,11 +462,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mTickerEnabled = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_SHOW_TICKER, 0,
                 UserHandle.USER_CURRENT);
-        } catch (Exception e) {
+        mShowNetworkTraffic = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.NETWORK_TRAFFIC_STATE, 0,
+                UserHandle.USER_CURRENT);
+	} catch (Exception e) {
         }
 	updateClockStyle(animate);
         setCarrierLabel(animate);
 	initTickerView();
+        updateNetworkTraffic(animate);
     }
 
     public void updateLogoSettings(boolean animate) {
