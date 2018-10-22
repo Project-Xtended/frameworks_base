@@ -5388,6 +5388,12 @@ public final class Settings {
         public static final String QS_RUNNING_SERVICES_TOGGLE = "qs_running_services_toggle";
 
         /**
+         * Whether to show VoLTE icon or not
+         * @hide
+         */
+        public static final String SHOW_VOLTE_ICON = "volte_icon";
+
+        /**
          * @hide
          */
         public static final String OMNI_USE_BOTTOM_GESTURE_NAVIGATION =
