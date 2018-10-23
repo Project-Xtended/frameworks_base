@@ -20,7 +20,6 @@
     <dimen name="floating_action_button_margin_bottom">54dp</dimen>
 
     <dimen name="current_weather_image_size">42dp</dimen>
-    <dimen name="qs_tile_height_wo_label">48dp</dimen>
 
     <dimen name="net_traffic_single_text_size">15dp</dimen>
     <dimen name="net_traffic_multi_text_size">8dp</dimen>

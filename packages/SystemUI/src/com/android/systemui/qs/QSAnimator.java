@@ -90,7 +90,6 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             Log.w(TAG, "QS Not using page layout");
         }
         panel.setPageListener(this);
-        updateSettings();
     }
 
     public void onRtlChanged() {
@@ -114,7 +113,7 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
     @Override
     public void onViewAttachedToWindow(View v) {
         Dependency.get(TunerService.class).addTunable(this, ALLOW_FANCY_ANIMATION,
-                MOVE_FULL_ROWS);
+                MOVE_FULL_ROWS, QuickQSPanel.NUM_QUICK_TILES);
     }
 
     @Override
@@ -134,6 +133,9 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             }
         } else if (MOVE_FULL_ROWS.equals(key)) {
             mFullRows = newValue == null || Integer.parseInt(newValue) != 0;
+        } else if (QuickQSPanel.NUM_QUICK_TILES.equals(key)) {
+            mNumQuickTiles = mQuickQsPanel.getNumQuickTiles(mQs.getContext());
+            clearAnimationState();
         }
         updateAnimators();
     }
@@ -407,9 +409,4 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             setPosition(mLastPosition);
         }
     };
-
-    public void updateSettings() {
-        mNumQuickTiles = mQuickQsPanel.getNumQuickTiles();
-        clearAnimationState();
-    }
 }
