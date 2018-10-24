@@ -320,7 +320,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private void updateTextColors() {
         final int blendedColor = getTextColor();
         mTitle.setTextColor(blendedColor);
-        int childCount = mRow.getChildCount();
+	int childCount = mRow.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View v = mRow.getChildAt(i);
             if (v instanceof Button) {
