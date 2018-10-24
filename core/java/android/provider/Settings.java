@@ -5611,7 +5611,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
-        
+
         /**
          * Quick Settings Smart Pulldown
          * @hide
@@ -5729,6 +5729,20 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_SCREEN_WEATHER_ICON_COLOR = "lock_screen_weather_icon_color";
+
+	/**
+	 ** Change fonts for the system lockscreen Owner info
+	 **
+	 ** @hide
+	 **/
+        public static final String LOCK_OWNERINFO_FONTS = "lock_ownerinfo_fonts";
+
+        /**
+	 ** Change font size for the system lockscreen owner
+	 **
+	 ** @hide
+	 **/
+        public static final String LOCKOWNER_FONT_SIZE= "lockowner_font_size";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
