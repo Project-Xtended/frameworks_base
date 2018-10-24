@@ -159,6 +159,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
     private final OnColorsChangedListener mColorsListener = (extractor, which) -> {
         if ((which & WallpaperManager.FLAG_LOCK) != 0) {
             updateColors();
+	    updateClockColor();
         }
     };
 
@@ -209,6 +210,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
         mStatusBarStateController.addCallback(mStateListener);
         mSysuiColorExtractor.addOnColorsChangedListener(mColorsListener);
         updateColors();
+	updateClockColor();
     }
 
     @Override
@@ -228,6 +230,19 @@ public class KeyguardClockSwitch extends RelativeLayout {
     private int getLockClockSize() {
         return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.LOCKCLOCK_FONT_SIZE, 78);
+    }
+
+    public void updateClockColor() {
+        ContentResolver resolver = getContext().getContentResolver();
+        int color = Settings.System.getInt(resolver,
+                Settings.System.LOCKSCREEN_CLOCK_COLOR, 0xFFFFFFFF);
+
+        if (mClockView != null) {
+            mClockView.setTextColor(color);
+        }
+        if (mClockViewBold != null) {
+            mClockViewBold.setTextColor(color);
+        }
     }
 
     private void setClockPlugin(ClockPlugin plugin) {
@@ -312,8 +327,6 @@ public class KeyguardClockSwitch extends RelativeLayout {
      * It will also update plugin setTextColor if plugin is connected.
      */
     public void setTextColor(int color) {
-        mClockView.setTextColor(color);
-        mClockViewBold.setTextColor(color);
         if (mClockPlugin != null) {
             mClockPlugin.setTextColor(color);
         }
