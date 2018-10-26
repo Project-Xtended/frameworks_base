@@ -460,6 +460,8 @@ interface IWindowManager
 
     boolean isGestureButtonRegion(int i, int i2);
 
+    boolean isKeyguardShowingAndNotOccluded();
+
     // This requires the ONE_HANDED_MODE permission.
     boolean isOneHandedModeAvailable();
 
