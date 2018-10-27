@@ -74,6 +74,9 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
     private float mDarkAmount;
     private boolean mUpdatesEnabled;
     private SettingsObserver mSettingsObserver;
+    private int mRightTextColor;
+    private int mLeftTextColor;
+    private int mCurrentImageColor;
 
     public CurrentWeatherView(Context context) {
         this(context, null);
@@ -124,9 +127,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         mSettingsObserver = new SettingsObserver(new Handler());
         mSettingsObserver.observe();
         mSettingsObserver.update();
-	updateLeftTextColor();
-	updateRightTextColor();
-	updateCurrentImageColor();
     }
 
     private void updateWeatherData(OmniJawsClient.WeatherInfo weatherData) {
@@ -134,9 +134,12 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
                 Settings.System.LOCKSCREEN_WEATHER_SHOW_TEMP, 1, UserHandle.USER_CURRENT) == 1;
         boolean showCity = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.LOCKSCREEN_WEATHER_SHOW_CITY, 0, UserHandle.USER_CURRENT) == 1;
-	updateLeftTextColor();
-	updateRightTextColor();
-	updateCurrentImageColor();
+        mRightTextColor = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.LOCK_SCREEN_WEATHER_TEMP_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
+        mLeftTextColor = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
+        mCurrentImageColor = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
         if (DEBUG) Log.d(TAG, "updateWeatherData");
 
         if (!mWeatherClient.isOmniJawsEnabled() || weatherData == null) {
@@ -146,13 +149,16 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         Drawable d = mWeatherClient.getWeatherConditionImage(weatherData.conditionCode);
         d = d.mutate();
         mCurrentImage.setImageDrawable(d);
+        mCurrentImage.setColorFilter(mCurrentImageColor);
         if (showTemp) {
             mRightText.setText(weatherData.temp + " " + weatherData.tempUnits);
+            mRightText.setTextColor(mRightTextColor);
         } else {
             mRightText.setText("");
         }
         if (showCity) {
             mLeftText.setText(weatherData.city);
+            mLeftText.setTextColor(mLeftTextColor);
         } else {
             mLeftText.setText("");
         }
@@ -186,9 +192,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
     public void weatherUpdated() {
         if (DEBUG) Log.d(TAG, "weatherUpdated");
         queryAndUpdateWeather();
-	updateLeftTextColor();
-	updateRightTextColor();
-	updateCurrentImageColor();
     }
 
     @Override
@@ -196,9 +199,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         if (DEBUG) Log.d(TAG, "updateSettings");
         OmniJawsClient.WeatherInfo weatherData = mWeatherClient.getWeatherInfo();
         updateWeatherData(weatherData);
-	updateLeftTextColor();
-	updateRightTextColor();
-	updateCurrentImageColor();
     }
 
     private void queryAndUpdateWeather() {
@@ -207,9 +207,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
             mWeatherClient.queryWeather();
             OmniJawsClient.WeatherInfo weatherData = mWeatherClient.getWeatherInfo();
             updateWeatherData(weatherData);
-	    updateLeftTextColor();
-	    updateRightTextColor();
-	    updateCurrentImageColor();
         }
     }
 
@@ -224,34 +221,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
                 getResources().getDimensionPixelSize(R.dimen.current_weather_image_size);
     }
 
-    private void updateRightTextColor() {
-        ContentResolver resolver = getContext().getContentResolver();
-        int color = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_WEATHER_TEMP_COLOR, 0xFFFFFFFF);
-        if (mRightText != null) {
-            mRightText.setTextColor(color);
-        }
-    }
-
-    private void updateLeftTextColor() {
-        ContentResolver resolver = getContext().getContentResolver();
-        int color = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR, 0xFFFFFFFF);
-        if (mLeftText != null) {
-            mLeftText.setTextColor(color);
-       	}
-    }
-
-    public void updateCurrentImageColor() {
-        ContentResolver resolver = getContext().getContentResolver();
-        int color = Settings.System.getInt(resolver,
-                Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, 0x99FFFFFF);
-
-        if (mCurrentImage != null) {
-            mCurrentImage.setColorFilter(color);
-        }
-    }
-
     private class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -264,6 +233,15 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_WEATHER_SHOW_CITY),
                     false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCK_SCREEN_WEATHER_TEMP_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -273,9 +251,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
 
         public void update() {
             queryAndUpdateWeather();
-	    updateLeftTextColor();
-	    updateRightTextColor();
-	    updateCurrentImageColor();
         }
     }
 }
