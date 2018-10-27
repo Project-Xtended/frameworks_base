@@ -132,7 +132,9 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         boolean showTemp = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.LOCKSCREEN_WEATHER_SHOW_TEMP, 1, UserHandle.USER_CURRENT) == 1;
         boolean showCity = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.LOCKSCREEN_WEATHER_SHOW_CITY, 0, UserHandle.USER_CURRENT) == 1;
+                Settings.System.LOCKSCREEN_WEATHER_SHOW_CITY, 1, UserHandle.USER_CURRENT) == 1;
+        boolean showImage = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_WEATHER_SHOW_IMAGE, 1, UserHandle.USER_CURRENT) == 1;
         if (DEBUG) Log.d(TAG, "updateWeatherData");
 
         if (!mWeatherClient.isOmniJawsEnabled()) {
@@ -146,7 +148,6 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         Drawable d = mWeatherClient.getWeatherConditionImage(weatherData.conditionCode);
         d = d.mutate();
         updateTint(d);
-        mCurrentImage.setImageDrawable(d);
         if (showTemp) {
             mRightText.setText(weatherData.temp + " " + weatherData.tempUnits);
         } else {
@@ -156,6 +157,11 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
             mLeftText.setText(weatherData.city);
         } else {
             mLeftText.setText("");
+        }
+        if (showImage) {
+            mCurrentImage.setImageDrawable(d);
+        } else {
+            mCurrentImage.setVisibility(View.GONE);
         }
     }
 
@@ -257,6 +263,9 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
                     false, this, UserHandle.USER_ALL);
             getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_WEATHER_SHOW_CITY),
+                    false, this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_WEATHER_SHOW_IMAGE),
                     false, this, UserHandle.USER_ALL);
         }
 
