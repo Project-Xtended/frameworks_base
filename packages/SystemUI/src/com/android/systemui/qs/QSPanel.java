@@ -559,6 +559,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
         if (mTileLayout != null) {
             mTileLayout.addTile(r);
+	    configureTile(r.tile, r.tileView);
         }
 
         return r;
@@ -817,6 +818,14 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
                    t.click();
                    setAnimationTile(v);
            });
+        }
+    }
+
+    public void updateSettings() {
+        if (mTileLayout != null) {
+            for (TileRecord r : mRecords) {
+                configureTile(r.tile, r.tileView);
+            }
         }
     }
 }
