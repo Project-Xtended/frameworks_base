@@ -5427,6 +5427,20 @@ public final class Settings {
         public static final String LOCK_SCREEN_WEATHER_ICON_COLOR = "lock_screen_weather_icon_color";
 
         /**
+	 ** Change fonts for the system lockscreen weather temperature
+	 **
+	 ** @hide
+	 **/
+         public static final String LOCK_WEATHER_TEMP_FONTS = "lock_weather_temp_fonts";
+
+        /**
+	 ** Change fonts for the system lockscreen weather city
+	 **
+	 ** @hide
+	 **/
+         public static final String LOCK_WEATHER_CITY_FONTS = "lock_weather_city_fonts";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
