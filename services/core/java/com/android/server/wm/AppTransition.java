@@ -2340,7 +2340,8 @@ public class AppTransition implements Dump {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.ANIMATION_CONTROLS_DURATION), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(Settings.System.ANIMATION_CONTROLS_NO_OVERRIDE), false, this);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.ANIMATION_CONTROLS_NO_OVERRIDE), false, this);
             for (int i = 0; i < 11; i++) {
 	            resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.ACTIVITY_ANIMATION_CONTROLS[i]), false, this);
@@ -2358,7 +2359,6 @@ public class AppTransition implements Dump {
             mActivityAnimations[i] = Settings.System.getInt(resolver, Settings.System.ACTIVITY_ANIMATION_CONTROLS[i], 0);
         }
         mNoOverrides = Settings.System.getInt(resolver, Settings.System.ANIMATION_CONTROLS_NO_OVERRIDE, 0) == 1;
-        int temp = Settings.System.getInt(resolver, Settings.System.ANIMATION_CONTROLS_DURATION, 0);
-        mAnimationDuration = temp;
+        mAnimationDuration = Settings.System.getInt(resolver, Settings.System.ANIMATION_CONTROLS_DURATION, 0);
     }
 }
