@@ -67,7 +67,7 @@ public class SleepScreenTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleLongClick() {
-        //do nothing here
+        handleClick();
     }
 
     @Override

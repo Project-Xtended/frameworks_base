@@ -71,6 +71,11 @@ public class OnTheGoTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
+    protected void handleLongClick() {
+        handleClick();
+    }
+
+    @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
         state.contentDescription =  mContext.getString(
                 R.string.quick_settings_onthego_label);

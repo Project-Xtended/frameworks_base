@@ -96,6 +96,11 @@ public class GamingModeTile extends QSTileImpl<BooleanState> {
         return null;
     }
 
+    @Override
+    protected void handleLongClick() {
+        handleClick();
+    }
+
     private void handleState(boolean enabled) {
         // Heads up
         boolean headsUpEnabled = Settings.Global.getInt(mContext.getContentResolver(),
