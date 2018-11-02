@@ -6080,7 +6080,40 @@ public final class Settings {
         public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
 
         /**
+         * Whether Ambient Play enabled/disabled
+         *
          * @hide
+         */
+        public static final String AMBIENT_RECOGNITION = "ambient_recognition";
+
+        /** @hide */
+        private static final Validator AMBIENT_RECOGNITION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether Ambient Play is shown on the lockscreen
+         *
+         * @hide
+         */
+        public static final String AMBIENT_RECOGNITION_KEYGUARD = "ambient_recognition_keyguard";
+
+        /** @hide */
+        private static final Validator AMBIENT_RECOGNITION_KEYGUARD_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * Whether Ambient Play notification is enabled
+         *
+         * @hide
+         */
+        public static final String AMBIENT_RECOGNITION_NOTIFICATION = "ambient_recognition_notification";
+
+        /** @hide */
+        private static final Validator AMBIENT_RECOGNITION_NOTIFICATION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+	 * @hide
          */
         public static final String QS_HEADER_STYLE = "qs_header_style";
 
@@ -6347,7 +6380,10 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
-        }
+            PRIVATE_SETTINGS.add(AMBIENT_RECOGNITION);
+            PRIVATE_SETTINGS.add(AMBIENT_RECOGNITION_KEYGUARD);
+            PRIVATE_SETTINGS.add(AMBIENT_RECOGNITION_NOTIFICATION);
+	}
 
 
         /**
@@ -6482,6 +6518,9 @@ public final class Settings {
             VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_LIST,
                     OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
             VALIDATORS.put(USE_OLD_MOBILETYPE, USE_OLD_MOBILETYPE_VALIDATOR);
+            VALIDATORS.put(AMBIENT_RECOGNITION, AMBIENT_RECOGNITION_VALIDATOR);
+            VALIDATORS.put(AMBIENT_RECOGNITION_KEYGUARD, AMBIENT_RECOGNITION_KEYGUARD_VALIDATOR);
+            VALIDATORS.put(AMBIENT_RECOGNITION_NOTIFICATION, AMBIENT_RECOGNITION_NOTIFICATION_VALIDATOR);
         }
 
         /**
@@ -9864,27 +9903,6 @@ public final class Settings {
          */
         public static final String MANAGED_PROFILE_CONTACT_REMOTE_SEARCH =
                 "managed_profile_contact_remote_search";
-
-        /**
-         * Whether Ambient Play enabled/disabled
-         *
-         * @hide
-         */
-        public static final String AMBIENT_RECOGNITION = "ambient_recognition";
-
-        /**
-         * Whether Ambient Play is shown on the lockscreen
-         *
-         * @hide
-         */
-        public static final String AMBIENT_RECOGNITION_KEYGUARD = "ambient_recognition_keyguard";
-
-        /**
-         * The update interval in milliseconds that is used by Ambient Play to recognize music 
-         *
-         * @hide
-         */
-        public static final String AMBIENT_RECOGNITION_INTERVAL = "ambient_recognition_interval";
 
 	    /**
          * Whether or not the automatic storage manager is enabled and should run on the device.
