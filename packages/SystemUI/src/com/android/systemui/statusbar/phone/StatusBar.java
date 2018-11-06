@@ -5457,7 +5457,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_STYLE),
                     false, this, UserHandle.USER_ALL);
-        }
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                     Settings.Secure.PULSE_APPS_BLACKLIST),
+                    false, this, UserHandle.USER_ALL);
+	 }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -5496,7 +5499,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_HEADER_STYLE))) {
                 stockQSHeaderStyle();
                 updateQSHeaderStyle();
-            }
+            } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.PULSE_APPS_BLACKLIST))) {
+                setPulseBlacklist();
+	    }
 	    update();
         }
 
@@ -5519,6 +5524,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerAnimation();
             updateTickerTickDuration();
 	    setUseLessBoringHeadsUp();
+	    setPulseBlacklist();
 	 }
     }
 
@@ -5550,6 +5556,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mStatusBarWindow != null) {
             mStatusBarWindow.setLockscreenDoubleTapToSleep();
         }
+    }
+
+    private void setPulseBlacklist() {
+        String blacklist = Settings.Secure.getStringForUser(mContext.getContentResolver(),
+            Settings.Secure.PULSE_APPS_BLACKLIST, UserHandle.USER_CURRENT);
+        getMediaManager().setPulseBlacklist(blacklist);
     }
 
     private void setMaxKeyguardNotifConfig() {
