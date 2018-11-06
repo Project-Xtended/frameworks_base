@@ -6062,6 +6062,12 @@ public final class Settings {
         public static final String FLING_PULSE_SMOOTHING_ENABLED = "fling_pulse_smoothing_enabled";
 
         /**
+         * Apps to skip for Pulse
+         * @hide
+         */
+        public static final String PULSE_APPS_BLACKLIST = "pulse_apps_blacklist";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
