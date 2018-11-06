@@ -6041,6 +6041,20 @@ public final class Settings {
         public static final String PULSE_AUTO_COLOR = "pulse_auto_color";
 
         /**
+         * Fling pulse lavalamp start and end colors
+         *
+         * @hide
+         */
+        public static final String FLING_PULSE_LAVALAMP_COLOR_FROM = "fling_lavalamp_color_from";
+
+        /**
+         * Fling pulse lavalamp start and end colors
+         *
+         * @hide
+         */
+        public static final String FLING_PULSE_LAVALAMP_COLOR_TO = "fling_lavalamp_color_to";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
