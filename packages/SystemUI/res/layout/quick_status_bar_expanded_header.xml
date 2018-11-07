@@ -18,6 +18,7 @@
 <!-- Extends RelativeLayout -->
 <com.android.systemui.qs.QuickStatusBarHeader
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -34,6 +35,12 @@
 
     <!-- The clock -->
     <include layout="@layout/quick_status_bar_header_system_icons" />
+
+    <com.android.systemui.statusbar.policy.BatteryBarController
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        systemui:viewLocation="5"
+        android:layout_below="@+id/quick_status_bar_system_icons" />
 
     <!-- Status icons within the panel itself (and not in the top-most status bar) -->
     <include layout="@layout/quick_qs_status_icons" />

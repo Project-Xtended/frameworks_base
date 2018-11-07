@@ -26,6 +26,7 @@ import android.provider.Settings;
 import android.util.SparseArray;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -114,6 +115,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
     private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
 
+    private View mBatteryBars[] = new View[2];
+
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
         public void setIsAirplaneMode(NetworkController.IconState icon) {
@@ -164,6 +167,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mClockView = mStatusBar.findViewById(R.id.clock);
         mCenterClockLayout = (LinearLayout) mStatusBar.findViewById(R.id.center_clock_layout);
         mRightClock = mStatusBar.findViewById(R.id.right_clock);
+        mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mSignalClusterEndPadding = getResources().getDimensionPixelSize(R.dimen.signal_cluster_battery_padding);
         mStatusIcons = mStatusBar.findViewById(R.id.statusIcons);
@@ -320,6 +325,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateHide(mRightClock, animate, true);
         }
         animateHide(mSystemIconArea, animate, true);
+        for (View batteryBar: mBatteryBars) {
+            animateHide(batteryBar, animate, false);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -328,6 +336,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mRightClock, animate);
         }
         animateShow(mSystemIconArea, animate);
+        for (View batteryBar: mBatteryBars) {
+            animateShow(batteryBar, animate);
+        }
     }
 
 /*    public void hideClock(boolean animate) {
