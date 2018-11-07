@@ -29,6 +29,7 @@ import android.annotation.Nullable;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.database.ContentObserver;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.UserHandle;
@@ -143,6 +144,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private final SecureSettings mSecureSettings;
     private final Executor mMainExecutor;
     private final DumpManager mDumpManager;
+
+    private View mBatteryBars[] = new View[2];
 
     private BatteryMeterView mBatteryMeterView;
     private StatusIconContainer mStatusIcons;
@@ -313,6 +316,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mStatusBarIconController.addIconGroup(mDarkIconManager);
         mEndSideContent = mStatusBar.findViewById(R.id.status_bar_end_side_content);
         mClockView = mStatusBar.findViewById(R.id.clock);
+        mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
         mSignalClusterEndPadding = getResources().getDimensionPixelSize(R.dimen.signal_cluster_battery_padding);
         mStatusIcons = mStatusBar.findViewById(R.id.statusIcons);
         int batteryStyle = Settings.System.getInt(getContext().getContentResolver(),
@@ -563,6 +568,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mClockStyle == 2) {
             animateHide(mRightClock, animate, true);
         }
+        for (View batteryBar: mBatteryBars) {
+            animateHide(batteryBar, animate, false);
+        }
         animateHide(mEndSideContent, animate, true);
     }
 
@@ -573,6 +581,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mCenterClockLayout, animate);
             if (mClockStyle == 2) {
                 animateShow(mRightClock, animate);
+            }
+            for (View batteryBar: mBatteryBars) {
+                 animateShow(batteryBar, animate);
             }
             animateShow(mEndSideContent, animate);
         } else {
