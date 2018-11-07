@@ -10817,6 +10817,12 @@ public final class Settings {
         public static final String PULSE_APPS_BLACKLIST = "pulse_apps_blacklist";
 
         /**
+         * Pulse Fading units opacity
+         * @hide
+         */
+        public static final String PULSE_FADING_BLOCKS_OPACITY = "pulse_fading_blocks_opacity";
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear
