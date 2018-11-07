@@ -6068,6 +6068,12 @@ public final class Settings {
         public static final String PULSE_APPS_BLACKLIST = "pulse_apps_blacklist";
 
         /**
+         * Pulse Fading units opacity
+         * @hide
+         */
+        public static final String PULSE_FADING_BLOCKS_OPACITY = "pulse_fading_blocks_opacity";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
