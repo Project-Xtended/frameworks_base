@@ -137,6 +137,7 @@ public class KeyguardStatusView extends GridLayout implements
             updateOwnerInfoColor();
             refreshOwnerInfoSize();
             refreshOwnerInfoFont();
+	    updateSettings();
 	}
 
         @Override
