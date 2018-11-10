@@ -328,4 +328,7 @@
   <!-- Available icon mask paths for the adaptive icon shape setting -->
   <java-symbol type="array" name="system_icon_masks" />
 
+  <!-- Icon packs -->
+  <java-symbol type="drawable" name="adaptive_icon_drawable_wrapper" />
+
 </resources>
