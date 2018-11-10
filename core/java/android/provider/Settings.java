@@ -6147,7 +6147,7 @@ public final class Settings {
 
         /** @hide */
         private static final Validator ANIM_TILE_DURATION_VALIDATOR =
-              new SettingsValidators.InclusiveIntegerRangeValidator(1500, 2500);
+              new SettingsValidators.InclusiveIntegerRangeValidator(500, 2500);
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
