@@ -38,6 +38,7 @@ public class StatusBarIconHolder {
     public static final int TYPE_ICON = 0;
     public static final int TYPE_WIFI = 1;
     public static final int TYPE_MOBILE = 2;
+    public static final int TYPE_NETWORK_TRAFFIC = 42;
     /**
      * TODO (b/249790733): address this once the new pipeline is in place
      * This type exists so that the new pipeline (see {@link MobileIconViewModel}) can be used
@@ -152,6 +153,12 @@ public class StatusBarIconHolder {
         return holder;
     }
 
+    public static StatusBarIconHolder fromNetworkTraffic() {
+        StatusBarIconHolder holder = new StatusBarIconHolder();
+        holder.mType = TYPE_NETWORK_TRAFFIC;
+        return holder;
+    }
+
     public @IconType int getType() {
         return mType;
     }
@@ -195,6 +202,8 @@ public class StatusBarIconHolder {
             case TYPE_WIFI_NEW:
                 // The new pipeline controls visibilities via the view model and view binder, so
                 // this is effectively an unused return value.
+                return true;
+            case TYPE_NETWORK_TRAFFIC:
                 return true;
             default:
                 return true;
