@@ -198,9 +198,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 	updateLogoSettings(false);	
         showSystemIconArea(false);
 	updateSettings(false);
-	mSettingsObserver.observe();
         initEmergencyCryptkeeperText();
         initOperatorName();
+        mSettingsObserver.observe();
+        updateSettings(true);
     }
 
     @Override
