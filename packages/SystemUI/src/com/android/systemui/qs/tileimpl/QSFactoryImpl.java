@@ -64,6 +64,7 @@ import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WeatherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
+import com.android.systemui.qs.tiles.AmbientPlayTile;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.util.leak.GarbageMonitor;
 
@@ -165,6 +166,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new SmartPixelsTile(mHost);
             case "lte":
                 return new LteTile(mHost);
+            case "ambientplay":
+                return new AmbientPlayTile(mHost);
         }
 
         // Intent tiles.
