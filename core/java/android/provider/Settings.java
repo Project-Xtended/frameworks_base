@@ -5260,6 +5260,13 @@ public final class Settings {
         public static final String LOCKSCREEN_TIMEOUT = "lockscreen_timeout";
 
         /**
+         * Whether to display set of animations when prompting the power menu
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
