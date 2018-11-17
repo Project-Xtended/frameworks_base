@@ -321,4 +321,7 @@
    <!-- Ambient display music ticker -->
   <java-symbol type="bool" name="config_canForceDozeNotifications" />
 
+  <!-- Whether device has a physical display cutout -->
+  <java-symbol type="bool" name="config_physicalDisplayCutout" />
+
 </resources>
