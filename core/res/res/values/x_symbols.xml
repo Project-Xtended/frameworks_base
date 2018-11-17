@@ -68,4 +68,9 @@
     <java-symbol type="anim" name="custom_app_out" />
     <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
+  <!-- Powermenu animations -->
+  <java-symbol type="style" name="GlobalActionsAnimation" />
+  <java-symbol type="style" name="GlobalActionsAnimationTop" />
+  <java-symbol type="style" name="GlobalActionsAnimationEnter" />
+
 </resources>
