@@ -1321,7 +1321,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.USE_EDGE_SERVICE_FOR_GESTURES), false, this,
                     UserHandle.USER_ALL);
-            updateSettings();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.VOLUME_ROCKER_WAKE), false, this,
+                    UserHandle.USER_ALL);
+	    updateSettings();
         }
 
         @Override public void onChange(boolean selfChange) {
@@ -3170,7 +3173,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_CURRENT) == 1) &&
                     ((mDeviceHardwareWakeKeys & KEY_MASK_APP_SWITCH) != 0);
 
-            // Configure wake gesture.
+            // volume rocker wake
+            mVolumeRockerWake = Settings.System.getIntForUser(resolver,
+                    Settings.System.VOLUME_ROCKER_WAKE, 0, UserHandle.USER_CURRENT) != 0;
+
+	    // Configure wake gesture.
             boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.WAKE_GESTURE_ENABLED, 0,
                     UserHandle.USER_CURRENT) != 0;
@@ -7113,7 +7120,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         isVolumeRockerWake = isVolumeRockerWake ? (mVolumeMusicControlActive) : false;
         int result;
         boolean isWakeKey = (policyFlags & WindowManagerPolicy.FLAG_WAKE) != 0
-                || event.isWakeKey();
+                || event.isWakeKey() || isVolumeRockerWake;
         if (interactive || (isInjected && !isWakeKey)) {
             // When the device is interactive or the key is injected pass the
             // key to the application.
