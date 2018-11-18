@@ -82,6 +82,10 @@ applications that come with the platform
         <permission name="android.permission.DEVICE_POWER"/>
         <permission name="android.permission.EXPAND_STATUS_BAR"/>
         <permission name="android.permission.GET_ACCOUNTS_PRIVILEGED"/>
+        <permission name="android.permission.DEVICE_POWER" />
+        <permission name="android.permission.CAMERA" />
+        <permission name="android.permission.FORCE_STOP_PACKAGES" />
+        <permission name="android.permission.ACCESS_INSTANT_APPS" />
     </privapp-permissions>
 
     <privapp-permissions package="com.android.location.fused">
