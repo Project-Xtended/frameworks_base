@@ -169,6 +169,7 @@
   <java-symbol type="style" name="GlobalActionsAnimationTranslucent" />
   <java-symbol type="style" name="GlobalActionsAnimationXylon" />
   <java-symbol type="style" name="GlobalActionsAnimationCard" />
+  <java-symbol type="style" name="GlobalActionsAnimationRotate" />
 
   <!-- True if the notification's should dynamically tint the app icon and text -->
   <java-symbol type="bool" name="config_allowNotificationIconTextTinting" />
