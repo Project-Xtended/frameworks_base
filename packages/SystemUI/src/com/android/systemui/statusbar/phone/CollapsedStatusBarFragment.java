@@ -201,7 +201,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         initEmergencyCryptkeeperText();
         initOperatorName();
         mSettingsObserver.observe();
-	animateShow(mClockView, false);
         updateSettings(true);
     }
 
@@ -304,7 +303,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     public void hideSystemIconArea(boolean animate) {
-	animateHide(mClockView, animate, true);
+        animateHide(mSystemIconArea, animate, true);
         animateHide(mCenterClockLayout, animate, true);
         if (mClockStyle == 2) {
             animateHide(mRightClock, animate, true);
@@ -312,19 +311,17 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 2) {
             animateHide(mXtendedLogoRight, animate, false);
         }	
-	animateHide(mSystemIconArea, animate, true);
     }
 
     public void showSystemIconArea(boolean animate) {
-	animateShow(mClockView, animate);
+        animateShow(mSystemIconArea, animate);
         animateShow(mCenterClockLayout, animate);
         if (mClockStyle == 2) {
             animateShow(mRightClock, animate);
         }
         if (mShowLogo == 2) {
             animateShow(mXtendedLogoRight, animate);
-        }
-        animateShow(mSystemIconArea, animate);	
+        }	
     }
 
     public void hideNotificationIconArea(boolean animate) {
