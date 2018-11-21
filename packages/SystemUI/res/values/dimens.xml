@@ -46,19 +46,19 @@
     <dimen name="status_bar_clock_starting_padding">3dp</dimen>
 
     <!-- The end padding for the clock in the status bar. -->
-    <dimen name="status_bar_clock_end_padding">2dp</dimen>
+    <dimen name="status_bar_clock_end_padding">3dp</dimen>
 
     <!-- Starting padding for a left-aligned status bar clock -->
-    <dimen name="status_bar_left_clock_starting_padding">2dp</dimen>
+    <dimen name="status_bar_left_clock_starting_padding">3dp</dimen>
 
     <!-- End padding for left-aligned status bar clock -->
-    <dimen name="status_bar_left_clock_end_padding">2dp</dimen>
+    <dimen name="status_bar_left_clock_end_padding">3dp</dimen>
 
     <!-- Spacing after the wifi signals that is present if there are any icons following it. -->
-    <dimen name="status_bar_wifi_signal_spacer_width">4dp</dimen>
+    <dimen name="status_bar_wifi_signal_spacer_width">3dp</dimen>
 
     <!-- Spacing before the airplane mode icon if there are any icons preceding it. -->
-    <dimen name="status_bar_airplane_spacer_width">4dp</dimen>
+    <dimen name="status_bar_airplane_spacer_width">3dp</dimen>
 
     <!-- The amount to scale each of the status bar icons by. A value of 1 means no scaling. -->
     <item name="status_bar_icon_scale_factor" format="float" type="dimen">1.0</item>
@@ -198,10 +198,10 @@
     <dimen name="status_bar_icon_padding">0dp</dimen>
 
     <!-- the padding on the start of the statusbar -->
-    <dimen name="status_bar_padding_start">4dp</dimen>
+    <dimen name="status_bar_padding_start">3dp</dimen>
 
     <!-- the padding on the end of the statusbar -->
-    <dimen name="status_bar_padding_end">4dp</dimen>
+    <dimen name="status_bar_padding_end">3dp</dimen>
 
     <!-- the radius of the overflow dot in the status bar -->
     <dimen name="overflow_dot_radius">2dp</dimen>
@@ -602,7 +602,7 @@
     <dimen name="framed_avatar_size">54dp</dimen>
 
     <!-- Margin on the left side of the carrier text on Keyguard -->
-    <dimen name="keyguard_carrier_text_margin">16dp</dimen>
+    <dimen name="keyguard_carrier_text_margin">10dp</dimen>
 
     <!-- Margin on the left side of the battery % in the header. -->
     <dimen name="header_battery_margin_expanded">6dp</dimen>
@@ -703,7 +703,7 @@
     <dimen name="signal_cluster_margin_start">2.5dp</dimen>
 
     <!-- Padding between signal cluster and battery icon -->
-    <dimen name="signal_cluster_battery_padding">4dp</dimen>
+    <dimen name="signal_cluster_battery_padding">3dp</dimen>
 
     <!-- Padding for signal cluster and battery icon when there are not icons in signal cluster -->
     <dimen name="no_signal_cluster_battery_padding">3dp</dimen>
@@ -1024,5 +1024,8 @@
     <!-- How much we expand the touchable region of the status bar below the notch to catch touches
          that just start below the notch. -->
     <dimen name="display_cutout_touchable_region_size">12dp</dimen>
+
+    <!-- The padding for the custom icons in the status bar. -->
+    <dimen name="status_bar_xtnd_padding">3dp</dimen>
 
 </resources>

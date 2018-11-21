@@ -55,8 +55,8 @@
             android:layout_height="@dimen/status_bar_icon_size"
             android:src="@drawable/status_bar_logo"
 	    android:scaleType="centerInside"
-	    android:paddingStart="2dp"
-            android:padding="2dp"
+	    android:paddingStart="@dimen/status_bar_xtnd_padding"
+	    android:paddingEnd="@dimen/status_bar_xtnd_padding"
             android:visibility="gone" />
 
         <com.android.systemui.xtended.carrierlabel.CarrierLabel
@@ -65,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
 	    android:gravity="start|center_vertical"
-	    android:paddingStart="2dp"
-            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+	    android:paddingStart="@dimen/status_bar_xtnd_padding"
+	    android:paddingEnd="@dimen/status_bar_xtnd_padding"
             android:visibility="gone"
             android:singleLine="true"/>
 
@@ -134,16 +134,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:maxLines="1"
-                    android:gravity="right|center_vertical"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp" />
+		    android:gravity="right|center_vertical"
+		    android:visibility="gone"
+		    android:paddingStart="@dimen/status_bar_xtnd_padding"
+		    android:paddingEnd="@dimen/status_bar_xtnd_padding" />
 
                 <com.android.systemui.xtended.statusbarweather.StatusBarWeatherImage
                     android:id="@+id/weather_image"
                     android:layout_width="24dp"
-                    android:layout_height="match_parent"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp" />
+		    android:layout_height="match_parent"
+		    android:visibility="gone"
+		    android:paddingStart="@dimen/status_bar_xtnd_padding"
+		    android:paddingEnd="@dimen/status_bar_xtnd_padding" />
 
             <include layout="@layout/system_icons" />
 
@@ -167,7 +169,8 @@
             android:layout_height="@dimen/status_bar_icon_size"
             android:src="@drawable/status_bar_logo"
             android:scaleType="centerInside"
-            android:paddingStart="2dp"
+	    android:paddingStart="@dimen/status_bar_xtnd_padding"
+	    android:paddingEnd="@dimen/status_bar_xtnd_padding"
 	    android:visibility="gone" 
 	    />
 															    
