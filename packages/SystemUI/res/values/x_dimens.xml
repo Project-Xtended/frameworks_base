@@ -26,10 +26,10 @@
     <dimen name="net_traffic_txt_img_padding">2dp</dimen>
 
     <!-- Height of the battery circle icon in the status bar. -->
-    <dimen name="status_bar_battery_circle_icon_height">20.5dp</dimen>
+    <dimen name="status_bar_battery_circle_icon_height">19.5dp</dimen>
 
     <!-- Width of the battery circle icon in the status bar. -->
-    <dimen name="status_bar_battery_circle_icon_width">20.5dp</dimen>
+    <dimen name="status_bar_battery_circle_icon_width">19.5dp</dimen>
 
     <!-- Height of the status bar header bar -->
     <dimen name="status_bar_header_height">130dp</dimen>
