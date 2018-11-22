@@ -130,8 +130,6 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
     protected NotificationListContainer mListContainer;
     private ExpandableNotificationRow.OnAppOpsClickListener mOnAppOpsClickListener;
 
-    private NotificationData.Entry mEntryToRefresh;
-
     private boolean mLessBoringHeadsUp;
 
     /**
@@ -482,17 +480,6 @@ public class NotificationEntryManager implements Dumpable, NotificationInflater.
             mPresenter.updateNotificationViews();
         }
         entry.row.setLowPriorityStateUpdated(false);
-
-        if (mEntryToRefresh == entry) {
-            final Notification n = entry.notification.getNotification();
-            final int[] colors = {n.backgroundColor, n.foregroundColor,
-                    n.primaryTextColor, n.secondaryTextColor};
-            mMediaManager.setPulseColors(n.isColorizedMedia(), colors);
-        }
-    }
-
-    public void setEntryToRefresh(NotificationData.Entry entry) {
-        mEntryToRefresh = entry;
     }
 
     @Override
