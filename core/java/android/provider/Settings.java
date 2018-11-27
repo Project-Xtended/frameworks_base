@@ -5852,6 +5852,18 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to show the kill app button in notification guts
+         *
+         * @hide
+         */
+        public static final String NOTIFICATION_GUTS_KILL_APP_BUTTON =
+                "notification_guts_kill_app_button";
+
+        /** @hide */
+        private static final Validator NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Whether the user has already accepted MediaProjection permission for the built-in screenrecorder
          * @hide
          */
@@ -5982,6 +5994,7 @@ public final class Settings {
             HEADS_UP_TIMEOUT,
             LESS_BORING_HEADS_UP,
             WIRELESS_CHARGING_ANIMATION,
+            NOTIFICATION_GUTS_KILL_APP_BUTTON,
         };
 
         /**
@@ -6176,6 +6189,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HEADS_UP_TIMEOUT);
             PRIVATE_SETTINGS.add(LESS_BORING_HEADS_UP);
             PRIVATE_SETTINGS.add(WIRELESS_CHARGING_ANIMATION);
+            PRIVATE_SETTINGS.add(NOTIFICATION_GUTS_KILL_APP_BUTTON);
         }
 
         /**
@@ -6338,6 +6352,7 @@ public final class Settings {
             VALIDATORS.put(HEADS_UP_TIMEOUT,HEADS_UP_TIMEOUT_VALIDATOR);
             VALIDATORS.put(LESS_BORING_HEADS_UP, LESS_BORING_HEADS_UP_VALIDATOR);
             VALIDATORS.put(WIRELESS_CHARGING_ANIMATION, WIRELESS_CHARGING_ANIMATION_VALIDATOR);
+            VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON, NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
         }
 
         /**
