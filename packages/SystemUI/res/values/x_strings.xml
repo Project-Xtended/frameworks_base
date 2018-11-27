@@ -235,4 +235,7 @@
 
     <string name="photos_not_allowed">You are trying to set QS Panel image with an incompatible app. Please use the stock or another gallery app</string>
 
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Force stop?</string>
+    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
 </resources>
