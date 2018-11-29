@@ -156,6 +156,7 @@ public class ActionHandler {
     static final Set<String> sDisabledActions = new HashSet<String>();
     static {
         sDisabledActions.add(SYSTEMUI_TASK_REGION_SCREENSHOT);
+	sDisabledActions.add(SYSTEMUI_TASK_ASSISTANT_SOUND_SEARCH);
     }
 
     static enum SystemAction {
