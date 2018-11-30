@@ -6061,6 +6061,16 @@ public final class Settings {
         public static final String GAMING_MODE_DYNAMIC_STATE = "gaming_mode_dynamic_state";
 
         /**
+         * Settings dashboard icon style
+         * @hide
+         */
+        public static final String THEMING_SETTINGS_DASHBOARD_ICONS =
+                "theming_settings_dashboard_icons";
+
+        /** @hide */
+        private static final Validator THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6189,6 +6199,7 @@ public final class Settings {
             NOTIFICATION_GUTS_KILL_APP_BUTTON,
             OMNI_ASPECT_RATIO_APPS_ENABLED,
             OMNI_ASPECT_RATIO_APPS_LIST,
+            THEMING_SETTINGS_DASHBOARD_ICONS,
         };
 
         /**
@@ -6389,6 +6400,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
             PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_ENABLED);
             PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
+            PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
         }
 
         /**
@@ -6555,6 +6567,7 @@ public final class Settings {
             VALIDATORS.put(NOTIFICATION_GUTS_KILL_APP_BUTTON, NOTIFICATION_GUTS_KILL_APP_BUTTON_VALIDATOR);
             VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_ENABLED, OMNI_ASPECT_RATIO_APPS_ENABLED_VALIDATOR);
             VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_LIST, OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
+            VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
         }
 
         /**
