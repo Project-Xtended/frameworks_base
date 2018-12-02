@@ -128,7 +128,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             >
-
                 <com.android.systemui.xtended.statusbarweather.StatusBarWeather
                     android:id="@+id/weather_temp"
                     android:layout_width="wrap_content"
