@@ -195,9 +195,6 @@
   <!-- Proximity check on screen on default -->
   <java-symbol type="bool" name="config_proximityCheckOnWakeEnabledByDefault" />
 
-  <java-symbol type="dimen" name="nav_gesture_swipe_min_length" />
-  <java-symbol type="dimen" name="nav_gesture_long_press_max_length" />
-
   <!-- Whether the device supports Smart Pixels -->
   <java-symbol type="bool" name="config_enableSmartPixels" />
 
@@ -308,5 +305,10 @@
 
   <java-symbol type="bool" name="config_FastChargingLedSupported" />
   <java-symbol type="integer" name="config_notificationsFastBatteryARGB" />
+
+  <!-- Bottom gestures -->
+  <java-symbol type="integer" name="nav_gesture_swipe_min_length" />
+  <java-symbol type="integer" name="nav_gesture_swipe_timout" />
+  <java-symbol type="integer" name="nav_gesture_move_threshold" />
 
 </resources>

@@ -6473,6 +6473,20 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String BOTTOM_GESTURE_TRIGGER_TIMEOUT = "bottom_gesture_navigation_trigger_timeout";
+
+        private static final Validator BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
+         */
+        public static final String BOTTOM_GESTURE_SWIPE_LIMIT = "bottom_gesture_navigation_swipe_limit";
+
+        private static final Validator BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6575,6 +6589,8 @@ public final class Settings {
             BATTERY_LIGHT_BLEND_FULL_COLOR,
             BATTERY_LIGHT_BLEND_EMPTY_COLOR,
             BATTERY_LIGHT_BLEND_REVERSE,
+            BOTTOM_GESTURE_TRIGGER_TIMEOUT,
+            BOTTOM_GESTURE_SWIPE_LIMIT,
         };
 
         /**
@@ -6721,8 +6737,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_DOZE_AUTO_BRIGHTNESS);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_STATE);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_TYPE);
-            PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);	   
-	    PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_HIDEARROW); 
+            PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD);
+	    PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_HIDEARROW);
             PRIVATE_SETTINGS.add(OMNI_USE_BOTTOM_GESTURE_NAVIGATION);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
             PRIVATE_SETTINGS.add(NOTIFICATION_SOUND_VIB_SCREEN_ON);
@@ -6731,7 +6747,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SMART_PIXELS_SHIFT_TIMEOUT);
             PRIVATE_SETTINGS.add(SMART_PIXELS_ON_POWER_SAVE);
             PRIVATE_SETTINGS.add(RECENTS_COMPONENT);
-            PRIVATE_SETTINGS.add(QS_TILE_STYLE);       
+            PRIVATE_SETTINGS.add(QS_TILE_STYLE);
             PRIVATE_SETTINGS.add(QS_ROWS_PORTRAIT);
             PRIVATE_SETTINGS.add(QS_ROWS_LANDSCAPE);
             PRIVATE_SETTINGS.add(QS_COLUMNS_PORTRAIT);
@@ -6761,6 +6777,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_BLEND_FULL_COLOR);
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_BLEND_EMPTY_COLOR);
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_BLEND_REVERSE);
+            PRIVATE_SETTINGS.add(BOTTOM_GESTURE_TRIGGER_TIMEOUT);
+            PRIVATE_SETTINGS.add(BOTTOM_GESTURE_SWIPE_LIMIT);
 	}
 
         /**
@@ -6909,6 +6927,8 @@ public final class Settings {
             VALIDATORS.put(BATTERY_LIGHT_BLEND_FULL_COLOR, BATTERY_LIGHT_BLEND_FULL_COLOR_VALIDATOR);
             VALIDATORS.put(BATTERY_LIGHT_BLEND_EMPTY_COLOR, BATTERY_LIGHT_BLEND_EMPTY_COLOR_VALIDATOR);
             VALIDATORS.put(BATTERY_LIGHT_BLEND_REVERSE, BATTERY_LIGHT_BLEND_REVERSE_VALIDATOR);
+            VALIDATORS.put(BOTTOM_GESTURE_TRIGGER_TIMEOUT, BOTTOM_GESTURE_TRIGGER_TIMEOUT_VALIDATOR);
+            VALIDATORS.put(BOTTOM_GESTURE_SWIPE_LIMIT, BOTTOM_GESTURE_SWIPE_LIMIT_VALIDATOR);
         }
 
         /**
