@@ -127,10 +127,10 @@ public class BurnInProtectionController {
 
         // As now we have DUI, so enable burn-in shit for StatusBar items only
         mPhoneStatusBarView.swiftStatusBarItems(mHorizontalShift, mVerticalShift);
-        /*NavigationBarView mNavigationBarView = mStatusBar.getNavigationBarView();
+        Navigator mNavigationBarView = mStatusBar.getNavigationBarView();
         if (mNavigationBarView != null) {
             mNavigationBarView.swiftNavigationBarItems(mHorizontalShift, mVerticalShift);
-        }*/
+        }
 
         if (DEBUG) Log.d(TAG, "Swifting items..");
     }
