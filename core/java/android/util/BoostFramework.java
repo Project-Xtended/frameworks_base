@@ -301,6 +301,7 @@ public class BoostFramework {
                 ret = (int)retVal;
             }
         } catch(Exception e) {
+           if (DEBUG) Log.e(TAG,"Exception " + e);
         }
         return ret;
     }
