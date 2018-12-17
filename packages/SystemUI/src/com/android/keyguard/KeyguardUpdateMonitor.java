@@ -835,6 +835,10 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 } else {
                     maxChargingMicroWatt = -1;
                 }
+                if (DEBUG) Log.d(TAG, "maxChargingMicroAmp = " + maxChargingMicroAmp +
+                        " maxChargingMicroVolt = " + maxChargingMicroVolt + " maxChargingMicroWatt = " +
+                        maxChargingMicroWatt);
+
                 final boolean dashChargeStatus = intent.getBooleanExtra(EXTRA_DASH_CHARGER, false);
 		final boolean turboPowerStatus = intent.getBooleanExtra(EXTRA_TURBO_POWER, false);
                 final Message msg = mHandler.obtainMessage(
