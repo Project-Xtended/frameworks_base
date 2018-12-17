@@ -5267,6 +5267,39 @@ public final class Settings {
         public static final String QS_SHOW_BRIGHTNESS_ICON = "qs_show_brightness_icon";
 
         /**
+         * Whether the battery light should only be enabled on fully charged battery.
+         * The value is boolean (1 or 0).
+         * @hide
+         */
+        public static final String OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED =
+                "battery_light_only_fully_charged";
+
+        /** @hide */
+        private static final Validator OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * What color to use for the battery LED while charging - low
+         * @hide
+         */
+        public static final String OMNI_FAST_BATTERY_LIGHT_COLOR = "fast_battery_light_color";
+
+        /** @hide */
+        private static final Validator OMNI_FAST_BATTERY_LIGHT_COLOR_VALIDATOR =
+                ANY_STRING_VALIDATOR;
+
+        /**
+         * Whether the fast charging battery light is enabled
+         * The value is boolean (1 or 0).
+         * @hide
+         */
+        public static final String OMNI_FAST_CHARGING_LED_ENABLED = "fast_charging_led_enabled";
+
+        /** @hide */
+        private static final Validator OMNI_FAST_CHARGING_LED_ENABLED_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5368,6 +5401,9 @@ public final class Settings {
 	    OMNI_DOZE_ON_CHARGE,
             HEADS_UP_STOPLIST_VALUES,
             HEADS_UP_BLACKLIST_VALUES,
+            OMNI_FAST_BATTERY_LIGHT_COLOR,
+            OMNI_FAST_CHARGING_LED_ENABLED,
+            OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED,
         };
 
         /**
@@ -5534,6 +5570,9 @@ public final class Settings {
 	    PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
             PRIVATE_SETTINGS.add(HEADS_UP_STOPLIST_VALUES);
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
+            PRIVATE_SETTINGS.add(OMNI_FAST_BATTERY_LIGHT_COLOR);
+            PRIVATE_SETTINGS.add(OMNI_FAST_CHARGING_LED_ENABLED);
+            PRIVATE_SETTINGS.add(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED);
         }
 
         /**
@@ -5667,6 +5706,9 @@ public final class Settings {
 	    VALIDATORS.put(OMNI_DOZE_ON_CHARGE, OMNI_DOZE_ON_CHARGE_VALIDATOR);
             VALIDATORS.put(HEADS_UP_STOPLIST_VALUES, HEADS_UP_STOPLIST_VALUES_VALIDATOR);
             VALIDATORS.put(HEADS_UP_BLACKLIST_VALUES, HEADS_UP_BLACKLIST_VALUES_VALIDATOR);
+            VALIDATORS.put(OMNI_FAST_BATTERY_LIGHT_COLOR, OMNI_FAST_BATTERY_LIGHT_COLOR_VALIDATOR);
+            VALIDATORS.put(OMNI_FAST_CHARGING_LED_ENABLED, OMNI_FAST_CHARGING_LED_ENABLED_VALIDATOR);
+            VALIDATORS.put(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED, OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED_VALIDATOR);
         }
 
         /**
