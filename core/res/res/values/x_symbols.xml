@@ -325,4 +325,7 @@
   <!-- Whether device ignores the RSSNR signal implementation -->
   <java-symbol type="bool" name="config_ignoreRssnrSignalLevel" />
 
+  <!-- Available icon mask paths for the adaptive icon shape setting -->
+  <java-symbol type="array" name="system_icon_masks" />
+
 </resources>
