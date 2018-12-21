@@ -122,5 +122,9 @@
     <dimen name="amb_txt_font_size_99">99dp</dimen>
     <dimen name="amb_txt_font_size_100">100dp</dimen>
 
+    <!-- Weather condition icon  -->
+    <dimen name="weather_icon_size">24dp</dimen>
+    <dimen name="date_owner_info_margin">4dp</dimen>
+
 </resources>
 
