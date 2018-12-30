@@ -248,6 +248,8 @@ public class KeyguardStatusView extends GridLayout implements
         mKeyguardSlice.setContentChangeListener(this::onSliceContentChanged);
         onSliceContentChanged();
 
+        updateSettings();
+
         boolean shouldMarquee = KeyguardUpdateMonitor.getInstance(mContext).isDeviceInteractive();
         setEnableMarquee(shouldMarquee);
         refreshFormat();
@@ -1245,6 +1247,11 @@ public class KeyguardStatusView extends GridLayout implements
         if (ownerinfoFont == 31) {
             mOwnerInfo.setTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
         }
+    }
+
+    public void updateAll() {
+        updateSettings();
+        mKeyguardSlice.refresh();
     }
 
     // DateFormat.getBestDateTimePattern is extremely expensive, and refresh is called often.
