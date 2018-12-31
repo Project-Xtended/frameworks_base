@@ -40,6 +40,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Slog;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CustomAnalogClock;
 import android.widget.GridLayout;
@@ -1363,23 +1364,27 @@ public class KeyguardStatusView extends GridLayout implements
             default:
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(true);
-                break;
+                mClockView.setGravity(Gravity.CENTER);
+		break;
             case 1: // digital (bold)
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(true);
-                break;
+                mClockView.setGravity(Gravity.CENTER);
+		break;
             case 2: // analog
                 mClockView.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.analog_clock_view);
-                break;
+		break;
             case 3: // sammy
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(false);
-                break;
+                mClockView.setGravity(Gravity.CENTER);
+		break;
             case 4: // sammy (bold)
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(false);
-                break;
+                mClockView.setGravity(Gravity.CENTER);
+		break;
         }
 
         updateVisibilities();
