@@ -210,9 +210,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         mClockView = findViewById(R.id.clock_view);
         mClockView.setShowCurrentUserTime(true);
-        if (KeyguardClockAccessibilityDelegate.isNeeded(mContext)) {
-            mClockView.setAccessibilityDelegate(new KeyguardClockAccessibilityDelegate(mContext));
-        }
         mCustomClockView = findViewById(R.id.custom_clock_view);
         mDuClockView = findViewById(R.id.du_clock_view);
         mOwnerInfo = findViewById(R.id.owner_info);
@@ -1251,6 +1248,7 @@ public class KeyguardStatusView extends GridLayout implements
 
     public void updateAll() {
         updateSettings();
+        mKeyguardSlice.updateSettings();
         mKeyguardSlice.refresh();
     }
 
