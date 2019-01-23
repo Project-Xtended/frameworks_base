@@ -44,6 +44,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/google/notifications/Twinkle.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/notifications/Twinkle.ogg \
     $(LOCAL_PATH)/google/ringtones/Copycat.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Copycat.ogg \
     $(LOCAL_PATH)/google/ringtones/Crackle.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Crackle.ogg \
+    $(LOCAL_PATH)/ringtones/ogg/Despacito.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Despacito.ogg \
     $(LOCAL_PATH)/google/ringtones/Flutterby.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Flutterby.ogg \
     $(LOCAL_PATH)/google/ringtones/Hotline.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Hotline.ogg \
     $(LOCAL_PATH)/google/ringtones/Leaps_and_bounds.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Leaps_and_bounds.ogg \
@@ -51,6 +52,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/google/ringtones/Lost_and_found.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Lost_and_found.ogg \
     $(LOCAL_PATH)/google/ringtones/Mash_up.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Mash_up.ogg \
     $(LOCAL_PATH)/google/ringtones/Monkey_around.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Monkey_around.ogg \
+    $(LOCAL_PATH)/ringtones/ogg/PerfectStrangers.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/PerfectStrangers.ogg \
     $(LOCAL_PATH)/google/ringtones/Schools_out.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Schools_out.ogg \
     $(LOCAL_PATH)/google/ringtones/The_big_adventure.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/The_big_adventure.ogg \
     $(LOCAL_PATH)/google/ringtones/Zen_too.ogg:$(TARGET_COPY_OUT_PRODUCT)/media/audio/ringtones/Zen_too.ogg \
