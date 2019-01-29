@@ -331,7 +331,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         int statusBarBottomMargin = resources.getDimensionPixelSize(
                 R.dimen.qs_header_image_bottom_margin);
 
-	mSystemIconsView.getLayoutParams().height = topMargin;
+        mSystemIconsView.getLayoutParams().height = topMargin;
         mSystemIconsView.setLayoutParams(mSystemIconsView.getLayoutParams());
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) getLayoutParams();
