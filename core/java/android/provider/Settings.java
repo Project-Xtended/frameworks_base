@@ -6633,6 +6633,7 @@ public final class Settings {
             OMNI_DEVICE_PROXI_CHECK_ENABLED,
             OMNI_DEVICE_FEATURE_SETTINGS,
             PROXIMITY_ON_WAKE,
+	    NOTIFICATION_LIGHT_PULSE,
 	};
 
         /**
@@ -11419,6 +11420,8 @@ public final class Settings {
             VALIDATORS.put(WIFI_DISCONNECT_DELAY_DURATION, WIFI_DISCONNECT_DELAY_DURATION_VALIDATOR);
             VALIDATORS.put(FP_SWIPE_TO_DISMISS_NOTIFICATIONS, FP_SWIPE_TO_DISMISS_NOTIFICATIONS_VALIDATOR);
             VALIDATORS.put(VOLUME_LINK_NOTIFICATION, VOLUME_LINK_NOTIFICATION_VALIDATOR);
+            VALIDATORS.put(LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS, BOOLEAN_VALIDATOR);
+            VALIDATORS.put(LOCK_SCREEN_SHOW_NOTIFICATIONS, BOOLEAN_VALIDATOR);
         }
 
         /**
@@ -16090,6 +16093,7 @@ public final class Settings {
          * Supported keys:
          * compatibility_wal_supported      (boolean)
          * wal_syncmode       (String)
+         * truncate_size      (int)
          *
          * @hide
          */

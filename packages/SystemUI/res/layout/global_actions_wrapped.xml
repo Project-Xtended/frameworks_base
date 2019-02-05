@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="top|right"
+    android:orientation="vertical"
     android:layout_marginBottom="@dimen/global_actions_top_padding"
     android:paddingTop="@dimen/global_actions_top_padding"
     android:clipToPadding="false"
@@ -26,5 +28,16 @@
             android:translationZ="9dp" />
 
     </ScrollView>
+
+    <!-- For separated button-->
+    <FrameLayout
+        android:id="@+id/separated_button"
+        android:layout_width="@dimen/global_actions_panel_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:translationZ="9dp" />
 
 </com.android.systemui.HardwareUiLayout>
