@@ -27,7 +27,6 @@ import com.android.systemui.ambientmusic.AmbientIndicationInflateListener;
 
 public class AmbientIndicationContainer extends AutoReinflateContainer {
     private View mAmbientIndication;
-    private boolean mDozing;
     private LottieAnimationView mIcon;
     private CharSequence mIndication;
     private StatusBar mStatusBar;
