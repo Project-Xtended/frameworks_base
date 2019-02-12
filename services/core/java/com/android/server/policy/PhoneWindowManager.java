@@ -1289,6 +1289,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Secure.NAVIGATION_BAR_VISIBLE), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BOTTOM_GESTURE_FEEDBACK_DURATION), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.TORCH_LONG_PRESS_POWER_GESTURE), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
