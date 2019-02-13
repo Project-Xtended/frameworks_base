@@ -56,10 +56,12 @@ import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.settingslib.Utils;
 import com.android.settingslib.fuelgauge.BatteryStatus;
+import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.dock.DockManager;
+import com.android.systemui.omni.BatteryBarView;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.plugins.statusbar.StatusBarStateController.StateListener;
 import com.android.systemui.statusbar.phone.KeyguardIndicationTextView;
@@ -68,6 +70,7 @@ import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.util.wakelock.SettableWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
+import com.android.systemui.tuner.TunerService;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -147,6 +150,12 @@ public class KeyguardIndicationController implements StateListener,
                 }
             };
 
+    // omni additions
+    private static final String KEYGUARD_SHOW_BATTERY_BAR = "sysui_keyguard_show_battery_bar";
+    private static final String KEYGUARD_SHOW_BATTERY_BAR_ALWAYS = "sysui_keyguard_show_battery_bar_always";
+
+    private BatteryBarView mBatteryBar;
+
     /**
      * Creates a new KeyguardIndicationController and registers callbacks.
      */
@@ -188,6 +197,9 @@ public class KeyguardIndicationController implements StateListener,
                 mTextView.getTextColors() : ColorStateList.valueOf(Color.WHITE);
         mChargingIndicationView = (LottieAnimationView) indicationArea.findViewById(
                 R.id.charging_indication);
+
+        mBatteryBar = indicationArea.findViewById(R.id.battery_bar_view);
+
         mDisclosure = indicationArea.findViewById(R.id.keyguard_indication_enterprise_disclosure);
         mDisclosureMaxAlpha = mDisclosure.getAlpha();
         updateIndication(false /* animate */);
@@ -406,8 +418,14 @@ public class KeyguardIndicationController implements StateListener,
         }
 
         if (mVisible) {
+            final boolean showBatteryBar = Dependency.get(TunerService.class)
+                    .getValue(KEYGUARD_SHOW_BATTERY_BAR, 1) == 1;
+            final boolean showBatteryBarAlways = Dependency.get(TunerService.class)
+                    .getValue(KEYGUARD_SHOW_BATTERY_BAR_ALWAYS, 0) == 1;
+
             // Walk down a precedence-ordered list of what indication
             // should be shown based on user or device state
+            mBatteryBar.setVisibility(View.GONE);
             if (mDozing) {
                 // When dozing we ignore any text color and use white instead, because
                 // colors can be hard to read in low brightness.
@@ -423,6 +441,11 @@ public class KeyguardIndicationController implements StateListener,
                         animateText(mTextView, indication);
                     } else {
                         mTextView.switchIndication(indication);
+                    }
+                    if (showBatteryBar) {
+                        mBatteryBar.setVisibility(View.VISIBLE);
+                        mBatteryBar.setBatteryPercent(mBatteryLevel);
+                        mBatteryBar.setBarColor(Color.WHITE);
                     }
                 } else {
                     String percentage = NumberFormat.getPercentInstance()
@@ -469,6 +492,11 @@ public class KeyguardIndicationController implements StateListener,
                     animateText(mTextView, powerIndication);
                 } else {
                     mTextView.switchIndication(powerIndication);
+                }
+                if (showBatteryBar && showBatteryBarAlways) {
+                    mBatteryBar.setVisibility(View.VISIBLE);
+                    mBatteryBar.setBatteryPercent(mBatteryLevel);
+                    mBatteryBar.setBarColor(mTextView.getCurrentTextColor());
                 }
             } else if (!TextUtils.isEmpty(trustManagedIndication)
                     && mKeyguardUpdateMonitor.getUserTrustIsManaged(userId)
