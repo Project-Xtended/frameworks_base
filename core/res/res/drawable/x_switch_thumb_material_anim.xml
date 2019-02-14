@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
-
+<!-- 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -15,11 +14,9 @@
 -->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="rectangle">
-
-    <corners
-            android:radius="?attr/dialogCornerRadius" />
-    <solid
-            android:color="?attr/colorPopupBackground" />
-
+    android:visible="true" android:shape="rectangle" android:useLevel="false">
+    <solid android:color="@color/white" />
+    <corners android:radius="25dp" />
+    <size android:height="21dp" android:width="21dp" />
+    <stroke android:width="7dp" android:color="@color/transparent" />
 </shape>
