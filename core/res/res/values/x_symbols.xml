@@ -316,4 +316,7 @@
   <java-symbol type="integer" name="nav_gesture_swipe_timout" />
   <java-symbol type="integer" name="nav_gesture_move_threshold" />
 
+  <!-- Whether to enable oneplus cam hack -->
+  <java-symbol type="bool" name="config_enableOPcamhack" />
+
 </resources>
