@@ -55,5 +55,8 @@
 
     <!-- Color of the FOD view -->
     <color name="config_fodColor">#00ff00</color>
+
+    <!-- Device accent -->
+    <color name="accent_device_default_light">@*android:color/accent_device_default_light</color>
  
 </resources>
