@@ -138,7 +138,6 @@ public final class PowerManagerService extends SystemService
     private static final int MSG_SCREEN_BRIGHTNESS_BOOST_TIMEOUT = 3;
     // Message: Polling to look for long held wake locks.
     private static final int MSG_CHECK_FOR_LONG_WAKELOCKS = 4;
-
     private static final int MSG_WAKE_UP = 5;
 
     // Dirty bit: mWakeLocks changed
@@ -846,7 +845,7 @@ public final class PowerManagerService extends SystemService
             }
 
             // Initialize proximity sensor
-            mSensorManager = mContext.getSystemService(SensorManager.class);
+            mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
             mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 
             // Go.
@@ -997,14 +996,14 @@ public final class PowerManagerService extends SystemService
                 com.android.internal.R.fraction.config_maximumScreenDimRatio, 1, 1);
         mSupportsDoubleTapWakeConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_supportDoubleTapWake);
+        mProximityTimeOut = resources.getInteger(
+                com.android.internal.R.integer.config_proximityCheckTimeout);
         mProximityWakeSupported = resources.getBoolean(
                 com.android.internal.R.bool.config_proximityCheckOnWake);
         mProximityWakeEnabledByDefaultConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_proximityCheckOnWakeEnabledByDefault);
-        mProximityTimeOut = resources.getInteger(
-                com.android.internal.R.integer.config_proximityCheckTimeout);
         if (mProximityWakeSupported) {
-            mProximityWakeLock = mContext.getSystemService(PowerManager.class)
+            mProximityWakeLock = ((PowerManager) mContext.getSystemService(Context.POWER_SERVICE))
                     .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ProximityWakeLock");
         }
     }
@@ -1038,10 +1037,6 @@ public final class PowerManagerService extends SystemService
                 Settings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
                 (mWakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0)) == 1;
         mAlwaysOnEnabled = mAmbientDisplayConfiguration.alwaysOnEnabled(UserHandle.USER_CURRENT);
-        mProximityWakeEnabled = (Settings.System.getIntForUser(resolver,
-                Settings.System.PROXIMITY_ON_WAKE,
-                mProximityWakeEnabledByDefaultConfig ? 1 : 0,
-                UserHandle.USER_CURRENT) != 0);
 
         mWakeLockBlockingEnabled = Settings.System.getIntForUser(resolver,
                 Settings.System.WAKELOCK_BLOCKING_ENABLED, 0, UserHandle.USER_CURRENT);
@@ -5082,7 +5077,7 @@ public final class PowerManagerService extends SystemService
 
     private void runWithProximityCheck(final Runnable r) {
         if (mHandler.hasMessages(MSG_WAKE_UP)) {
-            // A message is already queued
+            // There is already a message queued;
             return;
         }
 

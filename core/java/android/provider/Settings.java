@@ -4069,9 +4069,6 @@ public final class Settings {
          */
         public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
 
-        /** @hide */
-        public static final Validator PROXIMITY_ON_WAKE_VALIDATOR = BOOLEAN_VALIDATOR;
-
         /**
          * Whether to play sounds when the keyguard is shown and dismissed.
          * @hide
@@ -6632,7 +6629,6 @@ public final class Settings {
             OMNI_BUTTON_EXTRA_KEY_MAPPING,
             OMNI_DEVICE_PROXI_CHECK_ENABLED,
             OMNI_DEVICE_FEATURE_SETTINGS,
-            PROXIMITY_ON_WAKE,
 	    NOTIFICATION_LIGHT_PULSE,
 	};
 
@@ -6825,7 +6821,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_BUTTON_EXTRA_KEY_MAPPING);
             PRIVATE_SETTINGS.add(OMNI_DEVICE_PROXI_CHECK_ENABLED);
             PRIVATE_SETTINGS.add(OMNI_DEVICE_FEATURE_SETTINGS);
-            PRIVATE_SETTINGS.add(PROXIMITY_ON_WAKE);
 	}
 
         /**
@@ -6979,8 +6974,7 @@ public final class Settings {
             VALIDATORS.put(OMNI_BUTTON_EXTRA_KEY_MAPPING, OMNI_BUTTON_EXTRA_KEY_MAPPING_VALIDATOR);
             VALIDATORS.put(OMNI_DEVICE_PROXI_CHECK_ENABLED, OMNI_DEVICE_PROXI_CHECK_ENABLED_VALIDATOR);
             VALIDATORS.put(OMNI_DEVICE_FEATURE_SETTINGS, OMNI_DEVICE_FEATURE_SETTINGS_VALIDATOR);
-            VALIDATORS.put(PROXIMITY_ON_WAKE, PROXIMITY_ON_WAKE_VALIDATOR);
-	}
+        }
 
         /**
          * These entries are considered common between the personal and the managed profile,
