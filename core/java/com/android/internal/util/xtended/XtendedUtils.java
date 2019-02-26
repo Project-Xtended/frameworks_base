@@ -16,6 +16,9 @@
 
 package com.android.internal.util.xtended;
 
+import android.app.ActivityManager;
+import android.app.AlertDialog; 
+import android.app.IActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,6 +35,9 @@ import android.view.WindowManagerGlobal;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+
+import java.util.List;
+import java.util.Locale;
 
 import com.android.internal.statusbar.IStatusBarService;
 
@@ -129,6 +135,23 @@ public class XtendedUtils {
         context.sendBroadcastAsUser(keyguardIntent, user);
     }
 
+    // Check if a service is running
+    public static boolean isServiceRunning(Context context, String serviceName) {
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> services = activityManager
+                .getRunningServices(Integer.MAX_VALUE);
+
+        if (services != null) {
+            for (ActivityManager.RunningServiceInfo info : services) {
+                if (info.service != null) {
+                    if (info.service.getClassName() != null && info.service.getClassName()
+                            .equalsIgnoreCase(serviceName)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
-
-
