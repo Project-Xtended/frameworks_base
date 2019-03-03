@@ -416,8 +416,8 @@ public class KeyguardStatusView extends GridLayout implements
             mClockView.setFormat12Hour(Patterns.clockView12);
             mClockView.setFormat24Hour(Patterns.clockView24);
         } else if (mClockSelection == 1) {
-            mClockView.setFormat12Hour(Html.fromHtml("<strong>h</strong>mm"));
-            mClockView.setFormat24Hour(Html.fromHtml("<strong>kk</strong>mm"));
+            mClockView.setFormat12Hour(Html.fromHtml("<strong>h</strong>:mm"));
+            mClockView.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:mm"));
         } else if (mClockSelection == 5) {
             mClockView.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br>mm"));
             mClockView.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br>mm"));
@@ -428,14 +428,14 @@ public class KeyguardStatusView extends GridLayout implements
             mClockView.setFormat12Hour(Html.fromHtml("<font color='#454545'>hh</font><br><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">mm</font>"));
             mClockView.setFormat24Hour(Html.fromHtml("<font color='#454545'>kk</font><br><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">mm</font>"));
         } else if (mClockSelection == 9) {
-            mClockView.setFormat12Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>h</strong>mm</font>"));
-            mClockView.setFormat24Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>kk</strong>m</font>"));
+            mClockView.setFormat12Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>h</strong>:mm</font>"));
+            mClockView.setFormat24Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>kk</strong>:mm</font>"));
         } else if (mClockSelection == 10) {
-            mClockView.setFormat12Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>h</strong></font>mm"));
-            mClockView.setFormat24Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>kk</strong></font>mm"));
+            mClockView.setFormat12Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>h</strong></font>:mm"));
+            mClockView.setFormat24Hour(Html.fromHtml("<font color=" + getResources().getColor(R.color.sammy_minutes_accent) + "><strong>kk</strong></font>:mm"));
         } else if (mClockSelection == 11) {
-            mClockView.setFormat12Hour(Html.fromHtml("<strong>h</strong><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">mm</font>"));
-            mClockView.setFormat24Hour(Html.fromHtml("<strong>kk</strong><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">mm</font>"));
+            mClockView.setFormat12Hour(Html.fromHtml("<strong>h</strong><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">:mm</font>"));
+            mClockView.setFormat24Hour(Html.fromHtml("<strong>kk</strong><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">:mm</font>"));
         } else {
             mClockView.setFormat12Hour("hh\nmm");
             mClockView.setFormat24Hour("kk\nmm");
