@@ -16,12 +16,9 @@
 
 package android.telephony;
 
-import android.content.ContentResolver;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.UserHandle;
-import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -587,8 +584,8 @@ public class SignalStrength implements Parcelable {
      *     0 represents very poor signal strength
      *     while 4 represents a very strong signal strength.
      */
-    public int getLevel(boolean ignoreRSSNR) {
-        int level = mIsGsm ? getGsmRelatedSignalStrength(ignoreRSSNR) : getCdmaRelatedSignalStrength();
+    public int getLevel() {
+        int level = mIsGsm ? getGsmRelatedSignalStrength() : getCdmaRelatedSignalStrength();
         if (DBG) log("getLevel=" + level);
         return level;
     }
@@ -857,17 +854,7 @@ public class SignalStrength implements Parcelable {
      *
      * @hide
      */
-
-    public int getLteLevel(){
-        return getLteLevel(false);
-    }
-
-    /**
-     * Get LTE as level 0..4
-     *
-     * @hide
-     */
-    public int getLteLevel(boolean ignoreRSSNR) {
+    public int getLteLevel() {
         /*
          * TS 36.214 Physical Layer Section 5.1.3
          * TS 36.331 RRC
@@ -922,11 +909,6 @@ public class SignalStrength implements Parcelable {
             if (DBG) log("getLTELevel - rsrp:" + mLteRsrp + " snr:" + mLteRssnr + " rsrpIconLevel:"
                     + rsrpIconLevel + " snrIconLevel:" + snrIconLevel
                     + " lteRsrpBoost:" + mLteRsrpBoost);
-
-            //boolean ignoreRSSNR = Settings.System.getIntForUser(getContentResolver(), Settings.System.IGNORE_RSSNR, 0, UserHandle.USER_CURRENT) == 1;
-
-            /* Ignore RSSNR for now */
-            if(ignoreRSSNR && rsrpIconLevel != -1) return rsrpIconLevel;
 
             /* Choose a measurement type to use for notification */
             if (snrIconLevel != -1 && rsrpIconLevel != -1) {
@@ -1274,8 +1256,8 @@ public class SignalStrength implements Parcelable {
     }
 
     /** Returns the signal strength related to GSM. */
-    private int getGsmRelatedSignalStrength(boolean ignoreRSSNR) {
-        int level = getLteLevel(ignoreRSSNR);
+    private int getGsmRelatedSignalStrength() {
+        int level = getLteLevel();
         if (level == SIGNAL_STRENGTH_NONE_OR_UNKNOWN) {
             level = getTdScdmaLevel();
             if (level == SIGNAL_STRENGTH_NONE_OR_UNKNOWN) {

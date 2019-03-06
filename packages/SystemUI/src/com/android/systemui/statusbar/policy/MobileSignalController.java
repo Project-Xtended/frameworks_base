@@ -88,7 +88,6 @@ public class MobileSignalController extends SignalController<
     private Config mConfig;
 
     private boolean mShow4gForLte;
-    private boolean ignoreRSSNR = false;
     private boolean mVoLTEicon;
     private boolean mRoamingIconAllowed;
 
@@ -246,27 +245,13 @@ public class MobileSignalController extends SignalController<
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
                 Global.MOBILE_DATA + mSubscriptionInfo.getSubscriptionId()),
                 true, mObserver);
-       try {
-           mImsManager.addRegistrationCallback(mImsRegistrationCallback);
-       }catch(ImsException e){
-           Log.d(mTag, "exception:" + e);
-       }
-       mContext.registerReceiver(mVolteSwitchObserver,
-           new IntentFilter("org.codeaurora.intent.action.ACTION_ENHANCE_4G_SWITCH"));
-
-        mContext.getContentResolver().registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.IGNORE_RSSNR),
-                    false /* notifyForDescendants */, 
-                    new ContentObserver(new Handler()) {
-                        @Override
-                        public void onChange(boolean selfChange) {
-                            boolean i = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.IGNORE_RSSNR, 0, UserHandle.USER_CURRENT) == 1;
-                            if(i!=ignoreRSSNR){
-                                ignoreRSSNR = i;
-                                updateTelephony();
-                            }                            
-                        }
-                    });
+        try {
+            mImsManager.addRegistrationCallback(mImsRegistrationCallback);
+        }catch(ImsException e){
+            Log.d(mTag, "exception:" + e);
+        }
+        mContext.registerReceiver(mVolteSwitchObserver,
+                new IntentFilter("org.codeaurora.intent.action.ACTION_ENHANCE_4G_SWITCH"));
     }
 
     /**
@@ -599,7 +584,7 @@ public class MobileSignalController extends SignalController<
             if (!mSignalStrength.isGsm() && mConfig.alwaysShowCdmaRssi) {
                 mCurrentState.level = mSignalStrength.getCdmaLevel();
             } else {
-                mCurrentState.level = mSignalStrength.getLevel(ignoreRSSNR);
+                mCurrentState.level = mSignalStrength.getLevel();
             }
         }
         if (mNetworkToIconLookup.indexOfKey(mDataNetType) >= 0) {
@@ -662,7 +647,7 @@ public class MobileSignalController extends SignalController<
         public void onSignalStrengthsChanged(SignalStrength signalStrength) {
             if (DEBUG) {
                 Log.d(mTag, "onSignalStrengthsChanged signalStrength=" + signalStrength +
-                        ((signalStrength == null) ? "" : (" level=" + signalStrength.getLevel(ignoreRSSNR))));
+                        ((signalStrength == null) ? "" : (" level=" + signalStrength.getLevel())));
             }
             mSignalStrength = signalStrength;
             updateTelephony();
