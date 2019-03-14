@@ -282,7 +282,6 @@ public class KeyguardStatusView extends GridLayout implements
     private void onSliceContentChanged() {
         boolean smallClock = mKeyguardSlice.hasHeader() || mPulsing;
         float clockScale = smallClock ? mSmallClockScale : 1;
-		Typeface tf = Typeface.create(FONT_FAMILY, Typeface.NORMAL);
         RelativeLayout.LayoutParams layoutParams =
                 (RelativeLayout.LayoutParams) mClockView.getLayoutParams();
         int height = mClockView.getHeight();
