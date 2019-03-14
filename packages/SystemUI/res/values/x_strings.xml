@@ -245,8 +245,6 @@
     <string name="lte_on">LTE ON</string>
     <string name="lte_off">LTE OFF</string>
 
-    <string name="quick_settings_ambient_play">Now playing</string>
-
     <!-- App Picker Tile -->
     <string name="quick_settings_apppicker">App Picker</string>
 
