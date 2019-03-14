@@ -5825,7 +5825,13 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_TYPE = "network_traffic_type";
 
         /**
-         * Color temperature of the display at night
+         * Whether to disable showing arrows in statusbar network traffic indicators
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_ARROW = "network_traffic_arrow";
+
+        /**
+          * Color temperature of the display at night
          * @hide
          */
         public static final String DISPLAY_TEMPERATURE_NIGHT = "display_temperature_night";
