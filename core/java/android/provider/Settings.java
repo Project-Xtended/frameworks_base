@@ -6343,14 +6343,6 @@ public final class Settings {
         public static final String LOCKSCREEN_SHORTCUTS_LONGPRESS =
                 "lockscreen_shortcuts_longpress";
 
-        /**
-         * @hide
-         */
-        public static final String STATUSBAR_HIDE_NOTCH = "statusbar_hide_notch";
-
-        /** @hide */
-        private static final Validator STATUSBAR_HIDE_NOTCH_VALIDATOR = BOOLEAN_VALIDATOR;
-
          /**
           * Volume dialog timeout
           * @hide
@@ -6706,7 +6698,6 @@ public final class Settings {
             OMNI_ASPECT_RATIO_APPS_ENABLED,
             OMNI_ASPECT_RATIO_APPS_LIST,
             USE_OLD_MOBILETYPE,
-            STATUSBAR_HIDE_NOTCH,
             VOLUME_DIALOG_TIMEOUT,
             VOLUME_KEYS_CONTROL_RING_TONE,
             QS_SHOW_BRIGHTNESS_BUTTONS,
@@ -6903,7 +6894,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_ASPECT_RATIO_APPS_LIST);
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
-            PRIVATE_SETTINGS.add(STATUSBAR_HIDE_NOTCH);
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
             PRIVATE_SETTINGS.add(VOLUME_KEYS_CONTROL_RING_TONE);
 	    PRIVATE_SETTINGS.add(HEADSET_CONNECT_PLAYER);
@@ -7062,7 +7052,6 @@ public final class Settings {
             VALIDATORS.put(OMNI_ASPECT_RATIO_APPS_LIST,
                     OMNI_ASPECT_RATIO_APPS_LIST_VALIDATOR);
             VALIDATORS.put(USE_OLD_MOBILETYPE, USE_OLD_MOBILETYPE_VALIDATOR);
-            VALIDATORS.put(STATUSBAR_HIDE_NOTCH, STATUSBAR_HIDE_NOTCH_VALIDATOR);
             VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
             VALIDATORS.put(VOLUME_KEYS_CONTROL_RING_TONE,VOLUME_KEYS_CONTROL_RING_TONE_VALIDATOR);
             VALIDATORS.put(QS_SHOW_BRIGHTNESS_BUTTONS, QS_SHOW_BRIGHTNESS_BUTTONS_VALIDATOR);
