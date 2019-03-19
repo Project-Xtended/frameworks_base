@@ -4006,6 +4006,9 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ALBUMART_FILTER),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4029,8 +4032,8 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
             } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.PULSE_ON_NEW_TRACKS))) {
                 setPulseOnNewTracks();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_MEDIA_BLUR))) {
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_MEDIA_BLUR)) ||
+                uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_ALBUMART_FILTER))) {
                 setLockScreenMediaBlurLevel();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN))) {
@@ -4115,6 +4118,7 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
     private void setLockScreenMediaBlurLevel() {
         if (mMediaManager != null) {
             mMediaManager.setLockScreenMediaBlurLevel();
+            mMediaManager.setLockScreenMediaArtStyle();
         }
     }
 
