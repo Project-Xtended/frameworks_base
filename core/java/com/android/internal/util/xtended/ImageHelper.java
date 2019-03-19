@@ -2,7 +2,7 @@
 * Copyright (C) 2013 SlimRoms Project
 * Copyright (C) 2015 TeamEos Project
 * Copyright (C) 2015-2016 The DirtyUnicorns Project
-* Copyright (C) 2019-2020 crDroid Android Project
+* Copyright (C) 2019-2021 crDroid Android Project
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -146,16 +146,21 @@ public class ImageHelper {
         return bmpGrayscale;
     }
 
-/*    public static Drawable resize(Context context, Drawable image, int size) {
+    public static int dpToPx(Context context, int dp) {
+        return (int) ((dp * context.getResources().getDisplayMetrics().density) + 0.5);
+    }
+
+    public static Drawable resize(Context context, Drawable image, int size) {
         if (image == null || context == null) {
             return null;
         }
         if (image instanceof VectorDrawable) {
             return image;
         } else {
-            int newSize = ActionUtils.dpToPx(context, size);
+            int newSize = dpToPx(context, size);
             Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
             Bitmap scaledBitmap = Bitmap.createBitmap(newSize, newSize, Config.ARGB_8888);
+
             float ratioX = newSize / (float) bitmap.getWidth();
             float ratioY = newSize / (float) bitmap.getHeight();
             float middleX = newSize / 2.0f;
@@ -164,13 +169,14 @@ public class ImageHelper {
             paint.setAntiAlias(true);
             Matrix scaleMatrix = new Matrix();
             scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
             Canvas canvas = new Canvas(scaledBitmap);
             canvas.setMatrix(scaleMatrix);
             canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2,
                     middleY - bitmap.getHeight() / 2, paint);
             return new BitmapDrawable(context.getResources(), scaledBitmap);
         }
-    }*/
+    }
 
     public static Bitmap resizeMaxDeviceSize(Context context, Drawable image) {
         Bitmap i2b = ((BitmapDrawable) image).getBitmap();
