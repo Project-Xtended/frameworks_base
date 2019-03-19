@@ -6339,6 +6339,12 @@ public final class Settings {
         public static final String CUSTOM_SB_LOGO_IMAGE = "custom_sb_logo_image";
 
         /**
+         * Switch between filters for lockscreen album art
+         * @hide
+         */
+        public static final String LOCKSCREEN_ALBUMART_FILTER = "lockscreen_albumart_filter";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *

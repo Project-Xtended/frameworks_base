@@ -4876,6 +4876,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SYSUI_ROUNDED_FWVALS),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_ALBUMART_FILTER),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4896,8 +4899,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MEDIA_BLUR))) {
                 setLockScreenMediaBlurLevel();
-            }  else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.SHOW_LOCKSCREEN_MEDIA_ART))) {
+            }  else if (uri.equals(Settings.System.getUriFor(Settings.System.SHOW_LOCKSCREEN_MEDIA_ART)) ||
+                uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_ALBUMART_FILTER))) {
                 setLockScreenMediaArt();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.BURN_IN_PROTECTION)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.BURN_IN_PROTECTION_INTERVAL))) {
@@ -4965,6 +4968,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setLockScreenMediaArt() {
         if (mMediaManager != null) {
             mMediaManager.setLockScreenMediaArt();
+            mMediaManager.setLockScreenMediaArtStyle();
         }
     }
 

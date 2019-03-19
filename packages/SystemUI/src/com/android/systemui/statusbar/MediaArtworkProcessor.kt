@@ -18,7 +18,6 @@ package com.android.systemui.statusbar
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.graphics.Point
 import android.graphics.Rect
 import android.renderscript.Allocation
@@ -70,24 +69,19 @@ class MediaArtworkProcessor @Inject constructor() {
                 inBitmap = oldIn.copy(Bitmap.Config.ARGB_8888, false /* isMutable */)
                 oldIn.recycle()
             }
-            val outBitmap = Bitmap.createBitmap(inBitmap.width, inBitmap.height,
-                    Bitmap.Config.ARGB_8888)
-
-            input = android.renderscript.Allocation.createFromBitmap(renderScript, inBitmap,
-                    android.renderscript.Allocation.MipmapControl.MIPMAP_NONE,
-                    android.renderscript.Allocation.USAGE_GRAPHICS_TEXTURE)
-            output = android.renderscript.Allocation.createFromBitmap(renderScript, outBitmap)
-
-            blur.setRadius(radius)
-            blur.setInput(input)
-            blur.forEach(output)
-            output.copyTo(outBitmap)
-
-            if (withSwatchOverlay) {
-                val swatch = MediaNotificationProcessor.findBackgroundSwatch(artwork)
-
-                val canvas = Canvas(outBitmap)
-                canvas.drawColor(ColorUtils.setAlphaComponent(swatch.rgb, COLOR_ALPHA))
+            var outBitmap: Bitmap?
+            if (radius >= 1f) {
+                outBitmap = Bitmap.createBitmap(inBitmap.width, inBitmap.height,
+                        Bitmap.Config.ARGB_8888)
+                input = Allocation.createFromBitmap(renderScript, inBitmap,
+                        Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_GRAPHICS_TEXTURE)
+                output = Allocation.createFromBitmap(renderScript, outBitmap)
+                    blur.setRadius(radius)
+                    blur.setInput(input)
+                    blur.forEach(output)
+                output.copyTo(outBitmap)
+            } else {
+                outBitmap = inBitmap.copy(Bitmap.Config.ARGB_8888, true/*mutable*/)
             }
             return outBitmap
         } catch (ex: IllegalArgumentException) {
@@ -110,8 +104,8 @@ class MediaArtworkProcessor @Inject constructor() {
 
     companion object {
         private const val TAG = "MediaArtworkProcessor"
-        private const val COLOR_ALPHA = 178 // 255 * 0.6
-        private const val BLUR_RADIUS = 20f
+        private const val COLOR_ALPHA = 178 // 255 * 0.7
+        private const val BLUR_RADIUS = 25f
         private const val DOWNSAMPLE = 5
     }
 }
