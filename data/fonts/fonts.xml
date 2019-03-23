@@ -121,6 +121,18 @@
     <family name="samsung-sys">
 	<font weight="300" style="normal">Shamshung.ttf</font>
     </family>
+    <family name="mexcellent-sys">
+        <font weight="300" style="normal">Mexcellent-Regular.ttf</font>
+    </family>
+    <family name="burnstown-sys">
+        <font weight="300" style="normal">Burnstown-Regular.ttf</font>
+    </family>
+    <family name="dumbledor-sys">
+        <font weight="300" style="normal">Dumbledor-Regular.ttf</font>
+    </family>
+    <family name="phantombold-sys">
+        <font weight="300" style="normal">PhantomBold-Regular.ttf</font>
+    </family>
 
     <!-- fallback fonts -->
     <family lang="und-Arab" variant="elegant">
