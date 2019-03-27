@@ -14,6 +14,7 @@ import android.graphics.PorterDuff.Mode;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.os.Message;
@@ -21,6 +22,7 @@ import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -61,6 +63,8 @@ public class NetworkTraffic extends TextView {
     private int mAutoHideThreshold;
     private int mTintColor;
     private int mNetTrafSize = 21;
+
+    private boolean mTrafficInHeaderView;
 
     private Handler mTrafficHandler = new Handler() {
         @Override
@@ -105,11 +109,11 @@ public class NetworkTraffic extends TextView {
                    }
                 // Update view if there's anything new to show
                 if (!output.contentEquals(getText())) {
-                    setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                     setText(output);
                 }
-                setVisibility(View.VISIBLE);
-				updateTextSize();
+		updateTextSize();
+                setVisibility(
+                mTrafficInHeaderView ? View.GONE : View.VISIBLE);
             }
 
             // Post delayed message to refresh in ~1000ms
@@ -172,6 +176,9 @@ public class NetworkTraffic extends TextView {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_HIDEARROW), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION), false,
+                    this, UserHandle.USER_ALL); 
        }
 
         /*
@@ -252,7 +259,11 @@ public class NetworkTraffic extends TextView {
     }
 
     private void updateSettings() {
-	    updateTextSize();
+        final ContentResolver resolver = getContext().getContentResolver();
+
+        mTrafficInHeaderView = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION, 1, UserHandle.USER_CURRENT) == 0;
+	updateTextSize();
         if (mIsEnabled) {
             if (mAttached) {
                 totalRxBytes = TrafficStats.getTotalRxBytes();
@@ -270,7 +281,7 @@ public class NetworkTraffic extends TextView {
     private void setMode() {
         ContentResolver resolver = mContext.getContentResolver();
         mIsEnabled = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_STATE, 1,
+                Settings.System.NETWORK_TRAFFIC_STATE, 0,
                 UserHandle.USER_CURRENT) == 1;
         mTrafficType = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_TYPE, 0,
