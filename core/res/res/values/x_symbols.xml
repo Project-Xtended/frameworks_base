@@ -191,4 +191,7 @@
 
     <java-symbol type="integer" name="config_screenBrightnessPulse" />
 
+    <!-- Smart charging battery percentage -->
+    <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
+
 </resources>
