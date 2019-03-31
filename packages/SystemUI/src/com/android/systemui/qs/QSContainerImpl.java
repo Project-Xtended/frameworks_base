@@ -193,9 +193,11 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundGradient.setLayoutParams(mlp);
 
         if (mHeaderImageEnabled) {
+            mQsBackgroundAlpha = false;
             mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
         } else {
-            mStatusBarBackground.setBackgroundColor(Color.BLACK);
+            mQsBackgroundAlpha = true;
+            mStatusBarBackground.setBackgroundColor(getResources().getColor(R.color.quick_settings_status_bar_background_color));
         }
     }
 
