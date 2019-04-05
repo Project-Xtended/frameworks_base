@@ -229,4 +229,7 @@
   <!-- Whether the device supports Smart Pixels -->
   <java-symbol type="bool" name="config_enableSmartPixels" />
 
+  <!-- In-display Fingerprint -->
+  <java-symbol type="bool" name="config_supportsInDisplayFingerprint" />
+
 </resources>
