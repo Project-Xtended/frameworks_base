@@ -396,4 +396,6 @@ number">%d</xliff:g> remaining attempt before SIM becomes permanently unusable. 
 number">%d</xliff:g> remaining attempts before SIM becomes permanently unusable. Contact carrier for details.</item>
     </plurals>
 
+    <string name="custom_text_clock_top_text_default">It\'s</string>
+
 </resources>
