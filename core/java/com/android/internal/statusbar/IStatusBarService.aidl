@@ -124,4 +124,7 @@ interface IStatusBarService
     void setBlockedGesturalNavigation(boolean blocked);
     void setPartialScreenshot(boolean active);
     void killForegroundApp();
+    // Used to show or hide in display fingerprint view
+    void showInDisplayFingerprintView();
+    void hideInDisplayFingerprintView();
 }
