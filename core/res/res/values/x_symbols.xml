@@ -369,5 +369,7 @@
   <java-symbol type="string" name="config_SmartChargingSupspendValue" />
   <java-symbol type="string" name="config_SmartChargingResumeValue" />
 
+  <!-- In-display Fingerprint -->
+  <java-symbol type="bool" name="config_supportsInDisplayFingerprint" />
 
 </resources>
