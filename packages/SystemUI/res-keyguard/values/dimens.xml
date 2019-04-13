@@ -183,8 +183,8 @@
     <dimen name="shortcut_margin_top">25dp</dimen>
 
     <!-- Custom text clock -->
-    <dimen name="custom_clock_left_padding">55dp</dimen>
-    <dimen name="custom_clock_top_margin">70dp</dimen>
+    <dimen name="custom_clock_left_padding">64dp</dimen>
+    <dimen name="custom_clock_top_margin">72dp</dimen>
 
     <!-- Lock Text clock font size parameters -->
     <dimen name="lock_text_clock_font_size_25">25dp</dimen>
