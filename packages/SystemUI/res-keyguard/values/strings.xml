@@ -400,6 +400,9 @@ number">%d</xliff:g> remaining attempts before SIM becomes permanently unusable.
     <string name="text_clock_zero_h_min">O\'</string>
     <string name="text_clock_high">High</string>
     <string name="text_clock_noon">Noon</string>
+    <string name="high_noon_first_row">High</string>
+    <string name="high_noon_second_row">Noon</string>
+    <string name="twelve_am">Twelve</string>
 
     <!-- TensString -->
     <string name="text_clock_tens_string_twenty">Twenty</string>
