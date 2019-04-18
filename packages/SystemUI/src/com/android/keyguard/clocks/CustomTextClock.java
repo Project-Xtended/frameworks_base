@@ -319,18 +319,5 @@ public class CustomTextClock extends TextView {
 	    updateClockSize();
         }
     }
-
-    private boolean langExEval (String langVal) {
-        return (ArrayUtils.contains(langExceptions, langVal) ? true : false);
-    }
-
-    private Bitmap drawEmpty() {
-        Bitmap convertedBitmap = Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(convertedBitmap);
-        Paint paint = new Paint();
-        paint.setColor(Color.YELLOW);
-        canvas.drawPaint(paint);
-        return convertedBitmap;
-    }
 }
 
