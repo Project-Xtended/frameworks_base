@@ -50,6 +50,7 @@ import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.SignalTileView;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
+import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.IconState;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
@@ -74,10 +75,10 @@ public class CellularTile extends QSTileImpl<SignalState> {
         super(host);
         mController = networkController;
         mActivityStarter = activityStarter;
+        mKeyguard = keyguardStateController;
         mDataController = mController.getMobileDataController();
         mDetailAdapter = new CellularDetailAdapter();
         mController.observe(getLifecycle(), mSignalCallback);
-        mKeyguard = keyguardStateController;
     }
 
     @Override
@@ -149,7 +150,16 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
     @Override
     protected void handleSecondaryClick() {
+        if (getState().state == Tile.STATE_UNAVAILABLE) {
+            return;
+        }
         if (mDataController.isMobileDataSupported()) {
+            if (mKeyguard.isMethodSecure() && !mKeyguard.canDismissLockScreen()) {
+                mActivityStarter.postQSRunnableDismissingKeyguard(() -> {
+                    showDetail(true);
+                });
+                return;
+            }
             showDetail(true);
         } else {
             mActivityStarter
@@ -171,6 +181,8 @@ public class CellularTile extends QSTileImpl<SignalState> {
 
         DataUsageController.DataUsageInfo carrierLabelInfo = mDataController.getDataUsageInfo();
         final Resources r = mContext.getResources();
+        state.dualTarget = true;
+        state.label = r.getString(R.string.mobile_data);
         boolean mobileDataEnabled = mDataController.isMobileDataSupported()
                 && mDataController.isMobileDataEnabled();
         state.value = mobileDataEnabled;
