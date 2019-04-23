@@ -1146,95 +1146,40 @@ public class KeyguardStatusView extends GridLayout implements
     }
 
     private void updateVisibilities() {
+        mClockView.setVisibility(View.GONE);
+        mCustomClockView.setVisibility(View.GONE);
+        mDuClockView.setVisibility(View.GONE);
+        mCustomNumClockView.setVisibility(View.GONE);
+        mTextClock.setVisibility(View.GONE);
+        mKeyguardSlice.setVisibility(mShowInfo ? View.VISIBLE : View.GONE);
+        final int mClockVisibility = mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
+                       View.GONE) : View.VISIBLE;
         switch (mClockSelection) {
-            case 0: // default digital
-            default:
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-		mCustomClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
+            case 2: // custom analog
+                mCustomClockView.setVisibility(mClockVisibility);
                 break;
+            case 3: // DU analog
+                mSpideyClockView.setVisibility(mClockVisibility);
+                break;
+            case 8: // custom analog with numbers
+                mCustomNumClockView.setVisibility(mClockVisibility);
+                break;
+            case 12: // custom text clock
+                mTextClock.setVisibility(mClockVisibility);
+                break;
+            case 0: // default digital
             case 1: // digital (bold)
+            case 4: // sammy
+            case 5: // sammy (bold)
+            case 6: // sammy accent
+            case 7: // sammy accent
             case 9: // digital (accent full)
 			case 10: // digital (accent hour)
 			case 11: // digital (accent minutes)
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mCustomClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
+            default:
+                mClockView.setVisibility(mClockVisibility);
                 break;
-            case 2: // custom analog
-                mCustomClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
-                break;
-            case 3: // du analog
-                mDuClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mClockView.setVisibility(View.GONE);
-                mCustomClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
-                break;
-            case 4: // sammy
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mCustomClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
-                break;
-            case 5: // sammy (bold)
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mCustomClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
-                break;
-            case 6: // sammy accent
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mCustomClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
-                break;
-            case 7: // sammy accent
-                mClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mCustomClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-		mCustomNumClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
-                break;
-            case 8: // custom analog with numbers
-                mCustomNumClockView.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mClockView.setVisibility(View.GONE);
-                mCustomClockView.setVisibility(View.GONE);
-                mDuClockView.setVisibility(View.GONE);
-		mTextClock.setVisibility(View.GONE);
-                break;
-            case 12: // custom text clock
-                mTextClock.setVisibility(mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
-                       View.GONE) : View.VISIBLE);
-                mKeyguardSlice.setPadding(0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
-                getResources().getDimensionPixelSize(R.dimen.widget_clock_normal_clock_padding),
-                getResources().getDisplayMetrics()),0,0);
-                mClockView.setVisibility(View.GONE);
-                mCustomNumClockView.setVisibility(View.GONE);
-                mCustomClockView.setVisibility(View.GONE);
-		mDuClockView.setVisibility(View.GONE);
-		break;
-	}
+	    }
     }
 
     private void updateDateStyles() {
@@ -1750,57 +1695,39 @@ public class KeyguardStatusView extends GridLayout implements
     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)
         mKeyguardSlice.getLayoutParams();
         switch (mClockSelection) {
+            case 2: // custom analog
+                params.addRule(RelativeLayout.BELOW, R.id.custom_clock_view);
+                break;
+            case 4: // sammy
+            case 5: // sammy (bold)
+            case 6: // sammy accent
+            case 7: // sammy accent
+                params.addRule(RelativeLayout.BELOW, R.id.clock_view);
+                mClockView.setSingleLine(false);
+                mClockView.setGravity(Gravity.CENTER);
+                mClockView.setLineSpacing(0, 0.8f);
+                break;
+            case 3: // DU analog
+                params.addRule(RelativeLayout.BELOW, R.id.du_clock_view);
+                break;
+            case 8: // custom analog with numbers
+                params.addRule(RelativeLayout.BELOW, R.id.custom_num_clock_view);
+                break;
+            case 12: // custom text clock
+                params.addRule(RelativeLayout.BELOW, R.id.custom_textclock_view);
+                break;
             case 0: // default digital
+            case 1: // digital (bold)
+            case 9: // digital (accent full)
+			case 10: // digital (accent hour)
+			case 11: // digital (accent minutes)
             default:
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(true);
                 mClockView.setGravity(Gravity.CENTER);
                 break;
-            case 1: // digital (bold)
-            case 9: // digital (accent full)
-			case 10: // digital (accent hour)
-			case 11: // digital (accent minutes)
-                params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                mClockView.setSingleLine(true);
-                mClockView.setGravity(Gravity.CENTER);
-                break;
-            case 2: // custom analog
-                params.addRule(RelativeLayout.BELOW, R.id.custom_clock_view);
-                break;
-            case 3: // du analog
-                params.addRule(RelativeLayout.BELOW, R.id.du_clock_view);
-                break;
-            case 4: // sammy
-                params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                mClockView.setSingleLine(false);
-                mClockView.setGravity(Gravity.CENTER);
-		mClockView.setLineSpacing(0, 0.9f);
-                break;
-            case 5: // sammy (bold)
-                params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                mClockView.setSingleLine(false);
-                mClockView.setGravity(Gravity.CENTER);
-		mClockView.setLineSpacing(0, 0.9f);
-                break;
-            case 6: // sammy accent
-                params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                mClockView.setSingleLine(false);
-                mClockView.setGravity(Gravity.CENTER);
-		mClockView.setLineSpacing(0, 0.9f);
-                break;
-            case 7: // sammy accent
-                params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                mClockView.setSingleLine(false);
-                mClockView.setGravity(Gravity.CENTER);
-		mClockView.setLineSpacing(0, 0.9f);
-                break;
-            case 8: // custom analog with numbers
-                params.addRule(RelativeLayout.BELOW, R.id.custom_num_clock_view);
-                break;
-	    case 12: // custom Text Clock View
-		params.addRule(RelativeLayout.BELOW, R.id.custom_textclock_view);
-		break;
         }
+        mKeyguardSlice.setLayoutParams(params);
 
         updateVisibilities();
         updateDozeVisibleViews();
@@ -1826,3 +1753,4 @@ public class KeyguardStatusView extends GridLayout implements
         }
     }
 }
+
