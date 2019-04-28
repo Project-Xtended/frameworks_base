@@ -43,6 +43,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -83,6 +84,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private Uri mKeyguardSliceUri;
     @VisibleForTesting
     TextView mTitle;
+    private RelativeLayout mRowContainer;
     private Row mRow;
     private int mTextColor;
     private float mDarkAmount = 0;
@@ -134,6 +136,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     protected void onFinishInflate() {
         super.onFinishInflate();
         mTitle = findViewById(R.id.title);
+        mRowContainer = findViewById(R.id.row_maincenter);
         mRow = findViewById(R.id.row);
         mTextColor = Utils.getColorAttr(mContext, R.attr.wallpaperTextColor);
         updateSettings();
@@ -171,6 +174,10 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
             return;
         }
 
+	final ContentResolver resolver = mContext.getContentResolver();
+	boolean mIsLeftAligned = Settings.System.getIntForUser(resolver,
+			Settings.System.LEFT_ALIGN_VIEW, 0, UserHandle.USER_CURRENT) == 1;
+
         ListContent lc = new ListContent(getContext(), mSlice);
         mHasHeader = lc.hasHeader();
         List<SliceItem> subItems = new ArrayList<SliceItem>();
@@ -200,6 +207,14 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         final int subItemsCount = subItems.size();
         final int blendedColor = getTextColor();
         final int startIndex = mHasHeader ? 1 : 0; // First item is header; skip it
+        if (mIsLeftAligned) {
+            mRowContainer.setPaddingRelative((int) mContext.getResources().getDimension(R.dimen.custom_clock_left_padding), 0, 0, 0);
+            mRowContainer.setGravity(Gravity.START);
+        } else {
+            mRowContainer.setPaddingRelative(0, 0, 0, 0);
+            mRowContainer.setGravity(Gravity.CENTER);
+        }
+
 	mRow.setVisibility(subItemsCount > 0 && mShowInfo ? VISIBLE : GONE);
         mRowAvailable = subItemsCount > 0;
         for (int i = startIndex; i < subItemsCount; i++) {
@@ -345,6 +360,18 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         }
     }
 
+    public void setViewBackground(Drawable drawRes) {
+        mRow.setBackground(drawRes);
+    }
+
+    public void setViewBackgroundResource(int drawRes) {
+        mRow.setBackgroundResource(drawRes);
+    }
+
+    public void setViewPadding(int left, int top, int right, int bottom) {
+        mRow.setPadding(left,top,right,bottom);
+    }
+
     @Override
     public void onClick(View v) {
         final PendingIntent action = mClickActions.get(v);
@@ -422,17 +449,6 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     public void refresh() {
         Slice slice = SliceViewManager.getInstance(getContext()).bindSlice(mKeyguardSliceUri);
         onChanged(slice);
-    }
-
-    public void setRowGravity(int gravity, int leftPadding) {
-        mRow.setGravity(gravity);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mRow.getLayoutParams();
-        if(gravity == Gravity.START){
-            lp.setMargins(leftPadding, lp.topMargin, 0, lp.bottomMargin);
-        } else {
-            lp.setMargins(0, lp.topMargin, 0, lp.bottomMargin);
-        }
-        mRow.setLayoutParams(lp);
     }
 
     public static class Row extends LinearLayout {
