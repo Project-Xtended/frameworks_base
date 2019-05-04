@@ -106,6 +106,7 @@ public class KeyguardStatusView extends GridLayout implements
     private boolean mShowClock;
     private boolean mShowInfo;
     private int mClockSelection;
+    private boolean mIsCenterAligned;
 
     private boolean mWasLatestViewSmall;
 
@@ -1558,13 +1559,30 @@ public class KeyguardStatusView extends GridLayout implements
             }
         }
 
+	RelativeLayout.LayoutParams textClockParams = new RelativeLayout.LayoutParams(
+			RelativeLayout.LayoutParams.WRAP_CONTENT,
+			RelativeLayout.LayoutParams.WRAP_CONTENT);
+	textClockParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+	int leftPadding = (int) getResources().getDimension(R.dimen.custom_clock_left_padding);
+        int topPadding = (int) getResources().getDimension(R.dimen.custom_clock_top_margin);
+
         mShowClock = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCKSCREEN_CLOCK, 1, UserHandle.USER_CURRENT) == 1;
         mShowInfo = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCKSCREEN_INFO, 1, UserHandle.USER_CURRENT) == 1;
         mClockSelection = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCKSCREEN_CLOCK_SELECTION, 0, UserHandle.USER_CURRENT);
+        mIsCenterAligned = Settings.System.getIntForUser(resolver,
+                Settings.System.CENTER_TEXT_CLOCK, 0, UserHandle.USER_CURRENT) == 1;
 
+        if (mTextClock != null && mIsCenterAligned) {
+	    mTextClock.setGravity(Gravity.CENTER);
+	    mTextClock.setLayoutParams(textClockParams);
+	    mTextClock.setPaddingRelative(0, topPadding, 0, 0);
+	} else {
+	    mTextClock.setPaddingRelative(leftPadding, topPadding, 0, 0);
+	}
         setStyle();
     }
 
