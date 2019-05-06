@@ -1872,11 +1872,13 @@ public final class SystemServer {
             traceEnd();
 
             // LiveDisplay
-            traceBeginAndSlog("StartLineageHardwareService");
-            mSystemServiceManager.startService(LineageHardwareService.class);
-            traceEnd(); traceBeginAndSlog("StartLiveDisplayService");
-            mSystemServiceManager.startService(LiveDisplayService.class);
-            traceEnd();
+            if (!mOnlyCore){
+                traceBeginAndSlog("StartLineageHardwareService");
+                mSystemServiceManager.startService(LineageHardwareService.class);
+                traceEnd(); traceBeginAndSlog("StartLiveDisplayService");
+                mSystemServiceManager.startService(LiveDisplayService.class);
+                traceEnd();
+            }
 
             if (!context.getResources().getString(
                     com.android.internal.R.string.config_pocketBridgeSysfsInpocket).isEmpty()) {
