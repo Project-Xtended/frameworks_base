@@ -1033,4 +1033,10 @@
     <!-- The padding for the custom icons in the status bar. -->
     <dimen name="status_bar_xtnd_padding">3dp</dimen>
 
+    <!-- Padding for overheat alarm dialog message of content -->
+    <dimen name="alarm_dialog_panel_padding">24dp</dimen>
+
+    <!-- Padding for overheat alarm dialog message of content -->
+    <dimen name="alarm_dialog_message_space">28dp</dimen>
+
 </resources>
