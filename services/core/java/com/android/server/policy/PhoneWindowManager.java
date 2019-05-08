@@ -732,7 +732,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private PendingIntent mTorchOffPendingIntent;
 
     private boolean mHasPermanentMenuKey;
-    private OPGesturesListener mOPGestures;
+    private SwipeToScreenshotListener mSwipeToScreenshot;
 
     private class PolicyHandler extends Handler {
         @Override
@@ -2010,10 +2010,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
         mCameraManager.registerTorchCallback(new TorchModeCallback(), mHandler);
 
-        mOPGestures = new OPGesturesListener(context, new OPGesturesListener.Callbacks() {
+        mSwipeToScreenshot = new SwipeToScreenshotListener(context, new SwipeToScreenshotListener.Callbacks() {
             @Override
             public void onSwipeThreeFinger() {
-                mHandler.post(mScreenshotRunnable);
+                if (!mPocketLockShowing) {
+                    mHandler.post(mScreenshotRunnable);
+                }
             }
         });
         mWakeGestureListener = new MyWakeGestureListener(mContext, mHandler);
@@ -2239,11 +2241,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (enable) {
             if (haveEnableGesture) return;
             haveEnableGesture = true;
-            mWindowManagerFuncs.registerPointerEventListener(mOPGestures, DEFAULT_DISPLAY);
+            mWindowManagerFuncs.registerPointerEventListener(mSwipeToScreenshot, DEFAULT_DISPLAY);
         } else {
             if (!haveEnableGesture) return;
             haveEnableGesture = false;
-            mWindowManagerFuncs.unregisterPointerEventListener(mOPGestures, DEFAULT_DISPLAY);
+            mWindowManagerFuncs.unregisterPointerEventListener(mSwipeToScreenshot, DEFAULT_DISPLAY);
         }
     }
 
