@@ -4292,7 +4292,7 @@ public final class Settings {
 
         /** @hide */
         public static final Validator SHOW_BATTERY_PERCENT_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 3);
 
         /** 
         /** some devices have a extra hw button e.g. n3 on the back on the

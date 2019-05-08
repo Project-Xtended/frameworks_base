@@ -334,15 +334,23 @@ public class BatteryMeterView extends LinearLayout implements
     private void updateShowPercent() {
         final boolean showing = mBatteryPercentView != null;
         if (forcePercentageQsHeader()
-                || ((mShowPercentText == 1) || mForceShowPercent)) {
+                || ((mShowPercentText == 2 || mShowPercentText == 3) || mForceShowPercent)) {
             if (!showing) {
                 mBatteryPercentView = loadPercentView();
                 if (mTextColor != 0) mBatteryPercentView.setTextColor(mTextColor);
                 updatePercentText();
-                addView(mBatteryPercentView,
-                        new ViewGroup.LayoutParams(
-                                LayoutParams.WRAP_CONTENT,
-                                LayoutParams.MATCH_PARENT));
+                if(mShowPercentText == 2){
+                    addView(mBatteryPercentView,
+		            0,
+                            new ViewGroup.LayoutParams(
+                                    LayoutParams.WRAP_CONTENT,
+                                    LayoutParams.MATCH_PARENT));
+                } else if(mShowPercentText == 3) {
+                    addView(mBatteryPercentView, 
+                            new ViewGroup.LayoutParams(
+                                    LayoutParams.WRAP_CONTENT,
+                                    LayoutParams.MATCH_PARENT));
+                }
             }
         } else {
             if (showing) {
@@ -355,8 +363,8 @@ public class BatteryMeterView extends LinearLayout implements
                     mStyle == BatteryMeterDrawableBase.BATTERY_STYLE_TEXT ? 0 : mEndPadding,
 		    0, 0, 0);
         }
-        mDrawable.showPercentInsideCircle(mShowPercentText == 2);
-        mDrawable.setShowPercent(mShowPercentText == 2);
+        mDrawable.showPercentInsideCircle(mShowPercentText == 1);
+        mDrawable.setShowPercent(mShowPercentText == 1);
     }
 
     @Override
