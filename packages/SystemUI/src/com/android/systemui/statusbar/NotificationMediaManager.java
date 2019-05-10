@@ -66,6 +66,8 @@ public class NotificationMediaManager implements Dumpable {
 
     private Set<String> mBlacklist = new HashSet<String>();
 
+    private boolean mPlaying;
+
     // callback into NavigationFragment for Pulse
     public interface MediaUpdateListener {
         public void onMediaUpdated(boolean playing);
@@ -378,6 +380,10 @@ public class NotificationMediaManager implements Dumpable {
 	}
     }
 
+    public boolean isMediaPlaying() {
+        return mPlaying;
+    }
+
     public void setMediaPlaying() {
         if (mMediaController != null && (PlaybackState.STATE_PLAYING ==
                 getMediaControllerPlaybackState(mMediaController)
@@ -393,6 +399,8 @@ public class NotificationMediaManager implements Dumpable {
                 // don't play Pulse for this app
                 dontPulse = true;
             }
+
+            mPlaying = true;
 
             boolean mediaNotification= false;
             for (int i = 0; i < N; i++) {
@@ -420,6 +428,7 @@ public class NotificationMediaManager implements Dumpable {
                 mStatusBar.getVisualizer().setPlaying(true);
             }
         } else {
+            mPlaying = false;
             mEntryManager.setEntryToRefresh(null, true);
             setMediaNotificationText(null, false);
             if (mListener != null) {

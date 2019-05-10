@@ -1971,7 +1971,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         Drawable artworkDrawable = null;
-        if (mediaMetadata != null && SHOW_LOCKSCREEN_MEDIA_ARTWORK && mLockscreenMediaMetadata) {
+        if (mediaMetadata != null && SHOW_LOCKSCREEN_MEDIA_ARTWORK && mLockscreenMediaMetadata && mMediaManager.isMediaPlaying()) {
             Bitmap artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
                 artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART);
@@ -1999,7 +1999,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
 
-        if (artworkDrawable == null) {
+        if (artworkDrawable == null && mMediaManager.isMediaPlaying()) {
             //Get wallpaper as bitmap
             WallpaperManager manager = WallpaperManager.getInstance(mContext);
             ParcelFileDescriptor pfd = manager.getWallpaperFile(WallpaperManager.FLAG_LOCK);
