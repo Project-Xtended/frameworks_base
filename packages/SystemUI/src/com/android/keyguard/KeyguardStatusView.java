@@ -52,7 +52,7 @@ import android.graphics.Typeface;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.ViewClippingUtil;
 import com.android.keyguard.clocks.CustomAnalogClock;
-import com.android.keyguard.clocks.CustomTextClock;
+import com.android.keyguard.clocks.TypographicClock;
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.omni.CurrentWeatherView;
@@ -81,11 +81,8 @@ public class KeyguardStatusView extends GridLayout implements
     private CustomAnalogClock mCustomClockView;
     private CustomAnalogClock mDuClockView;
     private CustomAnalogClock mCustomNumClockView;
-    private LinearLayout mTextClock;
+    private TypographicClock mTextClock;
     private TextClock mClockView;
-    private TextView mTextClockV0;
-    private TextView mTextClockV1;
-    private TextView mTextClockV2;
     private View mClockSeparator;
     private TextView mOwnerInfo;
     private KeyguardSliceView mKeyguardSlice;
@@ -247,9 +244,6 @@ public class KeyguardStatusView extends GridLayout implements
         mDuClockView = findViewById(R.id.du_clock_view);
         mCustomNumClockView = findViewById(R.id.custom_num_clock_view);
         mTextClock = findViewById(R.id.custom_textclock_view);
-        mTextClockV0 = findViewById(R.id.custom_textclock_view0);
-        mTextClockV1 = findViewById(R.id.custom_textclock_view1);
-        mTextClockV2 = findViewById(R.id.custom_textclock_view2);
         mOwnerInfo = findViewById(R.id.owner_info);
         mKeyguardSlice = findViewById(R.id.keyguard_status_area);
         mClockSeparator = findViewById(R.id.clock_separator);
@@ -333,13 +327,6 @@ public class KeyguardStatusView extends GridLayout implements
                 R.dimen.keyguard_security_view_top_margin);
         mCustomClockView.setLayoutParams(customlayoutParams);
 
-        //Custom Text clock
-        RelativeLayout.LayoutParams textlayoutParams =
-                (RelativeLayout.LayoutParams) mTextClock.getLayoutParams();
-        textlayoutParams.bottomMargin = getResources().getDimensionPixelSize(
-                R.dimen.keyguard_security_view_top_margin);
-        mTextClock.setLayoutParams(textlayoutParams);
-
         // Du analog clock
         RelativeLayout.LayoutParams dulayoutParams =
                 (RelativeLayout.LayoutParams) mDuClockView.getLayoutParams();
@@ -354,10 +341,13 @@ public class KeyguardStatusView extends GridLayout implements
                 R.dimen.keyguard_security_view_top_margin);
         mCustomNumClockView.setLayoutParams(customnumlayoutParams);
 
-        /* TODO: Switch case for diff clock variants */
-        mTextClockV0.setTextAppearance(getContext(), R.style.customtextclock_big_thin);
-        mTextClockV1.setTextAppearance(getContext(), R.style.customtextclock_big_thin);
-        mTextClockV2.setTextAppearance(getContext(), R.style.customtextclock_big_thin);
+        //Custom Text clock
+        RelativeLayout.LayoutParams textlayoutParams =
+                (RelativeLayout.LayoutParams) mTextClock.getLayoutParams();
+        textlayoutParams.bottomMargin = getResources().getDimensionPixelSize(
+                R.dimen.keyguard_security_view_top_margin);
+        mTextClock.setLayoutParams(textlayoutParams);
+
         layoutParams = (RelativeLayout.LayoutParams) mClockSeparator.getLayoutParams();
         layoutParams.topMargin = smallClock ? (int) mWidgetPadding : 0;
         layoutParams.bottomMargin = layoutParams.topMargin;
@@ -497,6 +487,8 @@ public class KeyguardStatusView extends GridLayout implements
         } else if (mClockSelection == 11) {
             mClockView.setFormat12Hour(Html.fromHtml("<strong>h</strong><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">:mm</font>"));
             mClockView.setFormat24Hour(Html.fromHtml("<strong>kk</strong><font color=" + getResources().getColor(R.color.sammy_minutes_accent) + ">:mm</font>"));
+        } else if (mClockSelection == 12) {
+            mTextClock.onTimeChanged();
         } else {
             mClockView.setFormat12Hour("hh\nmm");
             mClockView.setFormat24Hour("kk\nmm");
@@ -1159,7 +1151,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mCustomClockView.setVisibility(mClockVisibility);
                 break;
             case 3: // DU analog
-                mSpideyClockView.setVisibility(mClockVisibility);
+                mDuClockView.setVisibility(mClockVisibility);
                 break;
             case 8: // custom analog with numbers
                 mCustomNumClockView.setVisibility(mClockVisibility);

@@ -17,4 +17,3 @@
 package android.net.wifi;
 
 parcelable WifiDppConfig;
-

@@ -478,4 +478,16 @@ number">%d</xliff:g> remaining attempts before SIM becomes permanently unusable.
     <!-- Skeleton string format for displaying the day of the month. -->
     <string name="abbrev_wday_month_no_year">MMMMd</string>
 
+    <plurals name="type_clock_header">
+        <item quantity="other"><annotation name="color">It’s</annotation>"
+^1
+^2"</item>
+        <item quantity="one"><annotation name="color">It’s</annotation>"
+^1
+^2"</item>
+        <item quantity="few"><annotation name="color">It’s</annotation>"
+^1
+^2"</item>
+    </plurals>
+
 </resources>
