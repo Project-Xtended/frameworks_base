@@ -53,7 +53,7 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
     private static final int MB = KB * KB;
     private static final int GB = MB * KB;
     private static final String symbol = "B/s";
-    private int mNetTrafSize = 15;
+    private int mNetTrafSize = 21;
 
     private static DecimalFormat decimalFormat = new DecimalFormat("##0.#");
     static {
@@ -311,7 +311,7 @@ public class NetworkTraffic extends TextView implements StatusIconDisplayable {
         int txtSize;
 
         mNetTrafSize = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 15);
+                Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 21);
 
         if (mTrafficType == BOTH) {
             txtSize = getResources().getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
