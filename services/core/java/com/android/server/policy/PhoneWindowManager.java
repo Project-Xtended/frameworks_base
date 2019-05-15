@@ -863,6 +863,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private boolean mScreenrecordChordVolumeUpKeyTriggered;
     private long mScreenrecordChordVolumeUpKeyTime;
     private boolean mScreenrecordChordVolumeUpKeyConsumed;
+    private int mScreenrecordMode = SCREEN_RECORD_LOW_QUALITY;
+
     // end screenrecord
     private boolean mA11yShortcutChordVolumeUpKeyTriggered;
     private long mA11yShortcutChordVolumeUpKeyTime;
@@ -1367,6 +1369,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 		    UserHandle.USER_ALL);
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENTS_LAYOUT_STYLE), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SCREENRECORD_QUALITY_MODE), false, this,
                     UserHandle.USER_ALL);
             updateSettings();
         }
@@ -2321,14 +2326,14 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private final ScreenshotRunnable mScreenshotRunnable = new ScreenshotRunnable();
 
     private class ScreenrecordRunnable implements Runnable {
-        private int mMode = SCREEN_RECORD_LOW_QUALITY;
-         public void setMode(int mode) {
-            mMode = mode;
+        
+        public void setMode(int mode) {
+            mScreenrecordMode = mode;
         }
 
         @Override
         public void run() {
-            takeScreenrecord(mMode);
+            takeScreenrecord(mScreenrecordMode);
         }
     }
 
@@ -3309,6 +3314,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mRingerToggleChord = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.VOLUME_HUSH_GESTURE, VOLUME_HUSH_OFF,
                     UserHandle.USER_CURRENT);
+            mScreenrecordMode = Settings.System.getIntForUser(resolver,
+                    Settings.System.SCREENRECORD_QUALITY_MODE, SCREEN_RECORD_LOW_QUALITY,
+                    UserHandle.USER_CURRENT);
+
             if (!mContext.getResources()
                     .getBoolean(com.android.internal.R.bool.config_volumeHushGestureEnabled)) {
                 mRingerToggleChord = Settings.Secure.VOLUME_HUSH_OFF;
