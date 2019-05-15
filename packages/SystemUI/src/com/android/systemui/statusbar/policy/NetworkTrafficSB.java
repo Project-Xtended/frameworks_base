@@ -1,5 +1,9 @@
 package com.android.systemui.statusbar.policy;
 
+import static com.android.systemui.statusbar.StatusBarIconView.STATE_DOT;
+import static com.android.systemui.statusbar.StatusBarIconView.STATE_HIDDEN;
+import static com.android.systemui.statusbar.StatusBarIconView.STATE_ICON;
+
 import java.text.DecimalFormat;
 
 import android.content.BroadcastReceiver;
@@ -11,6 +15,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff.Mode;
+import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.TrafficStats;
@@ -24,7 +29,10 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
+import com.android.systemui.statusbar.StatusIconDisplayable;
+import com.android.systemui.statusbar.policy.DarkIconDispatcher.DarkReceiver;
 
 /*
 *
@@ -32,7 +40,9 @@ import com.android.systemui.R;
 * to only use it for a single boolean. 32-bits is plenty of room for what we need it to do.
 *
 */
-public class NetworkTraffic extends TextView {
+public class NetworkTrafficSB extends TextView implements StatusIconDisplayable {
+
+    public static final String SLOT = "networktraffic";
 
     private static final int INTERVAL = 1500; //ms
     private static final int BOTH = 0;
@@ -42,6 +52,7 @@ public class NetworkTraffic extends TextView {
     private static final int MB = KB * KB;
     private static final int GB = MB * KB;
     private static final String symbol = "B/s";
+	private int mNetTrafSize = 21;
 
     private static DecimalFormat decimalFormat = new DecimalFormat("##0.#");
     static {
@@ -60,7 +71,10 @@ public class NetworkTraffic extends TextView {
     private int mTrafficType;
     private int mAutoHideThreshold;
     private int mTintColor;
-    private int mNetTrafSize = 21;
+    private int mVisibleState = -1;
+    private boolean mTrafficVisible = false;
+    private boolean mSystemIconVisible = true;
+    private boolean mScreenOn = true;
 
     private Handler mTrafficHandler = new Handler() {
         @Override
@@ -87,30 +101,30 @@ public class NetworkTraffic extends TextView {
 
             if (shouldHide(rxData, txData, timeDelta)) {
                 setText("");
-                setVisibility(View.GONE);
+                mTrafficVisible = false;
             } else {
-                     String output;
+                    String output;
 
-                   if (mTrafficType == UP){
+                    if (mTrafficType == UP){
                      output = formatOutput(timeDelta, txData, symbol);
-                   } else if (mTrafficType == DOWN){
+                    } else if (mTrafficType == DOWN){
                      output = formatOutput(timeDelta, rxData, symbol);
-                   } else {
+                    } else {
                      // Get information for uplink ready so the line return can be added
                      output = formatOutput(timeDelta, txData, symbol);
                      // Ensure text size is where it needs to be
                      output += "\n";
                      // Add information for downlink if it's called for
                      output += formatOutput(timeDelta, rxData, symbol);
-                   }
+                    }
                 // Update view if there's anything new to show
                 if (!output.contentEquals(getText())) {
-                    setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
                     setText(output);
                 }
-                setVisibility(View.VISIBLE);
-				updateTextSize();
+                mTrafficVisible = true;
             }
+            updateVisibility();
+			updateTextSize();
 
             // Post delayed message to refresh in ~1000ms
             totalRxBytes = newTotalRxBytes;
@@ -142,7 +156,7 @@ public class NetworkTraffic extends TextView {
             return !getConnectAvailable() ||
                     (speedRxKB < mAutoHideThreshold &&
                     speedTxKB < mAutoHideThreshold);
-		    }
+			}
         }
     };
 
@@ -172,7 +186,7 @@ public class NetworkTraffic extends TextView {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_HIDEARROW), false,
                     this, UserHandle.USER_ALL);
-       }
+        }
 
         /*
          *  @hide
@@ -187,21 +201,21 @@ public class NetworkTraffic extends TextView {
     /*
      *  @hide
      */
-    public NetworkTraffic(Context context) {
+    public NetworkTrafficSB(Context context) {
         this(context, null);
     }
 
     /*
      *  @hide
      */
-    public NetworkTraffic(Context context, AttributeSet attrs) {
+    public NetworkTrafficSB(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
     /*
      *  @hide
      */
-    public NetworkTraffic(Context context, AttributeSet attrs, int defStyle) {
+    public NetworkTrafficSB(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         final Resources resources = getResources();
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
@@ -220,8 +234,11 @@ public class NetworkTraffic extends TextView {
             mAttached = true;
             IntentFilter filter = new IntentFilter();
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            filter.addAction(Intent.ACTION_SCREEN_OFF);
+            filter.addAction(Intent.ACTION_SCREEN_ON);
             mContext.registerReceiver(mIntentReceiver, filter, null, getHandler());
         }
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
         updateSettings();
     }
 
@@ -232,14 +249,23 @@ public class NetworkTraffic extends TextView {
             mContext.unregisterReceiver(mIntentReceiver);
             mAttached = false;
         }
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
     }
 
     private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action != null && action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+            if (action == null) return;
+
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION) && mScreenOn) {
                 updateSettings();
+            } else if (action.equals(Intent.ACTION_SCREEN_ON)) {
+                mScreenOn = true;
+                updateSettings();
+            } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
+                mScreenOn = false;
+                clearHandlerCallbacks();
             }
         }
     };
@@ -253,6 +279,7 @@ public class NetworkTraffic extends TextView {
 
     private void updateSettings() {
 	    updateTextSize();
+        updateVisibility();
         if (mIsEnabled) {
             if (mAttached) {
                 totalRxBytes = TrafficStats.getTotalRxBytes();
@@ -264,19 +291,18 @@ public class NetworkTraffic extends TextView {
         } else {
             clearHandlerCallbacks();
         }
-        setVisibility(View.GONE);
     }
 
     private void setMode() {
         ContentResolver resolver = mContext.getContentResolver();
         mIsEnabled = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_STATE, 1,
+                Settings.System.NETWORK_TRAFFIC_STATE, 0,
                 UserHandle.USER_CURRENT) == 1;
         mTrafficType = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_TYPE, 0,
                 UserHandle.USER_CURRENT);
         mAutoHideThreshold = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 1,
+                Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 0,
                 UserHandle.USER_CURRENT);
         mHideArrow = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_HIDEARROW, 0,
@@ -305,18 +331,18 @@ public class NetworkTraffic extends TextView {
         int intTrafficDrawable;
         if (mIsEnabled && !mHideArrow) {
            if (mTrafficType == UP) {
-              intTrafficDrawable = R.drawable.stat_sys_network_traffic_up;
+            intTrafficDrawable = R.drawable.stat_sys_network_traffic_up;
            } else if (mTrafficType == DOWN) {
-              intTrafficDrawable = R.drawable.stat_sys_network_traffic_down;
+            intTrafficDrawable = R.drawable.stat_sys_network_traffic_down;
            } else {
-              intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
-	   }
+            intTrafficDrawable = R.drawable.stat_sys_network_traffic_updown;
+		   }
         } else {
             intTrafficDrawable = 0;
         }
         if (intTrafficDrawable != 0 && !mHideArrow) {
             Drawable d = getContext().getDrawable(intTrafficDrawable);
-            d.setColorFilter(mTintColor, Mode.MULTIPLY);
+            d.setColorFilter(mTintColor, Mode.SRC_ATOP);
             setCompoundDrawablePadding(txtImgPadding);
             setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
         } else {
@@ -329,7 +355,68 @@ public class NetworkTraffic extends TextView {
         final Resources resources = getResources();
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
         setCompoundDrawablePadding(txtImgPadding);
-	updateTextSize();
+		updateTextSize();
+    }
+
+    @Override
+    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
+        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+        setTextColor(mTintColor);
+        updateTrafficDrawable();
+    }
+
+    @Override
+    public String getSlot() {
+        return SLOT;
+    }
+
+    @Override
+    public boolean isIconVisible() {
+        return mIsEnabled;
+    }
+
+    @Override
+    public int getVisibleState() {
+        return mVisibleState;
+    }
+
+    @Override
+    public void setVisibleState(int state) {
+        if (state == mVisibleState) {
+            return;
+        }
+        mVisibleState = state;
+
+        switch (state) {
+            case STATE_ICON:
+                mSystemIconVisible = true;
+                break;
+            case STATE_DOT:
+            case STATE_HIDDEN:
+            default:
+                mSystemIconVisible = false;
+                break;
+        }
+        updateVisibility();
+    }
+
+    private void updateVisibility() {
+        if (mIsEnabled && mTrafficVisible && mSystemIconVisible {
+   	    setVisibility(View.VISIBLE);
+        } else {
+            setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setStaticDrawableColor(int color) {
+        mTintColor = color;
+        setTextColor(mTintColor);
+        updateTrafficDrawable();
+    }
+
+    @Override
+    public void setDecorColor(int color) {
     }
 }
 
