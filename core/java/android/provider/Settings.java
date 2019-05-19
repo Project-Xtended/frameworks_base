@@ -4495,6 +4495,12 @@ public final class Settings {
         public static final String CENTER_TEXT_CLOCK = "center_text_clock";
 
         /**
+         * align the lockscreen weather & slice view to left
+         * @hide
+         */
+        public static final String LEFT_ALIGN_VIEW = "left_align_view";
+
+        /**
 	 * Wether to show network traffic indicator in statusbar
          * @hide
          */
