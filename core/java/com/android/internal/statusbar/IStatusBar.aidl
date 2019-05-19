@@ -232,4 +232,6 @@ oneway interface IStatusBar
      * Xtended additions
      */
     void toggleCameraFlash();
+    void toggleCameraFlashState(boolean enable);
+
 }
