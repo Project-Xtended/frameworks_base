@@ -4591,6 +4591,16 @@ public final class Settings {
         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
 
         /**
+         * Whether to show wireless charging animation
+         * @hide
+         */
+        public static final String WIRELESS_CHARGING_ANIMATION = "wireless_charging_animation";
+
+        /** @hide */
+        private static final Validator WIRELESS_CHARGING_ANIMATION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
@@ -5971,6 +5981,7 @@ public final class Settings {
             HEADS_UP_NOTIFICATION_SNOOZE,
             HEADS_UP_TIMEOUT,
             LESS_BORING_HEADS_UP,
+            WIRELESS_CHARGING_ANIMATION,
         };
 
         /**
@@ -6164,6 +6175,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(HEADS_UP_NOTIFICATION_SNOOZE);
             PRIVATE_SETTINGS.add(HEADS_UP_TIMEOUT);
             PRIVATE_SETTINGS.add(LESS_BORING_HEADS_UP);
+            PRIVATE_SETTINGS.add(WIRELESS_CHARGING_ANIMATION);
         }
 
         /**
@@ -6325,6 +6337,7 @@ public final class Settings {
             VALIDATORS.put(HEADS_UP_NOTIFICATION_SNOOZE,HEADS_UP_NOTIFICATION_SNOOZE_VALIDATOR);
             VALIDATORS.put(HEADS_UP_TIMEOUT,HEADS_UP_TIMEOUT_VALIDATOR);
             VALIDATORS.put(LESS_BORING_HEADS_UP, LESS_BORING_HEADS_UP_VALIDATOR);
+            VALIDATORS.put(WIRELESS_CHARGING_ANIMATION, WIRELESS_CHARGING_ANIMATION_VALIDATOR);
         }
 
         /**
