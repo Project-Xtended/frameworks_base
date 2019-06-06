@@ -916,10 +916,13 @@ public class Notifier {
     }
 
     private void showWiredChargingStarted(@UserIdInt int userId,int batteryLevel) {
+        final boolean animationEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.CHARGING_ANIMATION, 1, userId) == 1;
+
         playChargingStartedFeedback(userId, false /* wireless */);
 
         // show animation
-        if (mStatusBarManagerInternal != null) {
+        if (animationEnabled && mStatusBarManagerInternal != null) {
             mStatusBarManagerInternal.showChargingAnimation(batteryLevel);
         }
         mSuspendBlocker.release();
