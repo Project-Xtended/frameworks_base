@@ -6634,6 +6634,18 @@ public final class Settings {
          */
         public static final String TRANSPARENT_POWER_MENU = "transparent_power_menu";
 
+       /**
+        * Powermenu Background
+        * @hide
+        */
+        public static final String POWER_MENU_BG = "power_menu_bg";
+
+        /**
+        * Powermenu Background Style
+        * @hide
+        */
+        public static final String POWER_MENU_BG_STYLE = "power_menu_bg_style";
+
         /**
          * Dim amount around power/reboot menu dialogs
          * @hide

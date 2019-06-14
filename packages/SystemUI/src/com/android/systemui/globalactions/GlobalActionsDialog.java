@@ -53,11 +53,13 @@ import android.content.pm.UserInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -136,6 +138,7 @@ import com.android.systemui.Interpolators;
 import com.android.systemui.MultiListLayout;
 import com.android.systemui.MultiListLayout.MultiListAdapter;
 import com.android.systemui.broadcast.BroadcastDispatcher;
+import com.android.systemui.R.color;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.controls.ControlsServiceInfo;
 import com.android.systemui.controls.controller.ControlsController;
@@ -169,6 +172,8 @@ import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+
+import com.android.internal.util.xtended.ImageHelper;
 
 /**
  * Helper to show the global actions dialog.  Each item is an {@link Action} that may show depending
@@ -2621,6 +2626,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         private final SysuiColorExtractor mColorExtractor;
         private final Provider<GlobalActionsPanelPlugin.PanelViewController> mWalletFactory;
         @Nullable private GlobalActionsPanelPlugin.PanelViewController mWalletViewController;
+        private final Drawable mbackground;
+        private final Bitmap mbittemp;
+        private int mbackgroundfilter;
         private boolean mKeyguardShowing;
         private boolean mShowing;
         private float mScrimAlpha;
@@ -2668,6 +2676,33 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             // Window initialization
             Window window = getWindow();
             window.requestFeature(Window.FEATURE_NO_TITLE);
+
+            View v1 = window.getDecorView();
+            mbackgroundfilter = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.POWER_MENU_BG_STYLE, 0,
+                    UserHandle.USER_CURRENT);
+            switch (mbackgroundfilter) {
+                case 1:
+                    mbittemp = ImageHelper.toGrayscale(ImageHelper.screenshotSurface(mContext));
+                    break;
+                case 2:
+                    Drawable bittemp = new BitmapDrawable(mContext.getResources(), ImageHelper.screenshotSurface(mContext));
+                    mbittemp = ImageHelper.getColoredBitmap(bittemp, mContext.getResources().getColor(color.accent_device_default_light));
+                    break;
+                case 3:
+                    mbittemp = ImageHelper.getGrayscaleBlurredImage(mContext, ImageHelper.screenshotSurface(mContext), 25.0f);
+                    break;
+                case 4:
+                    Drawable bittempp = new BitmapDrawable(mContext.getResources(), ImageHelper.screenshotSurface(mContext));
+                    Bitmap bittemppp = ImageHelper.getColoredBitmap(bittempp, mContext.getResources().getColor(color.accent_device_default_light));
+                    mbittemp = ImageHelper.getBlurredImage(mContext, bittemppp, 25.0f);
+                    break;
+                case 0:
+                default:
+                    mbittemp = ImageHelper.getBlurredImage(mContext, ImageHelper.screenshotSurface(mContext), 25.0f);
+            }
+            mbackground = new BitmapDrawable(mContext.getResources(), mbittemp);
+
             // Inflate the decor view, so the attributes below are not overwritten by the theme.
             window.getDecorView();
             window.getAttributes().systemUiVisibility |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -2845,7 +2880,12 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 mScrimAlpha = mBlurUtils.supportsBlursOnWindows() ?
                         ScrimController.BLUR_SCRIM_ALPHA : ScrimController.BUSY_SCRIM_ALPHA;
             }
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.POWER_MENU_BG, 0) == 0) {
             getWindow().setBackgroundDrawable(mBackgroundDrawable);
+            } else {
+            getWindow().setBackgroundDrawable(mbackground);
+            }
         }
 
         private void fixNavBarClipping() {
@@ -2914,8 +2954,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             if (mControlsUiController != null) {
                 mControlsUiController.show(mControlsView, this::dismissForControlsActivity);
             }
-
-            mBackgroundDrawable.setAlpha(0);
+            if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.POWER_MENU_BG, 0) == 0) {
+                mBackgroundDrawable.setAlpha(0);
+            }
             float xOffset = mGlobalActionsLayout.getAnimationOffsetX();
             ObjectAnimator alphaAnimator =
                     ObjectAnimator.ofFloat(mContainer, "alpha", 0f, 1f);
@@ -2924,7 +2966,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             alphaAnimator.addUpdateListener((animation) -> {
                 float animatedValue = animation.getAnimatedFraction();
                 int alpha = (int) (animatedValue * mScrimAlpha * 255);
-                mBackgroundDrawable.setAlpha(alpha);
+                if (Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.POWER_MENU_BG, 0) == 0) {
+                    mBackgroundDrawable.setAlpha(alpha);
+                }
                 mDepthController.updateGlobalDialogVisibility(animatedValue,
                         mGlobalActionsLayout);
             });
@@ -2950,7 +2995,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 alphaAnimator.addUpdateListener((animation) -> {
                     float animatedValue = 1f - animation.getAnimatedFraction();
                     int alpha = (int) (animatedValue * mScrimAlpha * 255);
-                    mBackgroundDrawable.setAlpha(alpha);
+                    if (Settings.System.getInt(mContext.getContentResolver(),
+                        Settings.System.POWER_MENU_BG, 0) == 0) {
+                        mBackgroundDrawable.setAlpha(alpha);
+                    }
                     mDepthController.updateGlobalDialogVisibility(animatedValue,
                             mGlobalActionsLayout);
                 });
