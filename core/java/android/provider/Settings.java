@@ -6812,6 +6812,18 @@ public final class Settings {
          */
         public static final String REFRESH_RATE_SETTING = "refresh_rate_setting";
 
+       /**
+        * Powermenu Background
+        * @hide
+        */
+        public static final String POWER_MENU_BG = "power_menu_bg";
+
+        /**
+        * Powermenu Background Style
+        * @hide
+        */
+        public static final String POWER_MENU_BG_STYLE = "power_menu_bg_style";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
