@@ -55,9 +55,14 @@ import android.renderscript.Allocation;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.renderscript.RenderScript;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
+import android.view.Display;
+import android.view.SurfaceControl;
+import android.view.View;
+import android.view.WindowManager;
 
 public class ImageHelper {
     private static final int VECTOR_WIDTH = 512;
@@ -113,6 +118,35 @@ public class ImageHelper {
         final Rect rect = new Rect(0, 0, grayscaleBitmap.getWidth(), grayscaleBitmap.getHeight());
         cc.drawBitmap(grayscaleBitmap, rect, rect, pp);
         return grayscaleBitmap;
+    }
+
+    public static Bitmap screenshotSurface(Context context) {
+        WindowManager mWindowManager;
+        Display mDisplay;
+        DisplayMetrics mDisplayMetrics;
+        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mDisplay = mWindowManager.getDefaultDisplay();
+        mDisplayMetrics = new DisplayMetrics();
+        mDisplay.getRealMetrics(mDisplayMetrics);
+        int displayHeight = mDisplayMetrics.heightPixels;
+        int displayWidth = mDisplayMetrics.widthPixels;
+        Rect displayRect = new Rect(0, 0, displayWidth, displayHeight);
+        int rot = mDisplay.getRotation();
+        Bitmap mScreenBitmap;
+        try {
+            mScreenBitmap = SurfaceControl.screenshot(displayRect, displayWidth, displayHeight, rot);
+            // Crop the screenshot to selected region
+            Bitmap swBitmap = mScreenBitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap cropped = Bitmap.createBitmap(swBitmap, Math.max(0, displayRect.left), Math.max(0, displayRect.top),
+                    displayRect.width(), displayRect.height());
+            swBitmap.recycle();
+            mScreenBitmap.recycle();
+            mScreenBitmap = cropped;
+            } catch (Exception e) {
+                Log.d ("ion", "Screenshot service: FB is protected, falling back to an empty Bitmap");
+                mScreenBitmap = Bitmap.createBitmap(displayWidth, displayHeight, Bitmap.Config.ARGB_8888);
+        }
+        return mScreenBitmap;
     }
 
     public static Bitmap toGrayscale(Bitmap bmpOriginal) {
