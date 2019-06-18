@@ -6683,6 +6683,11 @@ public final class Settings {
         public static final String SMART_CHARGING_LEVEL = "smart_charging_level";
 
         /**
+	 * @hide
+	 */
+        public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
+
+	/**
          * @hide
          */
         public static final String SHOW_BATTERY_ESTIMATE = "show_battery_estimate";
