@@ -135,4 +135,7 @@
     <!-- Bottom margin size when fingerprint in display is active -->
     <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">@dimen/keyguard_indication_margin_bottom</dimen>
 
+    <!-- Bottom margin of the ambient music ticker -->
+    <dimen name="ambient_indication_margin_bottom">71dp</dimen>
+
 </resources>
