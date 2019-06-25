@@ -39,7 +39,7 @@ public class AwesomeAnimationHelper {
     public final static int ANIMATION_GROW_SHRINK_LEFT = 12;
     public final static int ANIMATION_GROW_SHRINK_RIGHT = 13;
     public final static int ANIMATION_ETHANS = 14;
-    public final static int ANIMATION_RANDOM = 15;
+    public final static int ANIMATION_Q = 15;
 
     public static final int TRANSIT_ACTIVITY_OPEN = 6;
     public static final int TRANSIT_ACTIVITY_CLOSE = 7;
@@ -71,7 +71,8 @@ public class AwesomeAnimationHelper {
         animList.add(ANIMATION_GROW_SHRINK_LEFT);
         animList.add(ANIMATION_GROW_SHRINK_RIGHT);
         animList.add(ANIMATION_ETHANS);
-        animList.add(ANIMATION_RANDOM);
+        animList.add(ANIMATION_Q);
+
         int length = animList.size();
         int[] anim = new int[length];
         for (int i = 0; i < length; i++) {
@@ -81,10 +82,6 @@ public class AwesomeAnimationHelper {
     }
 
     public static int[] getAnimations(int mAnim, int transit) {
-        if(mAnim == ANIMATION_RANDOM){
-            mAnim = (new Random()).nextInt(15);
-            // Random number from 0 to 14
-        }
         int[] anim = new int[2];
         switch (mAnim) {
             case ANIMATION_FADE:
@@ -194,6 +191,61 @@ public class AwesomeAnimationHelper {
                         anim[0] = com.android.internal.R.anim.ethans_launch_task_behind_target;
                         break;
                 }
+            case ANIMATION_Q:
+                switch (transit) {
+                    case TRANSIT_ACTIVITY_OPEN:
+                        anim[1] = com.android.internal.R.anim.q_activity_open_enter;
+                        anim[0] = com.android.internal.R.anim.q_activity_open_exit;
+                        break;
+
+                    case TRANSIT_ACTIVITY_CLOSE:
+                        anim[1] = com.android.internal.R.anim.q_activity_close_enter;
+                        anim[0] = com.android.internal.R.anim.q_activity_close_exit;
+                        break;
+
+                    case TRANSIT_DOCK_TASK_FROM_RECENTS:
+                    case TRANSIT_TASK_OPEN:
+                        anim[1] = com.android.internal.R.anim.q_task_open_enter;
+                        anim[0] = com.android.internal.R.anim.q_task_open_exit;
+                        break;
+
+                    case TRANSIT_TASK_CLOSE:
+                        anim[1] = com.android.internal.R.anim.q_task_close_enter;
+                        anim[0] = com.android.internal.R.anim.q_task_close_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_OPEN:
+                        anim[1] = com.android.internal.R.anim.q_wallpaper_open_enter;
+                        anim[0] = com.android.internal.R.anim.q_wallpaper_open_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_CLOSE:
+                        anim[1] = com.android.internal.R.anim.q_wallpaper_close_enter;
+                        anim[0] = com.android.internal.R.anim.q_wallpaper_close_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_INTRA_OPEN:
+                        anim[1] = com.android.internal.R.anim.q_wallpaper_intra_open_enter;
+                        anim[0] = com.android.internal.R.anim.q_wallpaper_intra_open_exit;
+                        break;
+
+                    case TRANSIT_WALLPAPER_INTRA_CLOSE:
+                        anim[1] = com.android.internal.R.anim.q_wallpaper_intra_close_enter;
+                        anim[0] = com.android.internal.R.anim.q_wallpaper_intra_close_exit;
+                        break;
+                    case TRANSIT_TASK_TO_FRONT:
+                        anim[1] = com.android.internal.R.anim.q_task_open_enter;
+                        anim[0] = com.android.internal.R.anim.q_task_open_exit;
+                        break;
+                    case TRANSIT_TASK_TO_BACK:
+                        anim[1] = com.android.internal.R.anim.q_task_close_enter;
+                        anim[0] = com.android.internal.R.anim.q_task_close_exit;
+                        break;
+                    case TRANSIT_TASK_OPEN_BEHIND:
+                        anim[1] = com.android.internal.R.anim.q_launch_task_behind_source;
+                        anim[0] = com.android.internal.R.anim.q_launch_task_behind_target;
+                        break;
+                }
                 break;
         }
         return anim;
@@ -248,8 +300,8 @@ public class AwesomeAnimationHelper {
             case ANIMATION_ETHANS:
                 value = res.getString(com.android.internal.R.string.animation_ethans);
                 break;
-            case ANIMATION_RANDOM:
-                value = res.getString(com.android.internal.R.string.animation_random);
+            case ANIMATION_Q:
+                value = res.getString(com.android.internal.R.string.animation_q);
                 break;
             default:
                 value = res.getString(com.android.internal.R.string.action_null);
