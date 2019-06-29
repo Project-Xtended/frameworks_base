@@ -83,6 +83,8 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     @VisibleForTesting
     protected boolean mUseHeadsUp = false;
 
+    private boolean mSkipHeadsUp;
+
     @Inject
     public NotificationInterruptStateProviderImpl(
             Context context,
@@ -330,12 +332,24 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         mLessBoringHeadsUp = lessBoring;
     }
 
+    @Override
+    public void setGamingPeekMode(boolean skipHeadsUp) { 
+        mSkipHeadsUp = skipHeadsUp;
+    }
+
     private boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
-        boolean isImportantHeadsUp = false;
         String notificationPackageName = sbn.getPackageName().toLowerCase();
-        isImportantHeadsUp = notificationPackageName.contains("dialer") ||
-                notificationPackageName.contains("clock");
-        return mLessBoringHeadsUp && !isImportantHeadsUp;
+        // Gaming mode takes precedence since messaging headsup is intrusive
+        if (mSkipHeadsUp) {
+            boolean isNonInstrusive = notificationPackageName.equals("com.android.dialer")
+                || notificationPackageName.contains("clock");
+            return !mStatusBarStateController.isDozing() && mSkipHeadsUp && !isNonInstrusive;
+        }
+        boolean isLessBoring = notificationPackageName.equals("com.android.dialer") ||
+                notificationPackageName.contains("clock") ||
+                notificationPackageName.equals("com.android.messages");
+
+        return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isLessBoring;
     }
 
     /**
