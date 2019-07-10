@@ -324,6 +324,7 @@
   <java-symbol type="integer" name="nav_gesture_swipe_min_length" />
   <java-symbol type="integer" name="nav_gesture_swipe_timout" />
   <java-symbol type="integer" name="nav_gesture_move_threshold" />
+  <java-symbol type="integer" name="nav_gesture_swipe_start" />
 
   <!-- Whether to enable oneplus cam hack -->
   <java-symbol type="bool" name="config_enableOPcamhack" />
@@ -367,5 +368,6 @@
   <java-symbol type="string" name="config_SmartChargingSysfsNode" />
   <java-symbol type="string" name="config_SmartChargingSupspendValue" />
   <java-symbol type="string" name="config_SmartChargingResumeValue" />
+
 
 </resources>

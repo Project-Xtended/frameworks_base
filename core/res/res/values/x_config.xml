@@ -212,6 +212,8 @@
     <integer name="nav_gesture_swipe_timout">250</integer>
     <!-- signification move threshold - if stays below will trigger action -->
     <integer name="nav_gesture_move_threshold">4</integer>
+    <!-- min height for gesture action start -->
+    <integer name="nav_gesture_swipe_start">20</integer>
 
     <!-- Whether to enable oneplus cam hack -->
     <bool name="config_enableOPcamhack">false</bool>
