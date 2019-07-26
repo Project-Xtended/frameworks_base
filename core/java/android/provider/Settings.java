@@ -5714,6 +5714,12 @@ public final class Settings {
         public static final String SMART_SCREEN_WAKE = "smart_screen_wake";
 
         /**
+         * Whether to show heads up only for dialer and sms apps
+         * @hide
+         */
+        public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5781,10 +5787,6 @@ public final class Settings {
             PUBLIC_SETTINGS.add(SOUND_EFFECTS_ENABLED);
             PUBLIC_SETTINGS.add(HAPTIC_FEEDBACK_ENABLED);
             PUBLIC_SETTINGS.add(SHOW_WEB_SUGGESTIONS);
-            PUBLIC_SETTINGS.add(VIBRATE_WHEN_RINGING);
-            PUBLIC_SETTINGS.add(HEADS_UP_STOPLIST_VALUES);
-            PUBLIC_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
-            PUBLIC_SETTINGS.add(SCREEN_OFF_ANIMATION);
         }
 
         /**
@@ -5904,6 +5906,7 @@ public final class Settings {
 	    PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
             PRIVATE_SETTINGS.add(OMNI_FOOTER_TEXT_SHOW);
+            PRIVATE_SETTINGS.add(LESS_BORING_HEADS_UP);
         }
 
         /**
