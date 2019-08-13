@@ -1673,6 +1673,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private final ScreenshotRunnable mScreenshotRunnable = new ScreenshotRunnable();
 
+    private void takeScreenshot(int screenshotType) {
+        takeScreenshotDelayed(screenshotType, 0);
+    }
+
+    private void takeScreenshotDelayed(int screenshotType, long delay) {
+        mHandler.removeCallbacks(mScreenshotRunnable);
+        mScreenshotRunnable.setScreenshotType(screenshotType);
+        mHandler.postDelayed(mScreenshotRunnable, delay);
+    }
+
     @Override
     public void showGlobalActions() {
         mHandler.removeMessages(MSG_DISPATCH_SHOW_GLOBAL_ACTIONS);
@@ -6601,5 +6611,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         Message msg = mHandler.obtainMessage(MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK, event);
         msg.setAsynchronous(true);
         mHandler.sendMessageDelayed(msg, ViewConfiguration.getLongPressTimeout());
+    }
+
+    @Override
+    public void takeAlternativeScreenshot() {
+        takeScreenshot(TAKE_SCREENSHOT_FULLSCREEN);
     }
 }
