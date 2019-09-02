@@ -585,4 +585,7 @@
     <bool name="config_showNotificationForUnknownBatteryState">false</bool>
     <!-- content URL in a notification when ACTION_BATTERY_CHANGED.EXTRA_PRESENT field is false -->
     <string translatable="false" name="config_batteryStateUnknownUrl"></string>
+    
+     <!-- Max visible status icons -->
+     <integer name="config_maxVisibleStatusIcons">7</integer>
 </resources>
