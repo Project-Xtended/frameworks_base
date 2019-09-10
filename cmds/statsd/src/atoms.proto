@@ -122,6 +122,7 @@ message Atom {
         WTFOccurred wtf_occurred = 80;
         LowMemReported low_mem_reported = 81;
         ThermalThrottlingStateChanged thermal_throttling = 86;
+
         // 86 - 165 are not available
         BluetoothClassicPairingEventReported bluetooth_classic_pairing_event_reported = 166;
     }

@@ -728,15 +728,13 @@ public class GnssLocationProvider implements LocationProviderInterface, InjectNt
 
         String emergencyExtensionSecondsString
                 = properties.getProperty("ES_EXTENSION_SEC", "0");
-        if(mNIHandler != null){
-            try {
-                int emergencyExtensionSeconds =
+        try {
+            int emergencyExtensionSeconds =
                     Integer.parseInt(emergencyExtensionSecondsString);
-                mNIHandler.setEmergencyExtensionSeconds(emergencyExtensionSeconds);
-            } catch (NumberFormatException e) {
-                Log.e(TAG, "unable to parse ES_EXTENSION_SEC: "
-                        + emergencyExtensionSecondsString);
-            }
+            mNIHandler.setEmergencyExtensionSeconds(emergencyExtensionSeconds);
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "unable to parse ES_EXTENSION_SEC: "
+                    + emergencyExtensionSecondsString);
         }
     }
 
