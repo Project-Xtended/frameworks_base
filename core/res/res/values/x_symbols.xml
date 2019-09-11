@@ -68,18 +68,21 @@
     <java-symbol type="anim" name="custom_app_out" />
     <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
-  <!-- Powermenu animations -->
-  <java-symbol type="style" name="GlobalActionsAnimation" />
-  <java-symbol type="style" name="GlobalActionsAnimationTop" />
-  <java-symbol type="style" name="GlobalActionsAnimationEnter" />
-  <java-symbol type="style" name="GlobalActionsAnimationFly" />
-  <java-symbol type="style" name="GlobalActionsAnimationTn" />
-  <java-symbol type="style" name="GlobalActionsAnimationTranslucent" />
-  <java-symbol type="style" name="GlobalActionsAnimationXylon" />
-  <java-symbol type="style" name="GlobalActionsAnimationCard" />
-  <java-symbol type="style" name="GlobalActionsAnimationRotate" />
+    <!-- Powermenu animations -->
+    <java-symbol type="style" name="GlobalActionsAnimation" />
+    <java-symbol type="style" name="GlobalActionsAnimationTop" />
+    <java-symbol type="style" name="GlobalActionsAnimationEnter" />
+    <java-symbol type="style" name="GlobalActionsAnimationFly" />
+    <java-symbol type="style" name="GlobalActionsAnimationTn" />
+    <java-symbol type="style" name="GlobalActionsAnimationTranslucent" />
+    <java-symbol type="style" name="GlobalActionsAnimationXylon" />
+    <java-symbol type="style" name="GlobalActionsAnimationCard" />
+    <java-symbol type="style" name="GlobalActionsAnimationRotate" />
 
     <!-- Whether to allow process with media UID to access CameraServiceProxy -->
     <java-symbol type="bool" name="config_allowMediaUidForCameraServiceProxy" />
+
+    <!-- Whether device ignores the RSSNR signal implementation -->
+    <java-symbol type="bool" name="config_ignoreRssnrSignalLevel" />
 
 </resources>
