@@ -251,7 +251,7 @@ public class KeyguardStatusView extends GridLayout implements
         mWeatherView = (CurrentWeatherView) findViewById(R.id.weather_container);
 
         mVisibleInDoze = Sets.newArraySet();
-        if (mWeatherView != null) {
+        if (mWeatherView != null && !mPulsing) {
             mVisibleInDoze.add(mWeatherView);
         }
         if (mClockView != null) {
@@ -1579,11 +1579,6 @@ public class KeyguardStatusView extends GridLayout implements
             mWasPulsing = true;
         }
         mPulsing = pulsing;
-        // Animation can look really weird when the slice has a header, let's hide the views
-        // immediately instead of fading them away.
-        if (mKeyguardSlice.hasHeader()) {
-            animate = false;
-        }
         mKeyguardSlice.setPulsing(pulsing, animate);
         if (mWeatherView != null) {
             mWeatherView.setVisibility((mShowWeather && !mPulsing) ? View.VISIBLE : View.GONE);
@@ -1634,7 +1629,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mWeatherView.setVisibility(View.VISIBLE);
                 mWeatherView.enableUpdates();
             }
-            if (!mShowWeather) {
+            if (!mShowWeather || mPulsing) {
                 mWeatherView.setVisibility(View.GONE);
                 mWeatherView.disableUpdates();
             }
