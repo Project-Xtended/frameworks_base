@@ -224,5 +224,6 @@ public class SystemSettingsValidators {
                     }
                 });
         VALIDATORS.put(System.USE_OLD_MOBILETYPE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.NAVIGATION_BAR_INVERSE, BOOLEAN_VALIDATOR);
     }
 }
