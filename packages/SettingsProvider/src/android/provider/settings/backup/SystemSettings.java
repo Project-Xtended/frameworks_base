@@ -98,5 +98,6 @@ public class SystemSettings {
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
         Settings.System.LOCKSCREEN_SMALL_CLOCK,
+        Settings.System.NAVIGATION_BAR_INVERSE,
     };
 }
