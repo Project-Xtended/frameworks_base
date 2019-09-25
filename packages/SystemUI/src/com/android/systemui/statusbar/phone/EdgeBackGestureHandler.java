@@ -38,9 +38,11 @@ import android.os.Looper;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.UserHandle;
 import android.os.Vibrator;
 import android.os.VibrationEffect;
 import android.provider.DeviceConfig;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.text.TextUtils;
 import android.util.Log;
@@ -245,6 +247,8 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
     private boolean mEdgeHapticEnabled;
     private static final int HAPTIC_DURATION = 20;
 
+    private int mEdgeHeight;
+
     private final Vibrator mVibrator;
 
     private final GestureNavigationSettingsObserver mGestureNavigationSettingsObserver;
@@ -379,6 +383,28 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
         updateCurrentUserResources();
     }
 
+    private void updateEdgeHeightValue() {
+        if (mDisplaySize == null) {
+            return;
+        }
+        int edgeHeightSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.BACK_GESTURE_HEIGHT, 0, UserHandle.USER_CURRENT);
+        // edgeHeigthSettings cant be range 0 - 3
+        // 0 means full height
+        // 1 measns half of the screen
+        // 2 means lower third of the screen
+        // 3 means lower sicth of the screen
+        if (edgeHeightSetting == 0) {
+            mEdgeHeight = mDisplaySize.y;
+        } else if (edgeHeightSetting == 1) {
+            mEdgeHeight = mDisplaySize.y / 2;
+        } else if (edgeHeightSetting == 2) {
+            mEdgeHeight = mDisplaySize.y / 3;
+        } else {
+            mEdgeHeight = mDisplaySize.y / 6;
+        }
+    }
+
     /**
      * @see NavigationBarView#onAttachedToWindow()
      */
@@ -417,6 +443,10 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
     private void vibrateTick() {
             AsyncTask.execute(() ->
                     mVibrator.vibrate(VibrationEffect.createOneShot(HAPTIC_DURATION, VibrationEffect.DEFAULT_AMPLITUDE)));
+    }
+
+    public void onSettingsChanged() {
+        updateEdgeHeightValue();
     }
 
     private void disposeInputChannel() {
@@ -607,6 +637,12 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
         if (y >= (mDisplaySize.y - mBottomGestureHeight)) {
             return false;
         }
+        if (mEdgeHeight != 0) {
+            if (y < (mDisplaySize.y - mBottomGestureHeight - mEdgeHeight)) {
+                return false;
+            }
+        }
+
         // If the point is way too far (twice the margin), it is
         // not interesting to us for logging purposes, nor we
         // should process it.  Simply return false and keep
@@ -961,6 +997,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker implements Displa
         if (mEdgeBackPlugin != null) {
             mEdgeBackPlugin.setDisplaySize(mDisplaySize);
         }
+        updateEdgeHeightValue();
     }
 
     private void sendEvent(int action, int code) {

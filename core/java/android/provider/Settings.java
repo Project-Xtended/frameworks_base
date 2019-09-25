@@ -6606,6 +6606,9 @@ public final class Settings {
          */
         public static final String RIGHT_VERTICAL_BACK_SWIPE_APP_FR_ACTION = "right_vertical_back_swipe_app_fr_action";
 
+        /** @hide */
+        public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
+
         /**
          * Launch custom activity when using the long right back swipe app action
          *
