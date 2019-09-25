@@ -6045,6 +6045,9 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CARRIER_FONT_STYLE = "status_bar_carrier_font_style";
 
+        /** @hide */
+        public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
+
         /**
          * Set edge gesture Y dead zone
          * 0 - disabled - stock behavior - default
