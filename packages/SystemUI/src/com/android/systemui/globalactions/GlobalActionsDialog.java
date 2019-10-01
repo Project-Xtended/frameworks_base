@@ -433,7 +433,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                         Settings.System.POWERMENU_POWER, 0) == 1) {
                     mItems.add(new PowerAction());
                 }
-            } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
+            /*} else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_AIRPLANE, 0) == 1) {
                     mItems.add(mAirplaneModeOn);
@@ -447,7 +447,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_SOUNDPANEL, 0) == 1) {
                     mItems.add(mSilentModeAction);
-                }
+                }*/
             } else if (GLOBAL_ACTION_KEY_USERS.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.POWERMENU_USERS, 0) == 1) {
@@ -501,7 +501,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 		}
             } else if (GLOBAL_ACTION_KEY_ONTHEGO.equals(actionKey)) {
                 if (Settings.System.getInt(mContext.getContentResolver(),
-                        Settings.System.GLOBAL_ACTIONS_ONTHEGO, 1) == 1) {
+                        Settings.System.GLOBAL_ACTIONS_ONTHEGO, 0) == 1) {
                     mItems.add(getOnTheGoAction());
                 }
             } else {
