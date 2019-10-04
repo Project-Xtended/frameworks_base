@@ -359,11 +359,14 @@ public class EdgeBackGestureHandler implements DisplayListener {
         if (y > (mDisplaySize.y - Math.max(mImeHeight, mNavBarHeight))) {
             return false;
         }
+
         if (mEdgeHeight != 0) {
             if (y < (mDisplaySize.y - Math.max(mImeHeight, mNavBarHeight) - mEdgeHeight)) {
                 return false;
             }
         }
+
+        // Disallow if too far from the edge
         if (x > mEdgeWidth + mLeftInset && x < (mDisplaySize.x - mEdgeWidth - mRightInset)) {
             return false;
         }
