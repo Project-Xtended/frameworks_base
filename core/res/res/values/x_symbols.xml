@@ -189,4 +189,6 @@
     <!-- Whether the device supports Smart Pixels -->
     <java-symbol type="bool" name="config_enableSmartPixels" />
 
+    <java-symbol type="integer" name="config_screenBrightnessPulse" />
+
 </resources>
