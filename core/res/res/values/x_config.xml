@@ -234,4 +234,7 @@
     <string name="config_pocketJudgeVendorProximitySensorName"></string>
     <string name="config_pocketJudgeVendorSensorName"></string>
 
+    <!-- -1 means use same as config_screenBrightnessDoze -->
+    <integer name="config_screenBrightnessPulse">-1</integer>
+
 </resources>
