@@ -105,4 +105,7 @@
     <!-- Whether notify fingerprint client of successful cancelled authentication -->
     <bool name="config_notifyClientOnFingerprintCancelSuccess">false</bool>
 
+    <!-- -1 means use same as config_screenBrightnessDoze -->
+    <integer name="config_screenBrightnessPulse">-1</integer>
+
 </resources>
