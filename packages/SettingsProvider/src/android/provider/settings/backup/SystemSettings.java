@@ -97,5 +97,6 @@ public class SystemSettings {
         Settings.System.NAVBAR_LAYOUT_VIEWS,
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
+        Settings.System.DOZE_ON_CHARGE,
     };
 }
