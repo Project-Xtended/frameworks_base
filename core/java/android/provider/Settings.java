@@ -9984,6 +9984,18 @@ public final class Settings {
         public static final String POWER_MENU_HIDE_ON_SECURE = "power_menu_hide_on_secure";
 
         /**
+         * Select from different navigation bar layouts
+         * @hide
+         */
+        public static final String NAVBAR_LAYOUT_VIEWS = "navbar_layout_views";
+
+        /**
+         * Inverse navigation bar layout
+         * @hide
+         */
+        public static final String NAVBAR_INVERSE_LAYOUT = "navbar_inverse_layout";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
