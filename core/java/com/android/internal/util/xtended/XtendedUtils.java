@@ -83,6 +83,19 @@ public class XtendedUtils {
         return isPackageInstalled(context, pkg, true);
     }
 
+    public static boolean isAvailableApp(String packageName, Context context) {
+       Context mContext = context;
+       final PackageManager pm = mContext.getPackageManager();
+       try {
+           pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+           int enabled = pm.getApplicationEnabledSetting(packageName);
+           return enabled != PackageManager.COMPONENT_ENABLED_STATE_DISABLED &&
+               enabled != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER;
+       } catch (NameNotFoundException e) {
+           return false;
+       }
+    }
+
     public static boolean deviceHasFlashlight(Context ctx) {
         return ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
