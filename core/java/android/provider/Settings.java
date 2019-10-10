@@ -4532,6 +4532,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_SOUNDPANEL = "powermenu_soundpanel";
+        /** @hide */
+        private static final Validator POWERMENU_SOUNDPANEL_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display screenshot in the power menu
@@ -4539,6 +4542,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_SCREENSHOT = "powermenu_screenshot";
+        /** @hide */
+        private static final Validator POWERMENU_SCREENSHOT_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display settings in the power menu
@@ -4546,6 +4552,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_SETTINGS = "powermenu_settings";
+        /** @hide */
+        private static final Validator POWERMENU_SETTINGS_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display lock in the power menu
@@ -4553,10 +4562,16 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_LOCKDOWN = "powermenu_lockdown";
+        /** @hide */
+        private static final Validator POWERMENU_LOCKDOWN_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          */
         public static final String POWERMENU_AIRPLANE = "powermenu_airplane";
+        /** @hide */
+        private static final Validator POWERMENU_AIRPLANE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display reboot in the power menu
@@ -4564,6 +4579,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_RESTART = "powermenu_restart";
+        /** @hide */
+        private static final Validator POWERMENU_RESTART_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display advanced reboot in the power menu
@@ -4571,6 +4589,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_RESTART_RECOVERY = "powermenu_restart_recovery";
+        /** @hide */
+        private static final Validator POWERMENU_RESTART_RECOVERY_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display power in the power menu
@@ -4579,6 +4600,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_POWER = "powermenu_power";
+        /** @hide */
+        private static final Validator POWERMENU_POWER_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display the users option in the power menu
@@ -4586,6 +4610,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_USERS = "powermenu_users";
+        /** @hide */
+        private static final Validator POWERMENU_USERS_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * Whether to display the users option in the power menu
@@ -4593,6 +4620,9 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_LOGOUT = "powermenu_logout";
+        /** @hide */
+        private static final Validator POWERMENU_LOGOUT_VALIDATOR =
+                BOOLEAN_VALIDATOR;
 
         /**
          * If On-The-Go should be displayed at the power menu.
@@ -4841,6 +4871,16 @@ public final class Settings {
             VOLUME_KEY_CURSOR_CONTROL,
             TORCH_LONG_PRESS_POWER_GESTURE,
             TORCH_LONG_PRESS_POWER_TIMEOUT,
+            POWERMENU_SOUNDPANEL,
+            POWERMENU_SCREENSHOT,
+            POWERMENU_SETTINGS,
+            POWERMENU_LOCKDOWN,
+            POWERMENU_AIRPLANE,
+            POWERMENU_RESTART,
+            POWERMENU_RESTART_RECOVERY,
+            POWERMENU_POWER,
+            POWERMENU_USERS,
+            POWERMENU_LOGOUT,
             POWERMENU_TORCH,
         };
 
@@ -4977,6 +5017,16 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VOLUME_KEY_CURSOR_CONTROL);
             PRIVATE_SETTINGS.add(TORCH_LONG_PRESS_POWER_GESTURE);
             PRIVATE_SETTINGS.add(TORCH_LONG_PRESS_POWER_TIMEOUT);
+            PRIVATE_SETTINGS.add(POWERMENU_SOUNDPANEL);
+            PRIVATE_SETTINGS.add(POWERMENU_SCREENSHOT);
+            PRIVATE_SETTINGS.add(POWERMENU_SETTINGS);
+            PRIVATE_SETTINGS.add(POWERMENU_LOCKDOWN);
+            PRIVATE_SETTINGS.add(POWERMENU_AIRPLANE);
+            PRIVATE_SETTINGS.add(POWERMENU_RESTART);
+            PRIVATE_SETTINGS.add(POWERMENU_RESTART_RECOVERY);
+            PRIVATE_SETTINGS.add(POWERMENU_POWER);
+            PRIVATE_SETTINGS.add(POWERMENU_USERS);
+            PRIVATE_SETTINGS.add(POWERMENU_LOGOUT);
             PRIVATE_SETTINGS.add(POWERMENU_TORCH);
         }
 
@@ -5082,6 +5132,16 @@ public final class Settings {
             VALIDATORS.put(VOLUME_KEY_CURSOR_CONTROL, VOLUME_KEY_CURSOR_CONTROL_VALIDATOR);
             VALIDATORS.put(TORCH_LONG_PRESS_POWER_GESTURE, TORCH_LONG_PRESS_POWER_GESTURE_VALIDATOR);
             VALIDATORS.put(TORCH_LONG_PRESS_POWER_TIMEOUT, TORCH_LONG_PRESS_POWER_TIMEOUT_VALIDATOR);
+            VALIDATORS.put(POWERMENU_SOUNDPANEL, POWERMENU_SOUNDPANEL_VALIDATOR);
+            VALIDATORS.put(POWERMENU_SCREENSHOT, POWERMENU_SCREENSHOT_VALIDATOR);
+            VALIDATORS.put(POWERMENU_SETTINGS, POWERMENU_SETTINGS_VALIDATOR);
+            VALIDATORS.put(POWERMENU_LOCKDOWN, POWERMENU_LOCKDOWN_VALIDATOR);
+            VALIDATORS.put(POWERMENU_AIRPLANE, POWERMENU_AIRPLANE_VALIDATOR);
+            VALIDATORS.put(POWERMENU_RESTART, POWERMENU_RESTART_VALIDATOR);
+            VALIDATORS.put(POWERMENU_RESTART_RECOVERY, POWERMENU_RESTART_RECOVERY_VALIDATOR);
+            VALIDATORS.put(POWERMENU_POWER, POWERMENU_POWER_VALIDATOR);
+            VALIDATORS.put(POWERMENU_USERS, POWERMENU_USERS_VALIDATOR);
+            VALIDATORS.put(POWERMENU_LOGOUT, POWERMENU_LOGOUT_VALIDATOR);
             VALIDATORS.put(POWERMENU_TORCH, POWERMENU_TORCH_VALIDATOR);
         }
 
