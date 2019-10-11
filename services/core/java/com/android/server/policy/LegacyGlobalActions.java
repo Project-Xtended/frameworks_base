@@ -279,7 +279,7 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
             }
             if (GLOBAL_ACTION_KEY_POWER.equals(actionKey)) {
                 mItems.add(new PowerAction(mContext, mWindowManagerFuncs));
-            } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
+            /*} else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
                 mItems.add(mAirplaneModeOn);
             } else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
                 if (Settings.Global.getInt(mContext.getContentResolver(),
@@ -289,7 +289,7 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
             } else if (GLOBAL_ACTION_KEY_SILENT.equals(actionKey)) {
                 if (mShowSilentToggle) {
                     mItems.add(mSilentModeAction);
-                }
+                }*/
             } else if (GLOBAL_ACTION_KEY_USERS.equals(actionKey)) {
                 if (SystemProperties.getBoolean("fw.power_user_switcher", false)) {
                     addUsersToMenu(mItems);
