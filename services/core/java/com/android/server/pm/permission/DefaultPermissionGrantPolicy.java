@@ -979,6 +979,9 @@ final class DefaultPermissionGrantPolicy {
                 getDefaultProviderAuthorityPackage("com.oneplus.camera", userId),
                 userId, WRITE_PERMISSIONS);
 
+        // ThemePicker
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.android.wallpaper", userId, STORAGE_PERMISSIONS);
+
         String[] notifPackages = {
             "com.android.camera2",
             "com.google.android.apps.safetyhub",
