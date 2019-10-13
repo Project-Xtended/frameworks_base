@@ -32,13 +32,13 @@
     <!-- Default screen brightness, from 0 to 255.  102 is 40%. -->
     <integer name="def_screen_brightness">102</integer>
     <bool name="def_screen_brightness_automatic_mode">false</bool>
-    <fraction name="def_window_animation_scale">100%</fraction>
-    <fraction name="def_window_transition_scale">100%</fraction>
+    <fraction name="def_window_animation_scale">60%</fraction>
+    <fraction name="def_window_transition_scale">60%</fraction>
     <bool name="def_haptic_feedback">true</bool>
 
     <bool name="def_bluetooth_on">true</bool>
     <bool name="def_wifi_display_on">false</bool>
-    <bool name="def_install_non_market_apps">false</bool>
+    <bool name="def_install_non_market_apps">true</bool>
     <bool name="def_package_verifier_enable">true</bool>
     <!-- 0 == off, 3 == on -->
     <integer name="def_location_mode">3</integer>
@@ -49,7 +49,7 @@
     <!-- 0 == never, 1 == only when plugged in, 2 == always -->
     <integer name="def_wifi_sleep_policy">2</integer>
     <bool name="def_wifi_wakeup_enabled">true</bool>
-    <bool name="def_networks_available_notification_on">true</bool>
+    <bool name="def_networks_available_notification_on">false</bool>
 
     <bool name="def_backup_enabled">false</bool>
     <string name="def_backup_transport" translatable="false">com.google.android.gms/.backup.BackupTransportService</string>
@@ -88,7 +88,7 @@
     <integer name="def_dock_audio_media_enabled">1</integer>
 
     <!-- Notifications use ringer volume -->
-    <bool name="def_notifications_use_ring_volume">true</bool>
+    <bool name="def_notifications_use_ring_volume">false</bool>
 
     <!-- Default for Settings.System.VIBRATE_IN_SILENT -->
     <bool name="def_vibrate_in_silent">true</bool>
@@ -176,10 +176,10 @@
     <string name="def_device_name_simple">%1$s</string>
 
     <!-- Default for Settings.Secure.WAKE_GESTURE_ENABLED -->
-    <bool name="def_wake_gesture_enabled">true</bool>
+    <bool name="def_wake_gesture_enabled">false</bool>
 
     <!-- Default state of tap to wake -->
-    <bool name="def_double_tap_to_wake">true</bool>
+    <bool name="def_double_tap_to_wake">false</bool>
 
     <!-- Default for Settings.Secure.NFC_PAYMENT_COMPONENT -->
     <string name="def_nfc_payment_component"></string>
@@ -213,7 +213,7 @@
     <string name="def_backup_agent_timeout_parameters"></string>
 
     <!-- Default for Settings.System.VIBRATE_WHEN_RINGING -->
-    <bool name="def_vibrate_when_ringing">false</bool>
+    <bool name="def_vibrate_when_ringing">true</bool>
 
     <!-- Default for Settings.Global.APPLY_RAMPING_RINGER -->
     <bool name="def_apply_ramping_ringer">false</bool>
