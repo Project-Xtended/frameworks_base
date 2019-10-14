@@ -17,13 +17,14 @@
 */
 -->
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetLeft="2dp"
-    android:insetRight="2.5dp">
+    android:insetLeft="1dp"
+    android:insetRight="1.5dp" >
+
     <vector
-        android:width="20dp"
-        android:height="20dp"
-        android:viewportWidth="23.0"
-        android:viewportHeight="23.0">
+        android:height="19dp"
+        android:width="19dp"
+        android:viewportHeight="24.0"
+        android:viewportWidth="24.0">
         <group
             android:translateX="-0.5"
             android:translateY="-0.5">
