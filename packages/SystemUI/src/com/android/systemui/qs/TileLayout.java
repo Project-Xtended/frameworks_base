@@ -1,6 +1,7 @@
 package com.android.systemui.qs;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.UserHandle;
@@ -137,13 +138,21 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
      * @param tilesCount Upper limit on the number of tiles to show. to prevent empty rows.
      */
     public boolean updateMaxRows(int heightMeasureSpec, int tilesCount) {
+        final Resources res = getContext().getResources();
+        final ContentResolver resolver = mContext.getContentResolver();
         final int availableHeight = MeasureSpec.getSize(heightMeasureSpec) - mCellMarginTop
                 + mCellMarginVertical;
         final int previousRows = mRows;
-        mRows = availableHeight / (mCellHeight + mCellMarginVertical);
-        if (mRows >= mMaxAllowedRows) {
-            mRows = mMaxAllowedRows;
-        } else if (mRows <= 1) {
+        if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mRows = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_LAYOUT_ROWS, 3,
+                    UserHandle.USER_CURRENT);
+        } else {
+            mRows = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_LAYOUT_ROWS_LANDSCAPE, 2,
+                    UserHandle.USER_CURRENT);
+        }
+        if (mRows < 1) {
             mRows = 1;
         }
         if (mRows > (tilesCount + mColumns - 1) / mColumns) {
@@ -214,10 +223,16 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         int columnsLandscape = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE, defaultColumns,
                 UserHandle.USER_CURRENT);
+        int rows = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_LAYOUT_ROWS, defaultColumns,
+                UserHandle.USER_CURRENT);
+        int rowsLandscape = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_LAYOUT_ROWS_LANDSCAPE, defaultColumns,
+                UserHandle.USER_CURRENT);
         boolean showTitles = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.QS_TILE_TITLE_VISIBILITY, 1,
                 UserHandle.USER_CURRENT) == 1;
-         if (showTitles) {
+        if (showTitles) {
             mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height);
         } else {
             mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height_wo_label);
@@ -227,11 +242,21 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
             mShowTitles = showTitles;
             requestLayout();
         }
+        if (mRows != (isPortrait ? rows : rowsLandscape) || mShowTitles != showTitles) {
+            mRows = isPortrait ? rows : rowsLandscape;
+            mShowTitles = showTitles;
+            requestLayout();
+        }
     }
 
     @Override
     public int getNumColumns() {
         return mColumns;
+    }
+
+    @Override
+    public int getNumRows() {
+        return mRows;
     }
 
     @Override

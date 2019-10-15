@@ -427,7 +427,6 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
             };
 
     public static class TilePage extends TileLayout {
-
         public TilePage(Context context, AttributeSet attrs) {
             super(context, attrs);
         }
@@ -501,6 +500,11 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
     @Override
     public int getNumColumns() {
         return mPages.get(0).getNumColumns();
+    }
+
+    @Override
+    public int getNumRows() {
+        return mPages.get(0).getNumRows();
     }
 
     @Override
