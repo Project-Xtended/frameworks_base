@@ -5573,6 +5573,18 @@ public final class Settings {
          */
         public static final String FORCE_SHOW_NAVBAR = "navigation_bar_show_new";
 
+         /**
+         * Whether to enable DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE = "doze_on_charge";
+
+        /**
+         * hidden stting of the current atate of DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
+
         /**
          * User definable value of pulse notification screen brightness
          *
@@ -5775,6 +5787,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
             PRIVATE_SETTINGS.add(OMNI_PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(OMNI_DOZE_BRIGHTNESS);
+	    PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
         }
 
         /**
