@@ -5127,6 +5127,21 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CARRIER_FONT_STYLE = "status_bar_carrier_font_style";
 
+         /**
+         * Whether to enable DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE = "doze_on_charge";
+
+        private static final Validator OMNI_DOZE_ON_CHARGE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * hidden stting of the current atate of DOZE only when charging
+         * @hide
+         */
+        public static final String OMNI_DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -5226,6 +5241,7 @@ public final class Settings {
             STATUSBAR_CLOCK_DATE_STYLE,
             STATUSBAR_CLOCK_DATE_FORMAT,
 	    STATUSBAR_CLOCK_DATE_POSITION,
+	    OMNI_DOZE_ON_CHARGE,
         };
 
         /**
@@ -5389,6 +5405,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_STYLE);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_FORMAT);
 	    PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_POSITION);
+	    PRIVATE_SETTINGS.add(OMNI_DOZE_ON_CHARGE);
         }
 
         /**
@@ -5519,6 +5536,7 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_STYLE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_FORMAT_VALIDATOR);
 	    VALIDATORS.put(STATUSBAR_CLOCK_DATE_POSITION, STATUSBAR_CLOCK_DATE_POSITION_VALIDATOR);
+	    VALIDATORS.put(OMNI_DOZE_ON_CHARGE, OMNI_DOZE_ON_CHARGE_VALIDATOR);
         }
 
         /**
