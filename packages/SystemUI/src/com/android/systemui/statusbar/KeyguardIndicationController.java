@@ -68,6 +68,9 @@ import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.util.wakelock.SettableWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
 
+import android.content.pm.PackageManager;
+import com.android.internal.custom.app.LineageContextConstants;
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
@@ -440,8 +443,9 @@ public class KeyguardIndicationController implements StateListener,
     }
 
     private boolean hasActiveInDisplayFp() {
-        boolean hasInDisplayFingerprint = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_needCustomFODView);
+        PackageManager packageManager = mContext.getPackageManager();
+        boolean hasInDisplayFingerprint = packageManager.hasSystemFeature
+                     (LineageContextConstants.Features.FOD);
         int userId = KeyguardUpdateMonitor.getCurrentUser();
         FingerprintManager fpm = (FingerprintManager) mContext.getSystemService(Context.FINGERPRINT_SERVICE);
         return hasInDisplayFingerprint && fpm.getEnrolledFingerprints(userId).size() > 0;
