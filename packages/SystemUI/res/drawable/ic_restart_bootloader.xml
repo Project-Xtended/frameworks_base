@@ -19,14 +19,14 @@
     android:height="24.000000dp"
     android:viewportWidth="512.000000"
     android:viewportHeight="512.000000"
-    android:tint="@*android:color/accent_device_default_light">
+    android:tint="?attr/colorControlNormal">
 
     <group
         android:translateY="512.000000"
         android:scaleX="0.100000"
         android:scaleY="-0.100000">
         <path
-            android:fillColor="#000000"
+            android:fillColor="#FF000000"
             android:strokeWidth="1"
             android:pathData="M2078 4236 c-10 -7 -18 -16 -18 -20 0 -4 -30 -69 -67 -144 -37 -75 -67 -138 -67
 -139 -1 -1 -21 -4 -46 -8 -25 -3 -63 -11 -85 -17 -97 -26 -97 -26 -187 54 -173 153
@@ -52,7 +52,7 @@
 -38 -181 -79 -156 -225 -244 -381 -230 -173 16 -313 114 -365 256 -33 88 -33 220
 -2 298 40 101 139 199 241 240 70 27 113 31 201 17z" />
         <path
-            android:fillColor="#000000"
+            android:fillColor="#FF000000"
             android:strokeWidth="1"
             android:pathData="M3504 3954 c-11 -90 -57 -119 -136 -84 -25 11 -52 18 -60 15 -17 -7 -98 -149 -98
 -172 1 -10 21 -33 45 -51 40 -29 45 -37 45 -72 0 -34 -6 -43 -45 -76 -25 -20 -45
@@ -64,7 +64,7 @@
 -7 -56z m184 -244 c131 -80 69 -275 -82 -258 -135 16 -170 187 -53 258 41 25 93 25
 135 0z" />
         <path
-            android:fillColor="#000000"
+            android:fillColor="#FF000000"
             android:strokeWidth="1"
             android:pathData="M3232 2286 c-100 -19 -166 -37 -172 -46 -5 -7 -6 -64 -4 -125 l5 -112 -36 -27 c-19
 -15 -44 -37 -54 -48 -19 -19 -21 -19 -103 -3 -129 25 -136 25 -157 7 -27 -24 -125
