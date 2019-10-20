@@ -155,7 +155,7 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         if (showImage) {
             mCurrentImage.setImageDrawable(d);
         } else {
-            mCurrentImage.setImageResource(android.R.color.transparent);
+            mCurrentImage.setVisibility(View.GONE);
         }
     }
 
