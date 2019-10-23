@@ -87,8 +87,9 @@
         android:persistent="false"
         android:title="@string/status_bar_nfc" />
 
-    <com.android.systemui.tuner.BatteryPreference
+    <!--<com.android.systemui.tuner.BatteryPreference
         android:title="@string/battery"
         android:summary="%s"
-        android:entries="@array/battery_options" />
+        android:entries="@array/battery_options" />-->
+
 </PreferenceScreen>
