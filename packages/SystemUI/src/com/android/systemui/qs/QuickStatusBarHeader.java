@@ -253,6 +253,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         // Don't need to worry about tuner settings for this icon
         mBatteryRemainingIcon.setIgnoreTunerUpdates(true);
         mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
+        mBatteryRemainingIcon.setOnClickListener(this);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
         updateSettings();
@@ -626,6 +627,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             builder.appendPath(Long.toString(System.currentTimeMillis()));
             Intent todayIntent = new Intent(Intent.ACTION_VIEW, builder.build());
             mActivityStarter.postStartActivityDismissingKeyguard(todayIntent, 0);
+        } else if (v == mBatteryRemainingIcon) {
+            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
+                Intent.ACTION_POWER_USAGE_SUMMARY), 0);
         }
     }
 
