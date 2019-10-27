@@ -37,4 +37,7 @@
     <dimen name="dismiss_all_button_width">55dp</dimen>
     <dimen name="dismiss_all_fab_src_size">24dp</dimen>
 
+    <!-- QS System Info -->
+    <dimen name="qs_temperatur_icon_size">16sp</dimen>
+
 </resources>

@@ -5289,6 +5289,11 @@ public final class Settings {
         public static final String LOCKSCREEN_CLOCK_DATE_COLOR = "lockscreen_clock_date_color";
 
         /**
+         * Shows system info in QS OFF:0, CPU temp:1, battery temp:2, gpu freq: 3, gpu load: 4
+         */
+        public static final String QS_SYSTEM_INFO = "qs_system_info";
+
+        /**
          * Change the color of the lockscreen owner's info text
          *
          * @hide
