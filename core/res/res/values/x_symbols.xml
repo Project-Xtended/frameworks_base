@@ -72,4 +72,7 @@
     <!-- Global Actions pref list -->
     <java-symbol type="array" name="custom_config_globalActionsList" />
 
+    <!-- QQS Height -->
+    <java-symbol type="dimen" name="quick_qs_total_height" />
+
 </resources>
