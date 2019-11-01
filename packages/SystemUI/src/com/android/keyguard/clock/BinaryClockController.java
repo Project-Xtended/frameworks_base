@@ -191,6 +191,6 @@ public class BinaryClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        return true;
+        return false;
     }
 }

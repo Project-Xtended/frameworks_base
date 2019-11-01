@@ -784,7 +784,7 @@ public class KeyguardStatusView extends GridLayout implements
         }
         mPulsing = pulsing;
         if (mWeatherView != null) {
-            mWeatherView.setVisibility((mShowWeather && mOmniStyle) ? View.VISIBLE : View.GONE);
+            mWeatherView.setVisibility((mShowWeather && (!mPulsing || !hasCustomClock())) ? View.VISIBLE : View.GONE);
         }
     }
 
