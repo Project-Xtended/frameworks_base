@@ -177,6 +177,7 @@ import com.android.systemui.fragments.ExtensionFragmentListener;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.keyguard.DismissCallbackRegistry;
 import com.android.systemui.keyguard.KeyguardService;
+import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.systemui.keyguard.KeyguardUnlockAnimationController;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.keyguard.ScreenLifecycle;
@@ -261,6 +262,7 @@ import com.android.systemui.statusbar.policy.PulseController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
+import com.android.systemui.tuner.TunerService;
 import com.android.systemui.volume.VolumeComponent;
 import com.android.systemui.wmshell.BubblesManager;
 import com.android.wm.shell.bubbles.Bubbles;
@@ -306,6 +308,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             "com.android.systemui.statusbar.banner_action_cancel";
     private static final String BANNER_ACTION_SETUP =
             "com.android.systemui.statusbar.banner_action_setup";
+
     public static final String TAG = "StatusBar";
     public static final boolean DEBUG = false;
     public static final boolean SPEW = false;
@@ -4879,6 +4882,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_ALBUMART_FILTER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.PULSE_ON_NEW_TRACKS),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4911,7 +4917,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setScreenBrightnessMode();
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.SYSUI_ROUNDED_FWVALS))) {
                 updateCorners();
-
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.PULSE_ON_NEW_TRACKS))) {
+                setPulseOnNewTracks();
             }
             update();
         }
@@ -4928,6 +4936,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateBurnInSets();
             setScreenBrightnessMode();
             updateCorners();
+            setPulseOnNewTracks();
         }
     }
 
@@ -4969,6 +4978,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mMediaManager != null) {
             mMediaManager.setLockScreenMediaArt();
             mMediaManager.setLockScreenMediaArtStyle();
+        }
+    }
+
+    private void setPulseOnNewTracks() {
+        if (KeyguardSliceProvider.getAttachedInstance() != null) {
+            KeyguardSliceProvider.getAttachedInstance().setPulseOnNewTracks(Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.PULSE_ON_NEW_TRACKS, 1,
+                    UserHandle.USER_CURRENT) == 1);
         }
     }
 
@@ -5389,6 +5406,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void startAssist(Bundle args) {
         mAssistManagerLazy.get().startAssist(args);
     }
+
     // End Extra BaseStatusBarMethods.
 
     public NotificationGutsManager getGutsManager() {
