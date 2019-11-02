@@ -4627,6 +4627,13 @@ public final class Settings {
         private static final Validator POWERMENU_SCREENSHOT_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+        /** Whether to show ambient or lockscreen if AoD is disabled
+         * and we do a wake gesture like lift to wake or double tap
+         *
+         * @hide
+         */
+        public static final String AMBIENT_WAKE_GESTURES = "ambient_wake_gestures";
+
         /**
          * Whether to display settings in the power menu
          *
