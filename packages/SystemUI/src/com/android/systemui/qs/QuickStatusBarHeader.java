@@ -33,21 +33,26 @@ import android.graphics.Rect;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.AlarmClock;
 import android.provider.CalendarContract;
+import android.provider.DeviceConfig;
 import android.provider.Settings;
 import android.service.notification.ZenModeConfig;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
+import android.util.StatsLog;
 import android.view.ContextThemeWrapper;
 import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 import android.database.ContentObserver;
 import android.content.ContentResolver;
@@ -55,6 +60,7 @@ import android.os.UserHandle;
 
 import androidx.annotation.VisibleForTesting;
 
+import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.DualToneHandler;
@@ -62,6 +68,11 @@ import com.android.systemui.R;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
+import com.android.systemui.privacy.OngoingPrivacyChip;
+import com.android.systemui.privacy.PrivacyDialogBuilder;
+import com.android.systemui.privacy.PrivacyItem;
+import com.android.systemui.privacy.PrivacyItemController;
+import com.android.systemui.privacy.PrivacyItemControllerKt;
 import com.android.systemui.qs.QSDetail.Callback;
 import com.android.systemui.statusbar.phone.PhoneStatusBarView;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
@@ -76,6 +87,8 @@ import com.android.systemui.tuner.TunerService.Tunable;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -122,6 +135,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private TintedIconManager mIconManager;
     private TouchAnimator mStatusIconsAlphaAnimator;
     private TouchAnimator mHeaderTextContainerAlphaAnimator;
+    private TouchAnimator mPrivacyChipAlphaAnimator;
     private DualToneHandler mDualToneHandler;
 
     private View mSystemIconsView;
@@ -141,7 +155,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private View mRingerContainer;
     private Clock mClockView;
     private DateView mDateView;
+    private OngoingPrivacyChip mPrivacyChip;
+    private Space mSpace;
     private BatteryMeterView mBatteryRemainingIcon;
+    private boolean mPermissionsHubEnabled;
+
+    private PrivacyItemController mPrivacyItemController;
 
     private TextView mSystemInfoText;
     private int mSystemInfoMode;
@@ -182,17 +201,41 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
     };
     private boolean mHasTopCutout = false;
+    private boolean mPrivacyChipLogged = false;
+
+    private final DeviceConfig.OnPropertyChangedListener mPropertyListener =
+            new DeviceConfig.OnPropertyChangedListener() {
+                @Override
+                public void onPropertyChanged(String namespace, String name, String value) {
+                    if (DeviceConfig.NAMESPACE_PRIVACY.equals(namespace)
+                            && SystemUiDeviceConfigFlags.PROPERTY_PERMISSIONS_HUB_ENABLED.equals(
+                            name)) {
+                        mPermissionsHubEnabled = Boolean.valueOf(value);
+                        StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
+                        iconContainer.setIgnoredSlots(getIgnoredIconSlots());
+                    }
+                }
+            };
+
+    private PrivacyItemController.Callback mPICCallback = new PrivacyItemController.Callback() {
+        @Override
+        public void privacyChanged(List<PrivacyItem> privacyItems) {
+            mPrivacyChip.setPrivacyList(privacyItems);
+            setChipVisibility(!privacyItems.isEmpty());
+        }
+    };
 
     @Inject
     public QuickStatusBarHeader(@Named(VIEW_CONTEXT) Context context, AttributeSet attrs,
             NextAlarmController nextAlarmController, ZenModeController zenModeController,
             StatusBarIconController statusBarIconController,
-            ActivityStarter activityStarter) {
+            ActivityStarter activityStarter, PrivacyItemController privacyItemController) {
         super(context, attrs);
         mAlarmController = nextAlarmController;
         mZenController = zenModeController;
         mStatusBarIconController = statusBarIconController;
         mActivityStarter = activityStarter;
+        mPrivacyItemController = privacyItemController;
         mDualToneHandler = new DualToneHandler(
                 new ContextThemeWrapper(context, R.style.QSHeaderTheme));
         mSystemInfoMode = getQsSystemInfoMode();
@@ -208,6 +251,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemIconsView = findViewById(R.id.quick_status_bar_system_icons);
         mQuickQsStatusIcons = findViewById(R.id.quick_qs_status_icons);
         StatusIconContainer iconContainer = findViewById(R.id.statusIcons);
+        // Ignore privacy icons because they show in the space above QQS
+        iconContainer.addIgnoredSlots(getIgnoredIconSlots());
         iconContainer.setShouldRestrictIcons(false);
         mIconManager = new TintedIconManager(iconContainer);
 
@@ -221,6 +266,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mRingerModeIcon = findViewById(R.id.ringer_mode_icon);
         mRingerModeTextView = findViewById(R.id.ringer_mode_text);
         mRingerContainer = findViewById(R.id.ringer_container);
+        mRingerContainer.setOnClickListener(this::onClick);
+        mPrivacyChip = findViewById(R.id.privacy_chip);
+        mPrivacyChip.setOnClickListener(this::onClick);
         mCarrierGroup = findViewById(R.id.carrier_group);
         mSystemInfoLayout = findViewById(R.id.system_info_layout);
         mSystemInfoIcon = findViewById(R.id.system_info_icon);
@@ -247,6 +295,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 	mClockView.setQsHeader();
         mDateView = findViewById(R.id.date);
         mDateView.setOnClickListener(this);
+        mSpace = findViewById(R.id.space);
 
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
@@ -256,7 +305,25 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mBatteryRemainingIcon.setOnClickListener(this);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
+        mPermissionsHubEnabled = PrivacyItemControllerKt.isPermissionsHubEnabled();
+        // Change the ignored slots when DeviceConfig flag changes
+        DeviceConfig.addOnPropertyChangedListener(DeviceConfig.NAMESPACE_PRIVACY,
+                mContext.getMainExecutor(), mPropertyListener);
         updateSettings();
+    }
+
+    private List<String> getIgnoredIconSlots() {
+        ArrayList<String> ignored = new ArrayList<>();
+        ignored.add(mContext.getResources().getString(
+                com.android.internal.R.string.status_bar_camera));
+        ignored.add(mContext.getResources().getString(
+                com.android.internal.R.string.status_bar_microphone));
+        if (mPermissionsHubEnabled) {
+            ignored.add(mContext.getResources().getString(
+                    com.android.internal.R.string.status_bar_location));
+        }
+
+        return ignored;
     }
 
     private void updateStatusText() {
@@ -343,6 +410,21 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             return null;
         }
         return line;
+    }
+
+    private void setChipVisibility(boolean chipVisible) {
+        if (chipVisible && mPermissionsHubEnabled) {
+            mPrivacyChip.setVisibility(View.VISIBLE);
+            // Makes sure that the chip is logged as viewed at most once each time QS is opened
+            // mListening makes sure that the callback didn't return after the user closed QS
+            if (!mPrivacyChipLogged && mListening) {
+                mPrivacyChipLogged = true;
+                StatsLog.write(StatsLog.PRIVACY_INDICATORS_INTERACTED,
+                        StatsLog.PRIVACY_INDICATORS_INTERACTED__TYPE__CHIP_VIEWED);
+            }
+        } else {
+            mPrivacyChip.setVisibility(View.GONE);
+        }
     }
 
     private boolean updateRingerStatus() {
@@ -451,6 +533,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         updateStatusIconAlphaAnimator();
         updateHeaderTextContainerAlphaAnimator();
+        updatePrivacyChipAlphaAnimator();
     }
 
     private void updateSettings() {
@@ -501,6 +584,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 .build();
     }
 
+    private void updatePrivacyChipAlphaAnimator() {
+        mPrivacyChipAlphaAnimator = new TouchAnimator.Builder()
+                .addFloat(mPrivacyChip, "alpha", 1, 0, 1)
+                .build();
+    }
+
     public void setExpanded(boolean expanded) {
         if (mExpanded == expanded) return;
         mExpanded = expanded;
@@ -540,6 +629,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mHeaderTextContainerView.setVisibility(INVISIBLE);
             }
         }
+        if (mPrivacyChipAlphaAnimator != null) {
+            mPrivacyChip.setExpanded(expansionFraction > 0.5);
+            mPrivacyChipAlphaAnimator.setPosition(keyguardExpansionFraction);
+        }
         updateSystemInfoText();
     }
 
@@ -573,6 +666,21 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mSystemIconsView.setPadding(padding.first, 0, padding.second, 0);
 
         }
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mSpace.getLayoutParams();
+        if (cutout != null) {
+            Rect topCutout = cutout.getBoundingRectTop();
+            if (topCutout.isEmpty()) {
+                mHasTopCutout = false;
+                lp.width = 0;
+                mSpace.setVisibility(View.GONE);
+            } else {
+                mHasTopCutout = true;
+                lp.width = topCutout.width();
+                mSpace.setVisibility(View.VISIBLE);
+            }
+        }
+        mSpace.setLayoutParams(lp);
+        setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
         return super.onApplyWindowInsets(insets);
     }
 
@@ -597,10 +705,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mAlarmController.addCallback(this);
             mContext.registerReceiver(mRingerReceiver,
                     new IntentFilter(AudioManager.INTERNAL_RINGER_MODE_CHANGED_ACTION));
+            mPrivacyItemController.addCallback(mPICCallback);
         } else {
             mZenController.removeCallback(this);
             mAlarmController.removeCallback(this);
+            mPrivacyItemController.removeCallback(mPICCallback);
             mContext.unregisterReceiver(mRingerReceiver);
+            mPrivacyChipLogged = false;
         }
     }
 
@@ -618,6 +729,18 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                         AlarmClock.ACTION_SHOW_ALARMS), 0);
             }
+        } else if (v == mPrivacyChip) {
+            // Makes sure that the builder is grabbed as soon as the chip is pressed
+            PrivacyDialogBuilder builder = mPrivacyChip.getBuilder();
+            if (builder.getAppsAndTypes().size() == 0) return;
+            Handler mUiHandler = new Handler(Looper.getMainLooper());
+            StatsLog.write(StatsLog.PRIVACY_INDICATORS_INTERACTED,
+                    StatsLog.PRIVACY_INDICATORS_INTERACTED__TYPE__CHIP_CLICKED);
+            mUiHandler.post(() -> {
+                mActivityStarter.postStartActivityDismissingKeyguard(
+                        new Intent(Intent.ACTION_REVIEW_ONGOING_PERMISSION_USAGE), 0);
+                mHost.collapsePanels();
+            });
         } else if (v == mRingerContainer && mRingerContainer.isVisibleToUser()) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                     Settings.ACTION_SOUND_SETTINGS), 0);

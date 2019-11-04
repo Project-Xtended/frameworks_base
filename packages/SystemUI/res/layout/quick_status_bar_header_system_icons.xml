@@ -46,6 +46,8 @@
         android:orientation="horizontal"
         android:gravity="center_vertical|end" >
 
+        <include layout="@layout/ongoing_privacy_chip" />
+
         <LinearLayout
                 android:id="@+id/system_info_layout"
                 android:layout_height="match_parent"
