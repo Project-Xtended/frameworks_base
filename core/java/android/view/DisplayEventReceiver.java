@@ -53,20 +53,6 @@ public abstract class DisplayEventReceiver {
      */
     public static final int VSYNC_SOURCE_SURFACE_FLINGER = 1;
 
-    /**
-     * Specifies to suppress config changed events from being generated from Surface Flinger.
-     * <p>
-     * Needs to be kept in sync with frameworks/native/include/gui/ISurfaceComposer.h
-     */
-    public static final int CONFIG_CHANGED_EVENT_SUPPRESS = 0;
-
-    /**
-     * Specifies to generate config changed events from Surface Flinger.
-     * <p>
-     * Needs to be kept in sync with frameworks/native/include/gui/ISurfaceComposer.h
-     */
-    public static final int CONFIG_CHANGED_EVENT_DISPATCH = 1;
-
     private static final String TAG = "DisplayEventReceiver";
 
     private final CloseGuard mCloseGuard = CloseGuard.get();
@@ -79,7 +65,7 @@ public abstract class DisplayEventReceiver {
     private MessageQueue mMessageQueue;
 
     private static native long nativeInit(WeakReference<DisplayEventReceiver> receiver,
-            MessageQueue messageQueue, int vsyncSource, int configChanged);
+            MessageQueue messageQueue, int vsyncSource);
     private static native void nativeDispose(long receiverPtr);
     @FastNative
     private static native void nativeScheduleVsync(long receiverPtr);
@@ -91,7 +77,7 @@ public abstract class DisplayEventReceiver {
      */
     @UnsupportedAppUsage
     public DisplayEventReceiver(Looper looper) {
-        this(looper, VSYNC_SOURCE_APP, CONFIG_CHANGED_EVENT_SUPPRESS);
+        this(looper, VSYNC_SOURCE_APP);
     }
 
     /**
@@ -99,17 +85,15 @@ public abstract class DisplayEventReceiver {
      *
      * @param looper The looper to use when invoking callbacks.
      * @param vsyncSource The source of the vsync tick. Must be on of the VSYNC_SOURCE_* values.
-     * @param configChanged Whether to dispatch config changed events. Must be one of the
-     * CONFIG_CHANGED_EVENT_* values.
      */
-    public DisplayEventReceiver(Looper looper, int vsyncSource, int configChanged) {
+    public DisplayEventReceiver(Looper looper, int vsyncSource) {
         if (looper == null) {
             throw new IllegalArgumentException("looper must not be null");
         }
 
         mMessageQueue = looper.getQueue();
         mReceiverPtr = nativeInit(new WeakReference<DisplayEventReceiver>(this), mMessageQueue,
-                vsyncSource, configChanged);
+                vsyncSource);
 
         mCloseGuard.open("dispose");
     }

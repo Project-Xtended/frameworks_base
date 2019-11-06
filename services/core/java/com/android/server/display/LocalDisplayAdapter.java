@@ -881,7 +881,7 @@ final class LocalDisplayAdapter extends DisplayAdapter {
 
     private final class PhysicalDisplayEventReceiver extends DisplayEventReceiver {
         PhysicalDisplayEventReceiver(Looper looper) {
-            super(looper, VSYNC_SOURCE_APP, CONFIG_CHANGED_EVENT_DISPATCH);
+            super(looper, VSYNC_SOURCE_APP);
         }
 
         @Override

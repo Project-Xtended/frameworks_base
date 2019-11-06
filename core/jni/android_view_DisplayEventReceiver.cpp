@@ -48,8 +48,7 @@ static struct {
 class NativeDisplayEventReceiver : public DisplayEventDispatcher {
 public:
     NativeDisplayEventReceiver(JNIEnv* env,
-            jobject receiverWeak, const sp<MessageQueue>& messageQueue, jint vsyncSource,
-            jint configChanged);
+            jobject receiverWeak, const sp<MessageQueue>& messageQueue, jint vsyncSource);
 
     void dispose();
 
@@ -69,11 +68,9 @@ private:
 
 
 NativeDisplayEventReceiver::NativeDisplayEventReceiver(JNIEnv* env,
-        jobject receiverWeak, const sp<MessageQueue>& messageQueue, jint vsyncSource,
-        jint configChanged) :
+        jobject receiverWeak, const sp<MessageQueue>& messageQueue, jint vsyncSource) :
         DisplayEventDispatcher(messageQueue->getLooper(),
-                static_cast<ISurfaceComposer::VsyncSource>(vsyncSource),
-                static_cast<ISurfaceComposer::ConfigChanged>(configChanged)),
+                static_cast<ISurfaceComposer::VsyncSource>(vsyncSource)),
         mReceiverWeakGlobal(env->NewGlobalRef(receiverWeak)),
         mMessageQueue(messageQueue) {
     ALOGV("receiver %p ~ Initializing display event receiver.", this);
@@ -139,7 +136,7 @@ void NativeDisplayEventReceiver::dispatchConfigChanged(nsecs_t timestamp,
 
 
 static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverWeak,
-        jobject messageQueueObj, jint vsyncSource, jint configChanged) {
+        jobject messageQueueObj, jint vsyncSource) {
     sp<MessageQueue> messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);
     if (messageQueue == NULL) {
         jniThrowRuntimeException(env, "MessageQueue is not initialized.");
@@ -147,7 +144,7 @@ static jlong nativeInit(JNIEnv* env, jclass clazz, jobject receiverWeak,
     }
 
     sp<NativeDisplayEventReceiver> receiver = new NativeDisplayEventReceiver(env,
-            receiverWeak, messageQueue, vsyncSource, configChanged);
+            receiverWeak, messageQueue, vsyncSource);
     status_t status = receiver->initialize();
     if (status) {
         String8 message;
@@ -182,7 +179,7 @@ static void nativeScheduleVsync(JNIEnv* env, jclass clazz, jlong receiverPtr) {
 static const JNINativeMethod gMethods[] = {
     /* name, signature, funcPtr */
     { "nativeInit",
-            "(Ljava/lang/ref/WeakReference;Landroid/os/MessageQueue;II)J",
+            "(Ljava/lang/ref/WeakReference;Landroid/os/MessageQueue;I)J",
             (void*)nativeInit },
     { "nativeDispose",
             "(J)V",
