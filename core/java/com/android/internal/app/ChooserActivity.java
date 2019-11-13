@@ -2540,7 +2540,7 @@ public class ChooserActivity extends ResolverActivity {
         }
 
         public int getServiceTargetCount() {
-            if (isSendAction(getTargetIntent()) && !ActivityManager.isLowRamDeviceStatic()) {
+            if (isSendAction(getTargetIntent())) {
                 return Math.min(mServiceTargets.size(), MAX_SERVICE_TARGETS);
             }
 
