@@ -262,15 +262,18 @@
     <!-- Post reset runnable for all clients -->
     <java-symbol type="bool" name="config_fingerprintPostResetRunnableForAllClients" />
 
-  <!-- SystemUI Restart -->
-  <java-symbol type="string" name="systemui_restart_title" />
-  <java-symbol type="string" name="systemui_restart_message" />
+    <!-- SystemUI Restart -->
+    <java-symbol type="string" name="systemui_restart_title" />
+    <java-symbol type="string" name="systemui_restart_message" />
 
-  <!-- Intelligent Profiles -->
-  <java-symbol type="bool" name="config_intelligent_performance_profile" />
-  <java-symbol type="string" name="config_balanced_profile" />
-  <java-symbol type="string" name="config_performance_profile" />
-  <java-symbol type="string" name="config_powersave_profile" />
-  <java-symbol type="string" name="config_screen_off_profile"/>
+    <!-- Whether device supports variable refresh rate -->
+    <java-symbol type="bool" name="config_hasVariableRefreshRate" />
+
+    <!-- Intelligent Profiles -->
+    <java-symbol type="bool" name="config_intelligent_performance_profile" />
+    <java-symbol type="string" name="config_balanced_profile" />
+    <java-symbol type="string" name="config_performance_profile" />
+    <java-symbol type="string" name="config_powersave_profile" />
+    <java-symbol type="string" name="config_screen_off_profile"/>
 
 </resources>

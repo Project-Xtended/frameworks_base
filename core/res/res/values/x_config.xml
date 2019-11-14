@@ -259,4 +259,7 @@
     <string name="config_powersave_profile" translatable="false">0</string>
     <string name="config_screen_off_profile" translatable="false">0</string>
 
+    <!-- Whether device supports variable refresh rate -->
+    <bool name="config_hasVariableRefreshRate">false</bool>
+
 </resources>
