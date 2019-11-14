@@ -262,8 +262,11 @@
     <!-- Post reset runnable for all clients -->
     <java-symbol type="bool" name="config_fingerprintPostResetRunnableForAllClients" />
 
-  <!-- SystemUI Restart -->
-  <java-symbol type="string" name="systemui_restart_title" />
-  <java-symbol type="string" name="systemui_restart_message" />
+    <!-- SystemUI Restart -->
+    <java-symbol type="string" name="systemui_restart_title" />
+    <java-symbol type="string" name="systemui_restart_message" />
+
+    <!-- Whether device supports variable refresh rate -->
+    <java-symbol type="bool" name="config_hasVariableRefreshRate" />
 
 </resources>
