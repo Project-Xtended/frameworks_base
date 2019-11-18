@@ -3956,6 +3956,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_SHOW_NAVBAR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MEDIA_BLUR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -3969,6 +3972,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY))) {
                 mQSPanel.getHost().reloadAllTiles();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.XTENSIONS_STYLE))) {
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MEDIA_BLUR))) {
+                setLockScreenMediaBlurLevel();
 	    }
 	    update();
          }
@@ -3980,6 +3986,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateKeyguardStatusSettings();
             setQsColumns();
             updateNavigationBar(false);
+            setLockScreenMediaBlurLevel();
         }
     }
 
@@ -4026,6 +4033,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
         mShowNavBar = showNavBar;
+    }
+
+    private void setLockScreenMediaBlurLevel() {
+        if (mMediaManager != null) {
+            mMediaManager.setLockScreenMediaBlurLevel();
+        }
     }
 
     public int getWakefulnessState() {
