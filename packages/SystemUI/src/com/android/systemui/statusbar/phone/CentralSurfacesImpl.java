@@ -4150,6 +4150,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.PULSE_ON_NEW_TRACKS),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MEDIA_BLUR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4173,6 +4176,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.PULSE_ON_NEW_TRACKS))) {
                 setPulseOnNewTracks();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MEDIA_BLUR))) {
+                setLockScreenMediaBlurLevel();
             }
             update();
         }
@@ -4186,6 +4192,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
             setMaxKeyguardNotifConfig();
             setMaxNotifPanelNotifConfig();
             setPulseOnNewTracks();
+            setLockScreenMediaBlurLevel();
         }
     }
 
@@ -4245,6 +4252,12 @@ public class CentralSurfacesImpl extends CoreStartable implements
         KeyguardSliceProvider sliceProvider = KeyguardSliceProvider.getAttachedInstance();
         if (sliceProvider != null) {
                 sliceProvider.setPulseOnNewTracks(showPulseOnNewTracks);
+        }
+    }
+
+    private void setLockScreenMediaBlurLevel() {
+        if (mMediaManager != null) {
+            mMediaManager.setLockScreenMediaBlurLevel();
         }
     }
 
