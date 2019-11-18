@@ -130,6 +130,8 @@ public class NotificationMediaManager implements Dumpable {
     @Nullable
     private LockscreenWallpaper mLockscreenWallpaper;
 
+    private float mLockscreenMediaBlur;
+
     private final Handler mHandler = Dependency.get(MAIN_HANDLER);
 
     private final Context mContext;
@@ -275,7 +277,6 @@ public class NotificationMediaManager implements Dumpable {
         mAlbumArtFilter = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.LOCKSCREEN_ALBUMART_FILTER, 0,
                 UserHandle.USER_CURRENT);
-        getLockScreenMediaBlurLevel();
     }
 
     public static boolean isPlayingState(int state) {
@@ -752,10 +753,16 @@ public class NotificationMediaManager implements Dumpable {
             case 2:
                 return Bitmap.createBitmap(ImageHelper.getColoredBitmap(new BitmapDrawable(mBackdropBack.getResources(), artwork), mContext.getResources().getColor(R.color.accent_device_default_light)));
             case 3:
-                return mMediaArtworkProcessor.processArtwork(mContext, artwork, getLockScreenMediaBlurLevel());
+                return mMediaArtworkProcessor.processArtwork(mContext, artwork, mLockscreenMediaBlur);
             case 4:
-                return Bitmap.createBitmap(ImageHelper.getGrayscaleBlurredImage(mContext, artwork, getLockScreenMediaBlurLevel()));
+                return Bitmap.createBitmap(ImageHelper.getGrayscaleBlurredImage(mContext, artwork, mLockscreenMediaBlur));
         }
+    }
+
+    public void setLockScreenMediaBlurLevel() {
+        mLockscreenMediaBlur = (float) Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_MEDIA_BLUR, 100,
+                UserHandle.USER_CURRENT) / 4;
     }
 
     @MainThread
@@ -817,12 +824,5 @@ public class NotificationMediaManager implements Dumpable {
          * @see PlaybackState.State
          */
         void onMetadataOrStateChanged(MediaMetadata metadata, @PlaybackState.State int state);
-    }
-
-    private float getLockScreenMediaBlurLevel() {
-        float level = (float) Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_MEDIA_BLUR, 250,
-                UserHandle.USER_CURRENT) / 10;
-        return level;
     }
 }

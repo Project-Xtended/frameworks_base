@@ -4197,6 +4197,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_ALBUMART_FILTER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MEDIA_BLUR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4243,7 +4246,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             setGamingMode();
             updateChargingAnimation();
             updateQSPanel();
-       }
+            setLockScreenMediaBlurLevel();
+        }
     }
 
     private void setScreenBrightnessMode() {
@@ -4279,6 +4283,12 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mContext.getContentResolver(), Settings.Secure.LOCKSCREEN_ALBUMART_FILTER, 0,
                 UserHandle.USER_CURRENT);
 	mMediaManager.updateSettings();
+    }
+
+    private void setLockScreenMediaBlurLevel() {
+        if (mMediaManager != null) {
+            mMediaManager.setLockScreenMediaBlurLevel();
+        }
     }
 
     private void updateNavigationBarVisibility() {
