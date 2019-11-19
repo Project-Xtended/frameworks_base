@@ -81,9 +81,11 @@ public class SyncTile extends QSTileImpl<BooleanState> {
         if (state.value) {
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_sync_on);
+            state.state = Tile.STATE_ACTIVE;
         } else {
             state.contentDescription =  mContext.getString(
                     R.string.accessibility_quick_settings_sync_off);
+            state.state = Tile.STATE_INACTIVE;
         }
         state.icon = mIcon;
         state.slash.isSlashed = !state.value;
