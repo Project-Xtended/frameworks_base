@@ -345,15 +345,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 2) {
             animateHide(mXtendedLogoRight, animate, false);
         }
-        if (mShowWeather != 0 && !mWeatherInHeaderView) {
-            if (mWeatherTextView != null && (mShowWeather == 2
-                   || mShowWeather == 4)) {
-                animateHide(mWeatherTextView, animate, false);
- 	    }
-            if (mWeatherImageView != null && (mShowWeather == 1
-                   || mShowWeather == 2 || mShowWeather == 5)) {
-                animateHide(mWeatherImageView, animate, false);
-	    }
+        if ((mShowWeather != 0 || mShowWeather != 5) &&
+            !mWeatherInHeaderView && mWeatherTextView != null) {
+            animateHide(mWeatherTextView, animate, false);
+ 	}
+        if ((mShowWeather != 0 || mShowWeather != 3 || mShowWeather != 4)
+            && !mWeatherInHeaderView && mWeatherImageView != null) {
+            animateHide(mWeatherImageView, animate, false);
         }
     }
 
@@ -366,15 +364,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (mShowLogo == 2) {
             animateShow(mXtendedLogoRight, animate);
         }
-        if (mShowWeather != 0 && !mWeatherInHeaderView) {
-            if (mWeatherTextView != null && (mShowWeather != 0
-                   || mShowWeather != 5)) {
-                animateShow(mWeatherTextView, animate);
-	    }
-            if (mWeatherImageView != null && (mShowWeather == 1
-                   || mShowWeather == 2 || mShowWeather == 5)) {
-                animateShow(mWeatherImageView, animate);
-	    }
+        if ((mShowWeather != 0 || mShowWeather != 5) &&
+            !mWeatherInHeaderView && mWeatherTextView != null) {
+            animateShow(mWeatherTextView, animate);
+        }
+        if ((mShowWeather != 0 || mShowWeather != 3 || mShowWeather != 4)
+            && !mWeatherInHeaderView && mWeatherImageView != null) {
+            animateShow(mWeatherImageView, animate);
         }
     }
 
@@ -745,26 +741,25 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     private void setSBWeather(boolean animate) {
         if (mSystemIconArea != null) {
-            if (mShowWeather != 0 && !mWeatherInHeaderView) {
-                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
-                    if (mWeatherTextView != null && (mShowWeather != 0
-                        || mShowWeather != 5)) {
-                        animateShow(mWeatherTextView, animate);
-	            }
-                    if (mWeatherImageView != null && (mShowWeather == 1
-		        || mShowWeather == 2 || mShowWeather == 5)) {
-                        animateShow(mWeatherImageView, animate);
-		    }
-                }
-            } else if (mShowWeather != 0 && mWeatherInHeaderView) {
-                if (mWeatherTextView != null && (mShowWeather != 0
-                    || mShowWeather != 5)) {
+            if (mSystemIconArea.getVisibility() == View.VISIBLE
+	                            && !mKeyguardMonitor.isShowing()) {
+                if ((mShowWeather != 0 || mShowWeather != 5) &&
+                    !mWeatherInHeaderView && mWeatherTextView != null) {
+                    animateShow(mWeatherTextView, animate);
+	        }
+                if ((mShowWeather != 0 || mShowWeather != 3 || mShowWeather != 4)
+                    && !mWeatherInHeaderView && mWeatherImageView != null) {
+                    animateShow(mWeatherImageView, animate);
+		}
+            } else {
+                if ((mShowWeather != 0 || mShowWeather != 5) &&
+                    !mWeatherInHeaderView && mWeatherTextView != null) {
                     animateHide(mWeatherTextView, animate, false);
 		}
-                if (mWeatherImageView != null && (mShowWeather == 1
-		    || mShowWeather == 2 || mShowWeather == 5)) {
+                if ((mShowWeather != 0 || mShowWeather != 3 || mShowWeather != 4)
+                    && !mWeatherInHeaderView && mWeatherImageView != null) {
                     animateHide(mWeatherImageView, animate, false);
-	         }
+	        }
             }
         }
     }
