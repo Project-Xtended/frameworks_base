@@ -293,6 +293,9 @@
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
+    <!-- DataSwitch tile -->
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
