@@ -24,7 +24,10 @@ import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_WIFI
 import static com.android.systemui.statusbar.phone.StatusBarIconHolder.TYPE_IMS;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.os.Bundle;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.view.Gravity;
@@ -310,7 +313,7 @@ public interface StatusBarIconController {
         @VisibleForTesting
         protected StatusBarMobileView addMobileIcon(int index, String slot, MobileIconState state) {
             StatusBarMobileView view = onCreateStatusBarMobileView(slot);
-            view.applyMobileState(state);
+            view.applyMobileState(state, useOldStyleMobileDataIcons());
             mGroup.addView(view, index, onCreateLayoutParams());
 
             if (mIsInDemoMode) {
@@ -435,7 +438,7 @@ public interface StatusBarIconController {
         public void onSetMobileIcon(int viewIndex, MobileIconState state) {
             StatusBarMobileView view = (StatusBarMobileView) mGroup.getChildAt(viewIndex);
             if (view != null) {
-                view.applyMobileState(state);
+                view.applyMobileState(state, useOldStyleMobileDataIcons());
             }
 
             if (mIsInDemoMode) {
@@ -478,6 +481,12 @@ public interface StatusBarIconController {
 
         protected DemoStatusIcons createDemoStatusIcons() {
             return new DemoStatusIcons((LinearLayout) mGroup, mIconSize);
+        }
+
+        private boolean useOldStyleMobileDataIcons() {
+            return Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.USE_OLD_MOBILETYPE, 0,
+                    UserHandle.USER_CURRENT) != 0;
         }
     }
 }
