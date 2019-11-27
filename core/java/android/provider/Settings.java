@@ -6415,6 +6415,13 @@ public final class Settings {
         public static final String VIBRATE_ON_NOTIFICATIONS = "vibrate_on_notifications";
 
         /**
+         * @hide
+         */
+        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
+
+        private static final Validator USE_OLD_MOBILETYPE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6565,7 +6572,8 @@ public final class Settings {
             QS_PANEL_BG_USE_ACCENT,
             STATUS_BAR_SHOW_TICKER,
             STATUS_BAR_TICKER_ANIMATION_MODE,
-            STATUS_BAR_TICKER_TICK_DURATION
+            STATUS_BAR_TICKER_TICK_DURATION,
+            USE_OLD_MOBILETYPE,
         };
 
         /**
@@ -6790,6 +6798,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_SHOW_TICKER);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
+            PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
         }
 
         /**
@@ -6982,6 +6991,7 @@ public final class Settings {
                     STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_TICKER_TICK_DURATION,
                     STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR);
+            VALIDATORS.put(USE_OLD_MOBILETYPE, USE_OLD_MOBILETYPE_VALIDATOR);
         }
 
         /**
