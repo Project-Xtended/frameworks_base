@@ -203,6 +203,11 @@ public final class DefaultPermissionGrantPolicy {
         STORAGE_PERMISSIONS.add(Manifest.permission.ACCESS_MEDIA_LOCATION);
     }
 
+    private static final Set<String> SUSPEND_APP_PERMISSIONS = new ArraySet<>();
+    static {
+        SUSPEND_APP_PERMISSIONS.add(Manifest.permission.SUSPEND_APPS);
+    }
+
     private static final Set<String> WALLPAPER_PERMISSIONS = new ArraySet<>();
     static {
         WALLPAPER_PERMISSIONS.add(Manifest.permission.BIND_WALLPAPER);
@@ -912,6 +917,11 @@ public final class DefaultPermissionGrantPolicy {
         // Google dialer
         grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.dialer", userId, PHONE_PERMISSIONS,
                 CONTACTS_PERMISSIONS, SMS_PERMISSIONS);
+
+        // Wellbeing
+        grantSystemFixedPermissionsToSystemPackage(pm,
+                getDefaultProviderAuthorityPackage("com.google.android.apps.wellbeing", userId),
+                userId, SUSPEND_APP_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
