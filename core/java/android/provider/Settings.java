@@ -4771,6 +4771,12 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * QS footer text
+         * @hide
+         */
+        public static final String X_FOOTER_TEXT_STRING = "x_footer_text_string";
+
+        /**
          * The time in ms to keep the button backlight on after pressing a button.
          * A value of 0 will keep the buttons on for as long as the screen is on.
          * @hide
@@ -15760,11 +15766,11 @@ public final class Settings {
         private static final Validator POWER_BUTTON_VERY_LONG_PRESS_VALIDATOR =
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
 
-        /**  
+        /**
          * AOKP Custom System Animations
          * @hide
-         */  
-        public static final String[] ACTIVITY_ANIMATION_CONTROLS = new String[] {  
+         */
+        public static final String[] ACTIVITY_ANIMATION_CONTROLS = new String[] {
                 "activity_open",
                 "activity_close",
                 "task_open",
@@ -15776,7 +15782,7 @@ public final class Settings {
                 "wallpaper_intra_open",
                 "wallpaper_intra_close",
                 "task_open_behind",
-        };  
+        };
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**
