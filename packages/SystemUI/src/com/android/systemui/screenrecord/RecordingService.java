@@ -159,7 +159,10 @@ public class RecordingService extends Service {
                 Intent data = intent.getParcelableExtra(EXTRA_DATA);
                 if (data != null) {
                     mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
-                    startRecording();
+                    final Handler h = new Handler(Looper.getMainLooper());
+                    h.postDelayed(() -> {
+                        startRecording();
+                    }, 500);
                 }
                 break;
 
