@@ -378,7 +378,7 @@ public class NotificationInterruptionStateProvider {
         }
 
         boolean isLessBoring = notificationPackageName.contains("dialer");
-        return mSkipHeadsUp && !isLessBoring;
+        return mLessBoringHeadsUp && !isLessBoring;
     }
 
     /**
