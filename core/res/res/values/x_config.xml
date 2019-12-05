@@ -232,4 +232,7 @@
      <!-- Whether to show a custom view for FOD -->
     <bool name="config_needCustomFODView">false</bool>
 
+    <!-- Whether device has warp charging support -->
+    <bool name="config_hasWarpCharger">false</bool>
+
 </resources>
