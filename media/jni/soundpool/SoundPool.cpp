@@ -950,6 +950,8 @@ void SoundChannel::process(int event, void *info, unsigned long toggle)
         ALOGV("process %p channel %d event %s",
               this, mChannelID, (event == AudioTrack::EVENT_UNDERRUN) ? "UNDERRUN" :
                       "BUFFER_END");
+        // Only BUFFER_END should happen as we use static tracks.
+        setVolume_l(0.f, 0.f);  // set volume to 0 to indicate no need to ramp volume down.
         mSoundPool->addToStopList(this);
     } else if (event == AudioTrack::EVENT_LOOP_END) {
         ALOGV("End loop %p channel %d", this, mChannelID);

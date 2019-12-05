@@ -187,7 +187,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
 
     @Override
     public void setMobileDataIndicators(IconState statusIcon, IconState qsIcon, int statusType,
-            int qsType, boolean activityIn, boolean activityOut, int stackedVoiceId,
+            int qsType, boolean activityIn, boolean activityOut, int volteId,
             CharSequence typeContentDescription,
             CharSequence typeContentDescriptionHtml, CharSequence description,
             boolean isWide, int subId, boolean roaming) {
@@ -207,7 +207,7 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
         state.roaming = roaming && !mBlockRoaming;
         state.activityIn = activityIn && mActivityEnabled;
         state.activityOut = activityOut && mActivityEnabled;
-        state.volteId = stackedVoiceId;
+        state.volteId = volteId;
 
         // Always send a copy to maintain value type semantics
         mIconController.setMobileIcons(mSlotMobile, MobileIconState.copyStates(mMobileStates));
