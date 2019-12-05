@@ -431,7 +431,7 @@ public class KeyguardIndicationController implements StateListener,
     }
 
     private void updateChargingIndication() {
-        if (mChargingIndication && !mDozing && mPowerPluggedIn && !hasActiveInDisplayFp()) {
+        if (mChargingIndication && mPowerPluggedIn && !hasActiveInDisplayFp()) {
             mChargingIndicationView.setVisibility(View.VISIBLE);
             mChargingIndicationView.playAnimation();
         } else {
