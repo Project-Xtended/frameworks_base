@@ -203,11 +203,13 @@ public class QSCarrierGroup extends LinearLayout implements
         handleUpdateState();
     }
 
+    @Override
     public void setMobileDataIndicators(NetworkController.IconState statusIcon,
             NetworkController.IconState qsIcon, int statusType,
-            int qsType, boolean activityIn, boolean activityOut,
-            int volteId, String typeContentDescription,
-            String description, boolean isWide, int subId, boolean roaming) {
+            int qsType, boolean activityIn, boolean activityOut, int stackedVoiceId,
+            CharSequence typeContentDescription,
+            CharSequence typeContentDescriptionHtml, CharSequence description,
+            boolean isWide, int subId, boolean roaming) {
         int slotIndex = getSlotIndex(subId);
         if (slotIndex >= SIM_SLOTS) {
             Log.w(TAG, "setMobileDataIndicators - slot: " + slotIndex);
