@@ -348,7 +348,6 @@ public class DozeTriggers implements DozeMachine.Part {
 
     private void checkTriggersAtInit() {
         if (mUiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_CAR
-                || mDozeHost.isPowerSaveActive()
                 || mDozeHost.isBlockingDoze()
                 || !mDozeHost.isProvisioned()) {
             mMachine.requestState(DozeMachine.State.FINISH);
@@ -577,8 +576,8 @@ public class DozeTriggers implements DozeMachine.Part {
 
         @Override
         public void onPowerSaveChanged(boolean active) {
-            if (active) {
-                mMachine.requestState(DozeMachine.State.FINISH);
+            if (mDozeHost.isPowerSaveActive()) {
+                mMachine.requestState(DozeMachine.State.DOZE);
             }
         }
     };
