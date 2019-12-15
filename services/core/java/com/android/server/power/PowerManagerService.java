@@ -228,8 +228,8 @@ public final class PowerManagerService extends SystemService
     // property for last reboot reason
     private static final String REBOOT_PROPERTY = "sys.boot.reason";
 
-    private static final int DEFAULT_BUTTON_ON_DURATION = 5 * 1000;
-    
+    private static final int DEFAULT_BUTTON_ON_DURATION = 1 * 1000;
+
     private final Context mContext;
     private final ServiceThread mHandlerThread;
     private final PowerManagerHandler mHandler;
