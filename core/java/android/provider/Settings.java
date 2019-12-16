@@ -6473,6 +6473,12 @@ public final class Settings {
 
         /** @hide */
         private static final Validator FORCE_FULLSCREEN_CUTOUT_APPS_VALIDATOR = ANY_STRING_VALIDATOR;
+        
+        /**
+        * FOD icon picker
+        * @hide
+        */
+        public static final String FOD_ICON = "fod_icon";
 
         /**
          * QS blur alpha
