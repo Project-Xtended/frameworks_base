@@ -522,17 +522,6 @@ public class ViewConfiguration {
         return true;
     }
 
-    /**
-     * @hide
-     */
-    public static boolean isNumeric(String string) {
-        try {
-            Integer.parseInt(string);
-        } catch(NumberFormatException e) {
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Returns a configuration for the specified context. The configuration depends on
