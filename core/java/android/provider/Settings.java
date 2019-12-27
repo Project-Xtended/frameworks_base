@@ -6450,6 +6450,12 @@ public final class Settings {
         /** @hide */
         private static final Validator QS_BLUR_ALPHA_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
+        /** @hide */
+        public static final String GESTURE_PILL_TOGGLE = "gesture_pill_toggle";
+
+        /** @hide */
+        private static final Validator GESTURE_PILL_TOGGLE_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * Use doubletap as doze pulse triggers
          * @hide
@@ -6611,6 +6617,7 @@ public final class Settings {
             USE_OLD_MOBILETYPE,
             QS_BLUR,
             QS_BLUR_ALPHA,
+            GESTURE_PILL_TOGGLE,
         };
 
         /**
@@ -6836,6 +6843,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
+            PRIVATE_SETTINGS.add(GESTURE_PILL_TOGGLE);
         }
 
         /**
@@ -7031,6 +7039,7 @@ public final class Settings {
             VALIDATORS.put(USE_OLD_MOBILETYPE, USE_OLD_MOBILETYPE_VALIDATOR);
             VALIDATORS.put(QS_BLUR, QS_BLUR_VALIDATOR);
             VALIDATORS.put(QS_BLUR_ALPHA, QS_BLUR_ALPHA_VALIDATOR);
+            VALIDATORS.put(GESTURE_PILL_TOGGLE, GESTURE_PILL_TOGGLE_VALIDATOR);
         }
 
         /**
