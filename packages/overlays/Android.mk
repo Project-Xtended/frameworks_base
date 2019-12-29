@@ -50,6 +50,8 @@ LOCAL_REQUIRED_MODULES := \
 	FontReemKufiSourceOverlay \
 	FontSimpleDaySourceOverlay \
         FontLinotte \
+	FontOneplusSlateSource \
+	FontSamsungOneSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularLauncherOverlay \
 	IconPackCircularSettingsOverlay \
