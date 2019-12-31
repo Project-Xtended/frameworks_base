@@ -19,6 +19,7 @@ package com.android.internal.util.xtended;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.IActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -346,5 +347,14 @@ public class XtendedUtils {
                 || XtendedUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural")
                 || XtendedUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_wide_back")
                 || XtendedUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_extra_wide_back");
+    }
+
+    public static void setComponentState(Context context, String packageName,
+            String componentClassName, boolean enabled) {
+        PackageManager pm = context.getApplicationContext().getPackageManager();
+        ComponentName componentName = new ComponentName(packageName, componentClassName);
+        int state = enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        pm.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
     }
 }
