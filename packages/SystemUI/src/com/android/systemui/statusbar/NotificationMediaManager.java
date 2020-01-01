@@ -56,7 +56,7 @@ import android.provider.Settings;
 
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.internal.statusbar.NotificationVisibility;
-import com.android.internal.util.crdroid.ImageHelper;
+import com.android.internal.util.xtended.ImageHelper;
 import com.android.systemui.Dependency;
 import com.android.systemui.Dumpable;
 import com.android.systemui.Interpolators;
@@ -267,14 +267,15 @@ public class NotificationMediaManager implements Dumpable {
         }
     }
 
-    private void updateSettings() {
+    public void updateSettings() {
         ContentResolver resolver = mContext.getContentResolver();
         mShowMediaMetadata = Settings.System.getIntForUser(resolver,
                 Settings.System.LOCKSCREEN_MEDIA_METADATA, 1,
                 UserHandle.USER_CURRENT) == 1;
-        mShowMediaMetadata = Settings.Secure.getIntForUser(resolver,
+        mAlbumArtFilter = Settings.Secure.getIntForUser(resolver,
                 Settings.Secure.LOCKSCREEN_ALBUMART_FILTER, 0,
-                UserHandle.USER_CURRENT) == 1;
+                UserHandle.USER_CURRENT);
+        getLockScreenMediaBlurLevel();
     }
 
     public static boolean isPlayingState(int state) {
@@ -564,29 +565,7 @@ public class NotificationMediaManager implements Dumpable {
             @Nullable Bitmap bmp) {
         Drawable artworkDrawable = null;
         if (bmp != null) {
-            switch (mAlbumArtFilter) {
-                case 0:
-                default:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), bmp);
-                    break;
-                case 1:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
-                        ImageHelper.toGrayscale(bmp));
-                    break;
-                case 2:
-                    Drawable aw = new BitmapDrawable(mBackdropBack.getResources(), bmp);
-                    artworkDrawable = new BitmapDrawable(ImageHelper.getColoredBitmap(aw,
-                        mContext.getResources().getColor(R.color.accent_device_default_light)));
-                    break;
-                case 3:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
-                        ImageHelper.getBlurredImage(mContext, bmp, 7.0f));
-                    break;
-                case 4:
-                    artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(),
-                        ImageHelper.getGrayscaleBlurredImage(mContext, bmp, 7.0f));
-                    break;
-            }
+            artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), bmp);
         }
 
         boolean hasMediaArtwork = artworkDrawable != null;
@@ -763,7 +742,20 @@ public class NotificationMediaManager implements Dumpable {
     };
 
     private Bitmap processArtwork(Bitmap artwork) {
-        return mMediaArtworkProcessor.processArtwork(mContext, artwork, getLockScreenMediaBlurLevel());
+        switch (mAlbumArtFilter) {
+            case 0:
+            default:
+                // TODO: Implement a proper fix to use this recycled bitmap
+                return Bitmap.createBitmap(ImageHelper.getBlurredImage(mContext, artwork, 0.001f));
+            case 1:
+                return Bitmap.createBitmap(ImageHelper.toGrayscale(artwork));
+            case 2:
+                return Bitmap.createBitmap(ImageHelper.getColoredBitmap(new BitmapDrawable(mBackdropBack.getResources(), artwork), mContext.getResources().getColor(R.color.accent_device_default_light)));
+            case 3:
+                return mMediaArtworkProcessor.processArtwork(mContext, artwork, getLockScreenMediaBlurLevel());
+            case 4:
+                return Bitmap.createBitmap(ImageHelper.getGrayscaleBlurredImage(mContext, artwork, getLockScreenMediaBlurLevel()));
+        }
     }
 
     @MainThread
@@ -829,8 +821,8 @@ public class NotificationMediaManager implements Dumpable {
 
     private float getLockScreenMediaBlurLevel() {
         float level = (float) Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_MEDIA_BLUR, 25,
-                UserHandle.USER_CURRENT) / 100;
+                Settings.System.LOCKSCREEN_MEDIA_BLUR, 250,
+                UserHandle.USER_CURRENT) / 10;
         return level;
     }
 }

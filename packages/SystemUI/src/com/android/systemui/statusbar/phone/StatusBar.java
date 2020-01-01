@@ -556,6 +556,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private VisualizerView mVisualizerView;
     // LS visualizer on Ambient Display
     private boolean mAmbientVisualizer;
+    private int mAlbumArtFilter;
 
     private boolean mChargingAnimation;
 
@@ -4193,6 +4194,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
 	            Settings.System.QS_PANEL_BG_USE_ACCENT),
 	            false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCKSCREEN_ALBUMART_FILTER),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4218,6 +4222,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT))) {
                 mQSPanel.getHost().reloadAllTiles();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCKSCREEN_ALBUMART_FILTER))) {
+                setArtFilter();
             }
             update();
             updateNavigationBarVisibility();
@@ -4232,6 +4239,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setScreenBrightnessMode();
             setFpToDismissNotifications();
             setAmbientVis();
+            setArtFilter();
             setGamingMode();
             updateChargingAnimation();
             updateQSPanel();
@@ -4264,6 +4272,13 @@ public class StatusBar extends SystemUI implements DemoMode,
         mAmbientVisualizer = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.AMBIENT_VISUALIZER_ENABLED, 0,
                 UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void setArtFilter() {
+        mAlbumArtFilter = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.LOCKSCREEN_ALBUMART_FILTER, 0,
+                UserHandle.USER_CURRENT);
+	mMediaManager.updateSettings();
     }
 
     private void updateNavigationBarVisibility() {
