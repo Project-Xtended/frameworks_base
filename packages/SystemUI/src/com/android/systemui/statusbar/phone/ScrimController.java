@@ -589,8 +589,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, OnCo
         setScrimAlpha(mScrimInFront, mInFrontAlpha);
         setScrimAlpha(mScrimBehind, mBehindAlpha);
         setScrimAlpha(mScrimForBubble, mBubbleAlpha);
-        // The animation could have all already finished, let's call onFinished just in case
-        onFinished();
         dispatchScrimsVisible();
     }
 
