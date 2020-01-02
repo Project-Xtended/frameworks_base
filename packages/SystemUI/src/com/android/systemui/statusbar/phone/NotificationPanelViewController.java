@@ -2903,6 +2903,10 @@ public class NotificationPanelViewController extends PanelViewController {
         }
     }
 
+    public void updateKeyguardStatusSettings() {
+        mKeyguardStatusView.updateAll();
+    }
+
     public void setStatusAccessibilityImportance(int mode) {
         mKeyguardStatusView.setImportantForAccessibility(mode);
     }
