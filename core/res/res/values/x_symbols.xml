@@ -82,4 +82,9 @@
   <java-symbol type="string" name="config_alertSliderIntent" />
   <java-symbol type="integer" name="config_alertSliderLocation" />
   <java-symbol type="string" name="config_alertSliderIntent" />
+
+    <!-- Light / Regular style fonts -->
+    <java-symbol type="string" name="config_lightFontFamily" />
+    <java-symbol type="string" name="config_regularFontFamily" />
+
 </resources>
