@@ -34,9 +34,10 @@
             android:id="@+id/mobile_volte"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-	    android:visibility="gone"
-            android:paddingEnd="2dp"
-	    android:paddingStart="2dp" />
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:paddingStart="3dp"
+            android:paddingEnd="2dp"/>
         <FrameLayout
             android:id="@+id/inout_container"
             android:layout_height="17dp"
@@ -48,14 +49,14 @@
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_activity_down"
                 android:visibility="gone"
-                android:paddingEnd="2dp"
+                android:paddingEnd="1.5dp"
             />
             <ImageView
                 android:id="@+id/mobile_out"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_activity_up"
-                android:paddingEnd="2dp"
+                android:paddingEnd="1.5dp"
                 android:visibility="gone"
             />
         </FrameLayout>
@@ -66,6 +67,7 @@
             android:layout_gravity="center_vertical"
             android:paddingStart="2.5dp"
             android:paddingEnd="1dp"
+            android:paddingTop="1.5dp"
             android:visibility="gone" />
         <Space
             android:id="@+id/mobile_roaming_space"
@@ -98,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/status_bar_mobile_type_height"
                 android:src="@drawable/stat_sys_roaming"
+                android:paddingTop="1.5dp"
                 android:visibility="gone"
                 android:scaleType="fitStart"
                 android:layout_gravity="start|top" />
