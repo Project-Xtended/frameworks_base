@@ -374,11 +374,11 @@ public class NotificationInterruptionStateProvider {
         // Gaming mode takes precedence since messaging headsup is intrusive
         if (mSkipHeadsUp) {
             boolean isNonInstrusive = notificationPackageName.contains("dialer");
-            return mSkipHeadsUp && !isNonInstrusive;
+            return !mStatusBarStateController.isDozing() && mSkipHeadsUp && !isNonInstrusive;
         }
 
         boolean isLessBoring = notificationPackageName.contains("dialer");
-        return mLessBoringHeadsUp && !isLessBoring;
+        return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isLessBoring;
     }
 
     /**
