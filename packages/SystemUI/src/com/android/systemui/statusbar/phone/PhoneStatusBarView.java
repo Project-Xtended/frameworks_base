@@ -29,20 +29,29 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.RemoteException;
 import android.util.AttributeSet;
 import android.util.EventLog;
 import android.util.Pair;
+import android.view.ContextThemeWrapper;
+import android.view.Display;
 import android.view.DisplayCutout;
 import android.view.Gravity;
+import android.view.IWindowManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.LinearLayout;
 
+import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.EventLogTags;
+import com.android.systemui.navigationbar.gestural.FloatingRotationButton;
+import com.android.systemui.navigationbar.RotationButton;
+import com.android.systemui.navigationbar.RotationButtonController;
 import com.android.systemui.R;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
@@ -53,10 +62,12 @@ import android.util.TypedValue;
 import com.android.systemui.tuner.TunerService;
 import android.provider.Settings;
 
+import java.util.function.Consumer;
 import java.util.List;
 import java.util.Objects;
 
 public class PhoneStatusBarView extends PanelBar implements Callbacks, TunerService.Tunable {
+
     private static final String TAG = "PhoneStatusBarView";
     private static final boolean DEBUG = StatusBar.DEBUG;
     private static final boolean DEBUG_GESTURES = false;
@@ -96,6 +107,7 @@ public class PhoneStatusBarView extends PanelBar implements Callbacks, TunerServ
     private DarkReceiver mClockCentre;
     private DarkReceiver mClockRight;
     private int mRotationOrientation = -1;
+    private RotationButtonController mRotationButtonController;
     @Nullable
     private View mCenterIconSpace;
     @Nullable
@@ -116,6 +128,43 @@ public class PhoneStatusBarView extends PanelBar implements Callbacks, TunerServ
         super(context, attrs);
         mCommandQueue = Dependency.get(CommandQueue.class);
         mContentInsetsProvider = Dependency.get(StatusBarContentInsetsProvider.class);
+
+        // Only create FRB here if there is no navbar
+        if (!hasNavigationBar()) {
+            final Context lightContext = new ContextThemeWrapper(context,
+                    Utils.getThemeAttr(context, R.attr.lightIconTheme));
+            final Context darkContext = new ContextThemeWrapper(context,
+                    Utils.getThemeAttr(context, R.attr.darkIconTheme));
+            final int lightIconColor =
+                    Utils.getColorAttrDefaultColor(lightContext, R.attr.singleToneColor);
+            final int darkIconColor =
+                    Utils.getColorAttrDefaultColor(darkContext, R.attr.singleToneColor);
+            final FloatingRotationButton floatingRotationButton =
+                    new FloatingRotationButton(context);
+            mRotationButtonController = new RotationButtonController(lightContext,
+                    lightIconColor, darkIconColor);
+            mRotationButtonController.setRotationButton(floatingRotationButton,
+                    mRotationButtonListener);
+        }
+    }
+
+    @Override
+    public void onRotationProposal(final int rotation, boolean isValid) {
+        if (mRotationButtonController != null && !hasNavigationBar()) {
+            final int winRotation = getDisplay().getRotation();
+            mRotationButtonController.onRotationProposal(rotation, winRotation, isValid);
+        }
+    }
+
+    private final Consumer<Boolean> mRotationButtonListener = (visible) -> {};
+    private final Consumer<Integer> mRotationWatcher = (rotation) -> {};
+
+    private boolean hasNavigationBar() {
+        try {
+            IWindowManager windowManager = WindowManagerGlobal.getWindowManagerService();
+            return windowManager.hasNavigationBar(Display.DEFAULT_DISPLAY);
+        } catch (RemoteException ex) {}
+        return false;
     }
 
     public void setBar(StatusBar bar) {
@@ -172,6 +221,11 @@ public class PhoneStatusBarView extends PanelBar implements Callbacks, TunerServ
         if (updateOrientationAndCutout()) {
             updateLayoutForCutout();
         }
+
+        if (mRotationButtonController != null && !hasNavigationBar()) {
+            mRotationButtonController.setRotationCallback(mRotationWatcher);
+            mCommandQueue.addCallback(this);
+        }
     }
 
     @Override
@@ -182,6 +236,10 @@ public class PhoneStatusBarView extends PanelBar implements Callbacks, TunerServ
         Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mClockCentre);
         Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(mClockRight);
         mDisplayCutout = null;
+
+        if (mRotationButtonController != null) {
+            mCommandQueue.removeCallback(this);
+        }
     }
 
     @Override
