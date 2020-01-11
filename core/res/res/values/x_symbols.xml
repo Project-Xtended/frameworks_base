@@ -214,5 +214,8 @@
   <!-- SystemUI Restart -->
   <java-symbol type="string" name="systemui_restart_title" />
   <java-symbol type="string" name="systemui_restart_message" />
+  
+  <!-- Whether the OnePlus device has an haptic motor -->
+  <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
 
 </resources>
