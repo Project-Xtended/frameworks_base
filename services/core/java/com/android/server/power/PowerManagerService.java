@@ -673,6 +673,7 @@ public final class PowerManagerService extends SystemService
     }
 
     // Smart charging
+    private boolean mSmartFeaturesAvailable;
     private boolean mSmartChargingEnabled;
     private boolean mSmartChargingResetStats;
     private boolean mPowerInputSuspended = false;
@@ -1344,6 +1345,8 @@ public final class PowerManagerService extends SystemService
         mSupportsDoubleTapWakeConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_supportDoubleTapWake);
         // Smart charging
+        mSmartFeaturesAvailable = resources.getBoolean(
+                com.android.internal.R.bool.config_supportSmartFeatures);
         mSmartChargingLevelDefaultConfig = resources.getInteger(
                 com.android.internal.R.integer.config_smartChargingBatteryLevel);
         mSmartChargingResumeLevelDefaultConfig = resources.getInteger(
@@ -2305,9 +2308,10 @@ public final class PowerManagerService extends SystemService
     }
 
     /*
-     * Suspend or resume charging based on the current Smart Feature settings 
+     * Suspend or resume charging based on the current Smart Feature settings
      */
     private void updateSmartFeatureStatus() {
+        if (!mSmartFeaturesAvailable) return;
         if (mPowerInputSuspended) {
             boolean resumeBySmartCharging = !mSmartChargingEnabled || (mSmartChargingEnabled && (mBatteryLevel <= mSmartChargingResumeLevel));
             boolean resumeBySmartCutoff = !mSmartCutoffEnabled || (mSmartCutoffEnabled && (mBatteryTemperature <= mSmartCutoffResumeTemperature));
