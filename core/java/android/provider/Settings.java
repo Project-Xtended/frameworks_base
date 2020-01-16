@@ -10332,6 +10332,12 @@ public final class Settings {
         public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
 
         /**
+         * Whether to hide lock icon on lockscreen
+         * {@hide}
+         */
+        public static final String HIDE_LOCKICON = "hide_lockicon";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
