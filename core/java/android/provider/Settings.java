@@ -6859,6 +6859,17 @@ public final class Settings {
          */
         @ChaosLab(name="GestureAnywhere", classification=Classification.NEW_FIELD)
         public static final String GESTURE_ANYWHERE_SHOW_TRIGGER = "gesture_anywhere_show_trigger";
+        /**
+         * FOD icon picker
+         * @hide
+         */
+        public static final String FOD_ICON = "fod_icon";
+
+        /**
+         * FOD use wallpaper color
+         * @hide
+         */
+        public static final String FOD_ICON_WALLPAPER_COLOR = "fod_icon_wallpaper_color";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
