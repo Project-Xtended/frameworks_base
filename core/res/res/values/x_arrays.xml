@@ -17,8 +17,9 @@
 <resources>
     <string-array translatable="false" name="config_rebootActionsList">
         <item>restart</item>
-        <item>reboot_recovery</item>
         <item>reboot_systemui</item>
+        <item>reboot_hot</item>
+        <item>reboot_recovery</item>
         <item>reboot_bootloader</item>
         <item>reboot_fastboot</item>
     </string-array>

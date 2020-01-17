@@ -74,6 +74,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Process;
 import android.os.PowerManager;
+import android.os.Process;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -206,6 +207,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private static final String GLOBAL_ACTION_KEY_REBOOT_BOOTLOADER = "reboot_bootloader";
     private static final String GLOBAL_ACTION_KEY_REBOOT_FASTBOOT = "reboot_fastboot";
     private static final String GLOBAL_ACTION_KEY_REBOOT_SYSTEMUI = "reboot_systemui";
+    private static final String GLOBAL_ACTION_KEY_REBOOT_HOT = "reboot_hot";
     private static final String GLOBAL_ACTION_KEY_SCREENRECORD = "screenrecord";
     private static final String GLOBAL_ACTION_KEY_FLASHLIGHT = "flashlight";
     private static final String GLOBAL_ACTION_KEY_ONTHEGO = "onthego";
@@ -677,6 +679,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             String actionKey = rebootMenuActions[i];
             if (GLOBAL_ACTION_KEY_REBOOT_RECOVERY.equals(actionKey)) {
                 items.add(new RebootRecoveryAction());
+            } else if (GLOBAL_ACTION_KEY_REBOOT_HOT.equals(actionKey)) {
+                items.add(new RebootHotAction());
             } else if (GLOBAL_ACTION_KEY_REBOOT_BOOTLOADER.equals(actionKey)) {
                 items.add(new RebootBootloaderAction());
             } else if (GLOBAL_ACTION_KEY_REBOOT_SYSTEMUI.equals(actionKey)) {
@@ -704,11 +708,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         int globalactionMaxColumns = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.GLOBAL_ACTIONS_MAX_COLUMNS, 3);
         if (mIsRebootMenu) {
-            // To show reboot to bootloader, recovery, systemui, system.
-            return 4;
-        } else if (mIsRebootMenu && SystemProperties.getBoolean("ro.fastbootd.available", true)) {
-            // To show reboot to bootloader, recovery, fastbootd, systemui, system.
+            // To show reboot to bootloader, recovery, hot reboot, systemui, system.
             return 5;
+        } else if (mIsRebootMenu && SystemProperties.getBoolean("ro.fastbootd.available", true)) {
+            // To show reboot to bootloader, recovery, fastbootd, hot reboot, systemui, system.
+            return 6;
         } else if (globalactionMaxColumns != 0) {
             return globalactionMaxColumns;
         } else {
@@ -816,6 +820,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_REBOOT_RECOVERY.equals(actionKey) &&
                     isAdvancedRebootPossible(mContext)) {
                 addIfShouldShowAction(tempActions, new RebootRecoveryAction());
+            } else if (GLOBAL_ACTION_KEY_REBOOT_HOT.equals(actionKey) &&
+                    isAdvancedRebootPossible(mContext)) {
+                addIfShouldShowAction(tempActions, new RebootHotAction());
             } else if (GLOBAL_ACTION_KEY_REBOOT_BOOTLOADER.equals(actionKey) &&
                     isAdvancedRebootPossible(mContext)) {
                 addIfShouldShowAction(tempActions, new RebootBootloaderAction());
@@ -1215,6 +1222,33 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         @Override
         public void onPress() {
             mWindowManagerFuncs.reboot(false, PowerManager.REBOOT_RECOVERY);
+        }
+    }
+
+    private final class RebootHotAction extends SinglePressAction {
+        private RebootHotAction() {
+            super(com.android.systemui.R.drawable.ic_restart_hot,
+                    com.android.systemui.R.string.global_action_reboot_hot);
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showDuringRestrictedKeyguard() {
+            return false;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+
+        @Override
+        public void onPress() {
+            Process.killProcess(Process.myPid());
         }
     }
 
