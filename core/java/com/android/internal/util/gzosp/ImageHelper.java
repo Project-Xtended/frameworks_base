@@ -35,6 +35,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
+import android.view.WindowManager;
 
 public class ImageHelper {
 
