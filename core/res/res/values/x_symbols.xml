@@ -22,4 +22,7 @@
     <java-symbol type="string" name="config_lightFontFamily" />
     <java-symbol type="string" name="config_regularFontFamily" />
 
+  <!-- Themes -->
+  <java-symbol type="color" name="theme_generic_semi_transparent_color" />
+
 </resources>
