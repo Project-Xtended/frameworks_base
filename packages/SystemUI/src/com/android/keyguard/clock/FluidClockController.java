@@ -163,9 +163,6 @@ public class FluidClockController implements ClockPlugin {
     }
 
     @Override
-    public void setStyle(Style style) {}
-
-    @Override
     public void setTextColor(int color) {
         mTimeClock.setTextColor(color);
         mDay.setTextColor(color);

@@ -178,9 +178,6 @@ public class TypeAltClockController implements ClockPlugin {
     }
 
     @Override
-    public void setStyle(Style style) {}
-
-    @Override
     public void setTextColor(int color) {
         mTextFormalTime.setTextColor(color);
         mTextFormalDate.setTextColor(color);
@@ -233,11 +230,9 @@ public class TypeAltClockController implements ClockPlugin {
         onTimeTick();
     }
 
-/*
     @Override
     public boolean shouldShowStatusArea() {
-        if (mContext == null) return true;
-        return Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_SHOW_STATUS_AREA, 1) == 1;
+        return false;
     }
-*/
 }
+

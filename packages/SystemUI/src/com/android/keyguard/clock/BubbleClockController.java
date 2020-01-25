@@ -61,7 +61,7 @@ public class BubbleClockController implements ClockPlugin {
     /**
      * Custom clock shown on AOD screen and behind stack scroller on lock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
     private ImageClock mAnalogClock;
 
     /**
@@ -84,13 +84,13 @@ public class BubbleClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater.inflate(R.layout.bubble_clock, null);
-        mAnalogClock = (ImageClock) mView.findViewById(R.id.analog_clock);
+        mBigClockView = (ClockLayout) mLayoutInflater.inflate(R.layout.bubble_clock, null);
+        mAnalogClock = (ImageClock) mBigClockView.findViewById(R.id.analog_clock);
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mAnalogClock = null;
     }
 
@@ -133,10 +133,10 @@ public class BubbleClockController implements ClockPlugin {
 
     @Override
     public View getBigClockView() {
-        if (mView == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView;
     }
 
     @Override
@@ -164,13 +164,13 @@ public class BubbleClockController implements ClockPlugin {
     @Override
     public void setDarkAmount(float darkAmount) {
         mPalette.setDarkAmount(darkAmount);
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override
     public void onTimeTick() {
         mAnalogClock.onTimeChanged();
-        mView.onTimeChanged();
+        mBigClockView.onTimeChanged();
     }
 
     @Override
@@ -180,11 +180,6 @@ public class BubbleClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        return true;
-    }
-
-    @Override
-    public boolean shouldShowInBigContainer() {
         return true;
     }
 }

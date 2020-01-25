@@ -19,24 +19,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
   >
-  <com.android.keyguard.clock.ImageClock
-      android:id="@+id/analog_clock"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-  >
-    <ImageView
-        android:id="@+id/minute_hand"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="@dimen/analog_clock_width"
         android:layout_height="wrap_content"
-        android:src="@drawable/bubble_minute_hand"
-        android:tint="@color/bubbleMinuteHandColor"
-    />
-    <ImageView
-        android:id="@+id/hour_hand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/bubble_hour_hand"
-        android:tint="@color/bubbleHourHandColor"
-    />
-  </com.android.keyguard.clock.ImageClock>
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <com.android.keyguard.clock.ImageClock
+            android:id="@+id/analog_clock"
+            android:layout_width="@dimen/analog_clock_width"
+            android:layout_height="@dimen/analog_clock_height">
+
+            <ImageView
+                android:id="@+id/minute_hand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bubble_minute_hand"
+                android:tint="@color/bubbleMinuteHandColor" />
+
+            <ImageView
+                android:id="@+id/hour_hand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bubble_hour_hand"
+                android:tint="@color/bubbleHourHandColor" />
+
+        </com.android.keyguard.clock.ImageClock>
+        <View
+            android:layout_width="@dimen/analog_clock_width"
+            android:layout_height="@dimen/clock_bottom_margin" />
+    </LinearLayout>
 </com.android.keyguard.clock.ClockLayout>

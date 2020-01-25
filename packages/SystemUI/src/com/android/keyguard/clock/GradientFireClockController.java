@@ -200,9 +200,6 @@ public class GradientFireClockController implements ClockPlugin {
     }
 
     @Override
-    public void setStyle(Style style) {}
-
-    @Override
     public void setTextColor(int color) {
     	if (mView == null) createViews();
         updateColor();

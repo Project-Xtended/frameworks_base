@@ -60,7 +60,7 @@ public class DefaultClockController implements ClockPlugin {
     /**
      * Root view of preview.
      */
-    private View mView;
+    private View mBigClockView;
 
     /**
      * Text clock in preview view hierarchy.
@@ -87,14 +87,14 @@ public class DefaultClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
-        mTextTime = mView.findViewById(R.id.time);
-        mTextDate = mView.findViewById(R.id.date);
+        mBigClockView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
+        mTextTime = mBigClockView.findViewById(R.id.time);
+        mTextDate = mBigClockView.findViewById(R.id.date);
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mTextTime = null;
         mTextDate = null;
     }
@@ -138,19 +138,16 @@ public class DefaultClockController implements ClockPlugin {
 
     @Override
     public View getBigClockView() {
-        if (mView == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView;
     }
 
     @Override
     public int getPreferredY(int totalHeight) {
         return totalHeight / 2;
     }
-
-    @Override
-    public void setStyle(Style style) {}
 
     @Override
     public void setTextColor(int color) {

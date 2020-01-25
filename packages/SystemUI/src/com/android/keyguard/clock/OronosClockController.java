@@ -207,9 +207,6 @@ public class OronosClockController implements ClockPlugin {
     }
 
     @Override
-    public void setStyle(Style style) {}
-
-    @Override
     public void setTextColor(int color) {}
 
     @Override
