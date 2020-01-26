@@ -20,6 +20,7 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -264,7 +265,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                 reset();
                 break;
         }
-
+        updateSettings();
         return false;
     }
 
@@ -275,6 +276,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
             tiles.add(tile);
         }
         mTileAdapter.resetTileSpecs(mHost, tiles);
+        updateSettings();
     }
 
     private void setTileSpecs() {
@@ -370,6 +372,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
     };
 
     private void updateSettings() {
+        final Resources res = mContext.getResources();
         mHeaderImageEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER, 0,
                 UserHandle.USER_CURRENT) == 1;
