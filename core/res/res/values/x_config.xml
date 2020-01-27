@@ -62,9 +62,6 @@
     <string-array name="config_forceEnabledComponents" translatable="false">
     </string-array>
 
-    <!-- Component name of the combo network location provider. -->
-    <string name="config_comboNetworkLocationProvider" translatable="false">@null</string>
-
     <!-- Hardware keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following keys present:
