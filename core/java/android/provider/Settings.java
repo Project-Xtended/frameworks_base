@@ -6530,6 +6530,12 @@ public final class Settings {
         public static final String FOD_PRESSED_STATE = "fod_pressed_state";
 
         /**
+         * FOD recognizing animation
+         * @hide
+         */
+        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
+
+        /**
          * Which Vibration Pattern to use
          * 0: dzzz-dzzz
          * 1: dzzz-da
