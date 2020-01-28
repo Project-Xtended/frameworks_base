@@ -40,7 +40,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import androidx.palette.graphics.Palette;
-
+import com.android.settingslib.Utils;
 import com.android.systemui.R;
 
 public class NotificationLightsView extends RelativeLayout {
@@ -89,9 +89,11 @@ public class NotificationLightsView extends RelativeLayout {
     }
 
     public void animateNotification() {
-        int color = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF,
-                UserHandle.USER_CURRENT);
+        int color = useAccent ?
+                Utils.getColorAccentDefaultColor(getContext()) :
+                Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF,
+                        UserHandle.USER_CURRENT);
         boolean randomPulse = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_RANDOM, 1,
                 UserHandle.USER_CURRENT) == 1;

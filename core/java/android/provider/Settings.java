@@ -7093,6 +7093,16 @@ public final class Settings {
          */
         public static final String PULSE_SOLID_UNITS_OPACITY = "pulse_solid_units_opacity";
 
+         /**
+         * Whether to use accent color for pulse
+         * @hide
+         */
+
+        public static final String OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT = "ambient_notification_light_accent";
+
+        private static final Validator OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
          * Pulse uses FFT averaging
          * @hide
@@ -7329,6 +7339,7 @@ public final class Settings {
             PULSE_AMBIENT_LIGHT,
             PULSE_AMBIENT_LIGHT_COLOR,
             PULSE_AMBIENT_AUTO_COLOR,
+            OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT,
             PULSE_AMBIENT_LIGHT_RANDOM,
             PULSE_AMBIENT_LIGHT_DURATION,
             PULSE_AMBIENT_LIGHT_REPEAT_COUNT,
@@ -7785,6 +7796,7 @@ public final class Settings {
             VALIDATORS.put(PULSE_AMBIENT_LIGHT, PULSE_AMBIENT_LIGHT_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_COLOR, PULSE_AMBIENT_LIGHT_COLOR_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_AUTO_COLOR, PULSE_AMBIENT_AUTO_COLOR_VALIDATOR);
+            VALIDATORS.put(OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT, OMNI_AMBIENT_NOTIFICATION_LIGHT_ACCENT_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_RANDOM, PULSE_AMBIENT_LIGHT_RANDOM_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_DURATION, PULSE_AMBIENT_LIGHT_DURATION_VALIDATOR);
             VALIDATORS.put(PULSE_AMBIENT_LIGHT_REPEAT_COUNT, PULSE_AMBIENT_LIGHT_REPEAT_COUNT_VALIDATOR);
