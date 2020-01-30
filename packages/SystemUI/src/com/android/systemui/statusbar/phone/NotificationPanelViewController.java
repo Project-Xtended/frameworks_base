@@ -27,6 +27,7 @@ import static com.android.systemui.classifier.Classifier.QS_COLLAPSE;
 import static com.android.systemui.classifier.Classifier.QUICK_SETTINGS;
 import static com.android.systemui.statusbar.StatusBarState.KEYGUARD;
 import static com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout.ROWS_ALL;
+import static com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayout.ROWS_HIGH_PRIORITY;
 
 import static java.lang.Float.isNaN;
 
@@ -3764,7 +3765,7 @@ public class NotificationPanelViewController extends PanelViewController {
                 Settings.System.PULSE_AMBIENT_LIGHT, 0, UserHandle.USER_CURRENT) != 0;
         boolean ambientLights = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
                 Settings.System.AMBIENT_NOTIFICATION_LIGHT_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
-        boolean activeNotif = mNotificationStackScrollLayoutController.hasActiveClearableNotifications(ROWS_ALL);
+        boolean activeNotif = mNotificationStackScrollLayoutController.hasActiveClearableNotifications(ROWS_HIGH_PRIORITY);
         int pulseReason = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
                 Settings.System.PULSE_TRIGGER_REASON, DozeLog.PULSE_REASON_NONE, UserHandle.USER_CURRENT);
         boolean pulseReasonNotification = pulseReason == DozeLog.PULSE_REASON_NOTIFICATION;
