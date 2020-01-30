@@ -38,9 +38,6 @@
     <!-- Whether SystemUI ignores notch -->
     <bool name="hide_view_behind_notch">false</bool>
 
-    <!-- Color of the FOD view -->
-    <color name="config_fodColor">#00ff00</color>
-
     <!-- Allow devices to use unordinary cutout overlays -->
     <bool name="config_customCutout">false</bool>
 
