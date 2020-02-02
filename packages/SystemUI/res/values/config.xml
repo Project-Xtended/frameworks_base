@@ -117,7 +117,7 @@
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-        wifi,bt,cell,sync,location,hotspot,dataswitch,flashlight,rotation,sound,screenrecord,battery,gaming,compass,screenshot,airplane,dnd,nfc,cpuinfo,weather,inversion,saver,dark,work,cast,night,onthego,caffeine,ambient_display,usb_tether,reboot,heads_up
+        wifi,bt,cell,sync,location,hotspot,dataswitch,flashlight,rotation,sound,screenrecord,battery,gaming,compass,screenshot,airplane,dnd,nfc,cpuinfo,weather,inversion,saver,dark,work,cast,night,onthego,caffeine,ambient_display,usb_tether,reboot,heads_up,lte
     </string>
 
     <!-- The tiles to display in QuickSettings -->
@@ -202,7 +202,7 @@
     <string name="doze_brightness_sensor_type" translatable="false"></string>
 
     <!-- Doze: pulse parameter - how long does it take to fade in? -->
-    <integer name="doze_pulse_duration_in">130</integer>
+    <integer name="doze_pulse_duration_in">100</integer>
 
     <!-- Doze: pulse parameter - once faded in, how long does it stay visible? -->
     <integer name="doze_pulse_duration_visible">6000</integer>

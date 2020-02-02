@@ -24,11 +24,15 @@ LOCAL_REQUIRED_MODULES := \
 	FontAmaranteSourceOverlay \
 	FontBariolSourceOverlay \
 	FontCagliostroSourceOverlay \
+	FontComicSansSourceOverlay \
 	FontCoolstorySourceOverlay \
+	FontGoogleSansSourceOverlay \
 	FontLGSmartGothicSourceOverlay \
 	FontGoogleSansOverlay \
 	FontNotoSerifSourceOverlay \
+	FontOneplusSlateSource \
 	FontRosemarySourceOverlay \
+	FontSamsungOneSourceOverlay \
 	FontSonySketchSourceOverlay \
 	FontSurferSourceOverlay \
 	IconPackCircularAndroidOverlay \
@@ -57,7 +61,12 @@ LOCAL_REQUIRED_MODULES := \
 	NavigationBarModeGesturalOverlayNarrowBack \
 	NavigationBarModeGesturalOverlayWideBack \
 	NavigationBarModeGesturalOverlayExtraWideBack \
+	NavigationBarModeGesturalOverlayNoPill \
+	NavigationBarModeGesturalOverlayNarrowBackNoPill \
+	NavigationBarModeGesturalOverlayWideBackNoPill \
+	NavigationBarModeGesturalOverlayExtraWideBackNoPill \
 	PrimaryColorBlackOverlay
+
 
 include $(BUILD_PHONY_PACKAGE)
 include $(CLEAR_VARS)

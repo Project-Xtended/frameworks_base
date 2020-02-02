@@ -192,6 +192,68 @@
     <alias name="fantasy" to="surfer" />
     <alias name="ITC Stone Serif" to="surfer" />
 
+    <family name="oneplusslate">
+        <font weight="300" style="normal">SlateFromOP-Light.ttf</font>
+        <font weight="400" style="normal">SlateFromOP-Regular.ttf</font>
+    </family>
+    <alias name="oneplusslate-bold" to="oneplusslate" weight="600" />
+    <alias name="times" to="oneplusslate" />
+    <alias name="times new roman" to="oneplusslate" />
+    <alias name="palatino" to="oneplusslate" />
+    <alias name="georgia" to="oneplusslate" />
+    <alias name="baskerville" to="oneplusslate" />
+    <alias name="goudy" to="oneplusslate" />
+    <alias name="fantasy" to="oneplusslate" />
+    <alias name="ITC Stone Serif" to="oneplusslate" />
+
+    <family name="samsungone">
+        <font weight="400" style="normal">SamsungOne.ttf</font>
+    </family>
+    <alias name="samsungone-bold" to="samsungone" weight="600" />
+    <alias name="times" to="samsungone" />
+    <alias name="times new roman" to="samsungone" />
+    <alias name="palatino" to="samsungone" />
+    <alias name="georgia" to="samsungone" />
+    <alias name="baskerville" to="samsungone" />
+    <alias name="goudy" to="samsungone" />
+    <alias name="fantasy" to="samsungone" />
+    <alias name="ITC Stone Serif" to="samsungone" />
+
+    <family name="comicsans">
+        <font weight="400" style="normal">Comic_Sans.ttf</font>
+    </family>
+    <alias name="comicsans-semi-bold" to="comicsans" weight="600" />
+    <alias name="comicsans-bold" to="comicsans" weight="700" />
+    <alias name="times" to="comicsans" />
+    <alias name="times new roman" to="comicsans" />
+    <alias name="palatino" to="comicsans" />
+    <alias name="georgia" to="comicsans" />
+    <alias name="baskerville" to="comicsans" />
+    <alias name="goudy" to="comicsans" />
+    <alias name="fantasy" to="comicsans" />
+    <alias name="ITC Stone Serif" to="comicsans" />
+
+    <family name="googlesans">
+        <font weight="400" style="normal">GoogleSans-Regular.ttf</font>
+        <font weight="400" style="italic">GoogleSans-Italic.ttf</font>
+        <font weight="500" style="normal">GoogleSans-Medium.ttf</font>
+        <font weight="500" style="italic">GoogleSans-MediumItalic.ttf</font>
+        <font weight="700" style="normal">GoogleSans-Bold.ttf</font>
+        <font weight="700" style="italic">GoogleSans-BoldItalic.ttf</font>
+    </family>
+
+    <alias name="googlesans-medium" to="googlesans" weight="500" />
+    <alias name="googlesans-semi-bold" to="googlesans" weight="600" />
+    <alias name="googlesans-bold" to="googlesans" weight="700" />
+    <alias name="times" to="googlesans" />
+    <alias name="times new roman" to="googlesans" />
+    <alias name="palatino" to="googlesans" />
+    <alias name="georgia" to="googlesans" />
+    <alias name="baskerville" to="googlesans" />
+    <alias name="goudy" to="googlesans" />
+    <alias name="fantasy" to="googlesans" />
+    <alias name="ITC Stone Serif" to="googlesans" />
+
     <family name="monospace">
         <font weight="400" style="normal">DroidSansMono.ttf</font>
     </family>

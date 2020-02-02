@@ -76,6 +76,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -83,6 +84,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.display.DisplayManager;
 import android.media.AudioAttributes;
 import android.media.MediaMetadata;
@@ -137,6 +139,7 @@ import android.widget.DateTimeView;
 import android.widget.FrameLayout;
 import android.widget.ImageSwitcher;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.colorextraction.ColorExtractor;
@@ -278,6 +281,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import dagger.Subcomponent;
+
+import com.android.systemui.ImageUtilities;
 
 public class StatusBar extends SystemUI implements DemoMode,
         ActivityStarter, OnUnlockMethodChangedListener,
@@ -531,6 +536,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             mLinger = BRIGHTNESS_CONTROL_LINGER_THRESHOLD + 1;
         }
     };
+
+    public ImageView mQSBlurView;
+    private boolean blurperformed = false;
 
     public void resetTrackInfo() {
         if (mTicker != null) {
@@ -962,6 +970,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mNotificationPanel = mStatusBarWindow.findViewById(R.id.notification_panel);
         mStackScroller = mStatusBarWindow.findViewById(R.id.notification_stack_scroller);
         mZenController.addCallback(this);
+        mQSBlurView = mStatusBarWindow.findViewById(R.id.qs_blur);
         NotificationListContainer notifListContainer = (NotificationListContainer) mStackScroller;
         mNotificationLogger.setUpWithContainer(notifListContainer);
 
@@ -1214,6 +1223,24 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
+    public void updateBlurVisibility() {
+        int QSUserAlpha = Settings.System.getInt(mContext.getContentResolver(),
+              Settings.System.QS_BLUR_ALPHA, 100);
+        int QSBlurAlpha = Math.round(255.0f *
+                mNotificationPanel.getExpandedFraction() * (float)((float) QSUserAlpha / 100.0));
+
+        if (QSBlurAlpha > 0 && !blurperformed && !mIsKeyguard && isQSBlurEnabled()) {
+            Bitmap bittemp = ImageUtilities.blurImage(mContext, ImageUtilities.screenshotSurface(mContext));
+            Drawable blurbackground = new BitmapDrawable(mContext.getResources(), bittemp);
+            blurperformed = true;
+            mQSBlurView.setBackgroundDrawable(blurbackground);
+        } else if (QSBlurAlpha == 0 || mState == StatusBarState.KEYGUARD) {
+            blurperformed = false;
+            mQSBlurView.setBackgroundColor(Color.TRANSPARENT);
+        }
+        mQSBlurView.setAlpha(QSBlurAlpha);
+        mQSBlurView.getBackground().setAlpha(QSBlurAlpha);
+    }
 
     private void adjustBrightness(int x) {
         mBrightnessChanged = true;
@@ -1254,6 +1281,11 @@ public class StatusBar extends SystemUI implements DemoMode,
                 }
             });
         }
+    }
+
+    private boolean isQSBlurEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BLUR, 1) != 0;
     }
 
     private void brightnessControl(MotionEvent event) {
@@ -3506,6 +3538,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     private boolean updateIsKeyguard() {
+        updateBlurVisibility();
         boolean wakeAndUnlocking = mBiometricUnlockController.getMode()
                 == BiometricUnlockController.MODE_WAKE_AND_UNLOCK;
 
@@ -4433,6 +4466,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.CENTER_TEXT_CLOCK),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BLUR_ALPHA),
+                    false, this, UserHandle.USER_ALL);
 	}
 
         @Override
@@ -4465,6 +4501,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION)) ||
                     uri.equals(Settings.Secure.getUriFor(Settings.Secure.CENTER_TEXT_CLOCK))) {
                 updateKeyguardStatusSettings();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_BLUR_ALPHA))) {
+                updateBlurVisibility();
             }
             update();
             updateNavigationBarVisibility();

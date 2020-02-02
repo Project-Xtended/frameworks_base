@@ -93,7 +93,8 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         mCellMarginHorizontal = res.getDimensionPixelSize(R.dimen.qs_tile_margin_horizontal);
         mCellMarginVertical= res.getDimensionPixelSize(R.dimen.qs_tile_margin_vertical);
         mCellMarginTop = res.getDimensionPixelSize(R.dimen.qs_tile_margin_top);
-        mSidePadding = res.getDimensionPixelOffset(R.dimen.qs_tile_layout_margin_side);
+        // is already applied in the layout xml
+        mSidePadding = 0; //res.getDimensionPixelOffset(R.dimen.qs_tile_layout_margin_side);
         mMaxAllowedRows = Math.max(1, getResources().getInteger(R.integer.quick_settings_max_rows));
         updateSettings();
         return mLayoutChanged;
@@ -144,27 +145,20 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         final int availableHeight = MeasureSpec.getSize(heightMeasureSpec) - mCellMarginTop
                 + mCellMarginVertical;
         final int previousRows = mRows;
-        mRows = availableHeight / (mCellHeight + mCellMarginVertical);
-        if (mRows >= mMaxAllowedRows) {
-            mRows = mMaxAllowedRows;
-        } else if (mRows <= 1) {
+        if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mRows = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_LAYOUT_ROWS, 3,
+                    UserHandle.USER_CURRENT);
+        } else {
+            mRows = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_LAYOUT_ROWS_LANDSCAPE, 2,
+                    UserHandle.USER_CURRENT);
+        }
+        if (mRows < 1) {
             mRows = 1;
         }
         if (mRows > (tilesCount + mColumns - 1) / mColumns) {
             mRows = (tilesCount + mColumns - 1) / mColumns;
-        }
-        int rowsSet;
-        if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            rowsSet = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_LAYOUT_ROWS, 3,
-                    UserHandle.USER_CURRENT);
-        } else {
-            rowsSet = Settings.System.getIntForUser(resolver,
-                    Settings.System.QS_LAYOUT_ROWS_LANDSCAPE, 2,
-                    UserHandle.USER_CURRENT);
-        }
-        if (mRows > rowsSet) {
-            mRows = rowsSet;
         }
         return previousRows != mRows;
     }
@@ -223,6 +217,8 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     public void updateSettings() {
         final Resources res = mContext.getResources();
         int defaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        int defaultRows = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        int defaultRowsLandscape = Math.min(2, res.getInteger(R.integer.quick_settings_max_rows));
         boolean isPortrait = res.getConfiguration().orientation
                 == Configuration.ORIENTATION_PORTRAIT;
         int columns = Settings.System.getIntForUser(
@@ -232,10 +228,10 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
                 mContext.getContentResolver(), Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE, defaultColumns,
                 UserHandle.USER_CURRENT);
         int rows = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.QS_LAYOUT_ROWS, 3,
+                mContext.getContentResolver(), Settings.System.QS_LAYOUT_ROWS, defaultRows,
                 UserHandle.USER_CURRENT);
         int rowsLandscape = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.QS_LAYOUT_ROWS_LANDSCAPE, 2,
+                mContext.getContentResolver(), Settings.System.QS_LAYOUT_ROWS_LANDSCAPE, defaultRowsLandscape,
                 UserHandle.USER_CURRENT);
         boolean showTitles = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.QS_TILE_TITLE_VISIBILITY, 1,
