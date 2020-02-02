@@ -11454,6 +11454,18 @@ public final class Settings {
         private static final Validator HIDE_LOCKICON_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Accent color
+         * @hide
+         */
+        public static final String ACCENT_COLOR_PROP = "accent_color_prop";
+
+        /**
+         * Gradient color
+         * @hide
+         */
+        public static final String GRADIENT_COLOR_PROP = "gradient_color_prop";
+
+        /**
          * This are the settings to be backed up.
          *
          * NOTE: Settings are backed up and restored in the order they appear
