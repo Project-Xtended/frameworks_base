@@ -223,5 +223,6 @@ public class SystemSettingsValidators {
                     }
                 });
         VALIDATORS.put(System.QS_SYSTEM_INFO, ANY_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.RINGTONE_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 4));
     }
 }
