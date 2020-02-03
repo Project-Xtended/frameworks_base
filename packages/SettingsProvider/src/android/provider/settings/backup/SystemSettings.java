@@ -95,5 +95,6 @@ public class SystemSettings {
         Settings.System.SCREEN_OFF_FOD,
         Settings.System.NAVIGATION_BAR_INVERSE,
         Settings.System.NAVBAR_LAYOUT_VIEWS,
+        Settings.System.RINGTONE_VIBRATION_PATTERN,
     };
 }
