@@ -164,17 +164,18 @@ public class NavigationBarInflaterView extends FrameLayout
     protected void onDetachedFromWindow() {
         Dependency.get(NavigationModeController.class).removeListener(this);
         Dependency.get(TunerService.class).removeTunable(this);
+        Dependency.get(TunerService.class).removeTunable(this);
         super.onDetachedFromWindow();
     }
 
     @Override
     public void onTuningChanged(String key, String newValue) {
+        if (NAV_BAR_VIEWS.equals(key)) {
+            setNavigationBarLayout(newValue);
+        }
         if (NAV_BAR_INVERSE.equals(key)) {
             mInverseLayout = TunerService.parseIntegerSwitch(newValue, false);
             updateLayoutInversion();
-        }
-        if (NAV_BAR_VIEWS.equals(key)) {
-            setNavigationBarLayout(newValue);
         }
     }
 
@@ -272,9 +273,6 @@ public class NavigationBarInflaterView extends FrameLayout
         mCurrentLayout = newLayout;
         if (newLayout == null) {
             newLayout = getDefaultLayout();
-        }
-        if (mInverseLayout) {
-            newLayout = newLayout.replace("recent", "back").replaceFirst("back", "recent");
         }
         String[] sets = newLayout.split(GRAVITY_SEPARATOR, 3);
         if (sets.length != 3) {
