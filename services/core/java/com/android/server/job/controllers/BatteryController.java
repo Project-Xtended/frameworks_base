@@ -88,10 +88,15 @@ public final class BatteryController extends StateController {
         boolean reportChange = false;
         for (int i = mTrackedTasks.size() - 1; i >= 0; i--) {
             final JobStatus ts = mTrackedTasks.valueAt(i);
-            reportChange |= ts.setChargingConstraintSatisfied(stablePower);
-            reportChange |= ts.setBatteryNotLowConstraintSatisfied(batteryNotLow);
+            boolean previous = ts.setChargingConstraintSatisfied(stablePower);
+            if (previous != stablePower) {
+                reportChange = true;
+            }
+            previous = ts.setBatteryNotLowConstraintSatisfied(batteryNotLow);
+            if (previous != batteryNotLow) {
+                reportChange = true;
+            }
         }
-
         if (stablePower || batteryNotLow) {
             // If one of our conditions has been satisfied, always schedule any newly ready jobs.
             mStateChangedListener.onRunJobNow(null);

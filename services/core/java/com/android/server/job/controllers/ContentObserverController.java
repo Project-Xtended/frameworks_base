@@ -297,7 +297,9 @@ public final class ContentObserverController extends StateController {
             boolean reportChange = false;
             synchronized (mLock) {
                 if (mTriggerPending) {
-                    reportChange |= mJobStatus.setContentTriggerConstraintSatisfied(true);
+                    if (mJobStatus.setContentTriggerConstraintSatisfied(true)) {
+                        reportChange = true;
+                    }
                     unscheduleLocked();
                 }
             }
