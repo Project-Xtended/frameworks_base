@@ -1677,12 +1677,16 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     void showGlobalActionsInternal() {
-        stopLongshot();
+        final boolean keyguardShowing = isKeyguardShowingAndNotOccluded();
+        if (keyguardShowing && isKeyguardSecure(mCurrentUserId) &&
+                mGlobalActionsOnLockDisable) {
+            return;
+        }
         if (mGlobalActions == null) {
             mGlobalActions = new GlobalActions(mContext, mWindowManagerFuncs);
         }
-        final boolean keyguardShowing = isKeyguardShowingAndNotOccluded();
         mGlobalActions.showDialog(keyguardShowing, isDeviceProvisioned());
+        stopLongshot();
         // since it took two seconds of long press to bring this up,
         // poke the wake lock so they have some time to see the dialog.
         mPowerManager.userActivity(SystemClock.uptimeMillis(), false);
