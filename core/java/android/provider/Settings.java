@@ -7175,6 +7175,11 @@ public final class Settings {
         private static final Validator NAVIGATION_HANDLE_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String AUTO_BRIGHTNESS_MIN_VALUE = "auto_brightness_min_value";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
