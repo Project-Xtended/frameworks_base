@@ -66,6 +66,7 @@ import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.State;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
+import com.android.systemui.R;
 import com.android.systemui.qs.PagedTileLayout.TilePage;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.QuickStatusBarHeader;
@@ -453,6 +454,8 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                     Settings.System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
         boolean setQsFromAccent = Settings.System.getIntForUser(context.getContentResolver(),
                     Settings.System.QS_PANEL_BG_USE_ACCENT, 1, UserHandle.USER_CURRENT) == 1;
+        boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT) == 1;
 
         int qsBackGroundColor = ColorUtils.getValidQsColor(System.getIntForUser(context.getContentResolver(),
                 System.QS_PANEL_BG_COLOR, defaultColor, UserHandle.USER_CURRENT));
@@ -467,7 +470,10 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
             case Tile.STATE_ACTIVE:
                 if (setQsFromResources) {
-                    return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                    if (setQsUseNewTint)
+                        return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                    else
+                       return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
                 } else {
                      if (setQsFromAccent) {
                         return context.getResources().getColor(R.color.accent_device_default_light);
