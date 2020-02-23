@@ -161,6 +161,9 @@
   <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
 
+  <!-- Whether device supports internal audio recording -->
+  <java-symbol type="bool" name="config_hasInternalAudioRecordingSupport" />
+
   <!-- Wake Keys Config -->
   <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
 

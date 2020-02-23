@@ -98,6 +98,9 @@
     <string name="action_null">Blank</string>
     <string name="animation_ethans">Ethans</string>
 
+    <!-- Whether device supports internal audio recording -->
+    <bool name="config_hasInternalAudioRecordingSupport">true</bool>
+
     <!-- Hardware keys present on the device with the ability to wake, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following keys present:
