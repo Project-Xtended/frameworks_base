@@ -267,4 +267,9 @@
     <string name="tuner_keyguard_show_battery_bar_summary">Show battery bar on charging in always on display</string>
     <string name="tuner_keyguard_show_battery_bar_always_title">Always show battery bar</string>
     <string name="tuner_keyguard_show_battery_bar_always_summary">Always show battery bar on charging</string>
+
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">FPS Info</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">FPS Info off</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">FPS Info on</string>
 </resources>
