@@ -40,6 +40,7 @@ import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
+import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
@@ -104,6 +105,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<RebootTile> mRebootTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
+    private final Provider<FPSInfoTile> mFPSInfoTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -140,6 +142,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<HWKeysTile> hWKeysTileProvider,
             Provider<WeatherTile> weatherTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
+            Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<RebootTile> rebootTileProvider,
             Provider<SoundTile> soundTileProvider) {
         mQsHostLazy = qsHostLazy;
@@ -176,6 +179,7 @@ public class QSFactoryImpl implements QSFactory {
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mRebootTileProvider = rebootTileProvider;
         mSoundTileProvider = soundTileProvider;
+        mFPSInfoTileProvider = fpsInfoTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -255,6 +259,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mRebootTileProvider.get();
             case "sound":
                 return mSoundTileProvider.get();
+            case "fpsinfo":
+                return mFPSInfoTileProvider.get();
         }
 
         // Custom tiles
