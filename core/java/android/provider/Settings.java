@@ -6349,10 +6349,16 @@ public final class Settings {
         public static final String ALERT_SLIDER_ORDER = "alert_slider_order";
 
         /**
-         * Preferred silent mode for Alert Slider..
-         * 0: Alarms only.
-         * 1: Total silence
+         * Whether to show or hide alert slider notifications on supported devices
          * @hide
+         */
+        public static final String ALERT_SLIDER_NOTIFICATIONS = "alert_slider_notifications";
+
+        /**
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above.
          */
         public static final String ALERT_SLIDER_SILENT_MODE = "alert_slider_silent_mode";
 
