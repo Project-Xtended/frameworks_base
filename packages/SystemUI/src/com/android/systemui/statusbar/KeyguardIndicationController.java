@@ -403,7 +403,6 @@ public class KeyguardIndicationController implements StateListener,
                     if (showBatteryBar) {
                         mBatteryBar.setVisibility(View.VISIBLE);
                         mBatteryBar.setBatteryPercent(mBatteryLevel);
-                        mBatteryBar.setBarColor(Color.WHITE);
                     }
                 } else {
                     String percentage = NumberFormat.getPercentInstance()
@@ -438,7 +437,6 @@ public class KeyguardIndicationController implements StateListener,
                 if (showBatteryBar && showBatteryBarAlways) {
                     mBatteryBar.setVisibility(View.VISIBLE);
                     mBatteryBar.setBatteryPercent(mBatteryLevel);
-                    mBatteryBar.setBarColor(mInitialTextColorState);
                 }
             } else if (!TextUtils.isEmpty(trustManagedIndication)
                     && mKeyguardUpdateMonitor.getUserTrustIsManaged(userId)
