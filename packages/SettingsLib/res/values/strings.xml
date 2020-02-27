@@ -1196,4 +1196,8 @@
     <!-- Battery use screen. Battery status shown in chart label when charging from a warp source.  -->
     <string name="battery_info_status_warp_charging">Warp charging</string>
 
+    <string name="battery_info_status_dash_charging_lower">dash charging</string>
+
+    <string name="battery_info_status_warp_charging_lower">warp charging</string>
+
 </resources>
