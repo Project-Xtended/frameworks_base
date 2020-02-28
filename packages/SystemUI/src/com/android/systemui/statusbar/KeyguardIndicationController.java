@@ -456,9 +456,18 @@ public class KeyguardIndicationController implements StateListener,
     }
 
     private void updateChargingIndication() {
-        if (mChargingIndication && mPowerPluggedIn && !hasActiveInDisplayFp()) {
+        final Resources res = mContext.getResources();
+        int fpBottomPadding = (int) res.getDimension(R.dimen.anim_fp_bottom_padding);
+        boolean hasInDisplayFingerprint = res.getBoolean(
+                               com.android.internal.R.bool.config_needCustomFODView);
+        if (mChargingIndication && mPowerPluggedIn) {
             mChargingIndicationView.setVisibility(View.VISIBLE);
             mChargingIndicationView.playAnimation();
+            if (hasInDisplayFingerprint) {
+                mChargingIndicationView.setPaddingRelative(0, 0, 0, fpBottomPadding);
+            } else {
+                mChargingIndicationView.setPaddingRelative(0, 0, 0, 0);
+            }
         } else {
             mChargingIndicationView.setVisibility(View.GONE);
         }
