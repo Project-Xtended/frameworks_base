@@ -596,6 +596,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private int mAlbumArtFilter;
 
     private boolean mChargingAnimation;
+    private boolean mLsChargingBar;
 
     private boolean mWallpaperSupportsAmbientMode;
     private final BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
@@ -4499,6 +4500,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SHOW_BACK_ARROW_GESTURE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.KEYGUARD_SHOW_BATTERY_BAR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4512,9 +4516,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.AMBIENT_VISUALIZER_ENABLED))) {
                 setAmbientVis();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.LOCKSCREEN_CHARGING_ANIMATION))) {
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CHARGING_ANIMATION)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.KEYGUARD_SHOW_BATTERY_BAR))) {
                 updateChargingAnimation();
+                updateLsBatteryBar();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_PANEL_BG_USE_WALL))) {
                 updateQSPanel();
@@ -4557,6 +4562,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerTickDuration();
             updateKeyguardStatusSettings();
             setHideArrowForBackGesture();
+            updateLsBatteryBar();
         }
     }
 
@@ -4644,6 +4650,14 @@ public class StatusBar extends SystemUI implements DemoMode,
                 Settings.System.LOCKSCREEN_CHARGING_ANIMATION, 1, UserHandle.USER_CURRENT) == 1;
         if (mKeyguardIndicationController != null) {
             mKeyguardIndicationController.updateChargingIndication(mChargingAnimation);
+        }
+    }
+
+    private void updateLsBatteryBar() {
+        mLsChargingBar = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.KEYGUARD_SHOW_BATTERY_BAR, 1, UserHandle.USER_CURRENT) == 1;
+        if (mKeyguardIndicationController != null) {
+            mKeyguardIndicationController.updateChargingBar(mLsChargingBar);
         }
     }
 

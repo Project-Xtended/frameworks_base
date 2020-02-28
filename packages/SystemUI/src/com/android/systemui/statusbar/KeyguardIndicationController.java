@@ -55,7 +55,7 @@ import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
-import com.android.systemui.omni.BatteryBarView;
+import com.android.systemui.statusbar.policy.BatteryBarController;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.plugins.statusbar.StatusBarStateController.StateListener;
 import com.android.systemui.statusbar.phone.KeyguardIndicationTextView;
@@ -100,6 +100,7 @@ public class KeyguardIndicationController implements StateListener,
     private KeyguardIndicationTextView mDisclosure;
     private LottieAnimationView mChargingIndicationView;
     private boolean mChargingIndication = true;
+    private boolean mChargingBar = true;
     private final UserManager mUserManager;
     private final IBatteryStats mBatteryInfo;
     private final SettableWakeLock mWakeLock;
@@ -140,11 +141,7 @@ public class KeyguardIndicationController implements StateListener,
                 }
             };
 
-    // omni additions
-    private static final String KEYGUARD_SHOW_BATTERY_BAR = "sysui_keyguard_show_battery_bar";
-    private static final String KEYGUARD_SHOW_BATTERY_BAR_ALWAYS = "sysui_keyguard_show_battery_bar_always";
-
-    private BatteryBarView mBatteryBar;
+    private BatteryBarController mBatteryBar;
 
     /**
      * Creates a new KeyguardIndicationController and registers callbacks.
@@ -196,7 +193,7 @@ public class KeyguardIndicationController implements StateListener,
                 Context.DEVICE_POLICY_SERVICE);
         setIndicationArea(indicationArea);
 
-        mBatteryBar = indicationArea.findViewById(R.id.battery_bar_view);
+        mBatteryBar = indicationArea.findViewById(R.id.ls_battery_bar);
 
         updateDisclosure();
 
@@ -379,14 +376,8 @@ public class KeyguardIndicationController implements StateListener,
         }
 
         if (mVisible) {
-            final boolean showBatteryBar = Dependency.get(TunerService.class)
-                    .getValue(KEYGUARD_SHOW_BATTERY_BAR, 1) == 1;
-            final boolean showBatteryBarAlways = Dependency.get(TunerService.class)
-                    .getValue(KEYGUARD_SHOW_BATTERY_BAR_ALWAYS, 0) == 1;
-
             // Walk down a precedence-ordered list of what indication
             // should be shown based on user or device state
-            mBatteryBar.setVisibility(View.GONE);
             if (mDozing) {
                 // When dozing we ignore any text color and use white instead, because
                 // colors can be hard to read in low brightness.
@@ -400,16 +391,13 @@ public class KeyguardIndicationController implements StateListener,
                     } else {
                         mTextView.switchIndication(indication);
                     }
-                    if (showBatteryBar) {
-                        mBatteryBar.setVisibility(View.VISIBLE);
-                        mBatteryBar.setBatteryPercent(mBatteryLevel);
-                    }
                 } else {
                     String percentage = NumberFormat.getPercentInstance()
                             .format(mBatteryLevel / 100f);
                     mTextView.switchIndication(percentage);
                 }
                 updateChargingIndication();
+                updateLsBatteryBar();
                 return;
             }
 
@@ -434,10 +422,6 @@ public class KeyguardIndicationController implements StateListener,
                 } else {
                     mTextView.switchIndication(indication);
                 }
-                if (showBatteryBar && showBatteryBarAlways) {
-                    mBatteryBar.setVisibility(View.VISIBLE);
-                    mBatteryBar.setBatteryPercent(mBatteryLevel);
-                }
             } else if (!TextUtils.isEmpty(trustManagedIndication)
                     && mKeyguardUpdateMonitor.getUserTrustIsManaged(userId)
                     && !mKeyguardUpdateMonitor.getUserHasTrust(userId)) {
@@ -448,11 +432,24 @@ public class KeyguardIndicationController implements StateListener,
                 mTextView.setTextColor(mInitialTextColorState);
             }
             updateChargingIndication();
+            updateLsBatteryBar();
         }
+    }
+
+    public void updateChargingBar(boolean visible) {
+        mChargingBar = visible;
     }
 
     public void updateChargingIndication(boolean visible) {
         mChargingIndication = visible;
+    }
+
+    private void updateLsBatteryBar() {
+        if (mChargingBar && mPowerPluggedIn) {
+            mBatteryBar.setVisibility(View.VISIBLE);
+        } else {
+            mBatteryBar.setVisibility(View.GONE);
+        }
     }
 
     private void updateChargingIndication() {
