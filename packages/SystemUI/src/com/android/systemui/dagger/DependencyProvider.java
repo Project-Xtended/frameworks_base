@@ -90,6 +90,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.PulseController;
 import com.android.systemui.theme.ThemeOverlayApplier;
+import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.util.leak.LeakDetector;
 import com.android.systemui.util.settings.SecureSettings;
 import com.android.wm.shell.legacysplitscreen.LegacySplitScreen;
@@ -392,5 +393,11 @@ public class DependencyProvider {
     @SysUISingleton
     public PulseController providePulseController(Context context, @Main Handler mainHandler, @Background Executor backgroundExecutor) {
         return new PulseControllerImpl(context, mainHandler, backgroundExecutor);
+    }
+
+    @Provides
+    @SysUISingleton
+    public TaskHelper provideTaskHelper(Context context) {
+        return new TaskHelper(context);
     }
 }

@@ -297,4 +297,5 @@ oneway interface IStatusBar
     // for pulse LS
     void screenPinningStateChanged(boolean enabled);
     void leftInLandscapeChanged(boolean isLeft);
+    void killForegroundApp();
 }

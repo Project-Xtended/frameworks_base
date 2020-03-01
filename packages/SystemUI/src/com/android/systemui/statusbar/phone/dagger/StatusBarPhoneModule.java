@@ -105,6 +105,7 @@ import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
+import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.SecureLockscreenQSDisabler;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
@@ -226,6 +227,7 @@ public interface StatusBarPhoneModule {
             UnlockedScreenOffAnimationController unlockedScreenOffAnimationController,
             Optional<StartingSurface> startingSurfaceOptional,
             FlashlightController flashlightController,
+            TaskHelper taskHelper,
             SecureLockscreenQSDisabler secureLockscreenQSDisabler) {
         return new StatusBar(
                 context,
@@ -318,6 +320,7 @@ public interface StatusBarPhoneModule {
                 unlockedScreenOffAnimationController,
                 startingSurfaceOptional,
                 flashlightController,
+                taskHelper,
                 secureLockscreenQSDisabler);
     }
 }
