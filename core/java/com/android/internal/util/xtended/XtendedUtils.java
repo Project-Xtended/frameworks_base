@@ -377,6 +377,17 @@ public class XtendedUtils {
         }
     }
 
+    public static void killForegroundApp() {
+       IStatusBarService service = getStatusBarService();
+       if (service != null) {
+           try {
+               service.killForegroundApp();
+           } catch (RemoteException e) {
+              // do nothing.
+           }
+       }
+    }
+
     // Cycle ringer modes
     public static void toggleRingerModes (Context context) {
         AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
