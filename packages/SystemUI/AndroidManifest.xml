@@ -353,6 +353,9 @@
     <!-- LiveDisplay -->
     <uses-permission android:name="lineageos.permission.MANAGE_LIVEDISPLAY" />
     <uses-permission android:name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
+    
+    <!-- kill app api -->
+    <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
 
     <!-- Custom permissions -->
     <uses-permission android:name="android.permission.FORCE_STOP_PACKAGES" />
