@@ -57,4 +57,7 @@
          near events -->
     <bool name="doze_brightness_sensor_reports_proximity" translatable="false">true</bool>
 
+    <!-- Whether to use the mask for the quicksettings icons-->
+    <bool name="config_useMaskForQs">true</bool>
+
 </resources>
