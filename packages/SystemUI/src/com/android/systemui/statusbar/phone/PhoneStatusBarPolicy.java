@@ -514,6 +514,7 @@ public class PhoneStatusBarPolicy
                             iconId = R.drawable.stat_sys_data_bluetooth_connected;
                         }
                         contentDescription = mContext.getString(R.string.accessibility_bluetooth_connected);
+                        bluetoothVisible = mBluetooth.isBluetoothEnabled();
                         break;
                     }
                 }
@@ -524,7 +525,6 @@ public class PhoneStatusBarPolicy
         } else {
             mIconController.setIcon(mSlotBluetooth, iconId, contentDescription);
         }
-	bluetoothVisible = mBluetooth.isBluetoothEnabled();
         mIconController.setIconVisibility(mSlotBluetooth, bluetoothVisible);
     }
 
