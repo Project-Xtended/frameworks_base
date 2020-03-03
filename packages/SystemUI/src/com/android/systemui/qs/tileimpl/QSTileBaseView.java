@@ -90,45 +90,24 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         addView(mIconFrame, new LayoutParams(size, size));
         backgroundView = new ImageView(getContext());
         foregroundView = new ImageView(getContext());
-        Path path = new Path(PathParser.createPathFromPathData(
-                context.getResources().getString(ICON_MASK_ID)));
-        float pathSize = AdaptiveIconDrawable.MASK_SIZE;
-        int bgSize = context.getResources().getDimensionPixelSize(R.dimen.qs_tile_background_size);
-
-        mColorDisabled = Utils.getDisabled(context,
-                Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
-
-        PathShape p = new PathShape(path, pathSize, pathSize);
-        // The drawable shown when the tile is not active
-        backgroundDrawable = new ShapeDrawable(p);
-        backgroundDrawable.setTintList(ColorStateList.valueOf(mColorDisabled));
-        backgroundDrawable.setIntrinsicHeight(bgSize);
-        backgroundDrawable.setIntrinsicWidth(bgSize);
-        backgroundView.setImageDrawable(backgroundDrawable);
-        // The drawable shown when the tile is active
-        foregroundDrawable = new ShapeDrawable(p);
-        // Draw a 45 degree gradient for the foreground
-        foregroundDrawable.setShaderFactory(new ShaderFactory() {
-            @Override
-            public Shader resize(int width, int height) {
-                LinearGradient gradient = new LinearGradient (0, pathSize, pathSize, 0,
-                        context.getResources().getColor(com.android.internal.R.color.gradient_start),
-                        context.getResources().getColor(com.android.internal.R.color.gradient_end),
-                        TileMode.REPEAT);
-                return gradient;
-            }
-        });
-        foregroundDrawable.setIntrinsicHeight(bgSize);
-        foregroundDrawable.setIntrinsicWidth(bgSize);
-        foregroundView.setAlpha(0f);
-        foregroundView.setVisibility(View.GONE);
-        foregroundView.setImageDrawable(foregroundDrawable);
-        // Add the views to the tile frame layout
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(bgSize, bgSize, Gravity.CENTER);
-        mIconFrame.addView(backgroundView, lp);
-        mIconFrame.addView(foregroundView, lp);
-        backgroundView.setLayoutParams(lp);
-        foregroundView.setLayoutParams(lp);
+        if (context.getResources().getBoolean(R.bool.config_useMaskForQs)) {
+            Path path = new Path(PathParser.createPathFromPathData(
+                    context.getResources().getString(ICON_MASK_ID)));
+            float pathSize = AdaptiveIconDrawable.MASK_SIZE;
+            PathShape p = new PathShape(path, pathSize, pathSize);
+            ShapeDrawable d = new ShapeDrawable(p);
+            d.setTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+            int bgSize = context.getResources().getDimensionPixelSize(R.dimen.qs_tile_background_size);
+            d.setIntrinsicHeight(bgSize);
+            d.setIntrinsicWidth(bgSize);
+            mBg.setImageDrawable(d);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(bgSize, bgSize, Gravity.CENTER);
+            mIconFrame.addView(mBg, lp);
+            mBg.setLayoutParams(lp);
+        } else {
+            mBg.setImageResource(R.drawable.ic_qs_circle);
+            mIconFrame.addView(mBg);
+        }
         mIcon = icon;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,
