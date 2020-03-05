@@ -67,7 +67,7 @@ public class DragDownHelper implements Gefingerpoken {
     private long mDoubleTapTimeout;
     private Runnable mGoToSleep;
 
-    public DragDownHelper(final Context context, View host, ExpandHelper.Callback callback,
+    public DragDownHelper(Context context, View host, ExpandHelper.Callback callback,
             DragDownCallback dragDownCallback,
             FalsingManager falsingManager) {
         mMinDragDistance = context.getResources().getDimensionPixelSize(

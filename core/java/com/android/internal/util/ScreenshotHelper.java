@@ -22,6 +22,8 @@ import com.android.internal.custom.longshot.LongScreenshotManagerService;
 
 import java.util.function.Consumer;
 
+import java.util.function.Consumer;
+
 public class ScreenshotHelper {
     private static final String TAG = "ScreenshotHelper";
 

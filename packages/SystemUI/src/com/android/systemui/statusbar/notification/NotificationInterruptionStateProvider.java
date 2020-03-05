@@ -232,6 +232,7 @@ public class NotificationInterruptionStateProvider {
         if (!mUseHeadsUp) {
             if (DEBUG_HEADS_UP) {
                 Log.d(TAG, "No heads up: no huns");            }
+            }
             return false;
         }
 
@@ -245,10 +246,16 @@ public class NotificationInterruptionStateProvider {
 
         boolean inShade = mStatusBarStateController.getState() == SHADE;
         if (entry.isBubble() && inShade) {
-            
             if (DEBUG_HEADS_UP) {
-               Log.d(TAG, "No heads up: in unlocked shade where notification is shown as a "
+                Log.d(TAG, "No heads up: in unlocked shade where notification is shown as a "
                         + "bubble: " + sbn.getKey());
+            }
+            return false;
+        }
+
+        if (entry.shouldSuppressPeek()) {
+            if (DEBUG_HEADS_UP) {
+                Log.d(TAG, "No heads up: suppressed by DND: " + sbn.getKey());
             }
             return false;
         }
@@ -333,7 +340,7 @@ public class NotificationInterruptionStateProvider {
     }
 
     /**
-     *Common checks between regular & AOD heads up and bubbles.
+     * Common checks between regular & AOD heads up and bubbles.
      *
      * @param entry the entry to check
      * @return true if these checks pass, false if the notification should not alert
@@ -356,7 +363,6 @@ public class NotificationInterruptionStateProvider {
             }
             return false;
         }
-
         return true;
     }
 
@@ -385,7 +391,7 @@ public class NotificationInterruptionStateProvider {
      * Common checks between alerts that occur while the device is awake (heads up & bubbles).
      *
      * @param entry the entry to check
-     * @return true if these checks pass, false if the notification should not interrupt on screen
+     * @return true if these checks pass, false if the notification should not alert
      */
       @VisibleForTesting
       public boolean canAlertAwakeCommon(NotificationEntry entry) {

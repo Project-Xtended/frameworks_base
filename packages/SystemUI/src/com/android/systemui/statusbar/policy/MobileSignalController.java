@@ -68,9 +68,9 @@ import java.util.regex.Pattern;
 
 public class MobileSignalController extends SignalController<
         MobileSignalController.MobileState, MobileSignalController.MobileIconGroup> {
-    
+
     // The message to display Nr5G icon gracfully by CarrierConfig timeout
-    private static final int MSG_DISPLAY_GRACE = 1;    
+    private static final int MSG_DISPLAY_GRACE = 1;
 
     private final TelephonyManager mPhone;
     private final SubscriptionDefaults mDefaults;
@@ -397,7 +397,8 @@ public class MobileSignalController extends SignalController<
             }
             boolean dataDisabled = mCurrentState.userSetup
                     && (mCurrentState.iconGroup == TelephonyIcons.DATA_DISABLED
-                    || (mCurrentState.iconGroup == TelephonyIcons.NOT_DEFAULT_DATA));
+                    || (mCurrentState.iconGroup == TelephonyIcons.NOT_DEFAULT_DATA
+                            && mCurrentState.defaultDataOff));
             boolean noInternet = mCurrentState.inetCondition == 0;
             boolean cutOut = dataDisabled || noInternet;
             return SignalDrawable.getState(level, getNumLevels(), cutOut);
@@ -676,7 +677,6 @@ public class MobileSignalController extends SignalController<
             nr5GIconGroup = adjustNr5GIconGroupByDisplayGraceTime(nr5GIconGroup);
         }
 
-
         if (nr5GIconGroup != null) {
             mCurrentState.iconGroup = nr5GIconGroup;
         } else if (mNetworkToIconLookup.indexOfKey(mDataNetType) >= 0) {
@@ -717,7 +717,7 @@ public class MobileSignalController extends SignalController<
         notifyListenersIfNecessary();
     }
 
-     /**
+    /**
      * If we are controlling the NOT_DEFAULT_DATA icon, check the status of the other one
      */
     private void checkDefaultData() {
@@ -752,7 +752,7 @@ public class MobileSignalController extends SignalController<
                 return mConfig.nr5GIconMap.get(Config.NR_CONNECTED);
             }
         } else if (nrState == NetworkRegistrationInfo.NR_STATE_NOT_RESTRICTED) {
-                        if (mCurrentState.activityDormant) {
+            if (mCurrentState.activityDormant) {
                 if (mConfig.nr5GIconMap.containsKey(Config.NR_NOT_RESTRICTED_RRC_IDLE)) {
                     return mConfig.nr5GIconMap.get(Config.NR_NOT_RESTRICTED_RRC_IDLE);
                 }
@@ -770,7 +770,7 @@ public class MobileSignalController extends SignalController<
         return null;
     }
 
-     /**
+    /**
      * The function to adjust MobileIconGroup depend on CarrierConfig's time
      * nextIconGroup == null imply next state could be 2G/3G/4G/4G+
      * nextIconGroup != null imply next state will be 5G/5G+
@@ -977,7 +977,7 @@ public class MobileSignalController extends SignalController<
         boolean roaming;
         boolean isVolteRegistered;
         boolean defaultDataOff;  // Tracks the on/off state of the defaultDataSubscription
-       
+
         @Override
         public void copyFrom(State s) {
             super.copyFrom(s);
