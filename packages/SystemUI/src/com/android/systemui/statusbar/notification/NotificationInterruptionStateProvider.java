@@ -231,7 +231,7 @@ public class NotificationInterruptionStateProvider {
 
         if (!mUseHeadsUp) {
             if (DEBUG_HEADS_UP) {
-                Log.d(TAG, "No heads up: no huns");            }
+                Log.d(TAG, "No heads up: no huns");
             }
             return false;
         }

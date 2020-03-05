@@ -93,6 +93,7 @@ import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.internal.view.RotationPolicy;
 import com.android.internal.widget.LockPatternUtils;
+import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.systemui.Dependency;
 import com.android.systemui.Interpolators;
 import com.android.systemui.HardwareUiLayout;
@@ -235,11 +236,13 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         Dependency.get(ConfigurationController.class).addCallback(this);
 
         mActivityStarter = Dependency.get(ActivityStarter.class);
+        KeyguardUpdateMonitor keyguardUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         UnlockMethodCache unlockMethodCache = UnlockMethodCache.getInstance(context);
         unlockMethodCache.addListener(
                 () -> {
                     if (mDialog != null && mDialog.mPanelController != null) {
-                        boolean locked = !unlockMethodCache.canSkipBouncer();
+                        boolean locked = !unlockMethodCache.canSkipBouncer()
+                                && keyguardUpdateMonitor.isKeyguardVisible();
                         mDialog.mPanelController.onDeviceLockStateChanged(locked);
                     }
                 });
@@ -611,10 +614,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                                 new GlobalActionsPanelPlugin.Callbacks() {
                                     @Override
                                     public void dismissGlobalActionsMenu() {
-                                        if (mDialog != null) {
-                                            mDialog.dismiss();
-					    mDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-                                        }
+                                        dismissDialog();
                                     }
 
                                     @Override
@@ -1206,6 +1206,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
 
     /** {@inheritDoc} */
     public void onDismiss(DialogInterface dialog) {
+        if (mDialog == dialog) {
+            mDialog = null;
+        }
         mWindowManagerFuncs.onGlobalActionsHidden();
         if (mShowSilentToggle) {
             try {
