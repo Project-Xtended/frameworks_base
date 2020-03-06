@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.evolution;
+package com.android.internal.util.xtended;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
