@@ -60,6 +60,9 @@
     <!-- Whether to use the mask for the quicksettings icons-->
     <bool name="config_useMaskForQs">true</bool>
 
+     <!-- Whether to show biometric help only when failed -->
+    <bool name="config_biometricHelpShowOnlyWhenFailed">false</bool>
+
      <!-- Color of the FOD view -->
     <color name="config_fodColor">#00ff00</color>
     <color name="config_fodColorBackground">#20000000</color>
