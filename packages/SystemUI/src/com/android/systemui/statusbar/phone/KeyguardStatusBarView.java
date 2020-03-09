@@ -44,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.internal.util.xtended.cutout.CutoutUtils;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.Dependency;
@@ -120,6 +121,9 @@ public class KeyguardStatusBarView extends RelativeLayout
             updateVisibilities();
         }
     };
+
+    // Cutout
+    private boolean mHasCutout;
 
     public KeyguardStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -207,6 +211,7 @@ public class KeyguardStatusBarView extends RelativeLayout
                 com.android.internal.R.bool.config_battery_percentage_setting_available);
         mRoundedCornerPadding = res.getDimensionPixelSize(
                 R.dimen.rounded_corner_content_padding);
+        mHasCutout = CutoutUtils.hasCutout(getContext());
     }
 
     private void updateVisibilities() {
@@ -222,7 +227,7 @@ public class KeyguardStatusBarView extends RelativeLayout
             // If we have no keyguard switcher, the screen width is under 600dp. In this case,
             // we only show the multi-user switch if it's enabled through UserManager as well as
             // by the user.
-            if (mMultiUserSwitch.isMultiUserEnabled()) {
+            if (!mHasCutout && mMultiUserSwitch.isMultiUserEnabled()) {
                 mMultiUserSwitch.setVisibility(View.VISIBLE);
             } else {
                 mMultiUserSwitch.setVisibility(View.GONE);
@@ -504,6 +509,7 @@ public class KeyguardStatusBarView extends RelativeLayout
 
     @Override
     public void onOverlayChanged() {
+        mHasCutout = CutoutUtils.hasCutout(getContext());
         mCarrierLabel.setTextAppearance(
                 Utils.getThemeAttr(mContext, com.android.internal.R.attr.textAppearanceSmall));
         onThemeChanged();
