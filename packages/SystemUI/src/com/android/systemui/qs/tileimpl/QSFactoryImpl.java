@@ -40,6 +40,7 @@ import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DeviceControlsTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
+import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.InternetTile;
@@ -112,6 +113,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<AODTile> mAODTileProvider;
     private final Provider<RefreshRateTile> mRefreshRateTileProvider;
     private final Provider<OnTheGoTile> mOnTheGoTileProvider;
+    private final Provider<FPSInfoTile> mFPSInfoTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -157,7 +159,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<HeadsUpTile> headsupTileProvider,
             Provider<AODTile> aodTileProvider,
             Provider<RefreshRateTile> refreshRateTileProvider,
-            Provider<OnTheGoTile> onTheGoTileProvider) {
+            Provider<OnTheGoTile> onTheGoTileProvider,
+            Provider<FPSInfoTile> fpsInfoTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
 
@@ -199,6 +202,7 @@ public class QSFactoryImpl implements QSFactory {
         mAODTileProvider = aodTileProvider;
         mRefreshRateTileProvider = refreshRateTileProvider;
         mOnTheGoTileProvider = onTheGoTileProvider;
+        mFPSInfoTileProvider = fpsInfoTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -287,6 +291,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mRefreshRateTileProvider.get();
             case "onthego":
                 return mOnTheGoTileProvider.get();
+            case "fpsinfo":
+                return mFPSInfoTileProvider.get();
         }
 
         // Custom tiles
