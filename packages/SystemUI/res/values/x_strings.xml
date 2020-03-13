@@ -317,6 +317,10 @@
     <string name="accessibility_quick_settings_gaming_mode_disabled">Gaming mode turned off.</string>
     <!-- Content description of the Gaming mode tile in quick settings when enabled (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_gaming_mode_enabled">Gaming mode turned on.</string>
+    
+    <!-- Alert slide extras -->
+    <string name="volume_ringer_priority_only">Priority</string>
+    <string name="volume_ringer_alarms_only">Alarms</string>
 
     <!-- Partial screenshot -->
     <string name="global_screenshot_selector_capture_description">Capture partial screenshot</string>
