@@ -188,8 +188,6 @@ public class KeyguardIndicationController implements StateListener,
         mBatteryInfo = iBatteryStats;
         mUserManager = userManager;
 
-        mBatteryBar = indicationArea.findViewById(R.id.battery_bar_view);
-
         mKeyguardUpdateMonitor.registerCallback(getKeyguardCallback());
         mKeyguardUpdateMonitor.registerCallback(mTickReceiver);
         mStatusBarStateController.addCallback(this);
@@ -199,6 +197,7 @@ public class KeyguardIndicationController implements StateListener,
     public void setIndicationArea(ViewGroup indicationArea) {
         mIndicationArea = indicationArea;
         mTextView = indicationArea.findViewById(R.id.keyguard_indication_text);
+        mBatteryBar = indicationArea.findViewById(R.id.battery_bar_view);
         mInitialTextColorState = mTextView != null ?
                 mTextView.getTextColors() : ColorStateList.valueOf(Color.WHITE);
         mDisclosure = indicationArea.findViewById(R.id.keyguard_indication_enterprise_disclosure);
