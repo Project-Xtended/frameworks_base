@@ -219,7 +219,6 @@ import com.android.systemui.qs.QSPanel;
 import com.android.systemui.qs.QuickQSPanel;
 import com.android.systemui.recents.Recents;
 import com.android.systemui.recents.ScreenPinningRequest;
-import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.shared.system.ActivityManagerWrapper;
 import com.android.systemui.shared.system.PackageManagerWrapper;
 import com.android.systemui.shared.system.TaskStackChangeListener;
@@ -828,8 +827,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mKeyguardViewMediator = getComponent(KeyguardViewMediator.class);
         mColorExtractor = Dependency.get(SysuiColorExtractor.class);
         mDeviceProvisionedController = Dependency.get(DeviceProvisionedController.class);
-        mNavigationBarController = Dependency.get(NavigationBarController.class);
-        mNavigationBarSystemUiVisibility = mNavigationBarController.createSystemUiVisibility();
         mBubbleController = Dependency.get(BubbleController.class);
         mBubbleController.setExpandListener(mBubbleExpandListener);
         mActivityIntentHelper = new ActivityIntentHelper(mContext);
@@ -850,18 +847,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         tunerService.addTunable(this, SYSUI_ROUNDED_FWVALS);
         tunerService.addTunable(this, STATUS_BAR_CUSTOM_HEADER);
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
-
-        mNeedsNavigationBar = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_showNavigationBar);
-
-        // Allow a system property to override this. Used by the emulator.
-        // See also hasNavigationBar().
-        String navBarOverride = SystemProperties.get("qemu.hw.mainkeys");
-        if ("1".equals(navBarOverride)) {
-            mNeedsNavigationBar = false;
-        } else if ("0".equals(navBarOverride)) {
-            mNeedsNavigationBar = true;
-        }
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mDreamManager = IDreamManager.Stub.asInterface(
@@ -916,6 +901,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         createAndAddWindows(result);
 
+        mXSettingsObserver.observe();
+        mXSettingsObserver.update();
+
         if (mWallpaperSupported) {
             // Make sure we always have the most current wallpaper info.
             IntentFilter wallpaperChangedFilter = new IntentFilter(Intent.ACTION_WALLPAPER_CHANGED);
@@ -925,22 +913,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         } else if (DEBUG) {
             Log.v(TAG, "start(): no wallpaper service ");
         }
-
-        mUserTracker = new CurrentUserTracker(mContext) {
-            @Override
-            public void onUserSwitched(int newUserId) {
-                updateNavigationBarVisibility();
-            }
-        };
-        mUserTracker.startTracking();
-        mXSettingsObserver.observe();
-        mXSettingsObserver.update();
-
-        // Make sure we always have the most current wallpaper info.
-        IntentFilter wallpaperChangedFilter = new IntentFilter(Intent.ACTION_WALLPAPER_CHANGED);
-        mContext.registerReceiverAsUser(mWallpaperChangedReceiver, UserHandle.ALL,
-                wallpaperChangedFilter, null /* broadcastPermission */, null /* scheduler */);
-        mWallpaperChangedReceiver.onReceive(mContext, null);
 
         // Set up the initial notification state. This needs to happen before CommandQueue.disable()
         setUpPresenter();
@@ -1616,8 +1588,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     // TODO(b/117478341): This was left such that CarStatusBar can override this method.
     // Try to remove this.
     protected void createNavigationBar(@Nullable RegisterStatusBarResult result) {
-        mNavigationBarController.createNavigationBars(true /* includeDefaultDisplay */, result,
-                mNavigationBarSystemUiVisibility);
+        mNavigationBarController.createNavigationBars(true /* includeDefaultDisplay */, result);
     }
 
     /**
@@ -2750,16 +2721,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (displayId != mDisplayId) {
             return;
         }
-
-        mNavigationBarSystemUiVisibility.displayId = displayId;
-        mNavigationBarSystemUiVisibility.vis = vis;
-        mNavigationBarSystemUiVisibility.fullscreenStackVis = fullscreenStackVis;
-        mNavigationBarSystemUiVisibility.dockedStackVis = dockedStackVis;
-        mNavigationBarSystemUiVisibility.mask = mask;
-        mNavigationBarSystemUiVisibility.fullscreenStackBounds = fullscreenStackBounds;
-        mNavigationBarSystemUiVisibility.dockedStackBounds = dockedStackBounds;
-        mNavigationBarSystemUiVisibility.navbarColorManagedByIme = navbarColorManagedByIme;
-
         final int oldVal = mSystemUiVisibility;
         final int newVal = (oldVal&~mask) | (vis&mask);
         final int diff = newVal ^ oldVal;
@@ -4765,9 +4726,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.HEADS_UP_STOPLIST_VALUES), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES), false, this);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.FORCE_SHOW_NAVBAR),
-	            false, this, UserHandle.USER_ALL);
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
                     false, this, UserHandle.USER_ALL);
@@ -4907,6 +4865,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
+            update();
             if (uri.equals(Settings.System.getUriFor(
                 Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
                 setMaxKeyguardNotifConfig();
@@ -4959,9 +4918,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mQSPanel.getHost().reloadAllTiles();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.XTENSIONS_STYLE))) {
 	    }
-	    update();
-            updateNavigationBarVisibility();
          }
+
          public void update() {
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
@@ -5032,35 +4990,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mNotificationPanel.updateKeyguardStatusSettings();
     }
 
-    private void updateNavigationBarVisibility() {
-        if (mDisplayId == Display.DEFAULT_DISPLAY && mWindowManagerService != null) {
-            int mDefNavBar;
-            if (mNeedsNavigationBar) {
-                mDefNavBar = 1;
-            } else {
-                mDefNavBar = 0;
-            }
-            boolean forcedVisibility = mNeedsNavigationBar || Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.FORCE_SHOW_NAVBAR,
-                 mDefNavBar, UserHandle.USER_CURRENT) == 1;
-            boolean hasNavbar = getNavigationBarView() != null;
-            if (forcedVisibility) {
-                if (!hasNavbar) {
-                    try {
-                        mNavigationBarController.onDisplayReady(mDisplayId,
-                                mNavigationBarSystemUiVisibility);
-                    } catch (Exception e) { }
-                }
-            } else {
-                if (hasNavbar) {
-                    try {
-                        mNavigationBarController.onDisplayRemoved(mDisplayId);
-                    } catch (Exception e) { }
-                }
-            }
-        }
-    }
-
     private void setMaxKeyguardNotifConfig() {
         mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
@@ -5112,6 +5041,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
+=======
+>>>>>>> e7a669f2ad67... Navbar: Remove support for runtime toggle
     private void setGestureNavOptions() {
         if (getNavigationBarView() != null) {
             getNavigationBarView().setLongSwipeOptions();
@@ -5601,8 +5532,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             Dependency.get(DeviceProvisionedController.class);
 
     protected NavigationBarController mNavigationBarController;
-    private NavigationBarController.SystemUiVisibility mNavigationBarSystemUiVisibility;
-    private boolean mNeedsNavigationBar;
 
     // UI-specific methods
 

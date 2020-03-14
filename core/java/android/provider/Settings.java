@@ -5585,16 +5585,6 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
-         * Force show navigation bar setting.
-         * @hide
-         */
-        public static final String FORCE_SHOW_NAVBAR = "force_show_navbar";
-
-         /** @hide */
-        public static final Validator FORCE_SHOW_NAVBAR_VALIDATOR =
-                BOOLEAN_VALIDATOR;
-
-        /**
          * Whether to show VoLTE icon or not
          * @hide
          */
@@ -7532,7 +7522,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
-            PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
             PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
 	    PRIVATE_SETTINGS.add(HIDE_LOCKSCREEN_STATUS_BAR);
@@ -7740,7 +7729,6 @@ public final class Settings {
             VALIDATORS.put(OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED, OMNI_BATTERY_LIGHT_ONLY_FULLY_CHARGED_VALIDATOR);
             VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
             VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
-            VALIDATORS.put(FORCE_SHOW_NAVBAR, FORCE_SHOW_NAVBAR_VALIDATOR);
             VALIDATORS.put(SHOW_VOLTE_ICON, SHOW_VOLTE_ICON_VALIDATOR);
             VALIDATORS.put(VOLTE_ICON_STYLE, VOLTE_ICON_STYLE_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
