@@ -25,4 +25,7 @@
     <!-- Tag clock size -->
     <dimen name="btlg_tag_width">300dp</dimen>
     <dimen name="btlg_tag_height">165dp</dimen>
+
+    <dimen name="header_font_size">20dp</dimen>
+
 </resources>
