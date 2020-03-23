@@ -202,4 +202,6 @@
     <dimen name="lock_clock_font_size_107">107dp</dimen>
     <dimen name="lock_clock_font_size_108">108dp</dimen>
 
+    <dimen name="header_font_size">20dp</dimen>
+
 </resources>
