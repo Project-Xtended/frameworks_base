@@ -69,4 +69,7 @@
     <!-- Whether to dim the FOD icon -->
     <bool name="config_fodIconDim">false</bool>
 
+    <!-- Enable face auth only when swiping security view -->
+    <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
+
 </resources>
