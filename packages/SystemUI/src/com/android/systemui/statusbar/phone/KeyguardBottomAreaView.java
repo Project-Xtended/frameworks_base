@@ -806,6 +806,12 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
                     updateLeftAffordance();
                     updateRightAffordance();
                 }
+                @Override
+                public void onBiometricRunningStateChanged(boolean running,
+                            BiometricSourceType biometricSourceType) {
+                    if (biometricSourceType == BiometricSourceType.FINGERPRINT){
+                    }
+                }
             };
 
     public void updateLeftAffordance() {
