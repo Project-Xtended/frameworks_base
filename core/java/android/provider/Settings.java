@@ -4632,6 +4632,7 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to skip music track with volume rocker
          * @hide
          */
         public static final String OMNI_ASPECT_RATIO_APPS_LIST = "aspect_ratio_apps_list";
@@ -4792,7 +4793,6 @@ public final class Settings {
         /**
          * Whether to display power in the power menu
          *
-
          * @hide
          */
         public static final String POWERMENU_POWER = "powermenu_power";
