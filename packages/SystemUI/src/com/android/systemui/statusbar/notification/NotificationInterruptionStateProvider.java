@@ -29,9 +29,11 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.provider.Telephony.Sms;
 import android.service.dreams.DreamService;
 import android.service.dreams.IDreamManager;
 import android.service.notification.StatusBarNotification;
+import android.telecom.TelecomManager;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -82,6 +84,8 @@ public class NotificationInterruptionStateProvider {
 
     private boolean mPartialScreenshot;
 
+    private TelecomManager mTm;
+
     @Inject
     public NotificationInterruptionStateProvider(Context context, NotificationFilter filter,
             StatusBarStateController stateController, BatteryController batteryController) {
@@ -92,7 +96,8 @@ public class NotificationInterruptionStateProvider {
                 new AmbientDisplayConfiguration(context),
                 filter,
                 batteryController,
-                stateController);
+                stateController,
+                (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE));
     }
 
     @VisibleForTesting
@@ -103,7 +108,8 @@ public class NotificationInterruptionStateProvider {
             AmbientDisplayConfiguration ambientDisplayConfiguration,
             NotificationFilter notificationFilter,
             BatteryController batteryController,
-            StatusBarStateController statusBarStateController) {
+            StatusBarStateController statusBarStateController,
+            TelecomManager telecomManager) {
         mContext = context;
         mPowerManager = powerManager;
         mDreamManager = dreamManager;
@@ -111,6 +117,7 @@ public class NotificationInterruptionStateProvider {
         mAmbientDisplayConfiguration = ambientDisplayConfiguration;
         mNotificationFilter = notificationFilter;
         mStatusBarStateController = statusBarStateController;
+        mTm = telecomManager;
     }
 
     /** Sets up late-binding dependencies for this component. */
@@ -382,16 +389,20 @@ public class NotificationInterruptionStateProvider {
     }
 
     public boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
-        String notificationPackageName = sbn.getPackageName().toLowerCase();
+        String notificationPackageName = sbn.getPackageName();
 
         // Gaming mode takes precedence since messaging headsup is intrusive
         if (mSkipHeadsUp) {
-            boolean isNonInstrusive = notificationPackageName.contains("dialer");
+            boolean isNonInstrusive = notificationPackageName.equals(getDefaultDialerPackage(mTm));
             return !mStatusBarStateController.isDozing() && mSkipHeadsUp && !isNonInstrusive;
         }
 
-        boolean isLessBoring = notificationPackageName.contains("dialer");
+        boolean isLessBoring = notificationPackageName.equals(getDefaultDialerPackage(mTm));
         return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isLessBoring;
+    }
+
+    private static String getDefaultDialerPackage(TelecomManager tm) {
+        return tm != null ? tm.getDefaultDialerPackage() : "";
     }
 
     /**
