@@ -196,7 +196,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     @Override
     public void onVisibilityAggregated(boolean isVisible) {
         super.onVisibilityAggregated(isVisible);
-        setLayoutTransition(isVisible ? mLayoutTransition : null);
+        setLayoutTransition(null);
     }
 
     private int getLockDateSize() {
@@ -604,7 +604,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         @Override
         public void onVisibilityAggregated(boolean isVisible) {
             super.onVisibilityAggregated(isVisible);
-            setLayoutTransition(isVisible ? mLayoutTransition : null);
+            setLayoutTransition(null);
         }
 
         @Override
