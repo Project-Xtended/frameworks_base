@@ -852,6 +852,9 @@ public final class DefaultPermissionGrantPolicy {
 
         // Lawnchair
         grantSystemFixedPermissionsToSystemPackage("ch.deletescape.lawnchair.ci", userId, STORAGE_PERMISSIONS);
+
+        // GBoard
+        grantSystemFixedPermissionsToSystemPackage("com.google.android.inputmethod.latin", userId, STORAGE_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(String category, int userId) {
