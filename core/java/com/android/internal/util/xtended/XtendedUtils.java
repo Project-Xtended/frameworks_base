@@ -52,6 +52,7 @@ import android.provider.Settings;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -298,12 +299,26 @@ public class XtendedUtils {
         return displayCutoutExists;
     }
 
+    public static boolean shouldShowGestureNav(Context context) {
+        int navbarWidth = Settings.System.getIntForUser(context.getContentResolver(),
+            Settings.System.NAVIGATION_HANDLE_WIDTH, 1, UserHandle.USER_CURRENT);
+        boolean setNavbarHeight = ((navbarWidth != 0) ? true : false);
+        boolean twoThreeButtonEnabled = isThemeEnabled("com.android.internal.systemui.navbar.twobutton") ||
+                isThemeEnabled("com.android.internal.systemui.navbar.threebutton");
+        return setNavbarHeight || twoThreeButtonEnabled;
+    }
+
     // Method to detect whether an overlay is enabled or not
     public static boolean isThemeEnabled(String packageName) {
-        mOverlayService = new OverlayManager();
+        if (mOverlayService == null) {
+            mOverlayService = new OverlayManager();
+        }
         try {
-            List<OverlayInfo> infos = mOverlayService.getOverlayInfosForTarget("android",
-                    UserHandle.myUserId());
+            ArrayList<OverlayInfo> infos = new ArrayList<OverlayInfo>();
+            infos.addAll(mOverlayService.getOverlayInfosForTarget("android",
+                    UserHandle.myUserId()));
+            infos.addAll(mOverlayService.getOverlayInfosForTarget("com.android.systemui",
+                    UserHandle.myUserId()));
             for (int i = 0, size = infos.size(); i < size; i++) {
                 if (infos.get(i).packageName.equals(packageName)) {
                     return infos.get(i).isEnabled();
@@ -402,5 +417,6 @@ public class XtendedUtils {
         return Resources.getSystem().getBoolean(
                         R.bool.config_intelligent_performance_profile);
     }
+
 }
 
