@@ -273,8 +273,11 @@
     <java-symbol type="string" name="config_powersave_profile" />
     <java-symbol type="string" name="config_screen_off_profile"/>
 
-  <!-- Light / Regular style fonts -->
+  <!-- Fonts -->
   <java-symbol type="string" name="config_lightFontFamily" />
   <java-symbol type="string" name="config_regularFontFamily" />
+  <java-symbol type="string" name="config_headlineFontFamilyMedium" />
+  <java-symbol type="string" name="config_bodyFontFamily" />
+  <java-symbol type="string" name="config_bodyFontFamilyMedium" />
 
 </resources>
