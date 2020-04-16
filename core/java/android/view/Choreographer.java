@@ -83,7 +83,6 @@ public final class Choreographer {
 
     // Prints debug messages about jank which was detected (low volume).
     private static final boolean DEBUG_JANK = false;
-    private static final boolean OPTS_INPUT = SystemProperties.getBoolean("persist.vendor.qti.inputopts.enable",false);
 
     // Prints debug messages about every frame and callback registered (high volume).
     private static final boolean DEBUG_FRAMES = false;
@@ -151,11 +150,6 @@ public final class Choreographer {
     private static final int MSG_DO_SCHEDULE_VSYNC = 1;
     private static final int MSG_DO_SCHEDULE_CALLBACK = 2;
 
-    private static final int MOTION_EVENT_ACTION_DOWN = 0;
-    private static final int MOTION_EVENT_ACTION_UP = 1;
-    private static final int MOTION_EVENT_ACTION_MOVE = 2;
-    private static final int MOTION_EVENT_ACTION_CANCEL = 3;
-
     // All frame callbacks posted by applications have this token.
     private static final Object FRAME_CALLBACK_TOKEN = new Object() {
         public String toString() { return "FRAME_CALLBACK_TOKEN"; }
@@ -186,12 +180,10 @@ public final class Choreographer {
     private long mFrameIntervalNanos;
     private boolean mDebugPrintNextFrameTimeDelta;
     private int mFPSDivisor = 1;
-    private int mTouchMoveNum = -1;
-    private int mMotionEventType = -1;
-    private boolean mConsumedMove = false;
-    private boolean mConsumedDown = false;
+
     private boolean mIsVsyncScheduled = false;
     private long mLastTouchOptTimeNanos = 0;
+
     /**
      * Contains information about the current frame for jank-tracking,
      * mainly timings of key events along with a bit of metadata about
@@ -303,16 +295,6 @@ public final class Choreographer {
     @UnsupportedAppUsage
     public static Choreographer getSfInstance() {
         return sSfThreadInstance.get();
-    }
-
-    /**
-     * {@hide}
-     */
-    public void setMotionEventInfo(int motionEventType, int touchMoveNum) {
-        synchronized(this) {
-            mTouchMoveNum = touchMoveNum;
-            mMotionEventType = motionEventType;
-        }
     }
 
     /**
@@ -641,52 +623,7 @@ public final class Choreographer {
     private void scheduleFrameLocked(long now) {
         if (!mFrameScheduled) {
             mFrameScheduled = true;
-            if (OPTS_INPUT) {
-                if (!mIsVsyncScheduled) {
-                    long curr = System.nanoTime();
-                    boolean skipFlag = curr - mLastTouchOptTimeNanos < mFrameIntervalNanos;
-                    Trace.traceBegin(Trace.TRACE_TAG_VIEW, "scheduleFrameLocked-mMotionEventType:"
-                                     + mMotionEventType + " mTouchMoveNum:" + mTouchMoveNum
-                                     + " mConsumedDown:" + mConsumedDown + " mConsumedMove:"
-                                     + mConsumedMove + " skip:" + skipFlag
-                                     + " diff:" + (curr - mLastTouchOptTimeNanos));
-                    Trace.traceEnd(Trace.TRACE_TAG_VIEW);
-                    synchronized(this) {
-                        switch(mMotionEventType) {
-                            case MOTION_EVENT_ACTION_DOWN:
-                                mConsumedMove = false;
-                                if (!mConsumedDown && !skipFlag) {
-                                    Message msg = mHandler.obtainMessage(MSG_DO_FRAME);
-                                    msg.setAsynchronous(true);
-                                    mHandler.sendMessageAtFrontOfQueue(msg);
-                                    mLastTouchOptTimeNanos = System.nanoTime();
-                                    mConsumedDown = true;
-                                    return;
-                                }
-                                break;
-                            case MOTION_EVENT_ACTION_MOVE:
-                                mConsumedDown = false;
-                                //if ((mTouchMoveNum == 1) && !mConsumedMove && !skipFlag) {
-                                if (!mConsumedMove && !skipFlag) {
-                                    Message msg = mHandler.obtainMessage(MSG_DO_FRAME);
-                                    msg.setAsynchronous(true);
-                                    mHandler.sendMessageAtFrontOfQueue(msg);
-                                    mLastTouchOptTimeNanos = System.nanoTime();
-                                    mConsumedMove = true;
-                                    return;
-                                }
-                                break;
-                            case MOTION_EVENT_ACTION_UP:
-                            case MOTION_EVENT_ACTION_CANCEL:
-                                mConsumedMove = false;
-                                mConsumedDown = false;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
+
             if (USE_VSYNC) {
                 if (DEBUG_FRAMES) {
                     Log.d(TAG, "Scheduling next frame on vsync.");
