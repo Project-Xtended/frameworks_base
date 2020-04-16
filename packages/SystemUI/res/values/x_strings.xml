@@ -203,6 +203,11 @@
      <!-- Notify use that they are in Lock-to-app (for devices without navbar)-->
     <string name="screen_pinning_toast_no_navbar">To unpin this screen, touch &amp; hold Back button</string>
 
+    <!-- Status bar icons -->
+    <string name="status_bar_camera">Camera</string>
+    <string name="status_bar_location">Location</string>
+    <string name="status_bar_microphone">Microphone</string>
+
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
     <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
