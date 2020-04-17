@@ -4172,11 +4172,11 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
 
         try {
             mNetworkManager.restrictAppOnInterface("data", uid,
-                                                   (uidPolicy & POLICY_REJECT_ON_DATA) != 0);
+                    (uidPolicy & POLICY_REJECT_ON_DATA) != 0);
             mNetworkManager.restrictAppOnInterface("vpn", uid,
-                                                   (uidPolicy & POLICY_REJECT_ON_VPN) != 0);
+                    (uidPolicy & POLICY_REJECT_ON_VPN) != 0);
             mNetworkManager.restrictAppOnInterface("wlan", uid,
-                                                   (uidPolicy & POLICY_REJECT_ON_WLAN) != 0);
+                    (uidPolicy & POLICY_REJECT_ON_WLAN) != 0);
         } catch (RemoteException e) {
             // ignored; service lives in system_server
         }

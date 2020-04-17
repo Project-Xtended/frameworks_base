@@ -368,7 +368,7 @@ interface INetworkManagementService
     void addInterfaceToNetwork(String iface, int netId);
 
     /**
-     * Remove an interface from a network.
+     * Remove an Interface from a network.
      */
     void removeInterfaceFromNetwork(String iface, int netId);
 
