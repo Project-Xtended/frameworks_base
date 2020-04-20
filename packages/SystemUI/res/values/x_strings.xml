@@ -244,7 +244,7 @@
     <string name="qs_data_switch_toast_1">Currently only one SIM card is inserted</string>
     <string name="qs_data_switch_changed_1">Using SIM 1 for Mobile data</string>
     <string name="qs_data_switch_changed_2">Using SIM 2 for Mobile data</string>
- 
+
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
     <string name="lte_on">LTE ON </string>
@@ -282,5 +282,8 @@
 
     <string name="recents_app_killed">App killed</string>
     <string name="nope_cant_kill">Launcher cannot be killed</string>
+
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
 
 </resources>
