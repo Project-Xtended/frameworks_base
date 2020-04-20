@@ -339,4 +339,12 @@ public class XtendedUtils {
     public static boolean hasAltAmbientDisplay(Context context) {
         return context.getResources().getBoolean(com.android.internal.R.bool.config_alt_ambient_display);
     }
+
+    // Check if gesture navbar is enabled
+    public static boolean isGestureNavbar() {
+        return XtendedUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_narrow_back")
+                || XtendedUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural")
+                || XtendedUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_wide_back")
+                || XtendedUtils.isThemeEnabled("com.android.internal.systemui.navbar.gestural_extra_wide_back");
+    }
 }
