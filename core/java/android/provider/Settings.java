@@ -6477,6 +6477,14 @@ public final class Settings {
 	public static final String QS_PANEL_LOGO_COLOR = "qs_panel_logo_color";
 
         /**
+         * Whether to show Fahrenheit or Celsius with battery info on the
+         * lockscreen while charging
+         *
+         * @hide
+         */
+        public static final String LOCKSCREEN_BATTERY_INFO_TEMP_UNIT = "lockscreen_charge_temp_unit";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
