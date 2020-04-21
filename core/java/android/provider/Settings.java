@@ -5795,18 +5795,6 @@ public final class Settings {
         public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
 
         /**
-         * List of alarms blocks selected
-         * @hide
-         */
-        public static final String ALARM_BLOCKING_LIST = "alarm_blocking_list";
-
-        /**
-         * Enable blocking alarm
-         * @hide
-         */
-        public static final String ALARM_BLOCKING_ENABLED = "alarm_blocking_enabled";
-
-        /**
          * @hide
          */
         public static final String START_SCREEN_STATE_SERVICE = "start_screen_state_service";
