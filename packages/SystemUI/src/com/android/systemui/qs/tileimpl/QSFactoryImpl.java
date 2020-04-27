@@ -53,7 +53,6 @@ import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenStabilizationTile;
-import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
@@ -93,7 +92,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<NightDisplayTile> mNightDisplayTileProvider;
     private final Provider<NfcTile> mNfcTileProvider;
     private final Provider<GarbageMonitor.MemoryTile> mMemoryTileProvider;
-    private final Provider<UiModeNightTile> mUiModeNightTileProvider;
     private final Provider<CaffeineTile> mCaffeineTileProvider;
     private final Provider<AmbientDisplayTile> mAmbientDisplayTileProvider;
     private final Provider<AODTile> mAODTileProvider;
@@ -131,7 +129,6 @@ public class QSFactoryImpl implements QSFactory {
             Provider<NightDisplayTile> nightDisplayTileProvider,
             Provider<NfcTile> nfcTileProvider,
             Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
-            Provider<UiModeNightTile> uiModeNightTileProvider,
             Provider<CaffeineTile> caffeineTileProvider,
             Provider<AmbientDisplayTile> ambientDisplayTileProvider,
             Provider<UsbTetherTile> usbTetherTileProvider,
@@ -165,7 +162,6 @@ public class QSFactoryImpl implements QSFactory {
         mNightDisplayTileProvider = nightDisplayTileProvider;
         mNfcTileProvider = nfcTileProvider;
         mMemoryTileProvider = memoryTileProvider;
-        mUiModeNightTileProvider = uiModeNightTileProvider;
         mCaffeineTileProvider = caffeineTileProvider;
         mAmbientDisplayTileProvider = ambientDisplayTileProvider;
         mAODTileProvider = aodTileProvider;
@@ -232,8 +228,6 @@ public class QSFactoryImpl implements QSFactory {
                 return mNightDisplayTileProvider.get();
             case "nfc":
                 return mNfcTileProvider.get();
-            case "dark":
-                return mUiModeNightTileProvider.get();
             case "sync":
                 return new SyncTile(mHost);
             case "onthego":
