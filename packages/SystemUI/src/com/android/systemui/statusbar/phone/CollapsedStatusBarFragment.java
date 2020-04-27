@@ -22,6 +22,7 @@ import android.annotation.Nullable;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.util.SparseArray;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
@@ -40,8 +41,10 @@ import com.android.systemui.R;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.StatusBarState;
+import com.android.systemui.BatteryMeterView;
 import com.android.systemui.statusbar.phone.StatusBarIconController.DarkIconManager;
 import com.android.systemui.statusbar.policy.Clock;
+import com.android.systemui.statusbar.phone.StatusIconContainer;
 import com.android.systemui.statusbar.policy.EncryptionHelper;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.NetworkController;
@@ -79,6 +82,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private boolean mShowClock = true;
     private final Handler mHandler = new Handler();
     private ContentResolver mContentResolver;
+    private BatteryMeterView mBatteryMeterView;
+    private StatusIconContainer mStatusIcons;
+    private int mSignalClusterEndPadding = 0;
 
     // custom carrier label
     private View mCustomCarrierLabel;
@@ -112,6 +118,15 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         @Override
         public void setIsAirplaneMode(NetworkController.IconState icon) {
             mCommandQueue.recomputeDisableFlags(getContext().getDisplayId(), true /* animate */);
+        }
+    };
+
+    private BatteryMeterView.BatteryMeterViewCallbacks mBatteryMeterViewCallback =
+            new BatteryMeterView.BatteryMeterViewCallbacks() {
+        @Override
+        public void onHiddenBattery(boolean hidden) {
+            mStatusIcons.setPadding(
+                    mStatusIcons.getPaddingLeft(), mStatusIcons.getPaddingTop(), (hidden ? 0 : mSignalClusterEndPadding), mStatusIcons.getPaddingBottom());
         }
     };
 
@@ -150,6 +165,13 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCenterClockLayout = (LinearLayout) mStatusBar.findViewById(R.id.center_clock_layout);
         mRightClock = mStatusBar.findViewById(R.id.right_clock);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
+        mSignalClusterEndPadding = getResources().getDimensionPixelSize(R.dimen.signal_cluster_battery_padding);
+        mStatusIcons = mStatusBar.findViewById(R.id.statusIcons);
+        int batteryStyle = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.STATUS_BAR_BATTERY_STYLE, 0);
+        mStatusIcons.setPadding(mStatusIcons.getPaddingLeft(), mStatusIcons.getPaddingTop(), (batteryStyle == 5/*hidden*/ ? 0 : mSignalClusterEndPadding), mStatusIcons.getPaddingBottom());
+        mBatteryMeterView = mStatusBar.findViewById(R.id.battery);
+        mBatteryMeterView.addCallback(mBatteryMeterViewCallback);
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
         animateHide(mClockView, false, false);
@@ -186,6 +208,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         Dependency.get(StatusBarIconController.class).removeIconGroup(mDarkIconManager);
         if (mNetworkController.hasEmergencyCryptKeeperText()) {
             mNetworkController.removeCallback(mSignalCallback);
+        }
+        if (mBatteryMeterView != null) {
+            mBatteryMeterView.removeCallback(mBatteryMeterViewCallback);
         }
     }
 
