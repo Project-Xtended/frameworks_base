@@ -5444,6 +5444,12 @@ public final class Settings {
          public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
 
         /**
+         * Enable\Disable visibility of smart replies in notifications
+         * @hide
+         */
+        public static final String HIDE_SMART_REPLIES = "hide_smart_replies";
+
+        /**
          * Three Finger Gesture from Oppo
          * @hide
          */
@@ -5660,6 +5666,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREENSHOT_TYPE);
             PRIVATE_SETTINGS.add(COLOR_BUCKET_OVERLAY);
             PRIVATE_SETTINGS.add(FP_UNLOCK_KEYSTORE);
+            PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
         }
 
         /**
