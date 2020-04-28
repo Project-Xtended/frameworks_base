@@ -5769,6 +5769,18 @@ public final class Settings {
          */
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
+	/**
+         * Clock font style  QS
+         * @hide
+         */
+        public static final String QS_HEADER_CLOCK_FONT_STYLE = "qs_header_clock_font_style";
+
+	/**
+         * Clock font size QS
+         * @hide
+         */
+        public static final String QS_HEADER_CLOCK_SIZE = "qs_header_clock_size";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.

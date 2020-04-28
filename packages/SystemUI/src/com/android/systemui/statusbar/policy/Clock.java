@@ -114,6 +114,8 @@ public class Clock extends TextView implements
     public static final int STYLE_DATE_RIGHT = 1;
 
     private int mClockFontStyle = FONT_NORMAL;
+    private int mQsClockFontStyle = FONT_MEDIUM;
+
     public static final int FONT_NORMAL = 0;
     public static final int FONT_ITALIC = 1;
     public static final int FONT_BOLD = 2;
@@ -161,6 +163,7 @@ public class Clock extends TextView implements
     protected boolean mShowClock = true;
     private int mClockColor = 0xffffffff;
     private int mClockSize = 14;
+    private int mClockSizeQsHeader = 14;
     private int mAmPmStyle;
     protected boolean mQsHeader;
     private boolean mShowSeconds;
@@ -208,11 +211,20 @@ public class Clock extends TextView implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_COLOR),
                     false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_CLOCK_SIZE),
+                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_SIZE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_CLOCK_FONT_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_FONT_STYLE),
+                    false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_CLOCK_SIZE),
                     false, this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -752,7 +764,14 @@ public class Clock extends TextView implements
         mClockSize = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CLOCK_SIZE, DEFAULT_CLOCK_SIZE,
                 UserHandle.USER_CURRENT);
+	mClockSizeQsHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_CLOCK_SIZE, DEFAULT_CLOCK_SIZE,
+        UserHandle.USER_CURRENT);
+	if(mQsHeader) {
+            setTextSize(mClockSizeQsHeader);
+        } else {
             setTextSize(mClockSize);
+	}
             updateClock();
     }
 
@@ -772,7 +791,14 @@ public class Clock extends TextView implements
         mClockFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CLOCK_FONT_STYLE, FONT_NORMAL,
 		UserHandle.USER_CURRENT);
-        getClockFontStyle(mClockFontStyle);
+        mQsClockFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_CLOCK_FONT_STYLE, FONT_MEDIUM,
+                UserHandle.USER_CURRENT);
+        if(mQsHeader) {
+            getClockFontStyle(mQsClockFontStyle);
+        } else {
+            getClockFontStyle(mClockFontStyle);
+        }
         updateClock();
     }
 
