@@ -6115,6 +6115,14 @@ public final class Settings {
          */
         public static final String AMBIENT_VISUALIZER_ENABLED = "ambient_visualizer_enabled";
 
+        /*
+         * Whether to auto hide clock
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_AUTO_HIDE = "status_bar_clock_auto_hide";
+        public static final String STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION = "status_bar_clock_auto_hide_hduration";
+        public static final String STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION = "status_bar_clock_auto_hide_sduration";
+
         /**
          * Gaming mode master switch
          * @hide
