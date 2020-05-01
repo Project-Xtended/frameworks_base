@@ -70,4 +70,7 @@
     <color name="config_fodColor">#00ff00</color>
     <color name="config_fodColorBackground">#20000000</color>
 
+    <!-- Allow devices to enforce the H265 encoder for screen recordings -->
+    <bool name="config_useNewScreenRecEncoder">true</bool>
+
 </resources>
