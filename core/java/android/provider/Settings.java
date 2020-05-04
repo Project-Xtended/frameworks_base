@@ -6797,6 +6797,17 @@ public final class Settings {
         private static final Validator STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String ULTRA_POWER_SAVE = "ultra_power_save";
+
+        /**
+         * Last Performance mode
+         * @hide
+         */
+        public static final String LAST_PERFORMANCE_PROFILE= "last_performance_profile";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
