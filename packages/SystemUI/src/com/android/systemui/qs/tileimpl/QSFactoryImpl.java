@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.OnTheGoTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
+import com.android.systemui.qs.tiles.ScreenRecordTile;
 import com.android.systemui.qs.tiles.ScreenStabilizationTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.SoundTile;
@@ -101,6 +102,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<CPUInfoTile> mCPUInfoTileProvider;
+    private final Provider<ScreenRecordTile> mScreenRecordTileProvider;
     private final Provider<GamingModeTile> mGamingModeTileProvider;
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<LteTile> mLteTileProvider;
@@ -137,6 +139,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<CPUInfoTile> cpuInfoTileProvider,
+            Provider<ScreenRecordTile> screenRecordTileProvider,
             Provider<GamingModeTile> gamingModeTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<LteTile> lteTileProvider,
@@ -171,6 +174,7 @@ public class QSFactoryImpl implements QSFactory {
         mHeadsUpTileProvider = headsUpTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
         mCPUInfoTileProvider = cpuInfoTileProvider;
+        mScreenRecordTileProvider = screenRecordTileProvider;
         mGamingModeTileProvider = gamingModeTileProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mLteTileProvider = lteTileProvider;
@@ -254,6 +258,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new CompassTile(mHost);
             case "cpuinfo":
                 return mCPUInfoTileProvider.get();
+            case "screenrecord":
+                return mScreenRecordTileProvider.get();
             case "gaming":
                 return mGamingModeTileProvider.get();
             case "dataswitch":
