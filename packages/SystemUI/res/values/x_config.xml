@@ -64,5 +64,8 @@
 
     <!-- Whether to invert the sim slots for VoLTE/VoWiFi icon -->
     <bool name="config_invertImsSlots">true</bool>
+    
+    <!-- Whether to disable assist hint on lockscreen -->
+    <bool name="config_disableAssistHintOnLockscreen">false</bool>
 
 </resources>
