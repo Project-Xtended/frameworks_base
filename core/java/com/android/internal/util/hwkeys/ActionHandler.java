@@ -66,7 +66,6 @@ import android.view.IWindowManager;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
-import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 //import android.view.WindowManagerPolicyControl;
 import android.view.inputmethod.InputMethodManager;
@@ -152,7 +151,7 @@ public class ActionHandler {
         sDisabledActions.add(SYSTEMUI_TASK_ONE_HANDED_MODE_LEFT);
         sDisabledActions.add(SYSTEMUI_TASK_ONE_HANDED_MODE_RIGHT);
         // we need to make this more reliable when the user tap the partial screenshot button
-        // quickly and more times
+        // quickly and more times 
         sDisabledActions.add(SYSTEMUI_TASK_STOP_SCREENPINNING);
         sDisabledActions.add(SYSTEMUI_TASK_ASSISTANT_SOUND_SEARCH);
         sDisabledActions.add(SYSTEMUI_TASK_POWER_MENU);
@@ -499,18 +498,10 @@ public class ActionHandler {
             killProcess(context);
             return;
         } else if (action.equals(SYSTEMUI_TASK_SCREENSHOT)) {
-            try {
-                WindowManagerGlobal.getWindowManagerService().mokeeTakeScreenshot(WindowManager.TAKE_SCREENSHOT_FULLSCREEN);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Error while trying to take screenshot.", e);
-            }
+            sendCommandToWindowManager(new Intent(INTENT_SCREENSHOT));
             return;
         } else if (action.equals(SYSTEMUI_TASK_REGION_SCREENSHOT)) {
-            try {
-                WindowManagerGlobal.getWindowManagerService().mokeeTakeScreenshot(WindowManager.TAKE_SCREENSHOT_SELECTED_REGION);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Error while trying to take screenshot.", e);
-            }
+            sendCommandToWindowManager(new Intent(INTENT_REGION_SCREENSHOT));
             return;
         } else if (action.equals(SYSTEMUI_TASK_SCREENRECORD)) {
             sendCommandToWindowManager(new Intent(INTENT_TOGGLE_SCREENRECORD));
