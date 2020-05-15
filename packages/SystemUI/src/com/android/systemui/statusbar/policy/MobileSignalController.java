@@ -812,7 +812,7 @@ public class MobileSignalController extends SignalController<
 
     void onMobileDataChanged() {
         checkDefaultData();
-        notifyListenersIfNecessary();
+        notifyListeners();
     }
 
     boolean isDataDisabled() {
