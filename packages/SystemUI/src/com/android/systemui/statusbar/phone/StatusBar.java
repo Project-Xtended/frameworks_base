@@ -331,6 +331,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private static final String SYSUI_ROUNDED_FWVALS =
             Settings.Secure.SYSUI_ROUNDED_FWVALS;
+    private static final String STATUS_BAR_CUSTOM_HEADER =
+            "system:" + Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -846,7 +848,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, SYSUI_ROUNDED_FWVALS);
-
+        tunerService.addTunable(this, STATUS_BAR_CUSTOM_HEADER);
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
         mNeedsNavigationBar = mContext.getResources().getBoolean(
@@ -5978,10 +5980,17 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (key == SYSUI_ROUNDED_FWVALS) {
-            mSysuiRoundedFwvals =
-                    TunerService.parseIntegerSwitch(newValue, true);
-            updateCorners();
+        switch (key) {
+            case SYSUI_ROUNDED_FWVALS:
+                mSysuiRoundedFwvals =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                updateCorners();
+                break;
+            case STATUS_BAR_CUSTOM_HEADER:
+                updateTheme();
+                break;
+            default:
+                break;
         }
     }
     // End Extra BaseStatusBarMethods.
