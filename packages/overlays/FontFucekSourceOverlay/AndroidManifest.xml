@@ -26,6 +26,6 @@
     <application android:label="@string/font_fucek_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="fucek,fucek-semi-bold,fucek-bold" />
+            android:value="fucek,fucek-thin,fucek-light,fucek-medium,fucek-black,fucek-semi-bold,fucek-bold" />
     </application>
 </manifest>

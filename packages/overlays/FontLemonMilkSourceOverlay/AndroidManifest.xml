@@ -26,6 +26,6 @@
     <application android:label="@string/font_lemonmilk_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="lemonmilk,lemonmilk-semi-bold,lemonmilk-bold" />
+            android:value="lemonmilk,lemonmilk-thin,lemonmilk-light,lemonmilk-medium,lemonmilk-black,lemonmilk-semi-bold,lemonmilk-bold" />
     </application>
 </manifest>
