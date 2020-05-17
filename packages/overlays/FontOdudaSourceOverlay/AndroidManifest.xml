@@ -26,6 +26,6 @@
     <application android:label="@string/font_oduda_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="oduda,oduda-semi-bold,oduda-bold" />
+            android:value="oduda,oduda-thin,oduda-light,oduda-medium,oduda-black,oduda-semi-bold,oduda-bold" />
     </application>
 </manifest>
