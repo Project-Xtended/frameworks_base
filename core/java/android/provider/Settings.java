@@ -7146,6 +7146,13 @@ public final class Settings {
 
         public static final String AMBIENT_CUSTOM_IMAGE = "ambient_custom_image";
 
+
+        /**
+        * VolumePanel Themes
+        * @hide
+        */
+        public static final String AUDIO_PANEL_VIEW_THEME = "audio_panel_view_theme";
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
