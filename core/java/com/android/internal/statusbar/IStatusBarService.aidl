@@ -128,4 +128,5 @@ interface IStatusBarService
     void showInDisplayFingerprintView();
     void hideInDisplayFingerprintView();
     void setAutoRotate(boolean enabled);
+    void screenPinningStateChanged(boolean enabled);
 }
