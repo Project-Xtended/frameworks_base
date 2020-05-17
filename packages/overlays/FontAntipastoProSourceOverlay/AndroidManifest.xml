@@ -26,6 +26,6 @@
     <application android:label="@string/font_antipastopro_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="antipastopro,antipastopro-semi-bold,antipastopro-bold" />
+            android:value="antipastopro,antipastopro-thin,antipastopro-light,antipastopro-medium,antipastopro-black,antipastopro-semi-bold,antipastopro-bold" />
     </application>
 </manifest>
