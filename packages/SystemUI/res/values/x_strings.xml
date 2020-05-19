@@ -336,4 +336,8 @@
     <string name="system_theme_style_dark_grey">Dark Grey</string>
     <string name="system_theme_style_material_ocean">Material Ocean</string>
 
+    <!-- FOD View -->
+    <string name="fod_view_title" translatable="false">Fingerprint on display</string>
+    <string name="fod_view_pressed_title" translatable="false">Fingerprint on display.touched</string>
+
 </resources>
