@@ -6810,6 +6810,16 @@ public final class Settings {
         public static final String POWER_MENU_BG_STYLE = "power_menu_bg_style";
 
         /**
+         * Whether to disco the QS tiles or not
+         * @hide
+         */
+        public static final String QS_TILES_BG_DISCO = "qs_tiles_bg_disco";
+
+        /** @hide */
+        private static final Validator QS_TILES_BG_DISCO_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6978,6 +6988,7 @@ public final class Settings {
             NOTIFICATION_HEADERS,
             HIDE_SMART_REPLIES,
             STATUS_BAR_CUSTOM_HEADER_HEIGHT,
+            QS_TILES_BG_DISCO,
         };
 
         /**
@@ -7216,6 +7227,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_NEW_TINT);
             PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_HEADER_HEIGHT);
+            PRIVATE_SETTINGS.add(QS_TILES_BG_DISCO);
         }
 
         /**
@@ -7426,6 +7438,7 @@ public final class Settings {
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
             VALIDATORS.put(HIDE_SMART_REPLIES, HIDE_SMART_REPLIES_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
+            VALIDATORS.put(QS_TILES_BG_DISCO, QS_TILES_BG_DISCO_VALIDATOR);
         }
 
         /**

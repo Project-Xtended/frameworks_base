@@ -22,6 +22,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.content.res.Configuration;
+import android.content.res.ColorUtils;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.AdaptiveIconDrawable;
@@ -84,6 +86,9 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private final ShapeDrawable backgroundDrawable;
     private final ShapeDrawable foregroundDrawable;
 
+    private boolean mShouldDisco;
+    private boolean mUseFWbg;
+
     public QSTileBaseView(Context context, QSIconView icon) {
         this(context, icon, false);
     }
@@ -91,11 +96,22 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     public QSTileBaseView(Context context, QSIconView icon, boolean collapsedView) {
         super(context);
 
-        mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+        mShouldDisco = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILES_BG_DISCO, 0, UserHandle.USER_CURRENT) == 1;
+        mUseFWbg = Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
+        boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT) == 1;
+        if (mShouldDisco && setQsUseNewTint) {
+            mColorActive = ColorUtils.genRandomAccentColor(isThemeDark(context), (long) mIcon.toString().hashCode());
+        else
+            mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+        }
         mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
         boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
                     Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT) == 1;
-        if (setQsUseNewTint) {
+
+        if (setQsUseNewTint && mUseFWbg) {
             mColorActive = mColorActiveAlpha;
         }
         mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
@@ -179,6 +195,17 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setClipToPadding(false);
         mCollapsedView = collapsedView;
         setFocusable(true);
+    }
+
+    private static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
     }
 
     public View getBgCircle() {
