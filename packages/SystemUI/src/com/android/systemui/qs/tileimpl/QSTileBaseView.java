@@ -103,7 +103,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
                     Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT) == 1;
         if (mShouldDisco && setQsUseNewTint) {
-            mColorActive = ColorUtils.genRandomAccentColor(isThemeDark(context), (long) mIcon.toString().hashCode());
+            mColorActive = ColorUtils.genRandomAccentColor(isThemeDark(context), (long) (ColorUtils.getBootTime() + mIcon.toString().hashCode()));
 	} else {
             mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
         }
