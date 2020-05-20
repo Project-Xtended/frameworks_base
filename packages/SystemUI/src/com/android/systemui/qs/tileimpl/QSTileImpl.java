@@ -31,6 +31,7 @@ import android.app.ActivityManager;
 import android.content.res.ColorUtils;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.metrics.LogMaker;
 import android.os.Handler;
@@ -76,6 +77,7 @@ import com.android.systemui.R;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Base quick-settings tile, extend this to create a new tile.
@@ -454,8 +456,8 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                     Settings.System.QS_PANEL_BG_USE_FW, 1, UserHandle.USER_CURRENT) == 1;
         boolean setQsFromAccent = Settings.System.getIntForUser(context.getContentResolver(),
                     Settings.System.QS_PANEL_BG_USE_ACCENT, 1, UserHandle.USER_CURRENT) == 1;
-        boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT) == 1;
+        int setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT);
 
         int qsBackGroundColor = ColorUtils.getValidQsColor(System.getIntForUser(context.getContentResolver(),
                 System.QS_PANEL_BG_COLOR, defaultColor, UserHandle.USER_CURRENT));
@@ -470,7 +472,9 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
             case Tile.STATE_ACTIVE:
                 if (setQsFromResources) {
-                    if (setQsUseNewTint)
+                    if (setQsUseNewTint == 1)
+                        return getRandomColor();
+                    else if (setQsUseNewTint == 2)
                         return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
                     else
                        return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
@@ -488,6 +492,11 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 Log.e("QSTile", "Invalid state " + state);
                 return 0;
         }
+    }
+
+    public static int getRandomColor(){
+       Random rnd = new Random();
+       return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 
     protected final class H extends Handler {
