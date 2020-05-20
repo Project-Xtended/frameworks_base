@@ -21,6 +21,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.ColorUtils;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -93,9 +94,9 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
         mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
         mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
-        boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT) == 1;
-        if (setQsUseNewTint) {
+        int setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT);
+        if (setQsUseNewTint != 0) {
             mColorActive = mColorActiveAlpha;
         }
         mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
@@ -118,7 +119,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         // The drawable shown when the tile is active
         foregroundDrawable = new ShapeDrawable(p);
         if (context.getResources().getBoolean(R.bool.config_useMaskForQs)) {
-            if (!setQsUseNewTint) {
+            if (setQsUseNewTint == 0) {
                 backgroundDrawable.setTintList(ColorStateList.valueOf(mColorDisabled));
                 backgroundDrawable.setIntrinsicHeight(bgSize);
                 backgroundDrawable.setIntrinsicWidth(bgSize);
@@ -261,10 +262,10 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     }
 
     protected void handleStateChanged(QSTile.State state) {
-        boolean setQsUseNewTint = Settings.System.getIntForUser(getContext().getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT) == 1;
+        int setQsUseNewTint = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 1, UserHandle.USER_CURRENT);
         boolean allowAnimations = animationsEnabled();
-        if (getResources().getBoolean(R.bool.config_useMaskForQs) && !setQsUseNewTint) {
+        if (getResources().getBoolean(R.bool.config_useMaskForQs) && setQsUseNewTint == 0) {
             int newTileState = state.state;
             if (newTileState != mState) {
                 if (allowAnimations) {
