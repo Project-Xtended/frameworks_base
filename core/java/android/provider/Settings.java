@@ -6821,6 +6821,11 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * @hide
+         */
+        public static final String QS_NEW_BG_ENABLED = "qs_new_bg_enabled";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
