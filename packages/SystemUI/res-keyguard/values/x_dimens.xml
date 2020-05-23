@@ -17,9 +17,6 @@
 */
 -->
 <resources>
-    <!-- The margin between Emergency Carrier area and pattern/pin
-         view to incorporate the FOD icon -->
-    <dimen name="keyguard_security_fod_view_margin">120dp</dimen>
 
     <!-- Lock date font size parameters -->
     <dimen name="lock_date_font_size_1">1dp</dimen>
