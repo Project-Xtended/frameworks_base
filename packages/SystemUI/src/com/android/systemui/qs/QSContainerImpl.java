@@ -112,6 +112,7 @@ public class QSContainerImpl extends FrameLayout {
     private View mBackgroundGradient;
     private View mStatusBarBackground;
     private Drawable mQsBackGround;
+    private int mQsBgNewEnabled;
 
     private int mSideMargins;
     private boolean mQsDisabled;
@@ -217,6 +218,9 @@ public class QSContainerImpl extends FrameLayout {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.DISPLAY_CUTOUT_MODE), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_NEW_BG_ENABLED), false, this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -239,6 +243,8 @@ public class QSContainerImpl extends FrameLayout {
                 Settings.System.QS_PANEL_BG_ALPHA, 255, UserHandle.USER_CURRENT);
         mImmerseMode = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
+        mQsBgNewEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_NEW_BG_ENABLED, 0, UserHandle.USER_CURRENT);
         post(new Runnable() {
             public void run() {
                 setQsBackground();
@@ -276,11 +282,49 @@ public class QSContainerImpl extends FrameLayout {
             mBackground.setBackground(mQsBackGround);
             mBackground.setClipToOutline(true);
         } else {
-            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-        }
-        mBackground.setBackground(mQsBackGround);
-        mQsBackGround.setAlpha(mQsBackGroundAlpha);
+	    if (!mQsBackGroundType) {
+		switch(mQsBgNewEnabled) {
+			// Accent Bottom
+	               case 1:
+		            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent);
+			    break;
+			// Gradient Bottom
+		       case 2:
+			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad);
+			    break;
+			// Reverse Gradient Bottom
+		       case 3:
+			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad);
+			    break;
+                        // Accent Border
+                       case 4:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent_brdr);
+                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent_brdr);
+                            break;
+                        // Gradient Border
+                       case 5:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad_brdr);
+                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad_brdr);
+                            break;
+                        // Reverse Gradient Border
+                       case 6:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad_brdr);
+                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad_brdr);
+                            break;
+		        // Default Black
+		       default:
+		       case 0:
+			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+		            break;
+                }
+            }
+	}
+	mBackground.setBackground(mQsBackGround);
+	mQsBackGround.setAlpha(mQsBackGroundAlpha);
         mQsHeaderBackGround.setAlpha(mQsBackGroundAlpha);
     }
 
