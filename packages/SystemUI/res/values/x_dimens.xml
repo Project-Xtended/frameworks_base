@@ -75,10 +75,6 @@
 
     <dimen name="battery_bar_view_height">6dp</dimen>
 
-    <!-- Recognizing fingerprint animation -->
-    <dimen name="fod_animation_size">300dp</dimen>
-    <dimen name="fod_animation_offset">0dp</dimen>
-
     <!-- OPA home dimens -->
     <dimen name="halo_inner_radius">10.0dip</dimen>
     <dimen name="halo_thickness">1.0dip</dimen>
@@ -93,9 +89,6 @@
     <dimen name="opa_overshoot_translation">8.0dip</dimen>
     <dimen name="opa_return_translation">-1.0dip</dimen>
     <dimen name="opa_rest_to_collapse">7.0dip</dimen>
-
-    <!-- Bottom margin size when fingerprint in display is active -->
-    <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">30dp</dimen>
 
     <!-- Dismiss all button -->
     <dimen name="dismiss_all_button_elevation">10dp</dimen>
