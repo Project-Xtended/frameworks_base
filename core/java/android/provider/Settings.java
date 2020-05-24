@@ -7102,6 +7102,45 @@ public final class Settings {
         public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
 
         /**
+        * Ambient Customization
+        * @hide
+        */
+        public static final String AMBIENT_TEXT = "ambient_text";
+
+        public static final String AMBIENT_TEXT_STRING = "ambient_text_string";
+
+        public static final String AMBIENT_TEXT_ANIMATION = "ambient_text_animation";
+
+        public static final String AMBIENT_TEXT_SIZE = "ambient_text_size";
+
+        public static final String AMBIENT_TEXT_FONT = "ambient_text_font";
+
+        public static final String AMBIENT_TEXT_ALIGNMENT = "ambient_text_alignment";
+
+        /**
+         * Ambient text color
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_COLOR = "ambient_text_color";
+
+        private static final Validator AMBIENT_TEXT_COLOR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        public static final String AMBIENT_TEXT_TYPE_COLOR = "ambient_text_type_color";
+
+        /** @hide */
+        private static final Validator AMBIENT_TEXT_TYPE_COLOR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+        * Ambient Customization
+        * @hide
+        */
+        public static final String AMBIENT_IMAGE = "ambient_image";
+
+        public static final String AMBIENT_CUSTOM_IMAGE = "ambient_custom_image";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7271,6 +7310,8 @@ public final class Settings {
             HIDE_SMART_REPLIES,
             STATUS_BAR_CUSTOM_HEADER_HEIGHT,
             QS_DATAUSAGE,
+            AMBIENT_TEXT_COLOR,
+            AMBIENT_TEXT_TYPE_COLOR,
         };
 
         /**
@@ -7512,6 +7553,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_DATAUSAGE);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
             PRIVATE_SETTINGS.add(REFRESH_RATE_SETTING);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
         }
 
         /**
@@ -7724,6 +7767,8 @@ public final class Settings {
             VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
             VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
             VALIDATORS.put(REFRESH_RATE_SETTING, REFRESH_RATE_SETTING_VALIDATOR);
+            VALIDATORS.put(AMBIENT_TEXT_COLOR, AMBIENT_TEXT_COLOR_VALIDATOR);
+            VALIDATORS.put(AMBIENT_TEXT_TYPE_COLOR, AMBIENT_TEXT_TYPE_COLOR_VALIDATOR);
         }
 
         /**
