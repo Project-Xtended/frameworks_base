@@ -26,6 +26,12 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
+    <include layout="@layout/ambient_custom_image"
+         android:id="@+id/image_container"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:visibility="gone" />
+
     <ViewStub
         android:id="@+id/keyguard_qs_user_switch_stub"
         android:layout="@layout/keyguard_qs_user_switch"
@@ -119,6 +125,12 @@
         android:id="@+id/lights_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <include layout="@layout/ambient_text"
+        android:id="@+id/text_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone" />
 
     <include
