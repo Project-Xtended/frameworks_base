@@ -27,7 +27,6 @@ import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_Q
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_SCREEN_PINNING;
 import static com.android.systemui.shared.system.QuickStepContract.SYSUI_STATE_SEARCH_DISABLED;
 import static com.android.systemui.shared.system.QuickStepContract.isGesturalMode;
-import static com.android.systemui.shared.system.QuickStepContract.isLegacyMode;
 import static com.android.systemui.statusbar.phone.BarTransitions.MODE_OPAQUE;
 
 import android.animation.LayoutTransition;
@@ -646,18 +645,18 @@ public class NavigationBarView extends FrameLayout implements
         updateRecentsIcon();
 
         // Update arrow buttons
-        if (!mOverviewProxyService.shouldShowSwipeUpUI() && showDpadArrowKeys()) {
+        if (showDpadArrowKeys()) {
             getKeyButtonViewById(R.id.dpad_left).setImageDrawable(mArrowLeftIcon);
             getKeyButtonViewById(R.id.dpad_right).setImageDrawable(mArrowRightIcon);
             updateDpadKeys();
         }
 
         // Update IME button visibility, a11y and rotate button always overrides the appearance
-        mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, (!mOverviewProxyService.shouldShowSwipeUpUI()
-                && (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) != 0));
+        mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher,
+                (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SHOWN) != 0);
 
-        // Gesture Mode and right arrow overrules ime in 3 button mode cause there is not enough space
-        if (isGesturalMode(mNavBarMode) && showDpadArrowKeys()) {
+        // right arrow overrules ime in 3 button mode cause there is not enough space
+        if (QuickStepContract.isLegacyMode(mNavBarMode) && showDpadArrowKeys()) {
             mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, false);
         }
 
@@ -1282,8 +1281,8 @@ public class NavigationBarView extends FrameLayout implements
     });
 
     private void updateDpadKeys() {
-        final int visibility = showDpadArrowKeys() && !mOverviewProxyService.shouldShowSwipeUpUI()
-                       && (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_BACK_ALT) != 0 ? View.VISIBLE : View.GONE;
+        final int visibility = showDpadArrowKeys() && (mNavigationIconHints
+                & StatusBarManager.NAVIGATION_HINT_BACK_ALT) != 0 ? View.VISIBLE : View.GONE;
 
         getKeyButtonViewById(R.id.dpad_left).setVisibility(visibility);
         getKeyButtonViewById(R.id.dpad_right).setVisibility(visibility);
