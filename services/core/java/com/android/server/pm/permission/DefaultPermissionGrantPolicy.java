@@ -850,9 +850,6 @@ public final class DefaultPermissionGrantPolicy {
         // Google Markup
         grantSystemFixedPermissionsToSystemPackage("com.google.android.markup", userId, STORAGE_PERMISSIONS);
 
-        // Lawnchair
-        grantSystemFixedPermissionsToSystemPackage("ch.deletescape.lawnchair.ci", userId, STORAGE_PERMISSIONS);
-
         // GBoard
         grantSystemFixedPermissionsToSystemPackage("com.google.android.inputmethod.latin", userId, STORAGE_PERMISSIONS);
 
