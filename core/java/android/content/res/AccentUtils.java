@@ -14,11 +14,14 @@ public class AccentUtils {
     private static final String TAG = "AccentUtils";
 
     private static ArrayList<String> accentResources = new ArrayList<>(
-            Arrays.asList("accent_device_default",
+            Arrays.asList("colorAccent",
+                    "accent_device_default",
                     "accent_device_default_light",
                     "accent_device_default_dark",
                     "material_pixel_blue_dark",
                     "material_pixel_blue_bright",
+                    "holo_blue_light",
+                    "holo_blue_dark",
                     "gradient_start"));
 
     private static ArrayList<String> gradientResources = new ArrayList<>(
