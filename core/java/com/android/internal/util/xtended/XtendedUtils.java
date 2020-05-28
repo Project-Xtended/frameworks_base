@@ -343,6 +343,15 @@ public class XtendedUtils {
         return passedMillis;
     }
 
+    // Check if device is connected to Wi-Fi
+    public static boolean isWiFiConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
+
+        NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return wifi.isConnected();
+    }
+
     // Check to see if device supports an alterative ambient display package
     public static boolean hasAltAmbientDisplay(Context context) {
         return context.getResources().getBoolean(com.android.internal.R.bool.config_alt_ambient_display);
