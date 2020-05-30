@@ -335,6 +335,7 @@
     <string name="system_theme_style_pitch_black">Pitch Black</string>
     <string name="system_theme_style_dark_grey">Dark Grey</string>
     <string name="system_theme_style_material_ocean">Material Ocean</string>
+    <string name="system_theme_style_xtended_clear">Xtended Clear</string>
 
     <!-- Daily data usage -->
     <string name="daily_data_usage_title">Today\'s usage</string>

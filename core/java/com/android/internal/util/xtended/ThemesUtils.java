@@ -61,6 +61,11 @@ public class ThemesUtils {
             "com.android.theme.materialocean.systemui",
     };
 
+    public static final String[] XTENDED_CLEAR = {
+            "com.android.theme.xtendedclear.system",
+            "com.android.theme.xtendedclear.systemui",
+    };
+
     // QS header themes
     private static final String[] QS_HEADER_THEMES = {
         "com.android.systemui.qsheader.black", // 0
