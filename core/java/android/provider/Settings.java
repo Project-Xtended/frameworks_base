@@ -6740,6 +6740,9 @@ public final class Settings {
          */
         public static final String QS_DATAUSAGE = "qs_datausage";
 
+        /** @hide */
+        private static final Validator QS_DATAUSAGE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
         /**
          * Controls whether to show R style notification headers
          * @hide
@@ -7058,6 +7061,7 @@ public final class Settings {
             NOTIFICATION_HEADERS,
             HIDE_SMART_REPLIES,
             STATUS_BAR_CUSTOM_HEADER_HEIGHT,
+            QS_DATAUSAGE,
         };
 
         /**
@@ -7296,6 +7300,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_NEW_TINT);
             PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
             PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_HEADER_HEIGHT);
+            PRIVATE_SETTINGS.add(QS_DATAUSAGE);
         }
 
         /**
@@ -7506,6 +7511,7 @@ public final class Settings {
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
             VALIDATORS.put(HIDE_SMART_REPLIES, HIDE_SMART_REPLIES_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
+            VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
         }
 
         /**
