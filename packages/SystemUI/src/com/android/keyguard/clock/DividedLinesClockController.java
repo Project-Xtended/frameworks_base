@@ -134,13 +134,22 @@ public class DividedLinesClockController implements ClockPlugin {
 
     @Override
     public Bitmap getPreview(int width, int height) {
-        View previewView = getBigClockView();
 
+        View previewView = mLayoutInflater.inflate(R.layout.divided_lines_preview, null);
+        TextClock previewTime = previewView.findViewById(R.id.clock);
+        TextClock previewDate = previewView.findViewById(R.id.date);
+        View previewTLine = previewView.findViewById(R.id.topLine);
+        View previewBLine = previewView.findViewById(R.id.bottomLine);
+
+        // Initialize state of plugin before generating preview.
+        previewTime.setTextColor(Color.WHITE);
+        previewDate.setTextColor(Color.WHITE);
+        previewTLine.setBackgroundColor(Color.WHITE);
+        previewBLine.setBackgroundColor(Color.WHITE);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
 
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        onTimeTick();
 
         return mRenderer.createPreview(previewView, width, height);
     }
