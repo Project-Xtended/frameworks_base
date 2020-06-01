@@ -183,6 +183,6 @@ public class AnalogClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        return false;
+        return true;
     }
 }
