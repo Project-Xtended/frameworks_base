@@ -210,7 +210,10 @@ public class OronosClockController implements ClockPlugin {
     public void setStyle(Style style) {}
 
     @Override
-    public void setTextColor(int color) {}
+    public void setTextColor(int color) {
+        mHourClock.setTextColor(color);
+        mMinuteClock.setTextColor(color);
+    }
 
     public void setTypeface(Typeface tf) {
         mHourClock.setTypeface(tf);
