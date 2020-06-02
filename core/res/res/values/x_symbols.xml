@@ -287,6 +287,10 @@
   <java-symbol type="string" name="config_pocketJudgeVendorProximitySensorName" />
   <java-symbol type="string" name="config_pocketJudgeVendorSensorName" />
 
-    <java-symbol type="integer" name="config_screenBrightnessPulse" />
+  <java-symbol type="integer" name="config_screenBrightnessPulse" />
+
+  <!-- SystemUI Restart -->
+  <java-symbol type="string" name="systemui_restart_title" />
+  <java-symbol type="string" name="systemui_restart_message" />
 
 </resources>
