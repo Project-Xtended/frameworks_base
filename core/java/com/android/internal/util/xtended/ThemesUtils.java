@@ -67,7 +67,8 @@ public class ThemesUtils {
         "com.android.systemui.qsheader.grey", // 1
         "com.android.systemui.qsheader.lightgrey", // 2
         "com.android.systemui.qsheader.accent", // 3
-        "com.android.systemui.qsheader.transparent", // 4
+        "com.android.systemui.qsheader.gradient", // 4
+        "com.android.systemui.qsheader.transparent", // 5
     };
 
     // Switches qs header style to user selected.
