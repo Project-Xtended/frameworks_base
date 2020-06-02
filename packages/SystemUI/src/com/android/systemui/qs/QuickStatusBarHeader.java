@@ -535,10 +535,17 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 R.dimen.qs_quick_header_panel_height);
 
         if (mIsQuickQsBrightnessEnabled) {
-            qqsHeight += mContext.getResources().getDimensionPixelSize(
-                    R.dimen.brightness_mirror_height)
-                    + mContext.getResources().getDimensionPixelSize(
-                    R.dimen.qs_tile_margin_top);
+           if (!mHeaderImageEnabled) {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.brightness_mirror_height)
+                       + mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top);
+           } else {
+               qqsHeight += mContext.getResources().getDimensionPixelSize(
+                       R.dimen.brightness_mirror_height)
+                       + mContext.getResources().getDimensionPixelSize(
+                       R.dimen.qs_tile_margin_top) + mHeaderImageHeight;
+           }
         }
 
         setMinimumHeight(sbHeight + qqsHeight);
