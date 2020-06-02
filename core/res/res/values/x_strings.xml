@@ -48,5 +48,9 @@
     <string name="poweroff_alarm_cancelled">Power off alarm cancelled</string>
     <string name="poweroff_alarm_set">Power off alarm set</string>
        
+    <!-- SystemUI Restart -->
+    <string name="systemui_restart_title">SystemUI restart required</string>
+    <string name="systemui_restart_message">For all changes to take effect, a SystemUI restart is required. Restart SystemUI now?</string>
+
 </resources>
 

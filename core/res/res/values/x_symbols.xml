@@ -187,4 +187,8 @@
     <java-symbol type="string" name="config_deviceInputFilterLibs" />
     <java-symbol type="string" name="config_deviceInputFilterClasses" />
             
+    <!-- SystemUI Restart -->
+    <java-symbol type="string" name="systemui_restart_title" />
+    <java-symbol type="string" name="systemui_restart_message" />
+
 </resources>
