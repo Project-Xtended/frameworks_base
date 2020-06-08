@@ -230,6 +230,8 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManagerInternal;
+import android.hardware.SensorManager;
+import android.hardware.SystemSensorManager;
 import android.location.LocationManager;
 import android.media.audiofx.AudioEffect;
 import android.net.Proxy;
@@ -1627,6 +1629,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     private boolean mIsSwipeToScrenshotEnabled;
 
     private GamingModeController mGamingModeController;
+    private SystemSensorManager mSystemSensorManager;
 
     private CutoutFullscreenController mCutoutFullscreenController;
 
@@ -7675,6 +7678,9 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         // Gaming mode provider
         mGamingModeController = new GamingModeController(mContext);
+
+        // SensorBlocked app list provider
+        mSystemSensorManager = new SystemSensorManager(mContext, mHandler.getLooper());
 
         // Force full screen for devices with cutout
         mCutoutFullscreenController = new CutoutFullscreenController(mContext);
@@ -15190,6 +15196,9 @@ public class ActivityManagerService extends IActivityManager.Stub
                                         mBatteryStatsService.notePackageUninstalled(ssp);
                                         if (mGamingModeController != null) {
                                              mGamingModeController.notePackageUninstalled(ssp);
+                                        }
+                                        if (mSystemSensorManager != null) {
+                                             mSystemSensorManager.notePackageUninstalled(ssp);
                                         }
                                     }
                                 } else {
