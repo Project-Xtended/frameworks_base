@@ -7092,6 +7092,13 @@ public final class Settings {
         public static final String XTENSIONS_STYLE = "xtensions_style";
 
         /**
+         * Sensor blocked packages
+         * @hide
+         */
+        public static final String SENSOR_BLOCKED_APP = "sensor_blocked_app";
+        public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
