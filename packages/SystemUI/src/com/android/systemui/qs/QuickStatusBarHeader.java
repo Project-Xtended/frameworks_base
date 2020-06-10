@@ -157,6 +157,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private boolean mListening;
     private boolean mQsDisabled;
 
+    private int isBattIconQsH;
+
     private QSCarrierGroup mCarrierGroup;
     protected QuickQSPanel mHeaderQsPanel;
     protected QSTileHost mHost;
@@ -192,6 +194,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private OngoingPrivacyChip mPrivacyChip;
     private Space mSpace;
     private BatteryMeterView mBatteryRemainingIcon;
+    private BatteryMeterView mBatteryRemainingIconQsH;
     private RingerModeTracker mRingerModeTracker;
     private boolean mPermissionsHubEnabled;
     private boolean mAllIndicatorsEnabled;
@@ -252,6 +255,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(Settings.System
                    .getUriFor(Settings.System.CUSTOM_QS_LOGO_SIZE), false,
                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_SHOW_BATTERY_PERCENT), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_BATTERY_LOCATION), false,
+                    this, UserHandle.USER_ALL);
             }
 
         @Override
@@ -259,6 +268,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             updateSettings();
             updateLogoSettings();
             updateQsLogoSize();
+            setBatteryPercentMode();
         }
     }
     private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
@@ -414,6 +424,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mBatteryRemainingIcon.setIsQsHeader(true);
         mBatteryRemainingIcon.setPercentShowMode(getBatteryPercentMode());
         mBatteryRemainingIcon.setOnClickListener(this);
+        // Tint for the battery icons are handled in setupHost()
+        mBatteryRemainingIconQsH = findViewById(R.id.batteryRemainingIconQsH);
+        mBatteryRemainingIconQsH.setIsQsHeader(true);
+        mBatteryRemainingIconQsH.setPercentShowMode(getBatteryPercentMode());
+        mBatteryRemainingIconQsH.setOnClickListener(this);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
         updateSettings();
@@ -666,6 +681,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
       private void updateSettings() {
         Resources resources = mContext.getResources();
+        isBattIconQsH = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_BATTERY_LOCATION, 1,
+                UserHandle.USER_CURRENT);
+
         mSysCPUTemp = resources.getString(
                   com.android.internal.R.string.config_sysCPUTemp);
         mSysBatTemp = resources.getString(
@@ -678,6 +697,14 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                   com.android.internal.R.integer.config_sysCPUTempMultiplier);
         mSysBatTempMultiplier = resources.getInteger(
                   com.android.internal.R.integer.config_sysBatteryTempMultiplier);
+
+        if (isBattIconQsH == 1) {
+            mBatteryRemainingIconQsH.setVisibility(View.VISIBLE);
+            mBatteryRemainingIcon.setVisibility(View.GONE);
+        } else if (isBattIconQsH == 0) {
+            mBatteryRemainingIcon.setVisibility(View.VISIBLE);
+            mBatteryRemainingIconQsH.setVisibility(View.GONE);
+        }
 
         mSystemInfoMode = getQsSystemInfoMode();
         updateSystemInfoText();
@@ -745,7 +772,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     }
 
     public void setBatteryPercentMode() {
-        mBatteryRemainingIcon.setPercentShowMode(getBatteryPercentMode());
+        if (mBatteryRemainingIcon != null) {
+            mBatteryRemainingIcon.setPercentShowMode(getBatteryPercentMode());
+        }
+        if (mBatteryRemainingIconQsH != null) {
+            mBatteryRemainingIconQsH.setPercentShowMode(getBatteryPercentMode());
+        }
     }
 
     public void setExpanded(boolean expanded) {
@@ -978,6 +1010,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         } else if (v == mBatteryRemainingIcon) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                 Intent.ACTION_POWER_USAGE_SUMMARY), 0);
+        } else if (v == mBatteryRemainingIconQsH) {
+            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
+                Intent.ACTION_POWER_USAGE_SUMMARY), 0);
         }
     }
 
@@ -1019,8 +1054,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         float intensity = getColorIntensity(colorForeground);
         int fillColor = mDualToneHandler.getSingleColor(intensity);
 
-        mBatteryRemainingIcon.setColorsFromContext(mHost.getContext());
-        mBatteryRemainingIcon.onDarkChanged(new Rect(), 0, DarkIconDispatcher.DEFAULT_ICON_TINT);
+        if (mBatteryRemainingIconQsH != null) {
+            mBatteryRemainingIcon.onDarkChanged(tintArea, intensity, fillColor);
+        }
+        if (mBatteryRemainingIconQsH != null) {
+            mBatteryRemainingIconQsH.onDarkChanged(tintArea, intensity, fillColor);
+        }
         if(mSystemInfoText != null &&  mSystemInfoIcon != null) {
             updateSystemInfoText();
         }

@@ -7330,6 +7330,14 @@ public final class Settings {
         public static final String CLIPBOARD_TOAST_INFO = "clipboard_toast_info";
 
         /**
+         * Whether or not to hide the battery icon and % from QS header
+         * {@hide}
+		 * 0 - Near QS Signal Group
+		 * 1 - On Qs Header
+         */
+        public static final String QS_BATTERY_LOCATION = "qs_battery_location";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
