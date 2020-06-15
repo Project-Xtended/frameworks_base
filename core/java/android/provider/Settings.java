@@ -7166,6 +7166,15 @@ public final class Settings {
         public static final String SHOW_CLIPBOARD_TOAST = "show_clipboard_toast";
 
         /**
+         * Height of the navigation handle.
+         * @hide
+         */
+        public static final String NAVIGATION_HANDLE_HEIGHT = "navigation_handle_height";
+
+        /** @hide */
+        private static final Validator NAVIGATION_HANDLE_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7337,6 +7346,7 @@ public final class Settings {
             QS_DATAUSAGE,
             AMBIENT_TEXT_COLOR,
             AMBIENT_TEXT_TYPE_COLOR,
+            NAVIGATION_HANDLE_HEIGHT,
         };
 
         /**
@@ -7580,6 +7590,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(REFRESH_RATE_SETTING);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
+            PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_HEIGHT);
         }
 
         /**
@@ -7794,6 +7805,7 @@ public final class Settings {
             VALIDATORS.put(REFRESH_RATE_SETTING, REFRESH_RATE_SETTING_VALIDATOR);
             VALIDATORS.put(AMBIENT_TEXT_COLOR, AMBIENT_TEXT_COLOR_VALIDATOR);
             VALIDATORS.put(AMBIENT_TEXT_TYPE_COLOR, AMBIENT_TEXT_TYPE_COLOR_VALIDATOR);
+            VALIDATORS.put(NAVIGATION_HANDLE_HEIGHT, NAVIGATION_HANDLE_HEIGHT_VALIDATOR);
         }
 
         /**

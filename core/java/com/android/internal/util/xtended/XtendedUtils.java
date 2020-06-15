@@ -300,9 +300,11 @@ public class XtendedUtils {
     }
 
     public static boolean shouldShowGestureNav(Context context) {
+        int navbarHeight = Settings.System.getIntForUser(context.getContentResolver(),
+            Settings.System.NAVIGATION_HANDLE_HEIGHT, 1, UserHandle.USER_CURRENT);
         int navbarWidth = Settings.System.getIntForUser(context.getContentResolver(),
             Settings.System.NAVIGATION_HANDLE_WIDTH, 1, UserHandle.USER_CURRENT);
-        boolean setNavbarHeight = ((navbarWidth != 0) ? true : false);
+        boolean setNavbarHeight = ((navbarWidth != 0 && navbarHeight != 0) ? true : false);
         boolean twoThreeButtonEnabled = isThemeEnabled("com.android.internal.systemui.navbar.twobutton") ||
                 isThemeEnabled("com.android.internal.systemui.navbar.threebutton");
         return setNavbarHeight || twoThreeButtonEnabled;

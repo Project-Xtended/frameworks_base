@@ -42,6 +42,7 @@ public class NavigationHandle extends View implements ButtonInterface {
     private final int mBottom;
     private int mCustomWidth;
     private int mWidth;
+    private final int mBaseRadius;
 
     private Resources mRes;
     private ContentResolver mResolver;
@@ -54,8 +55,9 @@ public class NavigationHandle extends View implements ButtonInterface {
         super(context, attr);
         mRes = context.getResources();
         mResolver = context.getContentResolver();
-        mRadius = mRes.getDimensionPixelSize(R.dimen.navigation_handle_radius);
+        mBaseRadius = mRes.getDimensionPixelSize(R.dimen.navigation_handle_radius);
         mBottom = mRes.getDimensionPixelSize(R.dimen.navigation_handle_bottom);
+        mRadius = getCustomRadius();
 
         final int dualToneDarkTheme = Utils.getThemeAttr(context, R.attr.darkIconTheme);
         final int dualToneLightTheme = Utils.getThemeAttr(context, R.attr.lightIconTheme);
@@ -117,10 +119,24 @@ public class NavigationHandle extends View implements ButtonInterface {
         if (userSelection == 1) {
             finalWidth = mWidth;
         } else if (userSelection == 2) {
-            finalWidth = 1.33 * mWidth;
+            finalWidth = 1.5 * mWidth;
         } else if (userSelection == 3) {
             finalWidth = 2 * mWidth;
         }
         return finalWidth;
+    }
+
+    private int getCustomRadius() {
+        int userSelection = Settings.System.getInt(mResolver,
+                Settings.System.NAVIGATION_HANDLE_HEIGHT, 1);
+        if (userSelection == 1) {
+            return mBaseRadius;
+        } else if (userSelection == 2) {
+            return (int) (1.5 * mBaseRadius);
+        } else if (userSelection == 3) {
+            return 2 * mBaseRadius;
+        } else {
+            return 0;
+        }
     }
 }
