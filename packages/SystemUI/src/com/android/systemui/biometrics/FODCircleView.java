@@ -105,7 +105,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener, H
     private int mHbmOnDelay;
     private boolean mSupportsAlwaysOnHbm;
     private boolean mNoDim;
-
+		
     private boolean mViewPressedDisplayed = false;
     private final ImageView mViewPressed;
 
@@ -781,9 +781,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener, H
                 // do nothing
             }
 
-            if (!mNoDim) {
                 mParams.dimAmount = dimAmount / 255.0f;
-            }
+      
             if (mSupportsAlwaysOnHbm) {
                 mCurDim = dimAmount;
                 setColorFilter(Color.argb(dimAmount, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
