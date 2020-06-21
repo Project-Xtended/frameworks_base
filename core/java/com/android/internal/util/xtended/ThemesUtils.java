@@ -95,6 +95,7 @@ public class ThemesUtils {
         "com.android.systemui.qstile.ninja", // 6
         "com.android.systemui.qstile.dottedcircle", // 7
         "com.android.systemui.qstile.attemptmountain", // 8
+        "com.android.systemui.qstile.squaremedo", // 9
     };
 
     // Switches qs header style to user selected.
