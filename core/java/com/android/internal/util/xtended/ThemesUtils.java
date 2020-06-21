@@ -98,6 +98,7 @@ public class ThemesUtils {
         "com.android.systemui.qstile.squaremedo", // 9
         "com.android.systemui.qstile.inkdrop", // 10
         "com.android.systemui.qstile.cookie", // 11
+        "com.android.systemui.qstile.circleoutline", //12
     };
 
     // Switches qs header style to user selected.
