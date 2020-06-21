@@ -97,6 +97,7 @@ public class ThemesUtils {
         "com.android.systemui.qstile.attemptmountain", // 8
         "com.android.systemui.qstile.squaremedo", // 9
         "com.android.systemui.qstile.inkdrop", // 10
+        "com.android.systemui.qstile.cookie", // 11
     };
 
     // Switches qs header style to user selected.
