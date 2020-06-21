@@ -90,6 +90,11 @@ public class ThemesUtils {
         "com.android.systemui.qstile.circletrim", // 1
         "com.android.systemui.qstile.dualtonecircletrim", // 2
         "com.android.systemui.qstile.squircletrim", // 3
+        "com.android.systemui.qstile.wavey", // 4
+        "com.android.systemui.qstile.pokesign", // 5
+        "com.android.systemui.qstile.ninja", // 6
+        "com.android.systemui.qstile.dottedcircle", // 7
+        "com.android.systemui.qstile.attemptmountain", // 8
     };
 
     // Switches qs header style to user selected.
