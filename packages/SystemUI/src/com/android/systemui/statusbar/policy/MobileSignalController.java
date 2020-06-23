@@ -152,6 +152,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
     // Volte Icon Style
     private int mVoLTEstyle;
+    private int mVoWIFIicon = 0;
 
     // TODO: Reduce number of vars passed in, if we have the NetworkController, probably don't
     // need listener lists anymore.
@@ -338,9 +339,12 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.ROAMING_INDICATOR_ICON), false,
                     this, UserHandle.USER_ALL);
-           resolver.registerContentObserver(Settings.System.getUriFor(
-                  Settings.System.VOLTE_ICON_STYLE),
-                  false,this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.VOWIFI_ICON_STYLE), false,
+                    this, UserHandle.USER_ALL);
            updateSettings();
         }
 
@@ -364,8 +368,11 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mRoamingIconAllowed = Settings.System.getIntForUser(resolver,
                 Settings.System.ROAMING_INDICATOR_ICON, 1,
                 UserHandle.USER_CURRENT) == 1;
-		mVoLTEstyle = Settings.System.getIntForUser(resolver,
+	mVoLTEstyle = Settings.System.getIntForUser(resolver,
                 Settings.System.VOLTE_ICON_STYLE, 0,
+                UserHandle.USER_CURRENT);
+        mVoWIFIicon = Settings.System.getIntForUser(resolver,
+                Settings.System.VOWIFI_ICON_STYLE, 1,
                 UserHandle.USER_CURRENT);
         mConfig = Config.readConfig(mContext);
         setConfiguration(mConfig);
@@ -1073,11 +1080,38 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     }
 
     private MobileIconGroup getVowifiIconGroup() {
+        if (mVoWIFIicon == 0) return null;
+
         if ( isVowifiAvailable() && !isCallIdle() ) {
             return TelephonyIcons.VOWIFI_CALLING;
         }else if (isVowifiAvailable()) {
-            return TelephonyIcons.VOWIFI;
-        }else {
+            switch (mVoWIFIicon) {
+                case 1:
+                default:
+                    return TelephonyIcons.VOWIFI;
+                // OOS
+                case 2:
+                    return TelephonyIcons.VOWIFI_ONEPLUS;
+                // Motorola
+                case 3:
+                    return TelephonyIcons.VOWIFI_MOTO;
+                // ASUS
+                case 4:
+                    return TelephonyIcons.VOWIFI_ASUS;
+                // EMUI (Huawei P10)
+                case 5:
+                    return TelephonyIcons.VOWIFI_EMUI;
+                // Oneplus Compact
+                case 6:
+                    return TelephonyIcons.VOWIFI_ONEPLUS_COMPACT;
+                // Vivo
+                case 7:
+                    return TelephonyIcons.VOWIFI_VIVO;
+                // Margaritov
+                case 8:
+                    return TelephonyIcons.VOWIFI_Margaritov;
+            }
+        } else {
             return null;
         }
     }
