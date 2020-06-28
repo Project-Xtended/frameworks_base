@@ -18,9 +18,6 @@
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
     android:title="@string/nav_bar">
 
-    <PreferenceCategory
-        android:title="@string/tuner_nav_bar_legacy_category" />
-
     <com.android.systemui.tuner.TunerSwitch
         android:key="sysui_nav_bar_inverse"
         android:title="@string/nav_bar_layout_inverse" />
@@ -33,11 +30,4 @@
         android:entries="@array/nav_bar_layouts"
         android:entryValues="@array/nav_bar_layouts_values" />
 
-    <PreferenceCategory
-        android:title="@string/tuner_nav_bar_gesture_category" />
-    <com.android.systemui.tuner.TunerSwitch
-        android:key="sysui_nav_bar_show_handle"
-        android:title="@string/tuner_nav_bar_show_handle_title"
-        android:summary="@string/tuner_nav_bar_show_handle_summary"
-        sysui:defValue="true" />
 </PreferenceScreen>

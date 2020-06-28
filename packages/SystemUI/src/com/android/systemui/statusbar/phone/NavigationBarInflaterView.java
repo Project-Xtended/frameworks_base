@@ -57,7 +57,6 @@ public class NavigationBarInflaterView extends FrameLayout
     public static final String NAV_BAR_LEFT = "sysui_nav_bar_left";
     public static final String NAV_BAR_RIGHT = "sysui_nav_bar_right";
     public static final String NAV_BAR_INVERSE = "sysui_nav_bar_inverse";
-    public static final String NAV_BAR_SHOW_HANDLE = "sysui_nav_bar_show_handle";
 
     public static final String MENU_IME_ROTATE = "menu_ime";
     public static final String BACK = "back";
@@ -105,7 +104,6 @@ public class NavigationBarInflaterView extends FrameLayout
 
     private OverviewProxyService mOverviewProxyService;
     private int mNavBarMode = NAV_BAR_MODE_3BUTTON;
-    private boolean mHideHandle;
 
     private boolean mInverseLayout;
 
@@ -149,11 +147,7 @@ public class NavigationBarInflaterView extends FrameLayout
             String navbarLayout = getContext().getString(showDpadArrowKeys()
                     ? R.string.config_navBarLayoutHandleArrows
                     : R.string.config_navBarLayoutHandle);
-            if (mHideHandle) {
-                return navbarLayout.replace(HOME_HANDLE, NAVSPACE);
-            } else {
-                return navbarLayout;
-            }
+            return navbarLayout;
         } else {
             final int defaultResource = mOverviewProxyService.shouldShowSwipeUpUI()
                             ? R.string.config_navBarLayoutQuickstep
@@ -173,7 +167,6 @@ public class NavigationBarInflaterView extends FrameLayout
         super.onAttachedToWindow();
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_INVERSE);
         Dependency.get(TunerService.class).addTunable(this, NAV_BAR_VIEWS);
-        Dependency.get(TunerService.class).addTunable(this, NAV_BAR_SHOW_HANDLE);
         Dependency.get(CustomSettingsService.class).addIntObserver(this, Settings.System.NAVIGATION_BAR_ARROW_KEYS);
     }
 
@@ -189,14 +182,8 @@ public class NavigationBarInflaterView extends FrameLayout
     @Override
     public void onTuningChanged(String key, String newValue) {
         if (NAV_BAR_VIEWS.equals(key)) {
-            if (QuickStepContract.isLegacyMode(mNavBarMode)) {
-                setNavigationBarLayout(newValue);
-            }
-        }
-        if (NAV_BAR_SHOW_HANDLE.equals(key)) {
-            mHideHandle = newValue != null && newValue.equals("0");
             if (QuickStepContract.isGesturalMode(mNavBarMode)) {
-                onLikelyDefaultLayoutChange();
+                setNavigationBarLayout(newValue);
             }
         }
         if (NAV_BAR_INVERSE.equals(key)) {
