@@ -6894,6 +6894,11 @@ public final class Settings {
         public static final String QS_TILE_STYLE = "qs_tile_style";
 
         /**
+         * @hide
+         */
+        public static final String QS_TILE_ICON_PRIMARY = "qs_tile_icon_primary";
+
+        /**
          * FOD icon picker
          * @hide
          */
