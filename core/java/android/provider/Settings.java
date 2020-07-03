@@ -6958,6 +6958,12 @@ public final class Settings {
         public static final String FORMAL_TEXT_INPUT = "formal_text_input";
 
         /**
+         * A2DP codec priority
+         * @hide
+         */
+        public static final String A2DP_SOURCE_CODEC_PRIORITY = "a2dp_source_codec_priority";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
