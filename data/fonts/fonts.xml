@@ -500,6 +500,11 @@
     </family>
     <alias name="source-sans-pro-semi-bold" to="source-sans-pro" weight="600"/>
 
+    <!-- All Custom Fonts -->
+    <family name="linotte">
+        <font weight="300" style="normal">Linotte.ttf</font>
+    </family>
+
     <!-- fallback fonts -->
     <family>
         <font weight="100" style="normal">RobotoFallback-VF.ttf
