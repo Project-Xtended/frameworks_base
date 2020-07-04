@@ -43,6 +43,7 @@ LOCAL_REQUIRED_MODULES := \
 	FontSimpleDaySourceOverlay \
 	FontSonySketchSourceOverlay \
 	FontSurferSourceOverlay \
+        FontLinotte \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularPixelLauncherOverlay \
 	IconPackCircularPixelThemePickerOverlay \
