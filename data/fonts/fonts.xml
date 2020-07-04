@@ -413,6 +413,10 @@
     </family>
     <alias name="source-sans-pro-semi-bold" to="source-sans-pro" weight="600" />
 
+    <family name="linotte">
+        <font weight="300" style="normal">Linotte.ttf</font>
+    </family>
+
     <!-- Lockscren Fonts -->
     <family name="gobold-sys">
 	<font weight="300" style="normal">Gobold.ttf</font>
