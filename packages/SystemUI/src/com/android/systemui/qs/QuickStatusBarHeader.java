@@ -336,16 +336,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
+        mBatteryRemainingIconQsH = findViewById(R.id.batteryRemainingIconQsH);
         // Don't need to worry about tuner settings for this icon
         mBatteryRemainingIcon.setIgnoreTunerUpdates(true);
-        mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
-        mBatteryRemainingIcon.setOnClickListener(this);
-        // Tint for the battery icons are handled in setupHost()
-        mBatteryRemainingIconQsH = findViewById(R.id.batteryRemainingIconQsH);
-        mBatteryRemainingIconQsH.updateColors(fillColorWhite, fillColorWhite, fillColorWhite);
-        // Don't need to worry about tuner settings for this icon
         mBatteryRemainingIconQsH.setIgnoreTunerUpdates(true);
+        mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
         mBatteryRemainingIconQsH.setPercentShowMode(BatteryMeterView.MODE_ON);
+        mBatteryRemainingIcon.setOnClickListener(this);
         mBatteryRemainingIconQsH.setOnClickListener(this);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
@@ -889,6 +886,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         float intensity = getColorIntensity(colorForeground);
         int fillColor = mDualToneHandler.getSingleColor(intensity);
         mBatteryRemainingIcon.onDarkChanged(tintArea, intensity, fillColor);
+        mBatteryRemainingIconQsH.onDarkChanged(tintArea, intensity, fillColor);
         if(mSystemInfoText != null &&  mSystemInfoIcon != null) {
             updateSystemInfoText();
         }
