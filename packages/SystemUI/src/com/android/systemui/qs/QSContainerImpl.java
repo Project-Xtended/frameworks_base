@@ -27,6 +27,7 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -130,6 +131,8 @@ public class QSContainerImpl extends FrameLayout {
 
     private static final String QS_PANEL_FILE_IMAGE = "custom_file_qs_panel_image";
 
+    private boolean mImmerseMode;
+
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -211,6 +214,9 @@ public class QSContainerImpl extends FrameLayout {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_CUSTOM_IMAGE_BLUR), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.DISPLAY_CUTOUT_MODE), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -231,6 +237,8 @@ public class QSContainerImpl extends FrameLayout {
                 Settings.System.QS_PANEL_CUSTOM_IMAGE, UserHandle.USER_CURRENT);
         mQsBackGroundAlpha = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_PANEL_BG_ALPHA, 255, UserHandle.USER_CURRENT);
+        mImmerseMode = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
         post(new Runnable() {
             public void run() {
                 setQsBackground();
