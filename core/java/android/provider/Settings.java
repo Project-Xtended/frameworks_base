@@ -133,7 +133,7 @@ public final class Settings {
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String SCREEN_STABILIZATION_SETTINGS = "android.settings.SCREEN_STABILIZATION";
-    
+
     /**
      * Activity Action: Show settings to allow configuration of APNs.
      * <p>
@@ -4131,7 +4131,7 @@ public final class Settings {
          */
         @Deprecated
         public static final String ANIMATOR_DURATION_SCALE = Global.ANIMATOR_DURATION_SCALE;
-        
+
         /**
          * Whether or not to vibrate when a touchscreen gesture is detected
          * @hide
@@ -4949,7 +4949,7 @@ public final class Settings {
          * @hide
          */
         public static final String NETWORK_TRAFFIC_VIEW_LOCATION = "network_traffic_view_location";
-        
+
 	/**
          * Network traffic font style
          * @hide
@@ -6830,7 +6830,7 @@ public final class Settings {
          * @hide
          */
         public static final String REFRESH_RATE_SETTING = "refresh_rate_setting";
-        
+
         /** @hide */
         private static final Validator REFRESH_RATE_SETTING_VALIDATOR = NON_NEGATIVE_INTEGER_VALIDATOR;
 
@@ -7145,6 +7145,15 @@ public final class Settings {
         public static final String AMBIENT_IMAGE = "ambient_image";
 
         public static final String AMBIENT_CUSTOM_IMAGE = "ambient_custom_image";
+
+        /**
+        * Screen off fod
+        * @hide
+        */
+        public static final String FOD_GESTURE = "fod_gesture";
+
+        /** @hide */
+        public static final Validator FOD_GESTURE_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -7561,6 +7570,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(REFRESH_RATE_SETTING);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
+            PRIVATE_SETTINGS.add(FOD_GESTURE);
         }
 
         /**
@@ -7775,6 +7785,7 @@ public final class Settings {
             VALIDATORS.put(REFRESH_RATE_SETTING, REFRESH_RATE_SETTING_VALIDATOR);
             VALIDATORS.put(AMBIENT_TEXT_COLOR, AMBIENT_TEXT_COLOR_VALIDATOR);
             VALIDATORS.put(AMBIENT_TEXT_TYPE_COLOR, AMBIENT_TEXT_TYPE_COLOR_VALIDATOR);
+            VALIDATORS.put(FOD_GESTURE, FOD_GESTURE_VALIDATOR);
         }
 
         /**

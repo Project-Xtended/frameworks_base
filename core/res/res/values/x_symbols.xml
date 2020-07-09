@@ -120,7 +120,7 @@
   <java-symbol type="anim" name="slow_fade_in" />
   <java-symbol type="anim" name="slow_fade_out" />
   <java-symbol type="anim" name="slide_in_up_ribbon" />
-  <java-symbol type="anim" name="slide_out_down_ribbon" /> 
+  <java-symbol type="anim" name="slide_out_down_ribbon" />
   <java-symbol type="anim" name="slide_in_right_no_fade" />
   <java-symbol type="anim" name="slide_out_left_no_fade" />
   <java-symbol type="anim" name="slide_in_left_no_fade" />
@@ -188,11 +188,11 @@
     <!-- Smart charging -->
     <java-symbol type="bool" name="config_smartChargingAvailable" />
     <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
-    <java-symbol type="integer" name="config_smartChargingBatteryResumeLevel" />    
+    <java-symbol type="integer" name="config_smartChargingBatteryResumeLevel" />
     <java-symbol type="string" name="config_SmartChargingSysfsNode" />
     <java-symbol type="string" name="config_SmartChargingSupspendValue" />
     <java-symbol type="string" name="config_SmartChargingResumeValue" />
-   
+
      <!-- Pocket Lock -->
     <java-symbol type="layout" name="pocket_lock_view_layout" />
     <java-symbol type="id" name="pocket_hint_container" />
@@ -236,7 +236,7 @@
     <java-symbol type="color" name="theme_generic_semi_transparent_color" />
 
     <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
-  
+
     <!-- Whether device supports an alt. ambient display -->
     <java-symbol type="bool" name="config_alt_ambient_display"/>
 
@@ -245,7 +245,7 @@
 
     <!-- Whether to use scaled brightness (set -1 to disable) -->
     <java-symbol type="integer" name="config_useScaleBrightness" />
-  
+
     <!-- Whether device has warp charging support -->
     <java-symbol type="bool" name="config_hasWarpCharger" />
 
@@ -270,17 +270,20 @@
     <java-symbol type="string" name="config_powersave_profile" />
     <java-symbol type="string" name="config_screen_off_profile"/>
 
-  <!-- Fonts -->
-  <java-symbol type="string" name="config_lightFontFamily" />
-  <java-symbol type="string" name="config_regularFontFamily" />
-  <java-symbol type="string" name="config_headlineFontFamilyMedium" />
-  <java-symbol type="string" name="config_bodyFontFamily" />
-  <java-symbol type="string" name="config_bodyFontFamilyMedium" />
+    <!-- Fonts -->
+    <java-symbol type="string" name="config_lightFontFamily" />
+    <java-symbol type="string" name="config_regularFontFamily" />
+    <java-symbol type="string" name="config_headlineFontFamilyMedium" />
+    <java-symbol type="string" name="config_bodyFontFamily" />
+    <java-symbol type="string" name="config_bodyFontFamilyMedium" />
 
-  <!-- Whether to show a custom view for FOD -->
-  <java-symbol type="bool" name="config_needCustomFODView" />
+    <!-- Whether to show a custom view for FOD -->
+    <java-symbol type="bool" name="config_needCustomFODView" />
 
-  <!-- Enable face auth when swiping security view -->
-  <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
+    <!-- Enable face auth when swiping security view -->
+    <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
+
+    <!-- Whether device supports in-display fingerprint when screen is turned off -->
+    <java-symbol type="bool" name="config_supportsInDisplayFingerprintGesture" />
 
 </resources>
