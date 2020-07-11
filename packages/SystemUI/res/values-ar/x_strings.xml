@@ -20,41 +20,41 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sync</string>
-    <string name="accessibility_quick_settings_sync_off">Sync off</string>
-    <string name="accessibility_quick_settings_sync_on">Sync on</string>
-    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
-    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
-    <string name="global_action_restart_advanced">Advanced reboot</string>
-    <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>
+    <string name="quick_settings_sync_label">المزامنة</string>
+    <string name="accessibility_quick_settings_sync_off">إيقاف المزامنة</string>
+    <string name="accessibility_quick_settings_sync_on">تفعيل المزامنة</string>
+    <string name="accessibility_quick_settings_sync_changed_off">تم إيقاف المزامنة</string>
+    <string name="accessibility_quick_settings_sync_changed_on">تم تشغيل المزامنة</string>
+    <string name="global_action_restart_advanced">خيارات متقدمة لإعادة التشغيل</string>
+    <string name="global_action_restart_recovery">ريكڤري</string>
+    <string name="global_action_restart_bootloader">بوتلودر</string>
+    <string name="global_action_restart_ui">واجهة النظام</string>
     <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activated</string>
-    <string name="onthego_notif_title">On-The-Go is active</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Options</string>
-    <string name="onthego_notif_error">Unable to start On-The-Go</string>
-    <string name="onthego_notif_restart">Restart On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_notif_ticker">تم تفعيل On-The-Go</string>
+    <string name="onthego_notif_title">مفعل On-The-Go</string>
+    <string name="onthego_notif_stop">إيقاف</string>
+    <string name="onthego_notif_options">الاعدادات</string>
+    <string name="onthego_notif_error">فشل في تشغيل On-The-Go</string>
+    <string name="onthego_notif_restart">إعادة تشغيل On-The-Go</string>
+    <string name="onthego_notif_camera_changed">تم تغيير وضع الكاميرا</string>
+    <string name="onthego_transparency">الشفافيه</string>
+    <string name="onthego_front_camera">استخدام الكاميرا الأمامية</string>
+    <string name="onthego_service_toggle">خدمة إعادة التشغيل التلقائي</string>
+    <string name="onthego_channel_name">الرئيسية</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="quick_settings_onthego_label">وضع On-The-Go</string>
     <!-- Caffeine QS Tile -->
-    <string name="quick_settings_caffeine_label">Caffeine</string>
-    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
-    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
+    <string name="quick_settings_caffeine_label">كافيين</string>
+    <string name="accessibility_quick_settings_caffeine_off">وضع الكافيين معطل</string>
+    <string name="accessibility_quick_settings_caffeine_on">وضع الكافيين مفعل</string>
     <!-- Ambient display QS tile -->
-    <string name="quick_settings_ambient_display_label">Ambient display</string>
-    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
-    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
+    <string name="quick_settings_ambient_display_label">إضاءة الشاشة عند وصول إشعار</string>
+    <string name="accessibility_quick_settings_ambient_display_off">ايقاف وضع إضاءة الشاشة عند وصول إشعار.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">تفعيل وضع إضاءة الشاشة عند وصول إشعار.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">تم ايقاف وضع إضاءة الشاشة عند وصول إشعار.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">تم تفعيل وضع إضاءة الشاشة عند وصول إشعار.</string>
     <!-- USB tethering QS tile -->
-    <string name="quick_settings_usb_tether_label">USB tethering</string>
+    <string name="quick_settings_usb_tether_label">‏الأنترنت عبر USB</string>
     <!-- SystemUI Tuner -->
     <string name="statusbar_items_title">Statusbar icon</string>
     <string name="lockscreen_default">Default</string>

@@ -20,26 +20,26 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sync</string>
-    <string name="accessibility_quick_settings_sync_off">Sync off</string>
-    <string name="accessibility_quick_settings_sync_on">Sync on</string>
-    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
-    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
-    <string name="global_action_restart_advanced">Advanced reboot</string>
-    <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>
+    <string name="quick_settings_sync_label">Synchronisation</string>
+    <string name="accessibility_quick_settings_sync_off">Synchronisation désactivée</string>
+    <string name="accessibility_quick_settings_sync_on">Synchronisation activée</string>
+    <string name="accessibility_quick_settings_sync_changed_off">La synchronisation est désactivée</string>
+    <string name="accessibility_quick_settings_sync_changed_on">La synchronisation est activée</string>
+    <string name="global_action_restart_advanced">Redémarrage avancé</string>
+    <string name="global_action_restart_recovery">Mode Récupération</string>
+    <string name="global_action_restart_bootloader">Mode Amorçage</string>
+    <string name="global_action_restart_ui">Interface</string>
     <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activated</string>
-    <string name="onthego_notif_title">On-The-Go is active</string>
-    <string name="onthego_notif_stop">Stop</string>
+    <string name="onthego_notif_ticker">On-The-Go activé</string>
+    <string name="onthego_notif_title">On-The-Go est activé</string>
+    <string name="onthego_notif_stop">Arrêter</string>
     <string name="onthego_notif_options">Options</string>
-    <string name="onthego_notif_error">Unable to start On-The-Go</string>
-    <string name="onthego_notif_restart">Restart On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
+    <string name="onthego_notif_error">Impossible de démarrer On-The-Go</string>
+    <string name="onthego_notif_restart">Redémarrer On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Mode de caméra modifié</string>
+    <string name="onthego_transparency">Transparence</string>
+    <string name="onthego_front_camera">Utiliser la caméra frontale</string>
+    <string name="onthego_service_toggle">Redémarrer automatiquement le service</string>
     <string name="onthego_channel_name">Main</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">On-The-Go</string>

@@ -20,51 +20,51 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sync</string>
-    <string name="accessibility_quick_settings_sync_off">Sync off</string>
-    <string name="accessibility_quick_settings_sync_on">Sync on</string>
-    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
-    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
-    <string name="global_action_restart_advanced">Advanced reboot</string>
-    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="quick_settings_sync_label">Sinkronisasi</string>
+    <string name="accessibility_quick_settings_sync_off">Sinkronisasi tidak aktif</string>
+    <string name="accessibility_quick_settings_sync_on">Sinkronisasi aktif</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Sinkronisasi di matikan</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Sinkronisasi di hidupkan</string>
+    <string name="global_action_restart_advanced">Mulai ulang lanjutan</string>
+    <string name="global_action_restart_recovery">Pemulihan</string>
     <string name="global_action_restart_bootloader">Bootloader</string>
     <string name="global_action_restart_ui">SystemUI</string>
     <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activated</string>
-    <string name="onthego_notif_title">On-The-Go is active</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Options</string>
-    <string name="onthego_notif_error">Unable to start On-The-Go</string>
-    <string name="onthego_notif_restart">Restart On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_notif_ticker">On-The-Go diaktifkan</string>
+    <string name="onthego_notif_title">On-The-Go aktif</string>
+    <string name="onthego_notif_stop">Berhenti</string>
+    <string name="onthego_notif_options">Opsi</string>
+    <string name="onthego_notif_error">Tidak dapat memulai On-The-Go</string>
+    <string name="onthego_notif_restart">Mulai ulang On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Mode kamera berubah</string>
+    <string name="onthego_transparency">Transparansi</string>
+    <string name="onthego_front_camera">Gunakan kamera depan</string>
+    <string name="onthego_service_toggle">Mulai ulang layanan secara otomatis</string>
+    <string name="onthego_channel_name">Utama</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">On-The-Go</string>
     <!-- Caffeine QS Tile -->
-    <string name="quick_settings_caffeine_label">Caffeine</string>
-    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
-    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
+    <string name="quick_settings_caffeine_label">Mode Kafein</string>
+    <string name="accessibility_quick_settings_caffeine_off">Kafein mati</string>
+    <string name="accessibility_quick_settings_caffeine_on">Kafein hidup</string>
     <!-- Ambient display QS tile -->
-    <string name="quick_settings_ambient_display_label">Ambient display</string>
-    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
-    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
+    <string name="quick_settings_ambient_display_label">Tampilan ambient</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Tampilan ambient mati.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Tampilan ambient hidup.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Tampilan ambient dimatikan.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Tampilan ambient dihidupkan.</string>
     <!-- USB tethering QS tile -->
-    <string name="quick_settings_usb_tether_label">USB tethering</string>
+    <string name="quick_settings_usb_tether_label">Penambatan USB</string>
     <!-- SystemUI Tuner -->
-    <string name="statusbar_items_title">Statusbar icon</string>
-    <string name="lockscreen_default">Default</string>
-    <string name="lockscreen_hidden">None</string>
+    <string name="statusbar_items_title">Ikon status bar</string>
+    <string name="lockscreen_default">Standar</string>
+    <string name="lockscreen_hidden">Tidak satupun</string>
     <!-- NavBar Tuner -->
-    <string name="preview">Preview</string>
-    <string name="keycode">Keycode</string>
-    <string name="no_home_title">No home button found</string>
-    <string name="no_home_message">A home button is required to be able to navigate this device. Please add a home button before saving.</string>
-    <string name="clipboard_description">The Clipboard allows items to be dragged directly to the clipboard. Items can also be dragged directly out of the clipboard when present.</string>
+    <string name="preview">Pratinjau</string>
+    <string name="keycode">Kata kunci</string>
+    <string name="no_home_title">Tombol home tidak ditemukan</string>
+    <string name="no_home_message">Tombol beranda sangat dibutuhkan untuk menjalankan perangkat. Harap tambahkan tombol beranda sebelum menyimpan.</string>
+    <string name="clipboard_description">Papan Klip memungkinkan item untuk diseret langsung ke papan klip. Item juga dapat diseret langsung dari papan klip ketika tersedia.</string>
     <string name="keycode_description">Keycode buttons allow keyboard keys to be added to the Navigation Bar. When pressed they emulate the selected keyboard key. First the key must be selected for the button, followed by an image to be shown on the button.</string>
     <string name="start">Start</string>
     <string name="center">Center</string>
@@ -108,23 +108,23 @@
     <!-- Omni Weather -->
     <string name="omnijaws_service_error">Error</string>
     <string name="omnijaws_service_unkown">No weather data</string>
-    <string name="omnijaws_service_error_long">Error loading weather data</string>
-    <string name="omnijaws_service_disabled">Service is disabled</string>
-    <string name="omnijaws_detail_header">Weather</string>
-    <string name="omnijaws_label_default">Weather</string>
-    <string name="omnijaws_current_text">Now</string>
-    <string name="omnijaws_package_not_available">OmniJaws not available</string>
-    <string name="omnijaws_service_last_update">Last update:</string>
+    <string name="omnijaws_service_error_long">Kesalahan memuat data cuaca</string>
+    <string name="omnijaws_service_disabled">Layanan dinonaktifkan</string>
+    <string name="omnijaws_detail_header">Cuaca</string>
+    <string name="omnijaws_label_default">Cuaca</string>
+    <string name="omnijaws_current_text">Sekarang</string>
+    <string name="omnijaws_package_not_available">OmniJaws tidak tersedia</string>
+    <string name="omnijaws_service_last_update">Pembaruan terakhir:</string>
     <!-- Nav Bar Swipe -->
-    <string name="nav_bar_layout_inverse">Swap back and recents</string>
+    <string name="nav_bar_layout_inverse">Tukar kembali dan terkini</string>
     <!-- Compass QS Tile -->
-    <string name="quick_settings_compass_label">Compass</string>
-    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
-    <string name="quick_settings_compass_init">Initializing\u2026</string>
-    <string name="accessibility_quick_settings_compass_off">Compass off.</string>
-    <string name="accessibility_quick_settings_compass_on">Compass on.</string>
-    <string name="accessibility_quick_settings_compass_changed_off">Compass turned off.</string>
-    <string name="accessibility_quick_settings_compass_changed_on">Compass turned on.</string>
+    <string name="quick_settings_compass_label">Kompas</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0<xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Inisialisasi\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Kompas mati.</string>
+    <string name="accessibility_quick_settings_compass_on">Kompas hidup.</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Kompas dimatikan.</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Kompas dihidupkan.</string>
     <string name="quick_settings_compass_N">N</string>
     <string name="quick_settings_compass_NE">NE</string>
     <string name="quick_settings_compass_E">E</string>
@@ -134,12 +134,12 @@
     <string name="quick_settings_compass_W">W</string>
     <string name="quick_settings_compass_NW">NW</string>
     <!-- CPUInfo tile -->
-    <string name="quick_settings_cpuinfo_label">CPU Info</string>
-    <string name="accessibility_quick_settings_cpuinfo_off">CPU Info off</string>
-    <string name="accessibility_quick_settings_cpuinfo_on">CPU Info on</string>
+    <string name="quick_settings_cpuinfo_label">CPU info</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">CPU info mati</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">CPU info hidup</string>
     <!-- QS Config -->
-    <string name="qs_menu_item_columns">Columns</string>
-    <string name="qs_menu_item_columns_landscape">Columns (Landscape)</string>
+    <string name="qs_menu_item_columns">Kolom</string>
+    <string name="qs_menu_item_columns_landscape">Kolom (lanskap)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
@@ -147,28 +147,28 @@
     <string name="qs_menu_item_columns_seven">7</string>
     <string name="qs_menu_item_columns_eight">8</string>
     <string name="qs_menu_item_reset">Reset</string>
-    <string name="qs_menu_item_titles">Show labels</string>
-    <string name="qs_menu_item_qs_columns">Columns (Quickbar)</string>
-    <string name="qs_menu_item_columns_auto">Automatic</string>
+    <string name="qs_menu_item_titles">Tampilkan label</string>
+    <string name="qs_menu_item_qs_columns">Kolom (Pengaturan Cepat)</string>
+    <string name="qs_menu_item_columns_auto">Otomatis</string>
     <!--Screenrecord Tile-->
-    <string name="screenrecorder_title_tile">Screenrecord</string>
+    <string name="screenrecorder_title_tile">Perekam Layar</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking notification are snoozing for 1 minute.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g>-mengintip notifikasi tertidur selama 1 menit.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g>-mengintip notifikasi tertidur selama <xliff:g id="number">%d</xliff:g> menit.</string>
     <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">Force stop?</string>
-    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
+    <string name="force_stop_dlg_title">Hentikan paksa?</string>
+    <string name="force_stop_dlg_text">Jika anda menghentikan paksa aplikasi, akan menyebabkan gagal fungsi.</string>
     <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/cancel</string>
-    <string name="guts_force_close_app">Close App</string>
+    <string name="dlg_cancel">@android:string/batalkan</string>
+    <string name="guts_force_close_app">Tutup Aplikasi</string>
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Laporan lokasi: mode hemat baterai.</string>
     <!-- Content description of the location tile in quick settings when on, sensors only mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_location_gps_only">Location reporting: sensors only mode.</string>
+    <string name="accessibility_quick_settings_location_gps_only">Laporan lokasi: mode hanya sensor.</string>
     <!-- Content description of the location tile in quick settings when on, high accuracy mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_location_high_accuracy">Location reporting: high accuracy mode.</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Laporan lokasi: mode akurasi tinggi.</string>
     <!-- QuickSettings: Location (Off) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_turned_off_label">Off</string>
+    <string name="quick_settings_location_turned_off_label">Mati</string>
     <!-- QuickSettings: Location (On, low-power) [CHAR LIMIT=NONE] -->
     <string name="quick_settings_location_battery_saving_label">Battery saving</string>
     <string name="quick_settings_location_battery_saving_label_twoline">Battery\nsaving</string>
@@ -229,69 +229,69 @@
     <!-- Content description of the Gaming mode tile in quick settings when enabled (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_gaming_mode_enabled">Gaming mode turned on.</string>
     <!-- DataSwitch Tile -->
-    <string name="qs_data_switch_label">Switch data card</string>
-    <string name="qs_data_switch_toast_0">Currently no SIM card is inserted</string>
-    <string name="qs_data_switch_toast_1">Currently only one SIM card is inserted</string>
-    <string name="qs_data_switch_changed_1">Using SIM 1 for Mobile data</string>
-    <string name="qs_data_switch_changed_2">Using SIM 2 for Mobile data</string>
+    <string name="qs_data_switch_label">Ganti kartu data seluler</string>
+    <string name="qs_data_switch_toast_0">Tidak ada kartu SIM yang terpasang saat ini</string>
+    <string name="qs_data_switch_toast_1">Hanya satu kartu SIM yang terpasang saat ini</string>
+    <string name="qs_data_switch_changed_1">Menggunakan SIM 1 untuk data seluler</string>
+    <string name="qs_data_switch_changed_2">Menggunakan SIM 2 untuk data seluler</string>
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
-    <string name="lte_on">LTE ON </string>
-    <string name="lte_off">LTE OFF</string>
+    <string name="lte_on">LTE hidup </string>
+    <string name="lte_off">LTE mati</string>
     <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">Open Running Services screen.</string>
+    <string name="accessibility_quick_settings_running_services">Buka layanan layar yang sedang berjalan.</string>
     <!-- QuickSettings: ScreenStabilization tile [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_stabilization_label">Screen Stabilization</string>
+    <string name="quick_settings_stabilization_label">Stabilisasi layar</string>
     <!-- QuickSettings: ScreenStabilization (off) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_stabilization_off">ScreenStabilization is disabled</string>
+    <string name="quick_settings_stabilization_off">Stabilisasi layar dinonaktifkan</string>
     <!-- QuickSettings: ScreenStabilization (on) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_stabilization_on">ScreenStabilization is enabled</string>
-    <string name="low_label">Low</string>
-    <string name="high_label">High</string>
-    <string name="stabilization_velocity_friction">Velocity Friction</string>
-    <string name="stabilization_velocity_amplitude">Velocity Amplitude</string>
-    <string name="stabilization_position_friction">Position Friction</string>
-    <string name="tuner_keyguard_show_battery_bar_title">Show battery bar</string>
-    <string name="tuner_keyguard_show_battery_bar_summary">Show battery bar on charging in always on display</string>
-    <string name="tuner_keyguard_show_battery_bar_always_title">Always show battery bar</string>
-    <string name="tuner_keyguard_show_battery_bar_always_summary">Always show battery bar on charging</string>
+    <string name="quick_settings_stabilization_on">Stabilisasi layar diaktifkan</string>
+    <string name="low_label">Rendah</string>
+    <string name="high_label">Tinggi</string>
+    <string name="stabilization_velocity_friction">Gesekan Kecepatan</string>
+    <string name="stabilization_velocity_amplitude">Amplitudo Kecepatan</string>
+    <string name="stabilization_position_friction">Gesekan posisi</string>
+    <string name="tuner_keyguard_show_battery_bar_title">Tampilkan bilah baterai</string>
+    <string name="tuner_keyguard_show_battery_bar_summary">Tampilkan bilah baterai saat pengisian selalu di layar</string>
+    <string name="tuner_keyguard_show_battery_bar_always_title">Selalu tampilkan bilah baterai</string>
+    <string name="tuner_keyguard_show_battery_bar_always_summary">Selalu tampilkan bilah baterai saat pengisian</string>
     <!-- FPS Info tile -->
-    <string name="quick_settings_fpsinfo_label">FPS Info</string>
-    <string name="accessibility_quick_settings_fpsinfo_off">FPS Info off</string>
-    <string name="accessibility_quick_settings_fpsinfo_on">FPS Info on</string>
+    <string name="quick_settings_fpsinfo_label">Info FPS</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">Info FPS dimatikan</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">Info FPS hidup</string>
     <!-- Long swipe gesture actions -->
-    <string name="app_picker_dialog_title">Select an app</string>
-    <string name="active_edge_app_select_title">Select app</string>
-    <string name="active_edge_activity_select_title">Select activity</string>
-    <string name="recents_app_killed">App killed</string>
-    <string name="nope_cant_kill">Launcher cannot be killed</string>
+    <string name="app_picker_dialog_title">Pilih aplikasi</string>
+    <string name="active_edge_app_select_title">Pilih aplikasi</string>
+    <string name="active_edge_activity_select_title">Pilih aktivitas</string>
+    <string name="recents_app_killed">Aplikasi dimatikan</string>
+    <string name="nope_cant_kill">Peluncur tidak dapat dihentikan</string>
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">AOD</string>
     <!-- Alerting notification header label -->
-    <string name="notification_section_header_alerting">Alerting notifications</string>
+    <string name="notification_section_header_alerting">Peringatan Notifikasi</string>
     <!-- Immersive tile -->
-    <string name="quick_settings_immersive_tile">Immersive mode</string>
-    <string name="quick_settings_immersive_tile_statusbar">Immersive statusbar</string>
-    <string name="quick_settings_immersive_tile_navbar">Immersive navbar</string>
-    <string name="quick_settings_immersive_tile_full">Immersive full</string>
+    <string name="quick_settings_immersive_tile">Modus mendalam</string>
+    <string name="quick_settings_immersive_tile_statusbar">Statusbar imersif</string>
+    <string name="quick_settings_immersive_tile_navbar">Layar penuh bilah navigasi</string>
+    <string name="quick_settings_immersive_tile_full">Layar penuh semua</string>
     <!-- Smart Pixels QS Tile -->
-    <string name="quick_settings_smart_pixels">Smart Pixels</string>
-    <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled Smart Pixels</string>
+    <string name="quick_settings_smart_pixels">Piksel cerdas</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Piksel cerdas diaktifkan otomatis</string>
     <!-- Theme tile -->
-    <string name="system_theme_style_title">System Themes</string>
-    <string name="quick_settings_theme_tile_title">Themes</string>
-    <string name="quick_settings_theme_tile_style_detail_title">Select Theme</string>
-    <string name="system_theme_style_light">Light</string>
-    <string name="system_theme_style_dark">Google Dark</string>
-    <string name="system_theme_style_solarized_dark">Solarized Dark</string>
-    <string name="system_theme_style_baked_green">Baked Green</string>
+    <string name="system_theme_style_title">Tema sistem</string>
+    <string name="quick_settings_theme_tile_title">Tema</string>
+    <string name="quick_settings_theme_tile_style_detail_title">Pilih Tema</string>
+    <string name="system_theme_style_light">Terang</string>
+    <string name="system_theme_style_dark">Mode gelap google</string>
+    <string name="system_theme_style_solarized_dark">Gelap Solarized</string>
+    <string name="system_theme_style_baked_green">Hijau tua</string>
     <string name="system_theme_style_choco_x">Choco X</string>
     <string name="system_theme_style_pitch_black">Pitch Black</string>
-    <string name="system_theme_style_dark_grey">Dark Grey</string>
-    <string name="system_theme_style_material_ocean">Material Ocean</string>
+    <string name="system_theme_style_dark_grey">Abu - abu gelap</string>
+    <string name="system_theme_style_material_ocean">Biru laut</string>
     <string name="system_theme_style_xtended_clear">Xtended Clear</string>
     <!-- Daily data usage -->
-    <string name="daily_data_usage_title">Today\'s usage</string>
+    <string name="daily_data_usage_title">Penggunaan hari ini</string>
     <!-- Gesture Nav Handle -->
     <string name="tuner_nav_bar_show_handle_title">Show handle</string>
     <string name="tuner_nav_bar_show_handle_summary"></string>
