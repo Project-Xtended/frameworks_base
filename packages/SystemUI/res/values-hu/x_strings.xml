@@ -20,64 +20,64 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sync</string>
-    <string name="accessibility_quick_settings_sync_off">Sync off</string>
-    <string name="accessibility_quick_settings_sync_on">Sync on</string>
-    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
-    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
-    <string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="quick_settings_sync_label">Szinkronizálás</string>
+    <string name="accessibility_quick_settings_sync_off">Szinkronizálás ki</string>
+    <string name="accessibility_quick_settings_sync_on">Szinkronizálás be</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Szinkronizálás kikapcsolva</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Szinkronizálás bekapcsolva</string>
+    <string name="global_action_restart_advanced">Speciális újraindítás</string>
     <string name="global_action_restart_recovery">Recovery</string>
-    <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>
+    <string name="global_action_restart_bootloader">Bootloader (Fastboot mód)</string>
+    <string name="global_action_restart_ui">Rendszer UI</string>
     <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activated</string>
-    <string name="onthego_notif_title">On-The-Go is active</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Options</string>
-    <string name="onthego_notif_error">Unable to start On-The-Go</string>
-    <string name="onthego_notif_restart">Restart On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_notif_ticker">Menet közben (On-The-Go) aktiválva</string>
+    <string name="onthego_notif_title">A Menet közben mód aktív</string>
+    <string name="onthego_notif_stop">Megállít</string>
+    <string name="onthego_notif_options">Beállítások</string>
+    <string name="onthego_notif_error">Nem lehet elindítani a Menet közben módot</string>
+    <string name="onthego_notif_restart">A Menet közben mód újraindítása</string>
+    <string name="onthego_notif_camera_changed">Kameramód megváltoztatva</string>
+    <string name="onthego_transparency">Átlátszóság</string>
+    <string name="onthego_front_camera">Előlapi kamera használata</string>
+    <string name="onthego_service_toggle">Szolgáltatás automatikus újraindítása</string>
+    <string name="onthego_channel_name">Fő</string>
     <!-- OnTheGo Tile -->
-    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <string name="quick_settings_onthego_label">Menet közben (On-The-Go)</string>
     <!-- Caffeine QS Tile -->
     <string name="quick_settings_caffeine_label">Caffeine</string>
-    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
-    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeine kikapcsolása</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeine bekapcsolása</string>
     <!-- Ambient display QS tile -->
-    <string name="quick_settings_ambient_display_label">Ambient display</string>
-    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
-    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
+    <string name="quick_settings_ambient_display_label">Környezeti kijelző</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Környezeti kijelző ki.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Környezeti kijelző be.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Környezeti kijelző kikapcsolva.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Környezeti kijelző bekapcsolva.</string>
     <!-- USB tethering QS tile -->
-    <string name="quick_settings_usb_tether_label">USB tethering</string>
+    <string name="quick_settings_usb_tether_label">USB internetmegosztás</string>
     <!-- SystemUI Tuner -->
-    <string name="statusbar_items_title">Statusbar icon</string>
-    <string name="lockscreen_default">Default</string>
-    <string name="lockscreen_hidden">None</string>
+    <string name="statusbar_items_title">Állapotsor ikon</string>
+    <string name="lockscreen_default">Alapértelmezett</string>
+    <string name="lockscreen_hidden">Egyik sem</string>
     <!-- NavBar Tuner -->
-    <string name="preview">Preview</string>
-    <string name="keycode">Keycode</string>
-    <string name="no_home_title">No home button found</string>
-    <string name="no_home_message">A home button is required to be able to navigate this device. Please add a home button before saving.</string>
-    <string name="clipboard_description">The Clipboard allows items to be dragged directly to the clipboard. Items can also be dragged directly out of the clipboard when present.</string>
-    <string name="keycode_description">Keycode buttons allow keyboard keys to be added to the Navigation Bar. When pressed they emulate the selected keyboard key. First the key must be selected for the button, followed by an image to be shown on the button.</string>
-    <string name="start">Start</string>
-    <string name="center">Center</string>
-    <string name="end">End</string>
-    <string name="space">Spacer</string>
-    <string name="menu_ime">Menu / Keyboard Switcher</string>
-    <string name="select_button">Select button to add</string>
-    <string name="add_button">Add button</string>
-    <string name="save">Save</string>
-    <string name="reset">Reset</string>
-    <string name="select_keycode">Select Keyboard Button</string>
-    <string name="left">Left</string>
-    <string name="right">Right</string>
+    <string name="preview">Előnézet</string>
+    <string name="keycode">Billentyűkód</string>
+    <string name="no_home_title">Home gomb nem található</string>
+    <string name="no_home_message">Az eszközön történő navigáláshoz főoldal gomb szükséges. Kérjük, a mentés előtt adjon hozzá egy főoldal gombot.</string>
+    <string name="clipboard_description">A Vágólap lehetővé teszi az elemek áthúzását közvetlenül a vágólapra. Ha vannak elemek a vágólapon, közvetlenül lehúzhatók onnan.</string>
+    <string name="keycode_description">A billentyűkód gombok lehetővé teszik gombok hozzáadását a Navigációs sávhoz. A gombok megnyomásuk esetén a kiválasztott billentyűt imitálják. Először ki kell választani a gombhoz tartozó billentyűt, majd a gombon megjeleníteni kívánt képet.</string>
+    <string name="start">Kezdés</string>
+    <string name="center">Középen</string>
+    <string name="end">Befejezés</string>
+    <string name="space">Elválasztó</string>
+    <string name="menu_ime">Menü / Billentyűzetváltó</string>
+    <string name="select_button">Válassza ki a hozzáadni kívánt gombot</string>
+    <string name="add_button">Gomb hozzáadása</string>
+    <string name="save">Mentés</string>
+    <string name="reset">Alapállapot</string>
+    <string name="select_keycode">Billentyűgomb kiválasztása</string>
+    <string name="left">Bal</string>
+    <string name="right">Jobb</string>
     <string name="navbar_editor_title">Editor</string>
     <string name="navbar_editor_summary">Configure navigaton bar</string>
     <string name="navigation_bar_accessibility_dpad_left">Cursor left</string>
@@ -146,14 +146,14 @@
     <string name="qs_menu_item_columns_six">6</string>
     <string name="qs_menu_item_columns_seven">7</string>
     <string name="qs_menu_item_columns_eight">8</string>
-    <string name="qs_menu_item_reset">Reset</string>
-    <string name="qs_menu_item_titles">Show labels</string>
-    <string name="qs_menu_item_qs_columns">Columns (Quickbar)</string>
-    <string name="qs_menu_item_columns_auto">Automatic</string>
+    <string name="qs_menu_item_reset">Alapállapot</string>
+    <string name="qs_menu_item_titles">Feliratok megjelenítése</string>
+    <string name="qs_menu_item_qs_columns">Oszlopok (Gyorssáv)</string>
+    <string name="qs_menu_item_columns_auto">Automatikus</string>
     <!--Screenrecord Tile-->
-    <string name="screenrecorder_title_tile">Screenrecord</string>
+    <string name="screenrecorder_title_tile">Képernyőfelvétel</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking notification are snoozing for 1 minute.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> lebegő értesítései 1 percig szundiznak</string>
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Force stop?</string>

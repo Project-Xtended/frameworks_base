@@ -18,36 +18,35 @@
 */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="reboot_to_recovery_title">Recovery</string>
-    <string name="reboot_to_recovery_message">Rebooting to recovery</string>
-    <string name="reboot_to_bootloader_title">Bootloader</string>
-    <string name="reboot_to_bootloader_message">Rebooting to bootloader</string>
-    <string name="reboot_title">Reboot</string>
-    <string name="reboot_message">Rebooting system</string>
+    <string name="reboot_to_recovery_title">रिकवरी</string>
+    <string name="reboot_to_recovery_message">रिक्वरी में फिर से शुरु</string>
+    <string name="reboot_to_bootloader_title">बूटलॉडर</string>
+    <string name="reboot_to_bootloader_message">बूटलोडर में रिबूट हो रहा है</string>
+    <string name="reboot_title">रिबूट</string>
+    <string name="reboot_message">सिस्टम बंद करके चालू किया जा रहा है</string>
     <!-- On-The-Go -->
-    <string name="global_action_onthego">On-The-Go</string>
+    <string name="global_action_onthego">चलते चलते</string>
     <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">Copy crash log URL</string>
-    <string name="url_copy_success">URL copied successfully</string>
-    <string name="url_copy_failed">An error occured while uploading the log to dogbin</string>
+    <string name="aerr_copy">क्रैश लॉग यूआरएल कॉपी करें</string>
+    <string name="url_copy_success">यूआरएल सफलतापूर्वक कॉपी किया गया</string>
+    <string name="url_copy_failed">डॉगबिन में लॉग अपलोड करते समय कोई त्रुटि आई है।</string>
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permlab_fakePackageSignature">Spoof package signature</string>
+    <string name="permlab_fakePackageSignature">पैकेज हस्ताक्षर की नकल करें</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permdesc_fakePackageSignature">Allows the app to pretend to be a different app. Malicious applications might be able to use this to access private application data. Grant this permission with caution only!</string>
+    <string name="permdesc_fakePackageSignature">ये चालू करने से एक एप्लीकेशन दूसरा जैसा बर्ताव कर सकता है। हानिकारक एप्लीकेशन इसके फायदा उठा कर आप सीमित माहिती को पढ़ सकेंगे। इसकी परवानगी सावधानी से दे!।</string>
     <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permgrouplab_fake_package_signature">Spoof package signature</string>
+    <string name="permgrouplab_fake_package_signature">पैकेज हस्ताक्षर की नकल करें</string>
     <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permgroupdesc_fake_package_signature">allow to spoof package signature</string>
+    <string name="permgroupdesc_fake_package_signature">पैकेज हस्ताक्षर नकल की अनुमति दें</string>
     <!-- Message shown to the user when the apps requests permission from this group. If ever possible this should stay below 80 characters (assuming the parameters takes 20 characters). Don't abbreviate until the message reaches 120 characters though. [CHAR LIMIT=120] -->
-    <string name="permgrouprequest_fake_package_signature">Allow
-        &lt;b&gt;<xliff:g id="app_name" example="Gmail">%1$s</xliff:g>&lt;/b&gt; to spoof package signature?</string>
+    <string name="permgrouprequest_fake_package_signature">&lt;b&gt;<xliff:g id="app_name" example="Gmail">%1$s</xliff:g>&lt;/b&gt; को पैकेज हस्ताक्षर नक़ल की अनुमति दें?</string>
     <!-- Pocket Lock -->
-    <string name="pocket_lock_message_long_press">Press and hold power button to unlock</string>
+    <string name="pocket_lock_message_long_press">ताला खोलने के लिए पॉवर बटन दबाए रखें।</string>
     <!-- Gaming mode -->
-    <string name="notification_channel_gaming">Gaming mode</string>
-    <string name="gaming_mode_notification_title">Gaming mode enabled</string>
-    <string name="gaming_mode_notification_content">Tap to turn off Gaming mode</string>
-    <string name="gaming_mode_enabled_toast">Gaming mode turned on</string>
+    <string name="notification_channel_gaming">खेल प्रणाली</string>
+    <string name="gaming_mode_notification_title">खेल प्रणाली सक्षम</string>
+    <string name="gaming_mode_notification_content">गेमिंग मोड बंद करने के लिए स्पर्श करें</string>
+    <string name="gaming_mode_enabled_toast">गेमिंग मोड चालू किया गया है</string>
     <string name="gaming_mode_disabled_toast">Gaming mode turned off</string>
     <!-- SystemUI Restart -->
     <string name="systemui_restart_title">Restart SystemUI</string>

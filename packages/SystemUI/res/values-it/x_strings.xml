@@ -20,111 +20,111 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Sync QS Tile -->
-    <string name="quick_settings_sync_label">Sync</string>
-    <string name="accessibility_quick_settings_sync_off">Sync off</string>
-    <string name="accessibility_quick_settings_sync_on">Sync on</string>
-    <string name="accessibility_quick_settings_sync_changed_off">Sync turned off</string>
-    <string name="accessibility_quick_settings_sync_changed_on">Sync turned on</string>
-    <string name="global_action_restart_advanced">Advanced reboot</string>
+    <string name="quick_settings_sync_label">Sincronizza</string>
+    <string name="accessibility_quick_settings_sync_off">Sincronizzazione disabilitata</string>
+    <string name="accessibility_quick_settings_sync_on">Sincronizzazione abilitata</string>
+    <string name="accessibility_quick_settings_sync_changed_off">La sincronizzazione è disattivata</string>
+    <string name="accessibility_quick_settings_sync_changed_on">La sincronizzazione è attivata</string>
+    <string name="global_action_restart_advanced">Riavvio avanzato</string>
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string>
-    <string name="global_action_restart_ui">SystemUI</string>
+    <string name="global_action_restart_ui">Interfaccia di sistema</string>
     <!-- On The Go -->
-    <string name="onthego_notif_ticker">On-The-Go activated</string>
-    <string name="onthego_notif_title">On-The-Go is active</string>
-    <string name="onthego_notif_stop">Stop</string>
-    <string name="onthego_notif_options">Options</string>
-    <string name="onthego_notif_error">Unable to start On-The-Go</string>
-    <string name="onthego_notif_restart">Restart On-The-Go</string>
-    <string name="onthego_notif_camera_changed">Camera mode changed</string>
-    <string name="onthego_transparency">Transparency</string>
-    <string name="onthego_front_camera">Use front camera</string>
-    <string name="onthego_service_toggle">Automatically restart service</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_notif_ticker">On-The-Go attivato</string>
+    <string name="onthego_notif_title">On-The-Go è attivo</string>
+    <string name="onthego_notif_stop">Ferma</string>
+    <string name="onthego_notif_options">Opzioni</string>
+    <string name="onthego_notif_error">Impossibile avviare On-The-Go</string>
+    <string name="onthego_notif_restart">Riavvia On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Modalità fotocamera cambiata</string>
+    <string name="onthego_transparency">Trasparenza</string>
+    <string name="onthego_front_camera">Usa Fotocamera Frontale</string>
+    <string name="onthego_service_toggle">Riavvia automaticamente il servizio</string>
+    <string name="onthego_channel_name">Principale</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">On-The-Go</string>
     <!-- Caffeine QS Tile -->
     <string name="quick_settings_caffeine_label">Caffeine</string>
-    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
-    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
+    <string name="accessibility_quick_settings_caffeine_off">Modalità caffeine disattivata</string>
+    <string name="accessibility_quick_settings_caffeine_on">Modalità Caffeine attivata</string>
     <!-- Ambient display QS tile -->
-    <string name="quick_settings_ambient_display_label">Ambient display</string>
-    <string name="accessibility_quick_settings_ambient_display_off">Ambient display off.</string>
-    <string name="accessibility_quick_settings_ambient_display_on">Ambient display on.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display turned off.</string>
-    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display turned on.</string>
+    <string name="quick_settings_ambient_display_label">Ambient Display</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Ambient display non attivo.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Ambient display attivo.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display è stato disattivato.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient Display è stato attivato.</string>
     <!-- USB tethering QS tile -->
-    <string name="quick_settings_usb_tether_label">USB tethering</string>
+    <string name="quick_settings_usb_tether_label">Tethering USB</string>
     <!-- SystemUI Tuner -->
-    <string name="statusbar_items_title">Statusbar icon</string>
-    <string name="lockscreen_default">Default</string>
-    <string name="lockscreen_hidden">None</string>
+    <string name="statusbar_items_title">Icona della barra di stato</string>
+    <string name="lockscreen_default">Predefinito</string>
+    <string name="lockscreen_hidden">Nessuna</string>
     <!-- NavBar Tuner -->
-    <string name="preview">Preview</string>
+    <string name="preview">Anteprima</string>
     <string name="keycode">Keycode</string>
-    <string name="no_home_title">No home button found</string>
-    <string name="no_home_message">A home button is required to be able to navigate this device. Please add a home button before saving.</string>
-    <string name="clipboard_description">The Clipboard allows items to be dragged directly to the clipboard. Items can also be dragged directly out of the clipboard when present.</string>
-    <string name="keycode_description">Keycode buttons allow keyboard keys to be added to the Navigation Bar. When pressed they emulate the selected keyboard key. First the key must be selected for the button, followed by an image to be shown on the button.</string>
-    <string name="start">Start</string>
-    <string name="center">Center</string>
-    <string name="end">End</string>
-    <string name="space">Spacer</string>
-    <string name="menu_ime">Menu / Keyboard Switcher</string>
-    <string name="select_button">Select button to add</string>
-    <string name="add_button">Add button</string>
-    <string name="save">Save</string>
-    <string name="reset">Reset</string>
-    <string name="select_keycode">Select Keyboard Button</string>
-    <string name="left">Left</string>
-    <string name="right">Right</string>
+    <string name="no_home_title">Nessun pulsante home trovato</string>
+    <string name="no_home_message">Un tasto home è richiesto per essere in grado di navigare sul dispositivo. Per favore aggiungere un tasto home prima di salvare.</string>
+    <string name="clipboard_description">La funzione Appunti permette agli elementi di essere trascinati direttamente dentro di essa. Gli elementi possono a loro volta essere trascinati fuori dalla funzione Appunti se presente.</string>
+    <string name="keycode_description">I pulsanti keycode consentono di aggiungere tasti della tastiera alla barra di navigazione. Quando vengono premuti, emulano il tasto selezionato. Innanzitutto è necessario selezionare il tasto da associare al pulsante, poi un\'immagine da mostrare sul pulsante.</string>
+    <string name="start">Avvio</string>
+    <string name="center">Centro</string>
+    <string name="end">Fine</string>
+    <string name="space">Spaziatore</string>
+    <string name="menu_ime">Menù/Selettore tastiera</string>
+    <string name="select_button">Seleziona il pulsante da aggiungere</string>
+    <string name="add_button">Aggiungi pulsante</string>
+    <string name="save">Salva</string>
+    <string name="reset">Ripristina</string>
+    <string name="select_keycode">Seleziona il tasto della tastiera</string>
+    <string name="left">Sinistra</string>
+    <string name="right">Destra</string>
     <string name="navbar_editor_title">Editor</string>
-    <string name="navbar_editor_summary">Configure navigaton bar</string>
-    <string name="navigation_bar_accessibility_dpad_left">Cursor left</string>
-    <string name="navigation_bar_accessibility_dpad_right">Cursor right</string>
+    <string name="navbar_editor_summary">Configura la barra di navigazione</string>
+    <string name="navigation_bar_accessibility_dpad_left">Cursore a sinistra</string>
+    <string name="navigation_bar_accessibility_dpad_right">Cursore a destra</string>
     <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
-    <string name="custom_hint">Swipe from icon to launch</string>
+    <string name="custom_hint">Scorri dall\'icona per avviare</string>
     <!-- Sound QS Tile -->
-    <string name="quick_settings_sound_label">Sound</string>
-    <string name="quick_settings_sound_ring">Ring</string>
-    <string name="quick_settings_sound_vibrate">Vibrate</string>
-    <string name="quick_settings_sound_dnd">Do not disturb</string>
+    <string name="quick_settings_sound_label">Audio</string>
+    <string name="quick_settings_sound_ring">Suoneria</string>
+    <string name="quick_settings_sound_vibrate">Vibrazione</string>
+    <string name="quick_settings_sound_dnd">Non disturbare</string>
     <!-- Reboot/Recovery QS Tile -->
-    <string name="quick_settings_reboot_label">Reboot</string>
+    <string name="quick_settings_reboot_label">Riavvia</string>
     <string name="quick_settings_reboot_recovery_label">Recovery</string>
     <!-- Heads Up QS Tile -->
-    <string name="quick_settings_heads_up_label">Heads up</string>
-    <string name="accessibility_quick_settings_heads_up_off">Heads up off.</string>
-    <string name="accessibility_quick_settings_heads_up_on">Heads up on.</string>
-    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off.</string>
-    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on.</string>
+    <string name="quick_settings_heads_up_label">Notifiche a comparsa</string>
+    <string name="accessibility_quick_settings_heads_up_off">Notifiche a comparsa disattivate.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Notifiche a comparsa attive.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Notifiche a comparsa disattivate.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Notifiche a comparsa attivate.</string>
     <!-- Screenshot QS tile -->
-    <string name="quick_settings_screenshot_label">Screenshot</string>
-    <string name="quick_settings_region_screenshot_label">Partial screenshot</string>
+    <string name="quick_settings_screenshot_label">Cattura schermata</string>
+    <string name="quick_settings_region_screenshot_label">Cattura schermata parziale</string>
     <!-- Text to use when the number in a notification info is too large
          (greater than status_bar_notification_info_maxnum, defined in
          values/config.xml) and must be truncated.
          [CHAR LIMIT=4] -->
     <!-- Omni Weather -->
-    <string name="omnijaws_service_error">Error</string>
-    <string name="omnijaws_service_unkown">No weather data</string>
-    <string name="omnijaws_service_error_long">Error loading weather data</string>
-    <string name="omnijaws_service_disabled">Service is disabled</string>
-    <string name="omnijaws_detail_header">Weather</string>
-    <string name="omnijaws_label_default">Weather</string>
-    <string name="omnijaws_current_text">Now</string>
-    <string name="omnijaws_package_not_available">OmniJaws not available</string>
-    <string name="omnijaws_service_last_update">Last update:</string>
+    <string name="omnijaws_service_error">Errore</string>
+    <string name="omnijaws_service_unkown">Dati meteo non disponibili</string>
+    <string name="omnijaws_service_error_long">Errore durante il caricamento dei dati meteo</string>
+    <string name="omnijaws_service_disabled">Il servizio è disabilitato</string>
+    <string name="omnijaws_detail_header">Meteo</string>
+    <string name="omnijaws_label_default">Meteo</string>
+    <string name="omnijaws_current_text">Adesso</string>
+    <string name="omnijaws_package_not_available">OmniJaws non disponibile</string>
+    <string name="omnijaws_service_last_update">Ultimo aggiornamento:</string>
     <!-- Nav Bar Swipe -->
-    <string name="nav_bar_layout_inverse">Swap back and recents</string>
+    <string name="nav_bar_layout_inverse">Scambia i pulsanti indietro e recenti</string>
     <!-- Compass QS Tile -->
-    <string name="quick_settings_compass_label">Compass</string>
+    <string name="quick_settings_compass_label">Bussola</string>
     <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
-    <string name="quick_settings_compass_init">Initializing\u2026</string>
-    <string name="accessibility_quick_settings_compass_off">Compass off.</string>
-    <string name="accessibility_quick_settings_compass_on">Compass on.</string>
-    <string name="accessibility_quick_settings_compass_changed_off">Compass turned off.</string>
-    <string name="accessibility_quick_settings_compass_changed_on">Compass turned on.</string>
+    <string name="quick_settings_compass_init">Inizializzazione\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Bussola disattivata.</string>
+    <string name="accessibility_quick_settings_compass_on">Bussola attivata.</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Bussola disattivata.</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Bussola attivata.</string>
     <string name="quick_settings_compass_N">N</string>
     <string name="quick_settings_compass_NE">NE</string>
     <string name="quick_settings_compass_E">E</string>
@@ -134,167 +134,167 @@
     <string name="quick_settings_compass_W">W</string>
     <string name="quick_settings_compass_NW">NW</string>
     <!-- CPUInfo tile -->
-    <string name="quick_settings_cpuinfo_label">CPU Info</string>
-    <string name="accessibility_quick_settings_cpuinfo_off">CPU Info off</string>
-    <string name="accessibility_quick_settings_cpuinfo_on">CPU Info on</string>
+    <string name="quick_settings_cpuinfo_label">Informazioni sulla CPU</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">Informazioni sulla CPU disattivate</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">Informazioni sulla CPU attivata</string>
     <!-- QS Config -->
-    <string name="qs_menu_item_columns">Columns</string>
-    <string name="qs_menu_item_columns_landscape">Columns (Landscape)</string>
+    <string name="qs_menu_item_columns">Colonne</string>
+    <string name="qs_menu_item_columns_landscape">Colonne (orizzontale)</string>
     <string name="qs_menu_item_columns_three">3</string>
     <string name="qs_menu_item_columns_four">4</string>
     <string name="qs_menu_item_columns_five">5</string>
     <string name="qs_menu_item_columns_six">6</string>
     <string name="qs_menu_item_columns_seven">7</string>
     <string name="qs_menu_item_columns_eight">8</string>
-    <string name="qs_menu_item_reset">Reset</string>
-    <string name="qs_menu_item_titles">Show labels</string>
-    <string name="qs_menu_item_qs_columns">Columns (Quickbar)</string>
-    <string name="qs_menu_item_columns_auto">Automatic</string>
+    <string name="qs_menu_item_reset">Resetta</string>
+    <string name="qs_menu_item_titles">Mostra etichette</string>
+    <string name="qs_menu_item_qs_columns">Colonne (barra rapida)</string>
+    <string name="qs_menu_item_columns_auto">Automatico</string>
     <!--Screenrecord Tile-->
-    <string name="screenrecorder_title_tile">Screenrecord</string>
+    <string name="screenrecorder_title_tile">Registra schermo</string>
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking notification are snoozing for 1 minute.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%d</xliff:g> minutes.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Le notifiche a comparsa sono sospese per 1 minuto.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Le notifiche saranno posticipate per <xliff:g id="number">%d</xliff:g> minuti.</string>
     <!-- Kill button in notification guts -->
-    <string name="force_stop_dlg_title">Force stop?</string>
-    <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
-    <string name="dlg_ok">@android:string/ok</string>
+    <string name="force_stop_dlg_title">Forzare l\'interruzione?</string>
+    <string name="force_stop_dlg_text">Se forzi l\'interruzione di un\'applicazione, potrebbe funzionare in modo anomalo.</string>
+    <string name="dlg_ok">\@android: string/ok</string>
     <string name="dlg_cancel">@android:string/cancel</string>
-    <string name="guts_force_close_app">Close App</string>
+    <string name="guts_force_close_app">Chiudi l\'applicazione</string>
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
+    <string name="accessibility_quick_settings_location_battery_saving">Geolocalizzazione: modalità risparmio batteria.</string>
     <!-- Content description of the location tile in quick settings when on, sensors only mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_location_gps_only">Location reporting: sensors only mode.</string>
+    <string name="accessibility_quick_settings_location_gps_only">Geolocalizzazione: modalità solo sensori.</string>
     <!-- Content description of the location tile in quick settings when on, high accuracy mode (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_location_high_accuracy">Location reporting: high accuracy mode.</string>
+    <string name="accessibility_quick_settings_location_high_accuracy">Geolocalizzazione: modalità alta precisione.</string>
     <!-- QuickSettings: Location (Off) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_turned_off_label">Off</string>
+    <string name="quick_settings_location_turned_off_label">Disattivo</string>
     <!-- QuickSettings: Location (On, low-power) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_battery_saving_label">Battery saving</string>
-    <string name="quick_settings_location_battery_saving_label_twoline">Battery\nsaving</string>
+    <string name="quick_settings_location_battery_saving_label">Risparmio batteria</string>
+    <string name="quick_settings_location_battery_saving_label_twoline">Risparmio\nBatteria</string>
     <!-- QuickSettings: Location (On, gps-only) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_gps_only_label">GPS only</string>
-    <string name="quick_settings_location_gps_only_label_twoline">GPS only</string>
+    <string name="quick_settings_location_gps_only_label">Solo GPS</string>
+    <string name="quick_settings_location_gps_only_label_twoline">Solo GPS</string>
     <!-- QuickSettings: Location (On, high-accuracy) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_high_accuracy_label">High accuracy</string>
-    <string name="quick_settings_location_high_accuracy_label_twoline">High\naccuracy</string>
+    <string name="quick_settings_location_high_accuracy_label">Alta precisione</string>
+    <string name="quick_settings_location_high_accuracy_label_twoline">Alta\nprecisione</string>
     <!-- QuickSettings: Location detail panel title [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_detail_title">Location</string>
+    <string name="quick_settings_location_detail_title">Posizione</string>
     <!-- QuickSettings: Location detail panel menu title [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_location_detail_menu_title">Select mode:</string>
+    <string name="quick_settings_location_detail_menu_title">Seleziona la modalità:</string>
     <!-- [CHAR LIMIT=30] Location detail panel, high accuracy location mode -->
-    <string name="quick_settings_location_detail_mode_high_accuracy_title">High accuracy</string>
+    <string name="quick_settings_location_detail_mode_high_accuracy_title">Alta precisione</string>
     <!-- [CHAR LIMIT=30] Location detail panel, battery saving location mode -->
-    <string name="quick_settings_location_detail_mode_battery_saving_title">Battery saving</string>
+    <string name="quick_settings_location_detail_mode_battery_saving_title">Risparmio batteria</string>
     <!-- [CHAR LIMIT=30] Location detail panel, device only location mode -->
-    <string name="quick_settings_location_detail_mode_sensors_only_title">Device only</string>
+    <string name="quick_settings_location_detail_mode_sensors_only_title">Solo dispositivo</string>
     <!-- [CHAR LIMIT=130] Location detail panel, description for high accuracy mode -->
-    <string name="quick_settings_location_detail_mode_high_accuracy_description">Use GPS, Wi\u2011Fi, Bluetooth, or cellular networks to determine location </string>
+    <string name="quick_settings_location_detail_mode_high_accuracy_description">Utilizza rete dati, Bluetooth, Wi-Fi o GPS per stabilire la posizione </string>
     <!-- [CHAR LIMIT=130] Location detail panel, description for battery saving mode -->
-    <string name="quick_settings_location_detail_mode_battery_saving_description">Use Wi\u2011Fi, Bluetooth, or cellular networks to determine location</string>
+    <string name="quick_settings_location_detail_mode_battery_saving_description">Utilizza rete dati, Bluetooth o Wi-Fi per stabilire la posizione</string>
     <!-- [CHAR LIMIT=130] Location detail panel, description for sensors only mode -->
-    <string name="quick_settings_location_detail_mode_sensors_only_description">Use GPS to determine your location</string>
+    <string name="quick_settings_location_detail_mode_sensors_only_description">Utilizza il GPS per stabilire la posizione</string>
     <!-- Screen record -->
-    <string name="screenrecord_dialog_title">Start recording?</string>
-    <string name="screenrecord_dialog_summary">While recording, Android system can capture any sensitive information that\'s visible on your screen or played on your device. This includes passwords, payment info, photos, messages, and audio.</string>
-    <string name="screenrecord_dialog_start">Start</string>
-    <string name="screenrecord_dialog_cancel">Cancel</string>
-    <string name="screenrecord_audio_title">Audio source</string>
-    <string name="screenrecord_audio_summary">Allows to pick the audio input or disable it.</string>
-    <string name="screenrecord_audio_recording_internal">Internal</string>
-    <string name="screenrecord_audio_recording_microphone">Microphone</string>
-    <string name="screenrecord_audio_recording_off">Disabled</string>
-    <string name="screenrecord_taps_title">Show touches on screen</string>
-    <string name="screenrecord_taps_summary">Show visual feedback while recording</string>
-    <string name="screenrecord_stopdot_title">Show stop dot</string>
-    <string name="screenrecord_stopdot_summary">Show a red dot to stop recording with a single tap. Longpress it to move it to the opposite side.</string>
-    <string name="screenrecord_video_bitrate_title">Video Bitrate</string>
-    <string name="screenrecord_video_bitrate_summary">Set the video bitrate for better video quality, at the cost of a bigger file.</string>
-    <string name="global_action_screenrecord">Screenrecord</string>
+    <string name="screenrecord_dialog_title">Avviare la registrazione?</string>
+    <string name="screenrecord_dialog_summary">Durante la registrazione, il sistema Android può registrare ogni informazione sensibile mostrata o riprodotta sul tuo dispositivo. Questo include password, informazioni di pagamento, foto, messaggi e audio.</string>
+    <string name="screenrecord_dialog_start">Avvio</string>
+    <string name="screenrecord_dialog_cancel">Annulla</string>
+    <string name="screenrecord_audio_title">Sorgente audio</string>
+    <string name="screenrecord_audio_summary">Consente di scegliere l\'ingresso audio o disattivarlo.</string>
+    <string name="screenrecord_audio_recording_internal">Interno</string>
+    <string name="screenrecord_audio_recording_microphone">Microfono</string>
+    <string name="screenrecord_audio_recording_off">Disabilitato</string>
+    <string name="screenrecord_taps_title">Mostra i tocchi sullo schermo</string>
+    <string name="screenrecord_taps_summary">Mostra feedback visivo durante la registrazione</string>
+    <string name="screenrecord_stopdot_title">Mostra punto di arresto</string>
+    <string name="screenrecord_stopdot_summary">Mostra un pulsante rosso per interrompere la registrazione con un singolo tocco. Premilo a lungo per spostarlo nella parte opposta.</string>
+    <string name="screenrecord_video_bitrate_title">Bitrate del video</string>
+    <string name="screenrecord_video_bitrate_summary">Imposta il bitrate del video per una migliore qualità video avrà come risultato un file più grande.</string>
+    <string name="global_action_screenrecord">Registratore dello schermo</string>
     <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
-    <string name="global_action_screenshot_cust">"Screen/Rec"</string>
+    <string name="global_action_screenshot_cust">"Registratore dello schermo"</string>
     <!-- Name of the camera status bar icon. -->
-    <string name="status_bar_camera">Camera</string>
+    <string name="status_bar_camera">Fotocamera</string>
     <!-- Name of the location status bar icon. -->
-    <string name="status_bar_location">Location</string>
+    <string name="status_bar_location">Posizione</string>
     <!-- Name of the microphone status bar icon. -->
-    <string name="status_bar_microphone">Microphone</string>
+    <string name="status_bar_microphone">Microfono</string>
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
     <!-- Gaming mode -->
-    <string name="gaming_mode_not_enabled">Gaming mode is disabled in settings</string>
-    <string name="quick_settings_gaming_mode_label">Gaming mode</string>
+    <string name="gaming_mode_not_enabled">La modalità gioco è disattivata nelle impostazioni</string>
+    <string name="quick_settings_gaming_mode_label">Modalità gioco</string>
     <!-- Content description of the Gaming mode tile in quick settings when disabled (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_gaming_mode_disabled">Gaming mode turned off.</string>
+    <string name="accessibility_quick_settings_gaming_mode_disabled">Modalità gioco disattivata.</string>
     <!-- Content description of the Gaming mode tile in quick settings when enabled (not shown on the screen). [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_gaming_mode_enabled">Gaming mode turned on.</string>
+    <string name="accessibility_quick_settings_gaming_mode_enabled">Modalità gioco attivata.</string>
     <!-- DataSwitch Tile -->
-    <string name="qs_data_switch_label">Switch data card</string>
-    <string name="qs_data_switch_toast_0">Currently no SIM card is inserted</string>
-    <string name="qs_data_switch_toast_1">Currently only one SIM card is inserted</string>
-    <string name="qs_data_switch_changed_1">Using SIM 1 for Mobile data</string>
-    <string name="qs_data_switch_changed_2">Using SIM 2 for Mobile data</string>
+    <string name="qs_data_switch_label">Cambia sim dati</string>
+    <string name="qs_data_switch_toast_0">Attualmente nessuna SIM card è inserita</string>
+    <string name="qs_data_switch_toast_1">Attualmente solo una SIM è inserita</string>
+    <string name="qs_data_switch_changed_1">Utilizzo della SIM 1 per i dati mobili</string>
+    <string name="qs_data_switch_changed_2">Utilizzo della SIM 2 per i dati mobili</string>
     <!-- LTE QS Tile -->
     <string name="qs_lte_label">LTE</string>
-    <string name="lte_on">LTE ON </string>
-    <string name="lte_off">LTE OFF</string>
+    <string name="lte_on">LTE Attivato </string>
+    <string name="lte_off">LTE Disattivato</string>
     <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
-    <string name="accessibility_quick_settings_running_services">Open Running Services screen.</string>
+    <string name="accessibility_quick_settings_running_services">Apri la schermata dei servizi in esecuzione.</string>
     <!-- QuickSettings: ScreenStabilization tile [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_stabilization_label">Screen Stabilization</string>
+    <string name="quick_settings_stabilization_label">Stabilizzazione schermo</string>
     <!-- QuickSettings: ScreenStabilization (off) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_stabilization_off">ScreenStabilization is disabled</string>
+    <string name="quick_settings_stabilization_off">Stabilizzazione schermo è disattivata</string>
     <!-- QuickSettings: ScreenStabilization (on) [CHAR LIMIT=NONE] -->
-    <string name="quick_settings_stabilization_on">ScreenStabilization is enabled</string>
-    <string name="low_label">Low</string>
-    <string name="high_label">High</string>
-    <string name="stabilization_velocity_friction">Velocity Friction</string>
-    <string name="stabilization_velocity_amplitude">Velocity Amplitude</string>
-    <string name="stabilization_position_friction">Position Friction</string>
-    <string name="tuner_keyguard_show_battery_bar_title">Show battery bar</string>
-    <string name="tuner_keyguard_show_battery_bar_summary">Show battery bar on charging in always on display</string>
-    <string name="tuner_keyguard_show_battery_bar_always_title">Always show battery bar</string>
-    <string name="tuner_keyguard_show_battery_bar_always_summary">Always show battery bar on charging</string>
+    <string name="quick_settings_stabilization_on">Stabilizzazione schermo è attivata</string>
+    <string name="low_label">Basso</string>
+    <string name="high_label">Alto</string>
+    <string name="stabilization_velocity_friction">Velocità di movimento</string>
+    <string name="stabilization_velocity_amplitude">Ampiezza della velocità</string>
+    <string name="stabilization_position_friction">Posizione di movimento</string>
+    <string name="tuner_keyguard_show_battery_bar_title">Mostra barra batteria</string>
+    <string name="tuner_keyguard_show_battery_bar_summary">Mostra la barra della batteria durante la ricarica in Always on display</string>
+    <string name="tuner_keyguard_show_battery_bar_always_title">Mostra sempre la barra della batteria</string>
+    <string name="tuner_keyguard_show_battery_bar_always_summary">Mostra sempre la barra della batteria durante la ricarica</string>
     <!-- FPS Info tile -->
-    <string name="quick_settings_fpsinfo_label">FPS Info</string>
-    <string name="accessibility_quick_settings_fpsinfo_off">FPS Info off</string>
-    <string name="accessibility_quick_settings_fpsinfo_on">FPS Info on</string>
+    <string name="quick_settings_fpsinfo_label">Informazioni FPS attivate</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">Informazioni sulla CPU disattivate</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">Informazioni FPS attivate</string>
     <!-- Long swipe gesture actions -->
-    <string name="app_picker_dialog_title">Select an app</string>
-    <string name="active_edge_app_select_title">Select app</string>
-    <string name="active_edge_activity_select_title">Select activity</string>
-    <string name="recents_app_killed">App killed</string>
-    <string name="nope_cant_kill">Launcher cannot be killed</string>
+    <string name="app_picker_dialog_title">Seleziona un\'applicazione</string>
+    <string name="active_edge_app_select_title">Seleziona un\'applicazione</string>
+    <string name="active_edge_activity_select_title">Seleziona un\'attività</string>
+    <string name="recents_app_killed">Applicazione terminata</string>
+    <string name="nope_cant_kill">Il launcher non può essere terminato</string>
     <!-- AOD QS tile -->
-    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_label">Schermo sempre attivo</string>
     <!-- Alerting notification header label -->
-    <string name="notification_section_header_alerting">Alerting notifications</string>
+    <string name="notification_section_header_alerting">Notifiche di avviso</string>
     <!-- Immersive tile -->
-    <string name="quick_settings_immersive_tile">Immersive mode</string>
-    <string name="quick_settings_immersive_tile_statusbar">Immersive statusbar</string>
-    <string name="quick_settings_immersive_tile_navbar">Immersive navbar</string>
-    <string name="quick_settings_immersive_tile_full">Immersive full</string>
+    <string name="quick_settings_immersive_tile">Modalità immersiva</string>
+    <string name="quick_settings_immersive_tile_statusbar">Barra di stato immersiva</string>
+    <string name="quick_settings_immersive_tile_navbar">Barra di navigazione immersiva</string>
+    <string name="quick_settings_immersive_tile_full">Modalità immersiva completa</string>
     <!-- Smart Pixels QS Tile -->
     <string name="quick_settings_smart_pixels">Smart Pixels</string>
-    <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Smart Pixels attivati automaticamente</string>
     <!-- Theme tile -->
-    <string name="system_theme_style_title">System Themes</string>
-    <string name="quick_settings_theme_tile_title">Themes</string>
-    <string name="quick_settings_theme_tile_style_detail_title">Select Theme</string>
-    <string name="system_theme_style_light">Light</string>
-    <string name="system_theme_style_dark">Google Dark</string>
+    <string name="system_theme_style_title">Temi Di Sistema</string>
+    <string name="quick_settings_theme_tile_title">Temi</string>
+    <string name="quick_settings_theme_tile_style_detail_title">Seleziona Tema</string>
+    <string name="system_theme_style_light">Chiaro</string>
+    <string name="system_theme_style_dark">Scuro Google</string>
     <string name="system_theme_style_solarized_dark">Solarized Dark</string>
-    <string name="system_theme_style_baked_green">Baked Green</string>
+    <string name="system_theme_style_baked_green">Baked green</string>
     <string name="system_theme_style_choco_x">Choco X</string>
-    <string name="system_theme_style_pitch_black">Pitch Black</string>
-    <string name="system_theme_style_dark_grey">Dark Grey</string>
+    <string name="system_theme_style_pitch_black">Pitch black</string>
+    <string name="system_theme_style_dark_grey">Grigio scuro</string>
     <string name="system_theme_style_material_ocean">Material Ocean</string>
     <string name="system_theme_style_xtended_clear">Xtended Clear</string>
     <!-- Daily data usage -->
-    <string name="daily_data_usage_title">Today\'s usage</string>
+    <string name="daily_data_usage_title">Utilizzo di oggi</string>
     <!-- Gesture Nav Handle -->
-    <string name="tuner_nav_bar_show_handle_title">Show handle</string>
+    <string name="tuner_nav_bar_show_handle_title">Mostra maniglia</string>
     <string name="tuner_nav_bar_show_handle_summary"></string>
-    <string name="tuner_nav_bar_legacy_category">3-button navigation</string>
-    <string name="tuner_nav_bar_gesture_category">Gesture navigation</string>
+    <string name="tuner_nav_bar_legacy_category">Navigazione con tre pulsanti</string>
+    <string name="tuner_nav_bar_gesture_category">Navigazione tramite gesti</string>
 </resources>
