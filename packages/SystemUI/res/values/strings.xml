@@ -2870,4 +2870,8 @@
     <string name="media_output_dialog_connect_failed">Couldn\'t connect. Try again.</string>
     <!-- Title for pairing item [CHAR LIMIT=60] -->
     <string name="media_output_dialog_pairing_new">Pair new device</string>
+
+    <!-- Tux clock -->
+    <string name="clock_title_tux" translatable="false">Tux</string>
+
 </resources>
