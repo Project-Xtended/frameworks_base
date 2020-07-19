@@ -19,6 +19,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Display;
+import android.os.DeadObjectException;
 
 import com.android.server.SystemService;
 
@@ -252,25 +253,28 @@ public class ScreenStabilization extends SystemService
 
     public void setSurfaceFlingerTranslate(int x, int y)
     {
-	try
-	{
-	    if (flinger == null) flinger = ServiceManager.getService("SurfaceFlinger");
-	    if (flinger == null)
-	    {
-		    Log.wtf(TAG, "SurfaceFlinger is null");
-		    return;
-	    }
+        try {
+            if (flinger == null) {
+                flinger = ServiceManager.getService("SurfaceFlinger");
+            }
+            if (flinger == null) {
+                Log.wtf(TAG, "SurfaceFlinger is null");
+                return;
+            }
 
-	    Parcel data = Parcel.obtain();
-	    data.writeInterfaceToken("android.ui.ISurfaceComposer");
-	    data.writeInt(x);
-	    data.writeInt(y);
-	    flinger.transact(2020, data, null, 0);
-	    data.recycle();
-	}
-	catch(Exception e)
-	{
-	    Log.e(TAG, "SurfaceFlinger error", e);
-	}
+            Parcel data = Parcel.obtain();
+            data.writeInterfaceToken("android.ui.ISurfaceComposer");
+            data.writeInt(x);
+            data.writeInt(y);
+            try {
+                flinger.transact(2020, data, null, 0);
+            } catch (DeadObjectException e) {
+                Log.e(TAG, "Surfaceflinger died");
+            }
+
+            data.recycle();
+        } catch(Exception e) {
+            Log.e(TAG, "SurfaceFlinger error", e);
+        }
     }
 }
