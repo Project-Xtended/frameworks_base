@@ -3887,6 +3887,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_ICON_PRIMARY),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.XTENSIONS_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -3899,9 +3902,10 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY))) {
                 mQSPanel.getHost().reloadAllTiles();
-            }
-            update();
-        }
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.XTENSIONS_STYLE))) {
+	    }
+	    update();
+         }
 
          public void update() {
             setHeadsUpStoplist();
