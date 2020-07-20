@@ -4921,6 +4921,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.XTENSIONS_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4975,6 +4978,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 stockTileStyle();
                 updateTileStyle();
                 mQSPanel.getHost().reloadAllTiles();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.XTENSIONS_STYLE))) {
 	    }
 	    update();
             updateNavigationBarVisibility();
