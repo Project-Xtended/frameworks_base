@@ -7159,6 +7159,13 @@ public final class Settings {
         public static final String MUSIC_VOLUME_PANEL_DIALOG = "music_volume_panel_dialog";
 
         /**
+         * Toggle for clipboard access toast.
+         * @hide
+         */
+
+        public static final String SHOW_CLIPBOARD_TOAST = "show_clipboard_toast";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
