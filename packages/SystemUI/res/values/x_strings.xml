@@ -360,4 +360,9 @@
     <string name="quick_smart_charge_changed_off">Smart charging turned off</string>
     <string name="quick_smart_charge_changed_on">Smart charging turned on</string>
 
+    <!-- DC Dimming -->
+    <string name="quick_settings_dc_dimming_label">DC Dimming</string>
+    <string name="quick_settings_dc_brightness_mode">Brightness mode</string>
+    <string name="quick_settings_dc_full_auto">Auto mode</string>
+
 </resources>

@@ -305,4 +305,7 @@
   <!-- Wheter device supports an gaming mode profiles -->
   <java-symbol type="bool" name="config_gamingmode_performance" />
 
+  <!-- DC Dimming -->
+  <java-symbol type="string" name="config_deviceDcDimmingSysfsNode" />
+
 </resources>
