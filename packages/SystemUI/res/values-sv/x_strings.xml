@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (c) 2009, The Android Open Source Project
+ * Copyright (c) 2015, The CyanogenMod Project
+ * Copyright (c) 2017, The LineageOS Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Sync QS Tile -->
+    <string name="quick_settings_sync_label">Synka</string>
+    <string name="accessibility_quick_settings_sync_off">Synk av</string>
+    <string name="accessibility_quick_settings_sync_on">Synk på</string>
+    <string name="accessibility_quick_settings_sync_changed_off">Synk avstäng</string>
+    <string name="accessibility_quick_settings_sync_changed_on">Synk påslagen</string>
+    <string name="global_action_restart_advanced">Avancerad omstart</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <string name="global_action_restart_ui">SystemUI</string>
+    <!-- On The Go -->
+    <string name="onthego_notif_ticker">On-The-Go aktiverat</string>
+    <string name="onthego_notif_title">On-The-Go är aktivt</string>
+    <string name="onthego_notif_stop">Stopp</string>
+    <string name="onthego_notif_options">Alternativ</string>
+    <string name="onthego_notif_error">On-The-Go kunde inte startas</string>
+    <string name="onthego_notif_restart">Starta om On-The-Go</string>
+    <string name="onthego_notif_camera_changed">Kameraläge ändrat</string>
+    <string name="onthego_transparency">Transparens</string>
+    <string name="onthego_front_camera">Använd främre kamera</string>
+    <string name="onthego_service_toggle">Starta om tjänsten automatiskt</string>
+    <string name="onthego_channel_name">Huvud</string>
+    <!-- OnTheGo Tile -->
+    <string name="quick_settings_onthego_label">On-The-Go</string>
+    <!-- Caffeine QS Tile -->
+    <string name="quick_settings_caffeine_label">Koffein</string>
+    <string name="accessibility_quick_settings_caffeine_off">Koffein av</string>
+    <string name="accessibility_quick_settings_caffeine_on">Koffein på</string>
+    <!-- Ambient display QS tile -->
+    <string name="quick_settings_ambient_display_label">Ambient display</string>
+    <string name="accessibility_quick_settings_ambient_display_off">Ambient display av.</string>
+    <string name="accessibility_quick_settings_ambient_display_on">Ambient display på.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_off">Ambient display avslagen.</string>
+    <string name="accessibility_quick_settings_ambient_display_changed_on">Ambient display påslagen.</string>
+    <!-- USB tethering QS tile -->
+    <string name="quick_settings_usb_tether_label">USB-tethering</string>
+    <!-- SystemUI Tuner -->
+    <string name="statusbar_items_title">Statusfältsikon</string>
+    <string name="lockscreen_default">Standard</string>
+    <string name="lockscreen_hidden">Ingen</string>
+    <!-- NavBar Tuner -->
+    <string name="preview">Förhandsgranskning</string>
+    <string name="keycode">Keycode</string>
+    <string name="no_home_title">Ingen hemknapp hittades</string>
+    <string name="no_home_message">En hemknapp är nödvändig för att kunna navigera den här enheten. Var vänlig lägg till en hemknapp innan du sparar.</string>
+    <string name="clipboard_description">Objekt kan dras direkt till urklipp. Objekt kan också dras direkt från urklipp när den är framme.</string>
+    <string name="keycode_description">Med Keycode-knappar kan tangentbordsknappar läggas till navigeringsfältet. När de trycks emulerar de den valda tangenten. Först måste tangenten väljas, följt av en bild att visas på knappen.</string>
+    <string name="start">Start</string>
+    <string name="center">Mitt</string>
+    <string name="end">Slut</string>
+    <string name="space">Utfyllnad</string>
+    <string name="menu_ime">Meny-/tangentbordsväxlare</string>
+    <string name="select_button">Välj knapp att lägga till</string>
+    <string name="add_button">Lägg till knapp</string>
+    <string name="save">Spara</string>
+    <string name="reset">Återställ</string>
+    <string name="select_keycode">Välj tangent</string>
+    <string name="left">Vänster</string>
+    <string name="right">Höger</string>
+    <string name="navbar_editor_title">Editor</string>
+    <string name="navbar_editor_summary">Konfigurera navigeringsfältet</string>
+    <string name="navigation_bar_accessibility_dpad_left">Markör till vänster</string>
+    <string name="navigation_bar_accessibility_dpad_right">Markör till höger</string>
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Svep från ikonen för att starta</string>
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">Ljud</string>
+    <string name="quick_settings_sound_ring">Ringning</string>
+    <string name="quick_settings_sound_vibrate">Vibrera</string>
+    <string name="quick_settings_sound_dnd">Stör ej</string>
+    <!-- Reboot/Recovery QS Tile -->
+    <string name="quick_settings_reboot_label">Omstart</string>
+    <string name="quick_settings_reboot_recovery_label">Recovery</string>
+    <!-- Heads Up QS Tile -->
+    <string name="quick_settings_heads_up_label">Heads-up</string>
+    <string name="accessibility_quick_settings_heads_up_off">Heads-up av.</string>
+    <string name="accessibility_quick_settings_heads_up_on">Heads-up på.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_off">Heads-up avstängt.</string>
+    <string name="accessibility_quick_settings_heads_up_changed_on">Heads-up påslaget.</string>
+    <!-- Screenshot QS tile -->
+    <string name="quick_settings_screenshot_label">Skärmdump</string>
+    <string name="quick_settings_region_screenshot_label">Partiell skärmdump</string>
+    <!-- Text to use when the number in a notification info is too large
+         (greater than status_bar_notification_info_maxnum, defined in
+         values/config.xml) and must be truncated.
+         [CHAR LIMIT=4] -->
+    <!-- Omni Weather -->
+    <string name="omnijaws_service_error">Fel</string>
+    <string name="omnijaws_service_unkown">Ingen väderdata</string>
+    <string name="omnijaws_service_error_long">Fel vid inläsning av väderdata</string>
+    <string name="omnijaws_service_disabled">Tjänsten är inaktiverad</string>
+    <string name="omnijaws_detail_header">Väder</string>
+    <string name="omnijaws_label_default">Väder</string>
+    <string name="omnijaws_current_text">Nu</string>
+    <string name="omnijaws_package_not_available">OmniJaws är inte tillgängligt</string>
+    <string name="omnijaws_service_last_update">Senaste uppdatering:</string>
+    <!-- Nav Bar Swipe -->
+    <string name="nav_bar_layout_inverse">Växla knappar \"Tillbaka\" och \"Senaste\"</string>
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">Kompass</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">Initierar\u2026</string>
+    <string name="accessibility_quick_settings_compass_off">Kompass av.</string>
+    <string name="accessibility_quick_settings_compass_on">Kompass på.</string>
+    <string name="accessibility_quick_settings_compass_changed_off">Kompass avstängd.</string>
+    <string name="accessibility_quick_settings_compass_changed_on">Kompass påslagen.</string>
+    <string name="quick_settings_compass_N">N</string>
+    <string name="quick_settings_compass_NE">NO</string>
+    <string name="quick_settings_compass_E">O</string>
+    <string name="quick_settings_compass_SE">SO</string>
+    <string name="quick_settings_compass_S">S</string>
+    <string name="quick_settings_compass_SW">SV</string>
+    <string name="quick_settings_compass_W">V</string>
+    <string name="quick_settings_compass_NW">NV</string>
+    <!-- CPUInfo tile -->
+    <string name="quick_settings_cpuinfo_label">CPU-info</string>
+    <string name="accessibility_quick_settings_cpuinfo_off">CPU-info av</string>
+    <string name="accessibility_quick_settings_cpuinfo_on">CPU-info på</string>
+    <!-- QS Config -->
+    <string name="qs_menu_item_columns">Kolumner</string>
+    <string name="qs_menu_item_columns_landscape">Kolumner (liggande)</string>
+    <string name="qs_menu_item_columns_three">3</string>
+    <string name="qs_menu_item_columns_four">4</string>
+    <string name="qs_menu_item_columns_five">5</string>
+    <string name="qs_menu_item_columns_six">6</string>
+    <string name="qs_menu_item_columns_seven">7</string>
+    <string name="qs_menu_item_columns_eight">8</string>
+    <string name="qs_menu_item_reset">Återställ</string>
+    <string name="qs_menu_item_titles">Visa etiketter</string>
+    <string name="qs_menu_item_qs_columns">Kolumner (Snabbvalsfält)</string>
+    <string name="qs_menu_item_columns_auto">Automatiskt</string>
+    <!--Screenrecord Tile-->
+    <string name="screenrecorder_title_tile">Skärminspelning</string>
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Heads-up-aviseringar pausade i 1 minut.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Heads-up-aviseringar pausade i <xliff:g id="number">%d</xliff:g> minuter.</string>
+    <!-- Kill button in notification guts -->
+    <string name="force_stop_dlg_title">Forcera stopp?</string>
+    <string name="force_stop_dlg_text">Om du forcerar stopp av en app kan den sluta fungera som den ska.</string>
+    <string name="guts_force_close_app">Stäng app</string>
+    <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_location_battery_saving">Platsrapportering: batterisparläge.</string>
+    <!-- Content description of the location tile in quick settings when on, sensors only mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_location_gps_only">Platsrapportering: endast sensorer.</string>
+    <!-- Content description of the location tile in quick settings when on, high accuracy mode (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_location_high_accuracy">Platsrapportering: hög precision.</string>
+    <!-- QuickSettings: Location (Off) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_turned_off_label">Av</string>
+    <!-- QuickSettings: Location (On, low-power) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_battery_saving_label">Batterisparläge</string>
+    <string name="quick_settings_location_battery_saving_label_twoline">Batteri-\nsparläge</string>
+    <!-- QuickSettings: Location (On, gps-only) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_gps_only_label">Endast GPS</string>
+    <string name="quick_settings_location_gps_only_label_twoline">Endast GPS</string>
+    <!-- QuickSettings: Location (On, high-accuracy) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_high_accuracy_label">Hög precision</string>
+    <string name="quick_settings_location_high_accuracy_label_twoline">Hög-\nprecision</string>
+    <!-- QuickSettings: Location detail panel title [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_detail_title">Position</string>
+    <!-- QuickSettings: Location detail panel menu title [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_location_detail_menu_title">Välj läge:</string>
+    <!-- [CHAR LIMIT=30] Location detail panel, high accuracy location mode -->
+    <string name="quick_settings_location_detail_mode_high_accuracy_title">Hög precision</string>
+    <!-- [CHAR LIMIT=30] Location detail panel, battery saving location mode -->
+    <string name="quick_settings_location_detail_mode_battery_saving_title">Batterisparläge</string>
+    <!-- [CHAR LIMIT=30] Location detail panel, device only location mode -->
+    <string name="quick_settings_location_detail_mode_sensors_only_title">Endast enhet</string>
+    <!-- [CHAR LIMIT=130] Location detail panel, description for high accuracy mode -->
+    <string name="quick_settings_location_detail_mode_high_accuracy_description">Använd GPS, Wi\u2011Fi, Bluetooth, eller mobilnätverk för att bestämma position </string>
+    <!-- [CHAR LIMIT=130] Location detail panel, description for battery saving mode -->
+    <string name="quick_settings_location_detail_mode_battery_saving_description">Använd Wi\u2011Fi, Bluetooth, eller mobilnätverk för bestämma position</string>
+    <!-- [CHAR LIMIT=130] Location detail panel, description for sensors only mode -->
+    <string name="quick_settings_location_detail_mode_sensors_only_description">Använd GPS för att bestämma din position</string>
+    <!-- Screen record -->
+    <string name="screenrecord_dialog_title">Starta inspelning?</string>
+    <string name="screenrecord_dialog_summary">Under inspelning kan Android-systemet ta del av känslig information som är synlig på skärmen eller spela upp på enheten. Detta inkluderar lösenord, betalningsinformation, foton, meddelanden, samt ljud.</string>
+    <string name="screenrecord_dialog_start">Start</string>
+    <string name="screenrecord_dialog_cancel">Avbryt</string>
+    <string name="screenrecord_audio_title">Ljudkälla</string>
+    <string name="screenrecord_audio_summary">Tillåter val av källa eller inaktivering av ljud.</string>
+    <string name="screenrecord_audio_recording_internal">Intern</string>
+    <string name="screenrecord_audio_recording_microphone">Mikrofon</string>
+    <string name="screenrecord_audio_recording_off">Inaktiverad</string>
+    <string name="screenrecord_taps_title">Visa tryckningar på skärmen</string>
+    <string name="screenrecord_taps_summary">Visa visuell feedback under inspelning</string>
+    <string name="screenrecord_stopdot_title">Visa stoppunkt</string>
+    <string name="screenrecord_stopdot_summary">Visa en röd punkt för att avsluta inspelningen med ett tryck. Håll in för att flytta den till andra sidan.</string>
+    <string name="screenrecord_video_bitrate_title">Videobitrate</string>
+    <string name="screenrecord_video_bitrate_summary">Ställ in videobitrate för högre videokvalitet, till priset av en större fil.</string>
+    <string name="global_action_screenrecord">Skärminspelning</string>
+    <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
+    <string name="global_action_screenshot_cust">"Skärm/Inspelning"</string>
+    <!-- Name of the camera status bar icon. -->
+    <string name="status_bar_camera">Kamera</string>
+    <!-- Name of the location status bar icon. -->
+    <string name="status_bar_location">Position</string>
+    <!-- Name of the microphone status bar icon. -->
+    <string name="status_bar_microphone">Mikrofon</string>
+    <!-- Weather string format in expanded statusbar header -->
+    <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
+    <!-- Gaming mode -->
+    <string name="gaming_mode_not_enabled">Spelläge är inaktiverat i inställningarna</string>
+    <string name="quick_settings_gaming_mode_label">Spelläge</string>
+    <!-- Content description of the Gaming mode tile in quick settings when disabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_gaming_mode_disabled">Spelläge avstängt.</string>
+    <!-- Content description of the Gaming mode tile in quick settings when enabled (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_gaming_mode_enabled">Spelläge påslaget.</string>
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">Byt SIM-kort för data</string>
+    <string name="qs_data_switch_toast_0">Inget SIM-kort är isatt</string>
+    <string name="qs_data_switch_toast_1">Endast ett SIM-kort är isatt</string>
+    <string name="qs_data_switch_changed_1">Använd SIM-kort 1 för mobildata</string>
+    <string name="qs_data_switch_changed_2">Använd SIM 2 för mobildata</string>
+    <!-- LTE QS Tile -->
+    <string name="qs_lte_label">LTE</string>
+    <string name="lte_on">LTE På </string>
+    <string name="lte_off">LTE Av</string>
+    <!-- accessibility label for button to open running apps prefscreen [CHAR LIMIT=NONE] -->
+    <string name="accessibility_quick_settings_running_services">Öppna vyn för aktiva tjänster.</string>
+    <!-- QuickSettings: ScreenStabilization tile [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_stabilization_label">Skärmstabilisering</string>
+    <!-- QuickSettings: ScreenStabilization (off) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_stabilization_off">Skärmstabilisering är inaktiverat</string>
+    <!-- QuickSettings: ScreenStabilization (on) [CHAR LIMIT=NONE] -->
+    <string name="quick_settings_stabilization_on">Skärmstabilisering är aktiverat</string>
+    <string name="low_label">Låg</string>
+    <string name="high_label">Hög</string>
+    <string name="stabilization_velocity_friction">Hastighetsfriktion</string>
+    <string name="stabilization_velocity_amplitude">Hastighetsamplitud</string>
+    <string name="stabilization_position_friction">Positionsfriktion</string>
+    <string name="tuner_keyguard_show_battery_bar_title">Visa batterifältet</string>
+    <string name="tuner_keyguard_show_battery_bar_summary">Visa batterifältet vid laddning med konstant aktiv skärm</string>
+    <string name="tuner_keyguard_show_battery_bar_always_title">Visa alltid batterifältet</string>
+    <string name="tuner_keyguard_show_battery_bar_always_summary">Visa alltid batterifältet vid laddning</string>
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">FPS-info</string>
+    <string name="accessibility_quick_settings_fpsinfo_off">FPS-info av</string>
+    <string name="accessibility_quick_settings_fpsinfo_on">FPS-info på</string>
+    <!-- Long swipe gesture actions -->
+    <string name="app_picker_dialog_title">Välj en app</string>
+    <string name="active_edge_app_select_title">Välj app</string>
+    <string name="active_edge_activity_select_title">Välj aktivitet</string>
+    <string name="recents_app_killed">App avslutad</string>
+    <string name="nope_cant_kill">Launchern kan inte avslutas</string>
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">Always-On-Display</string>
+    <!-- Alerting notification header label -->
+    <string name="notification_section_header_alerting">Alarmerande aviseringar</string>
+    <!-- Immersive tile -->
+    <string name="quick_settings_immersive_tile">Omslutande läge</string>
+    <string name="quick_settings_immersive_tile_statusbar">Omslutande statusfält</string>
+    <string name="quick_settings_immersive_tile_navbar">Omslutande navigeringsfält</string>
+    <string name="quick_settings_immersive_tile_full">Fullt omslutande läge</string>
+    <!-- Smart Pixels QS Tile -->
+    <string name="quick_settings_smart_pixels">Smart Pixels</string>
+    <string name="quick_settings_smart_pixels_on_power_save">Auto-aktiverade Smart Pixels</string>
+    <!-- Theme tile -->
+    <string name="system_theme_style_title">Systemteman</string>
+    <string name="quick_settings_theme_tile_title">Teman</string>
+    <string name="quick_settings_theme_tile_style_detail_title">Välj tema</string>
+    <string name="system_theme_style_light">Ljust</string>
+    <string name="system_theme_style_dark">Google Mörk</string>
+    <string name="system_theme_style_solarized_dark">Solariserat Mörk</string>
+    <string name="system_theme_style_baked_green">Bakad grön</string>
+    <string name="system_theme_style_choco_x">Choco X</string>
+    <string name="system_theme_style_pitch_black">Kolsvart</string>
+    <string name="system_theme_style_dark_grey">Mörkgrå</string>
+    <string name="system_theme_style_material_ocean">Material Ocean</string>
+    <string name="system_theme_style_xtended_clear">Xtended Clear</string>
+    <!-- Daily data usage -->
+    <string name="daily_data_usage_title">Dagens användning</string>
+</resources>

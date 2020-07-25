@@ -158,8 +158,6 @@
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Beenden erzwingen?</string>
     <string name="force_stop_dlg_text">Das Beenden der App zu erzwingen kann zu unerwünschtem Verhalten führen.</string>
-    <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="guts_force_close_app">App schließen</string>
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_location_battery_saving">Standortdienste: Energiesparmodus.</string>
@@ -292,9 +290,4 @@
     <string name="system_theme_style_xtended_clear">Xtended Clear</string>
     <!-- Daily data usage -->
     <string name="daily_data_usage_title">Heutige Nutzung</string>
-    <!-- Gesture Nav Handle -->
-    <string name="tuner_nav_bar_show_handle_title">Linie anzeigen</string>
-    <string name="tuner_nav_bar_show_handle_summary"></string>
-    <string name="tuner_nav_bar_legacy_category">3-Tasten-Navigation</string>
-    <string name="tuner_nav_bar_gesture_category">Gestensteuerung</string>
 </resources>

@@ -158,8 +158,6 @@
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Hentikan paksa?</string>
     <string name="force_stop_dlg_text">Jika anda menghentikan paksa aplikasi, akan menyebabkan gagal fungsi.</string>
-    <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="guts_force_close_app">Tutup Aplikasi</string>
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_location_battery_saving">Laporan lokasi: mode hemat baterai.</string>
@@ -292,9 +290,4 @@
     <string name="system_theme_style_xtended_clear">Xtended Clear</string>
     <!-- Daily data usage -->
     <string name="daily_data_usage_title">Penggunaan hari ini</string>
-    <!-- Gesture Nav Handle -->
-    <string name="tuner_nav_bar_show_handle_title">Show handle</string>
-    <string name="tuner_nav_bar_show_handle_summary"></string>
-    <string name="tuner_nav_bar_legacy_category">3-button navigation</string>
-    <string name="tuner_nav_bar_gesture_category">Gesture navigation</string>
 </resources>

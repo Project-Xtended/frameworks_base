@@ -158,8 +158,6 @@
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Vynutit ukončení?</string>
     <string name="force_stop_dlg_text">Vynucené ukončení může způsobit nepředvídatelné chování aplikace.</string>
-    <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="guts_force_close_app">Zavřít aplikaci</string>
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_location_battery_saving">Hlášení polohy: úspora baterie.</string>
@@ -292,9 +290,4 @@
     <string name="system_theme_style_xtended_clear">Xtended Clear</string>
     <!-- Daily data usage -->
     <string name="daily_data_usage_title">Dnešní využití</string>
-    <!-- Gesture Nav Handle -->
-    <string name="tuner_nav_bar_show_handle_title">Zobrazit úchyt</string>
-    <string name="tuner_nav_bar_show_handle_summary"></string>
-    <string name="tuner_nav_bar_legacy_category">Navigace třemi tlačítky</string>
-    <string name="tuner_nav_bar_gesture_category">Navigace gesty</string>
 </resources>
