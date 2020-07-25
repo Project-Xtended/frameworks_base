@@ -158,8 +158,6 @@
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Forçar parada?</string>
     <string name="force_stop_dlg_text">Se você forçar a parada de um app, ele pode apresentar mau funcionamento.</string>
-    <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="guts_force_close_app">Fechar aplicativo</string>
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_location_battery_saving">Localização: modo de economia de bateria.</string>
@@ -292,9 +290,4 @@
     <string name="system_theme_style_xtended_clear">Xtended Clear</string>
     <!-- Daily data usage -->
     <string name="daily_data_usage_title">Uso de hoje</string>
-    <!-- Gesture Nav Handle -->
-    <string name="tuner_nav_bar_show_handle_title">Exibir alças</string>
-    <string name="tuner_nav_bar_show_handle_summary"></string>
-    <string name="tuner_nav_bar_legacy_category">Navegação com três botões</string>
-    <string name="tuner_nav_bar_gesture_category">Navegação por gestos</string>
 </resources>

@@ -40,7 +40,7 @@
     <string name="onthego_transparency">Transparence</string>
     <string name="onthego_front_camera">Utiliser la caméra frontale</string>
     <string name="onthego_service_toggle">Redémarrer automatiquement le service</string>
-    <string name="onthego_channel_name">Main</string>
+    <string name="onthego_channel_name">Principal</string>
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">On-The-Go</string>
     <!-- Caffeine QS Tile -->
@@ -158,8 +158,6 @@
     <!-- Kill button in notification guts -->
     <string name="force_stop_dlg_title">Force stop?</string>
     <string name="force_stop_dlg_text">If you force stop an app, it may misbehave.</string>
-    <string name="dlg_ok">@android:string/ok</string>
-    <string name="dlg_cancel">@android:string/cancel</string>
     <string name="guts_force_close_app">Close App</string>
     <!-- Content description of the location tile in quick settings when on, battery saving mode (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_quick_settings_location_battery_saving">Location reporting: battery saving mode.</string>
@@ -292,9 +290,4 @@
     <string name="system_theme_style_xtended_clear">Xtended Clear</string>
     <!-- Daily data usage -->
     <string name="daily_data_usage_title">Today\'s usage</string>
-    <!-- Gesture Nav Handle -->
-    <string name="tuner_nav_bar_show_handle_title">Show handle</string>
-    <string name="tuner_nav_bar_show_handle_summary"></string>
-    <string name="tuner_nav_bar_legacy_category">3-button navigation</string>
-    <string name="tuner_nav_bar_gesture_category">Gesture navigation</string>
 </resources>

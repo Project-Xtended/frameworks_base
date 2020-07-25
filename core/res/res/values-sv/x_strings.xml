@@ -19,37 +19,37 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="reboot_to_recovery_title">Recovery</string>
-    <string name="reboot_to_recovery_message">Restart do Recovery</string>
+    <string name="reboot_to_recovery_message">Omstart till recovery</string>
     <string name="reboot_to_bootloader_title">Bootloader</string>
-    <string name="reboot_to_bootloader_message">Restart do Bootloader</string>
-    <string name="reboot_title">Restart</string>
-    <string name="reboot_message">Ponowne uruchamianie systemu</string>
+    <string name="reboot_to_bootloader_message">Omstart till bootloader</string>
+    <string name="reboot_title">Omstart</string>
+    <string name="reboot_message">Startar om systemet</string>
     <!-- On-The-Go -->
     <string name="global_action_onthego">On-The-Go</string>
     <!-- Button that copies the url to the log of a crashed application -->
-    <string name="aerr_copy">Kopiuj adres URL dziennika awarii</string>
-    <string name="url_copy_success">Pomyślnie skopiowano adres URL</string>
-    <string name="url_copy_failed">Wystąpił błąd podczas przesyłania dziennika do dogbin</string>
+    <string name="aerr_copy">Kopiera URL för krashlogg</string>
+    <string name="url_copy_success">URL kopierad</string>
+    <string name="url_copy_failed">Ett fel inträffade vid uppladdning av loggen till dogbin</string>
     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permlab_fakePackageSignature">Fałszowanie sygnatury pakietu</string>
+    <string name="permlab_fakePackageSignature">Förfalskning av paketsignatur</string>
     <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permdesc_fakePackageSignature">Pozwala aplikacji na udawanie innej aplikacji. Złośliwe aplikacje mogą wykorzystać to w celu uzyskania dostępu do prywatnych danych. Zachowaj ostrożność udzielając tego uprawnienia!</string>
+    <string name="permdesc_fakePackageSignature">Tillåter appen att utge sig för att vara en annan app. Skadliga program skulle kunna använda detta för att komma åt privat appdata. Ge detta tillstånd med försiktighet!</string>
     <!-- Title of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permgrouplab_fake_package_signature">Fałszowanie sygnatury pakietu</string>
+    <string name="permgrouplab_fake_package_signature">Förfalskning av paketsignatur</string>
     <!-- Description of a category of application permissions, listed so the user can choose whether they want to allow the application to do this. -->
-    <string name="permgroupdesc_fake_package_signature">zezwól na fałszowanie podpisu pakietu</string>
+    <string name="permgroupdesc_fake_package_signature">tillåt förfalskning av paketsignatur</string>
     <!-- Message shown to the user when the apps requests permission from this group. If ever possible this should stay below 80 characters (assuming the parameters takes 20 characters). Don't abbreviate until the message reaches 120 characters though. [CHAR LIMIT=120] -->
-    <string name="permgrouprequest_fake_package_signature">Allow
-        &lt;b&gt;<xliff:g id="app_name" example="Gmail">%1$s</xliff:g>&lt;/b&gt; to spoof package signature?</string>
+    <string name="permgrouprequest_fake_package_signature">Tillåt
+        &lt;b&gt;<xliff:g id="app_name" example="Gmail">%1$s</xliff:g>&lt;/b&gt; att förfalska paketsignatur?</string>
     <!-- Pocket Lock -->
-    <string name="pocket_lock_message_long_press">Press and hold power button to unlock</string>
+    <string name="pocket_lock_message_long_press">Tryck och håll in avstängningsknappen för att låsa upp</string>
     <!-- Gaming mode -->
-    <string name="notification_channel_gaming">Gaming mode</string>
-    <string name="gaming_mode_notification_title">Gaming mode enabled</string>
-    <string name="gaming_mode_notification_content">Tap to turn off Gaming mode</string>
-    <string name="gaming_mode_enabled_toast">Gaming mode turned on</string>
-    <string name="gaming_mode_disabled_toast">Gaming mode turned off</string>
+    <string name="notification_channel_gaming">Spelläge</string>
+    <string name="gaming_mode_notification_title">Spelläge aktiverat</string>
+    <string name="gaming_mode_notification_content">Tryck för att stänga av spelläge</string>
+    <string name="gaming_mode_enabled_toast">Spelläge igång</string>
+    <string name="gaming_mode_disabled_toast">Spelläge avstängt</string>
     <!-- SystemUI Restart -->
-    <string name="systemui_restart_title">Restart SystemUI</string>
-    <string name="systemui_restart_message">For the changes to take effect, a SystemUI restart is required. Restart SystemUI now?</string>
+    <string name="systemui_restart_title">Starta om SystemUI</string>
+    <string name="systemui_restart_message">För att ändringarna ska träda i kraft krävs en omstart av SystemUI. Starta om SystemUI nu?</string>
 </resources>
