@@ -52,5 +52,5 @@
     <string name="gaming_mode_disabled_toast">Игровой режим выключен</string>
     <!-- SystemUI Restart -->
     <string name="systemui_restart_title">Перезагрузка интерфейса системы</string>
-    <string name="systemui_restart_message">Чтобы изменения вступили в силу, требуется перезагрузка интерфейса системы. Перезагрузить интерфейса системы сейчас?</string>
+    <string name="systemui_restart_message">Чтобы изменения вступили в силу, требуется перезагрузка интерфейса системы. Перезагрузить интерфейс системы сейчас?</string>
 </resources>
