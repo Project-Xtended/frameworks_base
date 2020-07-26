@@ -164,6 +164,7 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     protected boolean mShowClock = true;
     protected int mClockDatePosition;
     private int mClockColor = 0xffffffff;
+    private int mQsClockColor = 0xffffffff;
     private int mClockSize = 14;
     private int mClockSizeQsHeader = 14;
     private int mAmPmStyle;
@@ -243,6 +244,9 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
                     false, this, UserHandle.USER_ALL);
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_CLOCK_SIZE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_CLOCK_COLOR),
                     false, this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -497,10 +501,14 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     @Override
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mNonAdaptedColor = DarkIconDispatcher.getTint(area, this, tint);
-        if (mClockColor == 0xFFFFFFFF) {
+        if (mClockColor == 0xFFFFFFFF || mQsClockColor == 0xFFFFFFFF) {
             setTextColor(mNonAdaptedColor);
         } else {
-            setTextColor(mClockColor);
+	    if (mQsHeader) {
+                setTextColor(mQsClockColor);
+            } else {
+                setTextColor(mClockColor);
+            }
         }
     }
 
@@ -822,10 +830,17 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
         mClockColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CLOCK_COLOR, DEFAULT_CLOCK_COLOR,
                 UserHandle.USER_CURRENT);
-                if (mClockColor == 0xFFFFFFFF) {
+        mQsClockColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_CLOCK_COLOR, DEFAULT_CLOCK_COLOR,
+                UserHandle.USER_CURRENT);
+                if (mClockColor == 0xFFFFFFFF || mQsClockColor == 0xFFFFFFFF) {
                     setTextColor(mNonAdaptedColor);
                 } else {
-                    setTextColor(mClockColor);
+		    if (mQsHeader) {
+                        setTextColor(mQsClockColor);
+                    } else {
+                        setTextColor(mClockColor);
+		    }
                 }
    	        updateClock();
     }
