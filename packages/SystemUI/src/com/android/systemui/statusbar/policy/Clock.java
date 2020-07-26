@@ -162,6 +162,7 @@ public class Clock extends TextView implements
     protected int mClockDatePosition;
     protected boolean mShowClock = true;
     private int mClockColor = 0xffffffff;
+    private int mQsClockColor = 0xffffffff;
     private int mClockSize = 14;
     private int mClockSizeQsHeader = 14;
     private int mAmPmStyle;
@@ -225,6 +226,9 @@ public class Clock extends TextView implements
                     false, this, UserHandle.USER_ALL);
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_CLOCK_SIZE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_CLOCK_COLOR),
                     false, this, UserHandle.USER_ALL);
             updateSettings();
         }
@@ -451,10 +455,18 @@ public class Clock extends TextView implements
     @Override
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mNonAdaptedColor = DarkIconDispatcher.getTint(area, this, tint);
-        if (mClockColor == 0xFFFFFFFF) {
-            setTextColor(mNonAdaptedColor);
+        if (mQsHeader) {
+   	    if (mQsClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
+            } else {
+                setTextColor(mQsClockColor);
+            }
         } else {
-            setTextColor(mClockColor);
+	    if (mClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
+            } else {
+                setTextColor(mClockColor);
+            }
         }
     }
 
@@ -779,12 +791,23 @@ public class Clock extends TextView implements
         mClockColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CLOCK_COLOR, DEFAULT_CLOCK_COLOR,
                 UserHandle.USER_CURRENT);
-                if (mClockColor == 0xFFFFFFFF) {
-                    setTextColor(mNonAdaptedColor);
-                } else {
-                    setTextColor(mClockColor);
-                }
-   	        updateClock();
+        mQsClockColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_CLOCK_COLOR, DEFAULT_CLOCK_COLOR,
+                UserHandle.USER_CURRENT);
+        if (mQsHeader) {
+            if (mQsClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
+            } else {
+                setTextColor(mQsClockColor);
+            }
+        } else {
+            if (mClockColor == 0xFFFFFFFF) {
+                setTextColor(mNonAdaptedColor);
+            } else {
+                setTextColor(mClockColor);
+            }
+        }
+        updateClock();
     }
 
     private void updateClockFontStyle() {
