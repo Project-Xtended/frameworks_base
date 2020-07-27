@@ -42,4 +42,7 @@
     <string name="action_null">Blank</string>
     <string name="animation_ethans">Ethans</string>
 
+    <!-- Cycle through ringer modes -->
+    <string name="volume_dialog_ringer_guidance_normal">Calls and notifications will ring</string>
+
 </resources>
