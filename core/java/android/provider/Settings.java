@@ -5521,12 +5521,6 @@ public final class Settings {
                 ANY_STRING_VALIDATOR;
 
         /**
-         * Whether to show Brightness Icon On Brightness Slider
-         * @hide
-         */
-        public static final String QS_SHOW_BRIGHTNESS_ICON = "qs_show_brightness_icon";
-
-        /**
          * Whether the battery light should only be enabled on fully charged battery.
          * The value is boolean (1 or 0).
          * @hide
@@ -12046,12 +12040,6 @@ public final class Settings {
         public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
 
         private static final Validator VOLUME_LINK_NOTIFICATION_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether to show the brightness slider in quick settings panel
-         * @hide
-         */
-        public static final String QS_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
 
 	/*
          * Hide lockscreen shortcuts on secure lock screens
