@@ -524,12 +524,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         super.onConfigurationChanged(newConfig);
         mLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
         updateResources();
-
-        // Update color schemes in landscape to use wallpaperTextColor
-        boolean shouldUseWallpaperTextColor =
-                newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
-        mClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
-        updateStatusbarProperties();
     }
 
     @Override
@@ -661,7 +655,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updateSystemInfoText();
         updateResources();
         updateDataUsageView();
-        updateStatusbarProperties();
      }
 
      private void updateQSBatteryMode() {
@@ -1049,7 +1042,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     // Update color schemes in landscape to use wallpaperTextColor
     private void updateStatusbarProperties() {
         boolean shouldUseWallpaperTextColor = mLandscape && !mHeaderImageEnabled;
-        mClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
     }
 
     @Override
