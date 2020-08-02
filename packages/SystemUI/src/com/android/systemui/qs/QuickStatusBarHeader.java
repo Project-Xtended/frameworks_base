@@ -1015,7 +1015,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         float intensity = getColorIntensity(colorForeground);
         int fillColor = mDualToneHandler.getSingleColor(intensity);
         mBatteryRemainingIcon.onDarkChanged(tintArea, intensity, fillColor);
-        mBatteryRemainingIconQsH.onDarkChanged(tintArea, intensity, fillColor);
         if(mSystemInfoText != null &&  mSystemInfoIcon != null) {
             updateSystemInfoText();
         }
