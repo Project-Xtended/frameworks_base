@@ -525,7 +525,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
         updateResources();
     }
 
@@ -547,10 +546,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                       + mContext.getResources().getDimensionPixelSize(
                 R.dimen.quick_qs_drag_handle_height);
 
-        if (mHideDragHandle) {
-            qqsHeight -= mContext.getResources().getDimensionPixelSize(
-                    R.dimen.quick_qs_drag_handle_height);
-        }
         if (mBrightnessSlider != 0) {
            if (!mHeaderImageEnabled) {
                qqsHeight += mContext.getResources().getDimensionPixelSize(
@@ -622,11 +617,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 qsHeight += mHeaderImageHeight;
             }
 
-            if (mHideDragHandle) {
-                qsHeight -= resources.getDimensionPixelSize(
-                        R.dimen.quick_qs_drag_handle_height);
-            }
-
             // always add the margin below the statusbar with or without image
             lp.height = Math.max(getMinimumHeight(), qsHeight);
         }
@@ -643,6 +633,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mHeaderImageEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mHeaderImageHeight = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_HEADER_HEIGHT, 25,
+                UserHandle.USER_CURRENT);
         isBattIconQsH = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_BATTERY_LOCATION, 1,
                 UserHandle.USER_CURRENT);
@@ -661,7 +654,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                   com.android.internal.R.integer.config_sysBatteryTempMultiplier);
 
         mSystemInfoMode = getQsSystemInfoMode();
-        updateHeaderImage();
+        updateHeaderImage(mHeaderImageHeight);
         updateQSBatteryMode();
         updateSBBatteryStyle();
         updateSystemInfoText();
@@ -1051,11 +1044,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
     }
 
-    // Update color schemes in landscape to use wallpaperTextColor
-    private void updateStatusbarProperties() {
-        boolean shouldUseWallpaperTextColor = mLandscape && !mHeaderImageEnabled;
-    }
-
     @Override
     public void onTuningChanged(String key, String newValue) {
         switch (key) {
@@ -1081,14 +1069,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
     }
 
-    private void updateHeaderImage() {
-        mHeaderImageEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.OMNI_STATUS_BAR_CUSTOM_HEADER, 0,
-                UserHandle.USER_CURRENT) == 1;
-        int mImageHeight = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.STATUS_BAR_CUSTOM_HEADER_HEIGHT, 25,
-                UserHandle.USER_CURRENT);
-        switch (mImageHeight) {
+    private void updateHeaderImage(int height) {
+        switch (height) {
             case 0:
                 mHeaderImageHeight = 0;
                 break;
