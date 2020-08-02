@@ -92,6 +92,9 @@ public class NotificationLightsView extends RelativeLayout {
         int color = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_COLOR, 0xFF3980FF,
                 UserHandle.USER_CURRENT);
+        boolean randomPulse = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.PULSE_AMBIENT_LIGHT_RANDOM, 1,
+                UserHandle.USER_CURRENT) == 1;
         int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT_DURATION, 2,
                 UserHandle.USER_CURRENT) * 1000;
@@ -127,16 +130,23 @@ public class NotificationLightsView extends RelativeLayout {
         Log.e("NotificationLightsView", sb.toString());
         ImageView leftViewSolid = (ImageView) findViewById(R.id.notification_animation_left_solid);
         ImageView leftViewFaded = (ImageView) findViewById(R.id.notification_animation_left_faded);
-        leftViewSolid.setColorFilter(color);
-        leftViewFaded.setColorFilter(color);
         leftViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         leftViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         ImageView rightViewSolid = (ImageView) findViewById(R.id.notification_animation_right_solid);
         ImageView rightViewFaded = (ImageView) findViewById(R.id.notification_animation_right_faded);
-        rightViewSolid.setColorFilter(color);
-        rightViewFaded.setColorFilter(color);
         rightViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         rightViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
+        if (randomPulse) {
+            leftViewSolid.setColorFilter(randomColor());
+            leftViewFaded.setColorFilter(randomColor());
+            rightViewSolid.setColorFilter(randomColor());
+            rightViewFaded.setColorFilter(randomColor());
+        } else {
+            leftViewSolid.setColorFilter(color);
+            leftViewFaded.setColorFilter(color);
+            rightViewSolid.setColorFilter(color);
+            rightViewFaded.setColorFilter(color);
+        }
         mLightAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
         mLightAnimator.setDuration(duration);
         if (repeat == 0) {
@@ -167,5 +177,12 @@ public class NotificationLightsView extends RelativeLayout {
         });
         Log.e("NotificationLightsView", "start");
         mLightAnimator.start();
+    }
+
+    public int randomColor() {
+        int red = (int) (0xff * Math.random());
+        int green = (int) (0xff * Math.random());
+        int blue = (int) (0xff * Math.random());
+        return Color.argb(255, red, green, blue);
     }
 }
