@@ -143,4 +143,7 @@
     <!-- Whether to send camera status intent -->
     <bool name="config_sendCameraStatusIntent">false</bool>
     
+    <!-- NightLight FOD -->
+    <bool name="disable_fod_night_light">false</bool>
+       
 </resources>

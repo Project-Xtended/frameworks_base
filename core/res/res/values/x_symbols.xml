@@ -190,4 +190,8 @@
   
   <!-- Whether to send camera status intent -->
   <java-symbol type="bool" name="config_sendCameraStatusIntent" />
+  
+  <!-- NightLight FOD -->
+  <java-symbol type="bool" name="disable_fod_night_light"/>
+  
 </resources>
