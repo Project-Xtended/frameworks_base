@@ -7188,6 +7188,15 @@ public final class Settings {
         public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
 
         /**
+         * Controls whether to center R style notification headers
+         * by.tikkiX2
+         * @hide
+         */
+        public static final String CENTER_NOTIFICATION_HEADERS = "center_notification_headers";
+
+        private static final Validator CENTER_NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7360,6 +7369,7 @@ public final class Settings {
             AMBIENT_TEXT_COLOR,
             AMBIENT_TEXT_TYPE_COLOR,
             NAVIGATION_HANDLE_HEIGHT,
+            CENTER_NOTIFICATION_HEADERS,
         };
 
         /**
@@ -7819,6 +7829,7 @@ public final class Settings {
             VALIDATORS.put(AMBIENT_TEXT_COLOR, AMBIENT_TEXT_COLOR_VALIDATOR);
             VALIDATORS.put(AMBIENT_TEXT_TYPE_COLOR, AMBIENT_TEXT_TYPE_COLOR_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_HEIGHT, NAVIGATION_HANDLE_HEIGHT_VALIDATOR);
+            VALIDATORS.put(CENTER_NOTIFICATION_HEADERS, CENTER_NOTIFICATION_HEADERS_VALIDATOR);
         }
 
         /**
