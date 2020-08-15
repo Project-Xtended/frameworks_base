@@ -311,4 +311,8 @@
   <!-- Device Hardware Wake Keys -->
   <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
 
+  <!-- Clipboard access toast -->
+  <java-symbol type="string" name="app_clipboard_access_denied" />
+  <java-symbol type="string" name="app_clipboard_access_granted" />
+
 </resources>
