@@ -216,4 +216,7 @@
   <java-symbol type="integer" name="config_smartCutoffTemperature" />
   <java-symbol type="integer" name="config_smartCutoffResumeTemperature" />
 
+  <!-- Power button fingerprint -->
+  <java-symbol type="bool" name="config_powerButtonFingerprint" />
+
 </resources>
