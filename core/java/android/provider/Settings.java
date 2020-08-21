@@ -6144,6 +6144,18 @@ public final class Settings {
         public static final String QS_PANEL_BG_ALPHA = "qs_panel_bg_alpha";
 
         /**
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String QS_PANEL_TYPE_BACKGROUND = "qs_panel_type_background";
+
+        /** @hide */
+        public static final String QS_PANEL_CUSTOM_IMAGE = "qs_panel_custom_image";
+
+        /** @hide */
+        public static final String QS_PANEL_CUSTOM_IMAGE_BLUR = "qs_panel_custom_image_blur";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6332,6 +6344,9 @@ public final class Settings {
 	    PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_IMAGE);
             PRIVATE_SETTINGS.add(OMNI_FOOTER_TEXT_SHOW);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_ALPHA);
+            PRIVATE_SETTINGS.add(QS_PANEL_TYPE_BACKGROUND);
+            PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE);
+            PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE_BLUR);
         }
 
         /**

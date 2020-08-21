@@ -4060,4 +4060,9 @@
   <java-symbol type="color" name="gradient_start" />
   <java-symbol type="color" name="gradient_end" />
 
+  <!-- QS Inset -->
+  <java-symbol type="dimen" name="qs_background_inset" />
+
+  <java-symbol type="attr" name="colorBackgroundFloating" />
+
 </resources>
