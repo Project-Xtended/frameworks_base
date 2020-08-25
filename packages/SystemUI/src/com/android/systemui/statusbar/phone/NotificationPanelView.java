@@ -3513,6 +3513,8 @@ public class NotificationPanelView extends PanelView implements
         boolean mAmbientTextEnable = Settings.System.getIntForUser(
                 mContext.getContentResolver(), Settings.System.AMBIENT_TEXT,
                 0, UserHandle.USER_CURRENT) != 0;
+        boolean ambientTextAnimated = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_TEXT_ANIMATION, 0, UserHandle.USER_CURRENT) != 0;
 
         if (mAmbientTextEnable) {
             if (dozing) {
@@ -3521,7 +3523,9 @@ public class NotificationPanelView extends PanelView implements
                 // if the current notifications "would" turn the screen on
                 // just checking hasActiveClearableNotifications is obviusly not
                 // enough here - so for now dont even try to do it
+                mAmbientText.animateText(ambientTextAnimated);
                 mAmbientText.update();
+                mAmbientText.setVisibility(View.VISIBLE);
             } else {
                 // screen on!
                 mAmbientText.setVisibility(View.GONE);
@@ -3568,8 +3572,6 @@ public class NotificationPanelView extends PanelView implements
         boolean pulseLights = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_AMBIENT_LIGHT, 0, UserHandle.USER_CURRENT) != 0;
 
-        ExpandableNotificationRow row = mNotificationStackScroller.getFirstActiveClearableNotifications(ROWS_HIGH_PRIORITY);
-        boolean activeNotif = row != null;
         boolean ambientText = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_TEXT, 0, UserHandle.USER_CURRENT) != 0;
         boolean ambientTextAnimated = Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -3595,16 +3597,11 @@ public class NotificationPanelView extends PanelView implements
         }
         if (mAmbientText != null && ambientText) {
           if (mPulsing) {
-              if (!activeNotif) {
-                  mAmbientText.animateText(ambientTextAnimated);
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.VISIBLE);
-              } else {
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.GONE);
-              }
+              mAmbientText.animateText(ambientTextAnimated);
+              mAmbientText.update();
+              mAmbientText.setVisibility(View.VISIBLE);
           } else {
-              if (!activeNotif && mDozing) {
+              if (mDozing) {
                   mAmbientText.animateText(ambientTextAnimated);
                   mAmbientText.update();
                   mAmbientText.setVisibility(View.VISIBLE);
@@ -3613,8 +3610,11 @@ public class NotificationPanelView extends PanelView implements
                   mAmbientText.setVisibility(View.GONE);
               }
           }
+        } else {
+            mAmbientText.update();
+            mAmbientText.setVisibility(View.GONE);
         }
-          if (mAmbientCustomImage != null && ambientImage) {
+        if (mAmbientCustomImage != null && ambientImage) {
             if (mPulsing) {
                 mAmbientCustomImage.setVisibility(View.VISIBLE);
                 mAmbientCustomImage.update();
