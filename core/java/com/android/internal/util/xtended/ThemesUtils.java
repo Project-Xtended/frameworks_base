@@ -101,6 +101,7 @@ public class ThemesUtils {
         "com.android.systemui.qstile.circleoutline", //12
         "com.android.systemui.qstile.neonlike", // 13
         "com.android.systemui.qstile.triangles", // 14
+	"com.android.systemui.qstile.oos", // 15
     };
 
     // Switches qs header style to user selected.
