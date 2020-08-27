@@ -4878,6 +4878,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_SHOW_NAVBAR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BRIGHTNESS_SLIDER_STYLE),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -4959,6 +4962,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setGestureNavOptions();
             stockQSHeaderStyle();
             updateQSHeaderStyle();
+            updateBrightnessSliderStyle();
             updateNavigationBar(getRegisterStatusBarResult(), false);
         }
     }
@@ -4996,6 +5000,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mMediaManager != null) {
             mMediaManager.setLockScreenMediaBlurLevel();
         }
+    }
+
+    public void updateBrightnessSliderStyle() {
+        int brighthnessSliderStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.BRIGHTNESS_SLIDER_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
     }
 
     private void updateKeyguardStatusSettings() {
