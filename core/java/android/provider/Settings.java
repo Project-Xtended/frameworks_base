@@ -7166,6 +7166,11 @@ public final class Settings {
         public static final String SHOW_CLIPBOARD_TOAST = "show_clipboard_toast";
 
         /**
+         * Weather to enable statusbar dual row
+         */
+        public static final String STATUSBAR_DUAL_ROW = "statusbar_dual_row";
+
+        /**
          * Height of the navigation handle.
          * @hide
          */
