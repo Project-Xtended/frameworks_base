@@ -246,7 +246,6 @@ import com.android.systemui.statusbar.ScrimView;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
 import com.android.systemui.statusbar.VibratorHelper;
-import com.android.systemui.statusbar.VisualizerView;
 import com.android.systemui.statusbar.notification.ActivityLaunchAnimator;
 import com.android.systemui.statusbar.notification.BypassHeadsUpNotifier;
 import com.android.systemui.statusbar.notification.DynamicPrivacyController;
@@ -620,9 +619,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected NotificationRemoteInputManager mRemoteInputManager;
     private boolean mWallpaperSupported;
 
-    private VisualizerView mVisualizerView;
-    // LS visualizer on Ambient Display
-    private boolean mAmbientVisualizer;
     private int mAlbumArtFilter;
 
     private int mChargingAnimation;
@@ -703,7 +699,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private FlashlightController mFlashlightController;
     private KeyguardUserSwitcher mKeyguardUserSwitcher;
     protected UserSwitcherController mUserSwitcherController;
-    private CurrentUserTracker mUserTracker;
     protected NetworkController mNetworkController;
     protected KeyguardMonitor mKeyguardMonitor;
     protected BatteryController mBatteryController;
@@ -1173,8 +1168,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         BackDropView backdrop = mStatusBarWindow.findViewById(R.id.backdrop);
         mMediaManager.setup(backdrop, backdrop.findViewById(R.id.backdrop_front),
                 backdrop.findViewById(R.id.backdrop_back), mScrimController, mLockscreenWallpaper);
-
-        mVisualizerView = (VisualizerView) mStatusBarWindow.findViewById(R.id.visualizerview);
 
         // Other icons
         mVolumeComponent = getComponent(VolumeComponent.class);
@@ -4241,7 +4234,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 || (mDozing && mDozeServiceHost.shouldAnimateScreenOff() && sleepingFromKeyguard);
 
         mNotificationPanel.setDozing(mDozing, animate, mWakeUpTouchLocation);
-        mVisualizerView.setDozing(mDozing);
         updateQsExpansionEnabled();
         Trace.endSection();
     }
@@ -4421,7 +4413,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         checkBarModes();
         updateScrimController();
         mPresenter.updateMediaMetaData(false, mState != StatusBarState.KEYGUARD);
-        mVisualizerView.setStatusBarState(newState);
         updateKeyguardState();
         Trace.endSection();
     }
@@ -4457,11 +4448,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 BiometricUnlockController.MODE_WAKE_AND_UNLOCK) {
             dozing = false;
         }
-        mStatusBarStateController.setIsDozing(dozing);
 
-        if (mAmbientVisualizer && mDozing) {
-            mVisualizerView.setVisible(true);
-        }
+        mStatusBarStateController.setIsDozing(dozing);
     }
 
     private void updateKeyguardState() {
@@ -4715,7 +4703,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         @Override
         public void onScreenTurnedOn() {
             mScrimController.onScreenTurnedOn();
-            mVisualizerView.setVisible(true);
         }
 
         @Override
@@ -4723,7 +4710,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateDozing();
             mFalsingManager.onScreenOff();
             mScrimController.onScreenTurnedOff();
-            mVisualizerView.setVisible(false);
             updateIsKeyguard();
         }
     };
@@ -4777,9 +4763,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.AMBIENT_VISUALIZER_ENABLED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.GAMING_MODE_ACTIVE),
@@ -4877,6 +4860,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FORCE_SHOW_NAVBAR),
                     false, this, UserHandle.USER_ALL);
+            update();
         }
 
         @Override
@@ -4887,9 +4871,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 	    } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.FP_SWIPE_TO_DISMISS_NOTIFICATIONS))) {
                 setFpToDismissNotifications();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.AMBIENT_VISUALIZER_ENABLED))) {
-                setAmbientVis();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_CHARGING_ANIMATION))) {
                 updateChargingAnimation();
@@ -4948,7 +4929,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             setStatusDoubleTapToSleep();
             setScreenBrightnessMode();
             setFpToDismissNotifications();
-            setAmbientVis();
             setArtFilter();
             setGamingMode();
             updateChargingAnimation();
@@ -4985,12 +4965,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setHeadsUpBlacklist() {
         if (mPresenter != null)
             mPresenter.setHeadsUpBlacklist();
-    }
-
-    private void setAmbientVis() {
-        mAmbientVisualizer = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.AMBIENT_VISUALIZER_ENABLED, 0,
-                UserHandle.USER_CURRENT) == 1;
     }
 
     private void setArtFilter() {
@@ -5061,8 +5035,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-=======
->>>>>>> e7a669f2ad67... Navbar: Remove support for runtime toggle
     private void setGestureNavOptions() {
         if (getNavigationBarView() != null) {
             getNavigationBarView().setLongSwipeOptions();
@@ -5246,10 +5218,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             mScrimController.transitionTo(ScrimState.UNLOCKED, mUnlockScrimCallback);
         }
         Trace.endSection();
-    }
-
-    public VisualizerView getVisualizer() {
-        return mVisualizerView;
     }
 
     public boolean isKeyguardShowing() {
