@@ -6457,6 +6457,26 @@ public final class Settings {
 	public static final String STATUS_BAR_LOGO_COLOR = "status_bar_logo_color";
 
         /**
+	 * @hide
+         * 0 = off
+	 * 1 = left
+	 * 2 = right
+         */
+        public static final String QS_PANEL_LOGO = "qs_panel_logo";
+
+        /**
+	 * @hide
+	 * Qs Panel logo Style
+	 */
+        public static final String QS_PANEL_LOGO_STYLE = "qs_panel_logo_style";
+
+	/**
+	 * @hide
+	 * Qs Panel logo Color
+         */
+	public static final String QS_PANEL_LOGO_COLOR = "qs_panel_logo_color";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
