@@ -1545,6 +1545,30 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case 33:
                 logo = mContext.getDrawable(R.drawable.ic_guitar_electric);
                 break;
+            case 34:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon);
+                break;
+            case 35:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon_neutral);
+                break;
+            case 36:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon_happy);
+                break;
+            case 37:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon_sad);
+                break;
+            case 38:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon_tongue);
+                break;
+            case 39:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon_dead);
+                break;
+            case 40:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon_cool);
+                break;
+            case 41:
+                logo = mContext.getDrawable(R.drawable.ic_emoticon_devil);
+                break;
             case 0:
             default: // Default (Xtended Main)
                 logo = mContext.getDrawable(R.drawable.status_bar_logo);
