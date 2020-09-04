@@ -34,6 +34,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.AlarmClock;
@@ -92,6 +93,12 @@ import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
+
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,6 +212,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private int mSysCPUTempMultiplier;
     private int mSysBatTempMultiplier;
 
+    // QS Logo
+    private ImageView mXtendedLogo;
+    private ImageView mXtendedLogoRight;
+    private int mLogoStyle;
+    private int mShowLogo;
+    private int mLogoColor;
+
     protected ContentResolver mContentResolver;
 
     private class SettingsObserver extends ContentObserver {
@@ -235,6 +249,15 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_BATTERY_LOCATION), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                   .getUriFor(Settings.System.QS_PANEL_LOGO), false,
+                   this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                   .getUriFor(Settings.System.QS_PANEL_LOGO_STYLE), false,
+                   this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                   .getUriFor(Settings.System.QS_PANEL_LOGO_COLOR), false,
+		    this, UserHandle.USER_ALL);
             }
 
         @Override
@@ -338,6 +361,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemInfoLayout = findViewById(R.id.system_info_layout);
         mSystemInfoIcon = findViewById(R.id.system_info_icon);
         mSystemInfoText = findViewById(R.id.system_info_text);
+        mXtendedLogo = findViewById(R.id.qs_panel_logo);
+	mXtendedLogoRight = findViewById(R.id.qs_panel_logo_right);
 
         updateResources();
         addQuickQSPanel();
@@ -675,6 +700,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updateResources();
         addQuickQSPanel();
         updateDataUsageView();
+        updateLogoSettings();
      }
 
      private void updateQSBatteryMode() {
@@ -1386,6 +1412,161 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case 100:
                 mHeaderImageHeight = mContext.getResources().getDimensionPixelSize(R.dimen.lock_clock_font_size_100);
                 break;
+        }
+    }
+
+    public void updateLogoSettings() {
+        Drawable logo = null;
+
+        if (mContext == null) {
+            return;
+        }
+        mShowLogo = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_PANEL_LOGO, 0,
+                UserHandle.USER_CURRENT);
+        mLogoColor = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_PANEL_LOGO_COLOR, 0xffff8800,
+                UserHandle.USER_CURRENT);
+        mLogoStyle = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_PANEL_LOGO_STYLE, 0,
+                UserHandle.USER_CURRENT);
+
+        switch(mLogoStyle) {
+                // Xtnd Old
+            case 1:
+                logo = mContext.getDrawable(R.drawable.ic_xtnd_logo);
+                break;
+                // XTND Short
+            case 2:
+                logo = mContext.getDrawable(R.drawable.ic_xtnd_short);
+                break;
+                // GZR Skull
+            case 3:
+                logo = mContext.getResources().getDrawable(R.drawable.status_bar_gzr_skull_logo);
+                break;
+                // GZR Circle
+            case 4:
+                logo = mContext.getResources().getDrawable(R.drawable.status_bar_gzr_circle_logo);
+                break;
+                // Batman
+            case 5:
+                logo = mContext.getDrawable(R.drawable.ic_batman_logo);
+                break;
+                // Deadpool
+            case 6:
+                logo = mContext.getDrawable(R.drawable.ic_deadpool_logo);
+                break;
+                // Superman
+            case 7:
+                logo = mContext.getDrawable(R.drawable.ic_superman_logo);
+                break;
+                // Ironman
+            case 8:
+                logo = mContext.getDrawable(R.drawable.ic_ironman_logo);
+                break;
+                // Spiderman
+            case 9:
+                logo = mContext.getDrawable(R.drawable.ic_spiderman_logo);
+                break;
+                // Decepticons
+            case 10:
+                logo = mContext.getDrawable(R.drawable.ic_decpeticons_logo);
+                break;
+                // Minions
+            case 11:
+                logo = mContext.getDrawable(R.drawable.ic_minions_logo);
+                break;
+            case 12:
+                logo = mContext.getDrawable(R.drawable.ic_android_logo);
+                break;
+                // Shit
+            case 13:
+                logo = mContext.getDrawable(R.drawable.ic_apple_logo);
+                break;
+                // Shitty Logo
+            case 14:
+                logo = mContext.getDrawable(R.drawable.ic_ios_logo);
+                break;
+                // Others
+            case 15:
+                logo = mContext.getDrawable(R.drawable.ic_blackberry);
+                break;
+            case 16:
+                logo = mContext.getDrawable(R.drawable.ic_cake);
+                break;
+            case 17:
+                logo = mContext.getDrawable(R.drawable.ic_blogger);
+                break;
+            case 18:
+                logo = mContext.getDrawable(R.drawable.ic_biohazard);
+                break;
+            case 19:
+                logo = mContext.getDrawable(R.drawable.ic_linux);
+                break;
+            case 20:
+                logo = mContext.getDrawable(R.drawable.ic_yin_yang);
+                break;
+            case 21:
+                logo = mContext.getDrawable(R.drawable.ic_windows);
+                break;
+            case 22:
+                logo = mContext.getDrawable(R.drawable.ic_robot);
+                break;
+            case 23:
+                logo = mContext.getDrawable(R.drawable.ic_ninja);
+                break;
+            case 24:
+                logo = mContext.getDrawable(R.drawable.ic_heart);
+                break;
+            case 25:
+                logo = mContext.getDrawable(R.drawable.ic_ghost);
+                break;
+            case 26:
+                logo = mContext.getDrawable(R.drawable.ic_google);
+                break;
+            case 27:
+                logo = mContext.getDrawable(R.drawable.ic_human_male);
+                break;
+            case 28:
+                logo = mContext.getDrawable(R.drawable.ic_human_female);
+                break;
+            case 29:
+                logo = mContext.getDrawable(R.drawable.ic_human_male_female);
+                break;
+            case 30:
+                logo = mContext.getDrawable(R.drawable.ic_gender_male);
+                break;
+            case 31:
+                logo = mContext.getDrawable(R.drawable.ic_gender_female);
+                break;
+            case 32:
+                logo = mContext.getDrawable(R.drawable.ic_gender_male_female);
+                break;
+            case 33:
+                logo = mContext.getDrawable(R.drawable.ic_guitar_electric);
+                break;
+            case 0:
+            default: // Default (Xtended Main)
+                logo = mContext.getDrawable(R.drawable.status_bar_logo);
+                break;
+        }
+        if (mShowLogo == 1) {
+	    mXtendedLogoRight.setImageDrawable(null);
+            mXtendedLogoRight.setVisibility(View.GONE);
+            mXtendedLogo.setVisibility(View.VISIBLE);
+            mXtendedLogo.setImageDrawable(logo);
+            mXtendedLogo.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
+	} else if (mShowLogo == 2) {
+            mXtendedLogo.setImageDrawable(null);
+            mXtendedLogo.setVisibility(View.GONE);
+            mXtendedLogoRight.setVisibility(View.VISIBLE);
+	    mXtendedLogoRight.setImageDrawable(logo);
+	    mXtendedLogoRight.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
+	} else {
+            mXtendedLogo.setImageDrawable(null);
+            mXtendedLogo.setVisibility(View.GONE);
+            mXtendedLogoRight.setImageDrawable(null);
+            mXtendedLogoRight.setVisibility(View.GONE);
         }
     }
 }

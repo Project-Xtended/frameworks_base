@@ -7089,6 +7089,26 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+	 * @hide
+         * 0 = off
+	 * 1 = left
+	 * 2 = right
+         */
+        public static final String QS_PANEL_LOGO = "qs_panel_logo";
+
+        /**
+	 * @hide
+	 * Qs Panel logo Style
+	 */
+        public static final String QS_PANEL_LOGO_STYLE = "qs_panel_logo_style";
+
+	/**
+	 * @hide
+	 * Qs Panel logo Color
+         */
+	public static final String QS_PANEL_LOGO_COLOR = "qs_panel_logo_color";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7505,6 +7525,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
             PRIVATE_SETTINGS.add(NAVIGATION_HANDLE_HEIGHT);
             PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
+            PRIVATE_SETTINGS.add(QS_PANEL_LOGO);
         }
 
         /**
