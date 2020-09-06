@@ -6660,6 +6660,12 @@ public final class Settings {
         public static final String LOCKSCREEN_TIMEOUT = "lockscreen_timeout";
 
         /**
+         * Show app volume rows in volume panel
+         * @hide
+         */
+        public static final String SHOW_APP_VOLUME = "show_app_volume";
+
+        /**
          * @hide
          */
         public static final String WFD_LEGACY_VIDEO_MODE = "wfd_legacy_video_mode";
