@@ -23,7 +23,6 @@
     <ImageView
         android:layout_width="14dp"
         android:layout_height="14dp"
-        android:layout_gravity="center|top"
         android:src="@*android:drawable/ic_qs_dnd"
         android:tint="?android:attr/textColorTertiary"/>
 </FrameLayout>

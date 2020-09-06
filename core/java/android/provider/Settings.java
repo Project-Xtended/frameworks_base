@@ -7035,18 +7035,6 @@ public final class Settings {
         public static final String AMBIENT_CUSTOM_IMAGE = "ambient_custom_image";
 
         /**
-        * VolumePanel Themes
-        * @hide
-        */
-        public static final String AUDIO_PANEL_VIEW_THEME = "audio_panel_view_theme";
-
-        /**
-        * Music Card in VolumePanel
-        * @hide
-        */
-        public static final String MUSIC_VOLUME_PANEL_DIALOG = "music_volume_panel_dialog";
-
-        /**
          * Toggle for clipboard access toast.
          * @hide
          */
