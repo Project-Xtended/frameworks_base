@@ -27,13 +27,14 @@
     android:layout_gravity="center_horizontal"
     android:clipToPadding="false"
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     android:layout_centerHorizontal="true">
     <TextView
               android:id="@+id/title"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:paddingStart="44dp"
-              android:paddingEnd="44dp"
+              android:paddingEnd="44dp" 
               android:visibility="gone"
               android:textColor="?attr/wallpaperTextColor"
               android:textSize="20sp"
@@ -49,16 +50,28 @@
               android:textColor="?attr/wallpaperTextColor"
               android:theme="@style/TextAppearance.Keyguard"
     />
+    <TextView
+        android:id="@+id/change_clock_face"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_above="@+id/row_maincenter"
+        android:layout_marginBottom="44dp"
+        android:layout_marginTop="-44dp"
+        android:text="@string/change_clock_face"/>
+
     <RelativeLayout
         android:id="@+id/row_maincenter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
-            <view class="com.android.keyguard.KeyguardSliceView$Row"
-                      android:id="@+id/row"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-            />
+        <view class="com.android.keyguard.KeyguardSliceView$Row"
+              android:id="@+id/row"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+         />
     </RelativeLayout>
+
 </com.android.keyguard.KeyguardSliceView>

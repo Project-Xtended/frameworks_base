@@ -307,4 +307,7 @@
     <string name="quick_settings_smart_pixels">Smart pixels</string>
     <string name="quick_settings_smart_pixels_on_power_save">Auto-enabled smart pixels</string>
 
+   <!-- Change clockface -->
+    <string name="change_clock_face">Swipe to change the clock face</string>
+
 </resources>
