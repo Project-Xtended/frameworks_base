@@ -277,6 +277,7 @@ import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.volume.VolumeComponent;
+import com.android.systemui.XtendedIdleManager;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -464,6 +465,9 @@ public class StatusBar extends SystemUI implements DemoMode,
     // expanded notifications
     // the sliding/resizing panel within the notification window
     protected NotificationPanelViewController mNotificationPanelViewController;
+
+    // Xtended Idle
+    private boolean isIdleManagerIstantiated = false;
 
     // settings
     private QSPanel mQSPanel;
@@ -4891,6 +4895,18 @@ public class StatusBar extends SystemUI implements DemoMode,
             mBypassHeadsUpNotifier.setFullyAwake(false);
             mKeyguardBypassController.onStartedGoingToSleep();
             DejankUtils.stopDetectingBlockingIpcs(tag);
+            if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                                              Settings.System.XTENDED_IDLE_MANAGER, 1,
+                                              mLockscreenUserManager.getCurrentUserId()) == 1) {
+                if (!isIdleManagerIstantiated) {
+                    XtendedIdleManager.initManager(mContext);
+                    isIdleManagerIstantiated = true;
+                    XtendedIdleManager.executeManager();
+                } else {
+                    XtendedIdleManager.executeManager();
+                }
+            }
+
         }
 
         @Override
@@ -4912,6 +4928,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateNotificationPanelTouchState();
             mPulseExpansionHandler.onStartedWakingUp();
             DejankUtils.stopDetectingBlockingIpcs(tag);
+            if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                                              Settings.System.XTENDED_IDLE_MANAGER, 1,
+                                              mLockscreenUserManager.getCurrentUserId()) == 1) {
+                XtendedIdleManager.haltManager();
+            }
+
         }
 
         @Override
