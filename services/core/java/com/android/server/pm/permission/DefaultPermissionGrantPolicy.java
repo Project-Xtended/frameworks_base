@@ -702,7 +702,7 @@ public final class DefaultPermissionGrantPolicy {
 
         // Google prebuilt WP picker
         String wpPickerPackageName = "com.android.wallpaper.livepicker";
-        grantPermissionsToSystemPackage(wpPickerPackageName, userId, WALLPAPER_PERMISSIONS);
+        grantPermissionsToSystemPackage(pm, wpPickerPackageName, userId, WALLPAPER_PERMISSIONS);
 
         // Voice interaction
         if (voiceInteractPackageNames != null) {
@@ -850,77 +850,77 @@ public final class DefaultPermissionGrantPolicy {
                     MICROPHONE_PERMISSIONS);
         }
         // Google Account
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.gsf.login", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.gsf.login", userId, CONTACTS_PERMISSIONS,
                 PHONE_PERMISSIONS);
 
         // Google Play Services
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.gms", userId, SENSORS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.gms", userId, SENSORS_PERMISSIONS,
                 CALENDAR_PERMISSIONS, CAMERA_PERMISSIONS, CONTACTS_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS,
                 MICROPHONE_PERMISSIONS, PHONE_PERMISSIONS, SMS_PERMISSIONS, STORAGE_PERMISSIONS);
 
         // Persistent Google Play Services
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.gms.persistent", userId, SENSORS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.gms.persistent", userId, SENSORS_PERMISSIONS,
                 CALENDAR_PERMISSIONS, CAMERA_PERMISSIONS, CONTACTS_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS,
                 MICROPHONE_PERMISSIONS, PHONE_PERMISSIONS, SMS_PERMISSIONS, STORAGE_PERMISSIONS);
 
         // Google Connectivity Services
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.apps.gcs", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.apps.gcs", userId, CONTACTS_PERMISSIONS,
                 ALWAYS_LOCATION_PERMISSIONS);
 
         // Google Contacts Sync
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.syncadapters.contacts", userId,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.syncadapters.contacts", userId,
                 CONTACTS_PERMISSIONS);
 
         // Google Backup Transport
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.backuptransport", userId, CONTACTS_PERMISSIONS);
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.backuptransport", userId, CONTACTS_PERMISSIONS);
 
         // Google Play Framework
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.gsf", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.gsf", userId, CONTACTS_PERMISSIONS,
                 PHONE_PERMISSIONS);
 
         // Google Setup Wizard
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.setupwizard", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.setupwizard", userId, CONTACTS_PERMISSIONS,
                 PHONE_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS, CAMERA_PERMISSIONS);
 
         // Google Play Store
-        grantSystemFixedPermissionsToSystemPackage("com.android.vending", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.android.vending", userId, CONTACTS_PERMISSIONS,
                 PHONE_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS, SMS_PERMISSIONS, STORAGE_PERMISSIONS);
 
         // Project Fi
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.apps.tycho", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.apps.tycho", userId, CONTACTS_PERMISSIONS,
                 PHONE_PERMISSIONS, MICROPHONE_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS, SMS_PERMISSIONS);
 
         // ContactsProvider2
-        grantSystemFixedPermissionsToSystemPackage(
+        grantSystemFixedPermissionsToSystemPackage(pm, 
                 getDefaultProviderAuthorityPackage("com.android.providers.contacts.ContactsProvider2", userId), userId,
                 CONTACTS_PERMISSIONS, STORAGE_PERMISSIONS);
 
         // Google Calendar
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.calendar", userId, CALENDAR_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.calendar", userId, CALENDAR_PERMISSIONS,
                 CONTACTS_PERMISSIONS, PHONE_PERMISSIONS);
 
         // Chromium Sign-in
-        grantSystemFixedPermissionsToSystemPackage("org.chromium.chrome", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "org.chromium.chrome", userId, CONTACTS_PERMISSIONS,
                 STORAGE_PERMISSIONS);
 
         // Google dialer
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.dialer", userId, PHONE_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.dialer", userId, PHONE_PERMISSIONS,
                 CONTACTS_PERMISSIONS, SMS_PERMISSIONS);
 
         // Android Setup
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.setupwizard", userId, CONTACTS_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.setupwizard", userId, CONTACTS_PERMISSIONS,
                 STORAGE_PERMISSIONS, SMS_PERMISSIONS);
 
         // Android Setup
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.apps.restore", userId, PHONE_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.apps.restore", userId, PHONE_PERMISSIONS,
                 CONTACTS_PERMISSIONS, SMS_PERMISSIONS);
 
         // Carrier Setup
-        grantSystemFixedPermissionsToSystemPackage("com.google.android.carriersetup", userId, PHONE_PERMISSIONS,
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.google.android.carriersetup", userId, PHONE_PERMISSIONS,
                 SMS_PERMISSIONS);
 
         // ThemePicker
-        grantSystemFixedPermissionsToSystemPackage("com.android.wallpaper", userId, STORAGE_PERMISSIONS);
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.android.wallpaper", userId, STORAGE_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
