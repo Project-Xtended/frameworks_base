@@ -190,4 +190,7 @@
   
   <!-- Whether to send camera status intent -->
   <java-symbol type="bool" name="config_sendCameraStatusIntent" />
+  
+  <!-- Vendor signatures -->
+  <java-symbol type="array" name="config_vendorPlatformSignatures" />
 </resources>
