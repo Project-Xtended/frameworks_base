@@ -120,6 +120,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     private int mTickerEnabled;
     private View mTickerViewFromStub;
+    private View mTickerViewContainer;
 
     private class SettingsObserver extends ContentObserver {
        SettingsObserver(Handler handler) {
@@ -315,10 +316,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
                 hideSystemIconArea(animate);
                 hideOperatorName(animate);
                 hideSbWeather(animate);
+                hideTicker(animate);
             } else {
                 showSystemIconArea(animate);
                 showOperatorName(animate);
                 showSbWeather(animate);
+                showTicker(animate);
             }
         }
         if ((diff1 & DISABLE_NOTIFICATION_ICONS) != 0) {
@@ -416,6 +419,19 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateShow(mClockView, animate);
     }
 */
+
+    public void showTicker(boolean animate) {
+        if (mTickerViewContainer != null) {
+            animateShow(mTickerViewContainer, animate);
+        }
+    }
+
+    public void hideTicker(boolean animate) {
+        if (mTickerViewContainer != null) {
+            animateHide(mTickerViewContainer, animate, true);
+        }
+    }
+
     /**
      * If panel is expanded/expanding it usually means QS shade is opening, so
      * don't set the clock GONE otherwise it'll mess up the animation.
@@ -568,6 +584,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     }
 
     private void initTickerView() {
+        mTickerViewContainer = mStatusBar.findViewById(R.id.ticker_container);
         if (mTickerEnabled != 0) {
             View tickerStub = mStatusBar.findViewById(R.id.ticker_stub);
             if (mTickerViewFromStub == null && tickerStub != null) {
