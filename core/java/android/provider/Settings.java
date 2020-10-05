@@ -6025,6 +6025,9 @@ public final class Settings {
          */
         public static final String NOTIFICATION_PULSE_COLOR_MODE = "ambient_notification_color_mode";
 
+        /** @hide */
+        public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
+
         /**
          * Pulse Ambient lights color
          * @hide
@@ -6682,6 +6685,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SYSTEMUI_PLUGIN_VOLUME);
             PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
             PRIVATE_SETTINGS.add(STATUSBAR_ICONS_STYLE);
+            PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
         }
 
         /**
