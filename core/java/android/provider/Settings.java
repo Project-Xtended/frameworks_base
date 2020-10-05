@@ -5221,6 +5221,10 @@ public final class Settings {
         @Readable
         public static final String EGG_MODE = "egg_mode";
 
+        /** <===================> Add Below This Only <==================> */
+        /**      The Project-Xtended Specific Settings Additions           */
+        /** <===================> Add Below This Only <==================> */
+
         /**
          * Setting to determine whether or not to show the battery percentage in the status bar.
          *    0 - Don't show percentage
@@ -6702,6 +6706,9 @@ public final class Settings {
          */
         public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
 
+        /** @hide */
+        public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -6843,6 +6850,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
             PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
             PRIVATE_SETTINGS.add(OMNI_FOOTER_TEXT_SHOW);
+            PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
         }
 
         /**
