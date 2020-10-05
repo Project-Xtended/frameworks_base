@@ -1603,6 +1603,24 @@ public class ComputerEngine implements Computer {
         return result;
     }
 
+    private PackageInfo mayFakeSignature(AndroidPackage p, PackageInfo pi,
+            Set<String> permissions) {
+        try {
+            if (permissions.contains("android.permission.FAKE_PACKAGE_SIGNATURE")
+                    && p.getTargetSdkVersion() > Build.VERSION_CODES.LOLLIPOP_MR1
+                    && p.getMetaData() != null) {
+                String sig = p.getMetaData().getString("fake-signature");
+                if (sig != null) {
+                    pi.signatures = new Signature[] {new Signature(sig)};
+               }
+            }
+        } catch (Throwable t) {
+            // We should never die because of any failures, this is system code!
+            Log.w("PackageManagerService.FAKE_PACKAGE_SIGNATURE", t);
+        }
+        return pi;
+    }
+
     public final PackageInfo generatePackageInfo(PackageStateInternal ps,
             @PackageManager.PackageInfoFlagsBits long flags, int userId) {
         if (!mUserManager.exists(userId)) return null;
@@ -1636,9 +1654,9 @@ public class ComputerEngine implements Computer {
                     || ArrayUtils.isEmpty(p.getRequestedPermissions())) ? Collections.emptySet()
                     : mPermissionManager.getGrantedPermissions(ps.getPackageName(), userId);
 
-            PackageInfo packageInfo = PackageInfoUtils.generate(p, gids, flags,
+            PackageInfo packageInfo = mayFakeSignature(p, PackageInfoUtils.generate(p, gids, flags,
                     state.getFirstInstallTime(), ps.getLastUpdateTime(), permissions, state, userId,
-                    ps);
+                    ps), permissions);
 
             if (packageInfo == null) {
                 return null;
