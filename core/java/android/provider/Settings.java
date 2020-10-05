@@ -11778,9 +11778,20 @@ public final class Settings {
                 "ambient_context_package_name_key";
 
         /**
-         * Current provider of the intent extra key for the event code int array while
-         * requesting ambient context consent.
-         * Default value in @string/config_ambientContextEventArrayExtraKey.
+         * Height to be allowed for back gesture
+         * @hide
+         */
+        public static final String BACK_GESTURE_HEIGHT_LEFT =
+                "back_gesture_height_left";
+        /**
+         * @hide
+         */
+        public static final String BACK_GESTURE_HEIGHT_RIGHT =
+                 "back_gesture_height_right";
+
+        /**
+         * Current provider of proximity-based sharing services.
+         * Default value in @string/config_defaultNearbySharingComponent.
          * No VALIDATOR as this setting will not be backed up.
          * @hide
          */

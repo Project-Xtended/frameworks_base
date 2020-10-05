@@ -250,6 +250,9 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
     private int mRightInset;
     private int mSysUiFlags;
 
+    private float mEdgeHeightLeft;
+    private float mEdgeHeightRight;
+
     // For Tf-Lite model.
     private BackGestureTfClassifierProvider mBackGestureTfClassifierProvider;
     private Map<String, Integer> mVocab;
@@ -410,6 +413,9 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
         mEdgeWidthRight = mGestureNavigationSettingsObserver.getRightSensitivity(res);
         mIsBackGestureAllowed =
                 !mGestureNavigationSettingsObserver.areNavigationButtonForcedVisible();
+
+        mEdgeHeightLeft = mDisplaySize.y / mGestureNavigationSettingsObserver.getLeftHeight();
+        mEdgeHeightRight = mDisplaySize.y / mGestureNavigationSettingsObserver.getRightHeight();
 
         final DisplayMetrics dm = res.getDisplayMetrics();
         final float defaultGestureHeight = res.getDimension(
@@ -743,6 +749,15 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
         if (y >= (mDisplaySize.y - mBottomGestureHeight)) {
             return false;
         }
+
+        // Disallow if gesture height is mmore than allowed
+        if ((mIsOnLeftEdge && y < (mDisplaySize.y
+                 - mBottomGestureHeight - (int) mEdgeHeightLeft)) ||
+                 (!mIsOnLeftEdge && y < (mDisplaySize.y
+                 - mBottomGestureHeight - (int) mEdgeHeightRight))) {
+            return false;
+        }
+
         // If the point is way too far (twice the margin), it is
         // not interesting to us for logging purposes, nor we
         // should process it.  Simply return false and keep
