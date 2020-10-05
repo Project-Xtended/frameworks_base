@@ -5532,6 +5532,10 @@ public final class Settings {
         @Readable
         public static final String EGG_MODE = "egg_mode";
 
+        /** <===================> Add Below This Only <==================> */
+        /**      The Project-Xtended Specific Settings Additions           */
+        /** <===================> Add Below This Only <==================> */
+
         /**
          * Setting to determine whether or not to show the battery percentage in the status bar.
          *    0 - Don't show percentage
@@ -5565,24 +5569,13 @@ public final class Settings {
          */
         @Readable
         public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
-        
+
         /**
          * Whether auto brightness is applied one shot when screen is turned on.
          * Default 0
          * @hide
          */
         public static final String AUTO_BRIGHTNESS_ONE_SHOT = "auto_brightness_one_shot";
-
-        /**
-         * IMPORTANT: If you add a new public settings you also have to add it to
-         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
-         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
-         * the setting value. See an example above.
-         */
-
-        /** ================================================================================================================================================================= */
-        /** ==================================================================== Init Xtended Setting Strings ==================================================================== */
-        /** ================================================================================================================================================================= */
 
         /**
          * Whether user can swap the order of the Alert Slider.
@@ -6790,6 +6783,9 @@ public final class Settings {
          */
         public static final String RIGHT_VERTICAL_BACK_SWIPE_APP_ACTIVITY_ACTION = "right_vertical_back_swipe_app_activity_action";
 
+        /** @hide */
+        public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -6940,6 +6936,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_FOOTER_TEXT_SHOW);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
+            PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
         }
 
         /**
