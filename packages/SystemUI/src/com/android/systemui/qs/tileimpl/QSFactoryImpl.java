@@ -52,11 +52,9 @@ import com.android.systemui.qs.tiles.ScreenRecordTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.ThemeTile;
-import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
-import com.android.systemui.util.leak.GarbageMonitor;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -86,8 +84,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<DataSaverTile> mDataSaverTileProvider;
     private final Provider<NightDisplayTile> mNightDisplayTileProvider;
     private final Provider<NfcTile> mNfcTileProvider;
-    private final Provider<GarbageMonitor.MemoryTile> mMemoryTileProvider;
-    private final Provider<UiModeNightTile> mUiModeNightTileProvider;
     private final Provider<ScreenRecordTile> mScreenRecordTileProvider;
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<SyncTile> mSyncTileProvider;
@@ -122,8 +118,6 @@ public class QSFactoryImpl implements QSFactory {
             Provider<DataSaverTile> dataSaverTileProvider,
             Provider<NightDisplayTile> nightDisplayTileProvider,
             Provider<NfcTile> nfcTileProvider,
-            Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
-            Provider<UiModeNightTile> uiModeNightTileProvider,
             Provider<ScreenRecordTile> screenRecordTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<SyncTile> syncTileProvider,
@@ -154,8 +148,6 @@ public class QSFactoryImpl implements QSFactory {
         mDataSaverTileProvider = dataSaverTileProvider;
         mNightDisplayTileProvider = nightDisplayTileProvider;
         mNfcTileProvider = nfcTileProvider;
-        mMemoryTileProvider = memoryTileProvider;
-        mUiModeNightTileProvider = uiModeNightTileProvider;
         mScreenRecordTileProvider = screenRecordTileProvider;
         mHeadsUpTileProvider = headsUpTileProvider;
         mSyncTileProvider = syncTileProvider;
@@ -215,8 +207,6 @@ public class QSFactoryImpl implements QSFactory {
                 return mNightDisplayTileProvider.get();
             case "nfc":
                 return mNfcTileProvider.get();
-            case "dark":
-                return mUiModeNightTileProvider.get();
             case "screenrecord":
                 return mScreenRecordTileProvider.get();
             case "heads_up":
