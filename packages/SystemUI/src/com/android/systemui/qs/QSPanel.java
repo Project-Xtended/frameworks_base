@@ -303,6 +303,10 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
         }
     }
 
+    public boolean getMediaVisible() {
+        return mMediaVisible;
+    }
+
     protected void addSecurityFooter() {
         mSecurityFooter = new QSSecurityFooter(this, mContext);
         mSecurityFooter.updateSettings();
@@ -670,7 +674,7 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
         return switchTileLayout(false /* force */);
     }
 
-    private boolean switchTileLayout(boolean force) {
+    public boolean switchTileLayout(boolean force) {
         /** Whether or not the QuickQSPanel currently contains a media player. */
         boolean horizontal = shouldUseHorizontalLayout();
         if (mDivider != null) {
