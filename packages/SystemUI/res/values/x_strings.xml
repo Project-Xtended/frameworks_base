@@ -240,4 +240,7 @@
     <string name="lockscreen_hidden">None</string>
     <string name="custom_hint">Swipe from icon to launch</string>
 
+    <!-- QS Header data usage info -->
+    <string name="usage_data">used</string>
+
 </resources>
