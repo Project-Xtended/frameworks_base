@@ -72,4 +72,7 @@
     <!-- Global Actions pref list -->
     <java-symbol type="array" name="custom_config_globalActionsList" />
 
+  <!-- Ambient notification light color -->
+  <java-symbol type="integer" name="config_ambientNotificationDefaultColor" />
+
 </resources>
