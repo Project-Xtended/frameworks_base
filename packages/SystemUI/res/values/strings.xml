@@ -3035,4 +3035,11 @@
     <string name="to_switch_networks_disconnect_ethernet">To switch networks, disconnect ethernet</string>
     <!-- Message to describe "Wi-Fi scan always available feature" when Wi-Fi is off and Wi-Fi scanning is on. [CHAR LIMIT=NONE] -->
     <string name="wifi_scan_notify_message">To improve device experience, apps and services can still scan for Wi\u2011Fi networks at any time, even when Wi\u2011Fi is off. You can change this in Wi\u2011Fi scanning settings. <annotation id="link">Change</annotation></string>
+    
+    <!-- Advanced Reboot -->
+    <string name="global_action_restart_advanced">Advanced</string>
+    <string name="global_action_restart_recovery">Recovery</string>
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <string name="global_action_restart_ui">SystemUI</string>    
+    
 </resources>
