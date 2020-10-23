@@ -170,12 +170,6 @@
     <string name="status_bar_vpn">VPN</string>
     <string name="status_bar_roaming">Roaming</string>
 
-    <!-- SystemUI Tuner -->
-    <string name="lockscreen_default">Default</string>
-    <string name="lockscreen_hidden">None</string>
-    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
-    <string name="custom_hint">Swipe from icon to launch</string>
-
     <!-- NavBar Tuner -->
     <string name="preview">Preview</string>
     <string name="keycode">Keycode</string>
