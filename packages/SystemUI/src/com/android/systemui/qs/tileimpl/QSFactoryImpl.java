@@ -60,6 +60,7 @@ import com.android.systemui.qs.tiles.ScreenRecordTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.SleepModeTile;
 import com.android.systemui.qs.tiles.SleepScreenTile;
+import com.android.systemui.qs.tiles.SmartChargeTile;
 import com.android.systemui.qs.tiles.SmartPixelsTile;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.SoundSearchTile;
@@ -131,6 +132,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SmartPixelsTile> mSmartPixelsTileProvider;
     private final Provider<LteTile> mLteTileProvider;
     private final Provider<SleepModeTile> mSleepModeTileProvider;
+    private final Provider<SmartChargeTile> mSmartChargeTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -181,7 +183,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<WeatherTile> weatherTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider,
             Provider<LteTile> lteTileProvider,
-            Provider<SleepModeTile> sleepModeTileProvider) {
+            Provider<SleepModeTile> sleepModeTileProvider,
+            Provider<SmartChargeTile> smartChargeTileProvider) {
 
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
@@ -230,6 +233,7 @@ public class QSFactoryImpl implements QSFactory {
         mSmartPixelsTileProvider = smartPixelsTileProvider;
         mLteTileProvider = lteTileProvider;
         mSleepModeTileProvider = sleepModeTileProvider;
+        mSmartChargeTileProvider = smartChargeTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -334,6 +338,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mLteTileProvider.get();
             case "sleep_mode":
                 return mSleepModeTileProvider.get();
+            case "smart_charge":
+                return mSmartChargeTileProvider.get();
         }
 
         // Custom tiles
