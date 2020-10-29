@@ -81,6 +81,8 @@ import java.util.List;
  */
 public class QSContainerImpl extends FrameLayout {
 
+    public static final String QS_SHOW_DRAG_HANDLE = "qs_show_drag_handle";
+
     private final Point mSizePoint = new Point();
     private static final FloatPropertyCompat<QSContainerImpl> BACKGROUND_BOTTOM =
             new FloatPropertyCompat<QSContainerImpl>("backgroundBottom") {
@@ -127,6 +129,7 @@ public class QSContainerImpl extends FrameLayout {
     private Drawable mSbHeaderBackGround;
     private boolean mQsBackgroundBlur;
     private boolean mQsBackGroundType;
+    private boolean mQsDragHandle;
 
     private Context mContext;
 
@@ -227,6 +230,9 @@ public class QSContainerImpl extends FrameLayout {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_NEW_BG), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SHOW_DRAG_HANDLE), false, this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -253,6 +259,9 @@ public class QSContainerImpl extends FrameLayout {
                     Settings.System.QS_NEW_BG_ENABLED, 0, UserHandle.USER_CURRENT);
         mQsHeaderBgNew = Settings.System.getIntForUser(getContext().getContentResolver(),
                     Settings.System.QS_HEADER_NEW_BG, 0, UserHandle.USER_CURRENT);
+        mQsDragHandle = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_SHOW_DRAG_HANDLE, 0, UserHandle.USER_CURRENT) == 1;
+        mDragHandle.setVisibility(mQsDragHandle ? View.VISIBLE : View.GONE);
         post(new Runnable() {
             public void run() {
                 setQsBackground();
