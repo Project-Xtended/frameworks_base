@@ -206,8 +206,12 @@
     <!-- Status bar icons -->
     <string name="status_bar_camera">Camera</string>
     <string name="status_bar_data_disabled">Data disabled</string>
+    <string name="status_bar_data_saver">Data saver</string>
     <string name="status_bar_location">Location</string>
     <string name="status_bar_microphone">Microphone</string>
+    <string name="status_bar_nfc">NFC</string>
+    <string name="status_bar_roaming">Roaming</string>
+    <string name="status_bar_vpn">VPN</string>
 
     <!-- HW Keys Tile -->
     <string name="accessibility_quick_settings_hwkeys_on">HW keys on</string>
