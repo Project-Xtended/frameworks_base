@@ -38,6 +38,7 @@ public class AmbientDisplayConfiguration {
     private final Context mContext;
     private final boolean mAlwaysOnByDefault;
     private final boolean mDozeEnabledByDefault;
+    private final boolean mDeviceHasSoli;
 
     /** {@hide} */
     @TestApi
@@ -45,6 +46,7 @@ public class AmbientDisplayConfiguration {
         mContext = context;
         mAlwaysOnByDefault = mContext.getResources().getBoolean(R.bool.config_dozeAlwaysOnEnabled);
         mDozeEnabledByDefault = mContext.getResources().getBoolean(R.bool.config_doze_enabled_by_default);
+        mDeviceHasSoli = mContext.getResources().getBoolean(R.bool.config_has_Soli);
     }
 
     /** {@hide} */
@@ -280,5 +282,10 @@ public class AmbientDisplayConfiguration {
     public boolean isAmbientTickerEnabled(int user) {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_ON_NEW_TRACKS, 1, user) != 0;
+    }
+
+    /** {@hide} */
+    public boolean deviceHasSoli() {
+        return mDeviceHasSoli;
     }
 }
