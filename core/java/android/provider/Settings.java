@@ -6561,6 +6561,12 @@ public final class Settings {
         /** @hide */
         public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
 
+        /** Whether to pulse ambient on new music tracks
+         *
+         * @hide
+         */
+        public static final String PULSE_ON_NEW_TRACKS = "pulse_on_new_tracks";
+
         /**
          * Launch custom activity when using the long right back swipe app action
          *
