@@ -81,4 +81,7 @@
     <!-- Height-Width of the big battery circle icon in the status bar. -->
     <dimen name="big_battery_height">19dp</dimen>
 
+    <!-- Screen record -->
+    <dimen name="screenrecord_dot_size">48dp</dimen>
+
 </resources>
