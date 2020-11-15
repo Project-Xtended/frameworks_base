@@ -47,6 +47,7 @@ import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
+import com.android.systemui.qs.tiles.KillappTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MonoToggleTile;
 import com.android.systemui.qs.tiles.MusicTile;
@@ -135,6 +136,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SleepModeTile> mSleepModeTileProvider;
     private final Provider<SmartChargeTile> mSmartChargeTileProvider;
     private final Provider<DcDimmingTile> mDcDimmingTileProvider;
+    private final Provider<KillappTile> mKillappTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -187,7 +189,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<LteTile> lteTileProvider,
             Provider<SleepModeTile> sleepModeTileProvider,
             Provider<SmartChargeTile> smartChargeTileProvider,
-            Provider<DcDimmingTile> dcDimTileProvider) {
+            Provider<DcDimmingTile> dcDimTileProvider,
+            Provider<KillappTile> killappTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -237,6 +240,7 @@ public class QSFactoryImpl implements QSFactory {
         mSleepModeTileProvider = sleepModeTileProvider;
         mSmartChargeTileProvider = smartChargeTileProvider;
         mDcDimmingTileProvider = dcDimTileProvider;
+        mKillappTileProvider = killappTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -345,6 +349,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSmartChargeTileProvider.get();
             case "dc_dimming":
                 return mDcDimmingTileProvider.get();
+            case "killapp":
+                return mKillappTileProvider.get();
         }
 
         // Custom tiles
