@@ -705,8 +705,11 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         int globalactionMaxColumns = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.GLOBAL_ACTIONS_MAX_COLUMNS, 3);
         if (mIsRebootMenu) {
-            // To show reboot to bootloader, recovery, fastbootd, system.
+            // To show reboot to bootloader, recovery, systemui, system.
             return 4;
+        } else if (mIsRebootMenu && SystemProperties.getBoolean("ro.fastbootd.available", true)) {
+            // To show reboot to bootloader, recovery, fastbootd, systemui, system.
+            return 5;
         } else if (globalactionMaxColumns != 0) {
             return globalactionMaxColumns;
         } else {
