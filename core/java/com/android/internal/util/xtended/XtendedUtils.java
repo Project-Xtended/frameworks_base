@@ -17,6 +17,7 @@
 package com.android.internal.util.xtended;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.media.AudioManager;
@@ -403,4 +404,14 @@ public class XtendedUtils {
             isPackageInstalled(context, LINEAGE_DOZE_PACKAGE_NAME) ||
             isPackageInstalled(context, CUSTOM_DOZE_PACKAGE_NAME);
     }
+
+    public static void setComponentState(Context context, String packageName,
+            String componentClassName, boolean enabled) {
+        PackageManager pm = context.getApplicationContext().getPackageManager();
+        ComponentName componentName = new ComponentName(packageName, componentClassName);
+        int state = enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+        pm.setComponentEnabledSetting(componentName, state, PackageManager.DONT_KILL_APP);
+    }
 }
+
