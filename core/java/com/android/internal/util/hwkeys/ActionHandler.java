@@ -841,7 +841,7 @@ public class ActionHandler {
         }
     }
 
-    private static boolean killProcess(Context context) {
+    public static boolean killProcess(Context context) {
         if (context.checkCallingOrSelfPermission(android.Manifest.permission.FORCE_STOP_PACKAGES) == PackageManager.PERMISSION_GRANTED
             && !isLockTaskOn()) {
             final int mUserId = ActivityManager.getCurrentUser();
