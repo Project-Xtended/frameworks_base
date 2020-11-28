@@ -190,6 +190,7 @@ public class OmniJawsClient {
     private String mIconPrefix;
     private String mSettingIconPackage;
     private boolean mMetric;
+    private boolean mMonochromeIconPack = false;
     private List<OmniJawsObserver> mObserver;
     private WeatherUpdateReceiver mReceiver;
     private OmniJawsSettingsObserver mSettingsObserver;
@@ -324,6 +325,9 @@ public class OmniJawsClient {
         try {
             PackageManager packageManager = mContext.getPackageManager();
             mRes = packageManager.getResourcesForApplication(mPackageName);
+            if (mIconPrefix.contains("outline")) {
+                mMonochromeIconPack = true;
+            }
         } catch (Exception e) {
             mRes = null;
         }
@@ -362,6 +366,9 @@ public class OmniJawsClient {
         try {
             PackageManager packageManager = mContext.getPackageManager();
             mRes = packageManager.getResourcesForApplication(mPackageName);
+            if (mIconPrefix.contains("outline")) {
+                mMonochromeIconPack = true;
+            }
         } catch (Exception e) {
             mRes = null;
         }
@@ -462,6 +469,10 @@ public class OmniJawsClient {
             }
         }
         return true;
+    }
+
+    public boolean isMonochromeIcon() {
+        return mMonochromeIconPack;
     }
 
     private void updateUnits() {
