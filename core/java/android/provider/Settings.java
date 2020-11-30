@@ -6169,6 +6169,12 @@ public final class Settings {
          * Whether to take partial screenshot with volume down + power click.
          */
         public static final String CLICK_PARTIAL_SCREENSHOT = "click_partial_screenshot";
+        
+         /**
+         * Use doubletap as doze pulse triggers
+         * @hide
+         */
+        public static final String DOZE_TRIGGER_DOUBLETAP = "doze_trigger_doubletap";
 
         /**
          * Gaming mode master switch
