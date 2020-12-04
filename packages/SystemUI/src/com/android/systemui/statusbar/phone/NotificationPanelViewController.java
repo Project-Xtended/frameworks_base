@@ -781,6 +781,8 @@ public class NotificationPanelViewController extends PanelViewController {
         mStatusBarStateListener.onDozeAmountChanged(mStatusBarStateController.getDozeAmount(),
                 mStatusBarStateController.getInterpolatedDozeAmount());
 
+
+        mKeyguardStatusBar.setVisibility(mKeyguardShowing ? View.VISIBLE : View.INVISIBLE);
         setKeyguardStatusViewVisibility(mBarState, false, false);
         setKeyguardBottomAreaVisibility(mBarState, false);
         if (mOnReinflationListener != null) {
