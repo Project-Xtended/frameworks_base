@@ -6712,6 +6712,12 @@ public final class Settings {
         public static final String OMNI_DOZE_BRIGHTNESS = "doze_brightness";
 
         /**
+         * Some creation simillar to samsung OneUI
+         * @hide
+         */
+        public static final String SETTINGS_SPACER = "settings_spacer";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
