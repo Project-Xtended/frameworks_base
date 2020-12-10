@@ -83,10 +83,11 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     private boolean mClockVisibleByUser = true;
     protected boolean mClockHideableByUser = true;
 
-    protected boolean mAttached;
-    protected Calendar mCalendar;
-    protected String mClockFormatString;
-    protected SimpleDateFormat mClockFormat;
+    private boolean mAttached;
+    private boolean mScreenReceiverRegistered;
+    private Calendar mCalendar;
+    private String mClockFormatString;
+    private SimpleDateFormat mClockFormat;
     private SimpleDateFormat mContentDescriptionFormat;
     private Locale mLocale;
 
@@ -330,6 +331,14 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        if (mScreenReceiverRegistered) {
+            mScreenReceiverRegistered = false;
+            mBroadcastDispatcher.unregisterReceiver(mScreenReceiver);
+            if (mSecondsHandler != null) {
+                mSecondsHandler.removeCallbacks(mSecondTick);
+                mSecondsHandler = null;
+            }
+        }
         if (mAttached) {
             mBroadcastDispatcher.unregisterReceiver(mIntentReceiver);
             getContext().getContentResolver().unregisterContentObserver(mSettingsObserver);
@@ -471,12 +480,14 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
                     mSecondsHandler.postAtTime(mSecondTick,
                             SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
                 }
+                mScreenReceiverRegistered = true;
                 IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
                 filter.addAction(Intent.ACTION_SCREEN_ON);
                 mBroadcastDispatcher.registerReceiver(mScreenReceiver, filter);
             }
         } else {
             if (mSecondsHandler != null) {
+                mScreenReceiverRegistered = false;
                 mBroadcastDispatcher.unregisterReceiver(mScreenReceiver);
                 mSecondsHandler.removeCallbacks(mSecondTick);
                 mSecondsHandler = null;
