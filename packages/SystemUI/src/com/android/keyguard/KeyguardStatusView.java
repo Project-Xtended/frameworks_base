@@ -431,114 +431,117 @@ public class KeyguardStatusView extends GridLayout implements
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
         int lockDateFont = isPrimary ? getLockDateFont() : 32;
-        if (lockDateFont == 0) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
-        }
-        if (lockDateFont == 1) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.BOLD));
-        }
-        if (lockDateFont == 2) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
-        }
-        if (lockDateFont == 3) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
-        }
-        if (lockDateFont == 4) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
-        }
-        if (lockDateFont == 5) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-        }
-        if (lockDateFont == 6) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
-        }
-        if (lockDateFont == 7) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-        }
-        if (lockDateFont == 8) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-        }
-        if (lockDateFont == 9) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
-        }
-        if (lockDateFont == 10) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
-        }
-        if (lockDateFont == 11) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
-        }
-        if (lockDateFont == 12) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        }
-        if (lockDateFont == 13) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
-        }
-        if (lockDateFont == 14) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
-        }
-        if (lockDateFont == 15) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
-        }
-        if (lockDateFont == 16) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
-        }
-        if (lockDateFont == 17) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
-        }
-        if (lockDateFont == 18) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.NORMAL));
-        }
-        if (lockDateFont == 19) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.BOLD));
-        }
-        if (lockDateFont == 20) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("casual", Typeface.NORMAL));
-        }
-        if (lockDateFont == 21) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.NORMAL));
-        }
-        if (lockDateFont == 22) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.ITALIC));
-        }
-        if (lockDateFont == 23) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD));
-        }
-        if (lockDateFont == 24) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
-        }
-        if (lockDateFont == 25) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
-        }
-        if (lockDateFont == 26) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
-        }
-        if (lockDateFont == 27) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
-        }
-        if (lockDateFont == 28) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
-        }
-        if (lockDateFont == 29) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
-        }
-        if (lockDateFont == 30) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
-    	}
-        if (lockDateFont == 31) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
-        }
-	if (lockDateFont == 32) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
-        }
-	if (lockDateFont == 33) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
-        }
-        if (lockDateFont == 34) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
-        }
-	if (lockDateFont == 35) {
-            mKeyguardSlice.setViewsTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
-        }
+        switch (lockDateFont){
+		case 0:
+			mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+			break;
+		case 1:
+			mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.BOLD));
+			break;
+		case 2:
+			mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.ITALIC));
+			break;
+		case 3:
+			mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.BOLD_ITALIC));
+			break;
+		case 4:
+			mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-light", Typeface.ITALIC));
+			break;
+		case 5:
+			mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+			break;
+		case 6:
+	                mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-thin", Typeface.ITALIC));
+			break;
+		case 7:
+			 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
+			break;
+		case 8:
+		         mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+			break;
+		case 9:
+      	                 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.ITALIC));
+			break;
+		case 10:
+			 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+			break;
+		case 11:
+			 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD_ITALIC));
+			break;
+		case 12:
+			 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+			break;
+		case 13:
+			 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-medium", Typeface.ITALIC));
+			break;
+		case 14:
+                         mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.NORMAL));
+			break;
+		case 15:
+			 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-condensed-light", Typeface.ITALIC));
+			break;
+
+		case 16:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.NORMAL));
+			break;
+		case 17:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif-black", Typeface.ITALIC));
+			break;
+		case 18:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.NORMAL));
+			break;
+		case 19:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("cursive", Typeface.BOLD));
+			break;
+		case 20:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("casual", Typeface.NORMAL));
+			break;
+		case 21:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.NORMAL));
+			break;
+		case 22:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.ITALIC));
+			break;
+		case 23:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD));
+			break;
+		case 24:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("serif", Typeface.BOLD_ITALIC));
+			break;
+		case 25:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("gobold-light-sys", Typeface.NORMAL));
+			break;
+		case 26:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("roadrage-sys", Typeface.NORMAL));
+			break;
+		case 27:
+             		mKeyguardSlice.setViewsTypeface(Typeface.create("snowstorm-sys", Typeface.NORMAL));
+			break;
+		case 28:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+			break;
+		case 29:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
+			break;
+		case 30:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
+			break;
+		case 31:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
+			break;
+		case 32:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
+			break;
+		case 33:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
+			break;
+		case 34:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
+			break;
+		case 35:
+            		 mKeyguardSlice.setViewsTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
+			break;
+	}
     }
 
     public float getClockTextSize() {
