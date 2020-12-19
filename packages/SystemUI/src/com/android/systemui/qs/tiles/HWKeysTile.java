@@ -70,14 +70,14 @@ public class HWKeysTile extends QSTileImpl<BooleanState> {
     }
 
     private void setEnabled(boolean enabled) {
-        Settings.Secure.putInt(mContext.getContentResolver(),
-                Settings.Secure.HARDWARE_KEYS_DISABLE,
+        Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.HARDWARE_KEYS_DISABLE,
                 enabled ? 0 : 1);
     }
 
    private boolean isHWKeysEnabled() {
-        return Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.HARDWARE_KEYS_DISABLE, 0) == 0;
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HARDWARE_KEYS_DISABLE, 0) == 0;
     }
 
     @Override

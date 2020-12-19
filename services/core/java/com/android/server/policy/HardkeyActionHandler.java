@@ -648,9 +648,6 @@ public class HardkeyActionHandler {
                     Settings.System.ALLOW_INCALL_HOME), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false, this,
-                    UserHandle.USER_ALL);
-            resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.HARDWARE_KEYS_DISABLE), false, this,
                     UserHandle.USER_ALL);
             updateKeyAssignments();
