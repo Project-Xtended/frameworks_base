@@ -121,7 +121,6 @@ public class FODCircleView extends ImageView {
     private boolean mIsDreaming;
     private boolean mIsKeyguard;
     private boolean mIsCircleShowing;
-    private boolean mIsAnimating = false;
 
     private boolean mDozeEnabled;
     private boolean mFodGestureEnable;
@@ -207,7 +206,7 @@ public class FODCircleView extends ImageView {
         @Override
         public void onDreamingStateChanged(boolean dreaming) {
             mIsDreaming = dreaming;
-            updateIconDim(false);
+            updateIconDim();
 
             if (dreaming) {
                 mBurnInProtectionTimer = new Timer();
@@ -243,18 +242,6 @@ public class FODCircleView extends ImageView {
             }
             if (mFODAnimation != null) {
                 mFODAnimation.setAnimationKeyguard(mIsBouncer);
-            }
-        }
-
-        @Override
-        public void onStartedGoingToSleep(int why) {
-            if (mDeviceFlickersGoingToSleep) {
-                mScreenTurnedOn = false;
-                if (!mFodGestureEnable) {
-                    hide();
-                } else {
-                    hideCircle();
-                }
             }
         }
 
@@ -407,6 +394,7 @@ public class FODCircleView extends ImageView {
                 updateStyle();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS))) {
+                updateIconDim();
             } else if (uri.equals(Settings.Secure.getUriFor(
                 Settings.Secure.DOZE_ENABLED)) || uri.equals(Settings.System.getUriFor(
                 Settings.System.FOD_GESTURE))) {
@@ -446,33 +434,9 @@ public class FODCircleView extends ImageView {
         return interpolate(mCurrentBrightness, iArr[i2][0], iArr[i][0], iArr[i2][1], iArr[i][1]);
     }
 
-    public void updateIconDim(boolean animate) {
+    public void updateIconDim() {
         if (!mIsCircleShowing && mTargetUsesInKernelDimming) {
-            if (animate && !mIsAnimating) {
-                ValueAnimator anim = new ValueAnimator();
-                anim.setIntValues(0, getDimAlpha());
-                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        int progress = (Integer) valueAnimator.getAnimatedValue();
-                        setColorFilter(Color.argb(progress, 0, 0, 0),
-                                PorterDuff.Mode.SRC_ATOP);
-                    }
-                });
-                anim.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        mIsAnimating = false;
-                    }
-                });
-                anim.setDuration(500);
-                mIsAnimating = true;
-                anim.start();
-            } else if (!mIsAnimating) {
-                mHandler.post(() ->
-                        setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0),
-                        PorterDuff.Mode.SRC_ATOP));
-            }
+            setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
         } else {
             setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
         }
@@ -585,7 +549,7 @@ public class FODCircleView extends ImageView {
         }
 
         setImageDrawable(null);
-        updateIconDim(false);
+        updateIconDim();
         invalidate();
     }
 
@@ -645,15 +609,12 @@ public class FODCircleView extends ImageView {
                 Settings.System.FOD_RECOGNIZING_ANIMATION, 0) != 0;
         mSelectedIcon = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ICON, 0);
-        int brightness = Settings.System.getInt(mContext.getContentResolver(),
+        mCurrentBrightness = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SCREEN_BRIGHTNESS, 100);
-        if (mCurrentBrightness != brightness) {
-            mCurrentBrightness = brightness;
-            updateIconDim(false);
-        }
         if (mFODAnimation != null) {
             mFODAnimation.update();
         }
+        updateIconDim();
     }
 
     public void updateSettings() {
@@ -709,13 +670,11 @@ public class FODCircleView extends ImageView {
 
     private void setDim(boolean dim) {
         if (dim) {
-            int curBrightness = Settings.System.getInt(getContext().getContentResolver(),
-                    Settings.System.SCREEN_BRIGHTNESS, 100);
             int dimAmount = 0;
 
             IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
             try {
-                dimAmount = daemon.getDimAmount(curBrightness);
+                dimAmount = daemon.getDimAmount(mCurrentBrightness);
             } catch (RemoteException e) {
                 // do nothing
             }
@@ -738,7 +697,6 @@ public class FODCircleView extends ImageView {
             if (mPressedView.getParent() != null) {
                 mWindowManager.removeView(mPressedView);
             }
-            updateIconDim(true);
         }
     }
 
