@@ -114,6 +114,11 @@ public class XtendedUtils {
         return (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) == false);
     }
 
+    private static boolean mBlurSupportedSysProp = SystemProperties
+            .getBoolean("ro.surface_flinger.supports_background_blur", false);
+    private static boolean mBlurDisabledSysProp = SystemProperties
+            .getBoolean("persist.sys.sf.disable_blurs", false);
+
     public static String batteryTemperature(Context context, Boolean ForC) {
         Intent intent = context.registerReceiver(null, new IntentFilter(
                 Intent.ACTION_BATTERY_CHANGED));
@@ -588,5 +593,14 @@ public class XtendedUtils {
         } else {
             return hasNavigationBar == 1;
         }
+    }
+
+    /**
+     * If this device can render blurs.
+     *
+     * @return {@code true} when supported.
+     */
+    public static boolean supportsBlur() {
+        return mBlurSupportedSysProp && !mBlurDisabledSysProp && ActivityManager.isHighEndGfx();
     }
 }
