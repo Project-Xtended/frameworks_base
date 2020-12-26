@@ -240,4 +240,7 @@
   <!-- In-display Fingerprint -->
   <java-symbol type="bool" name="config_supportsInDisplayFingerprint" />
 
+  <!-- Default fod pressed icon -->
+  <java-symbol type="integer" name="config_fod_pressed_color" />
+
 </resources>
