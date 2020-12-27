@@ -6531,7 +6531,7 @@ public final class NotificationPanelViewController implements Dumpable {
                 return false;
             }
 
-            if (mBarState == StatusBarState.KEYGUARD) {
+            if (mDoubleTapToSleepEnabled && !mPulsing && !mDozing) {
                  mDoubleTapGestureListener.onTouchEvent(event);
             }
 
