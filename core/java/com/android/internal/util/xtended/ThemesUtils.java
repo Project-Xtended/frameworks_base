@@ -195,6 +195,12 @@ public class ThemesUtils {
             "com.android.system.slider.memestroke",
     };
 
+    public static final String[] PANEL_BG_STYLE = {
+        "com.jrinfected.panel.batik", // 1
+        "com.jrinfected.panel.kece", // 2
+        "com.jrinfected.panel.outline", // 3
+    };
+
     // Switches qs tile style to user selected.
     public static void updateNewTileStyle(IOverlayManager om, int userId, int qsTileStyle) {
         if (qsTileStyle == 0) {
