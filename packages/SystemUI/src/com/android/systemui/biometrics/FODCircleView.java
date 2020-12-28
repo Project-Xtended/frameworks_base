@@ -500,6 +500,9 @@ public class FODCircleView extends ImageView {
             hideCircle();
             return true;
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (!newIsInside) {
+                hideCircle();
+            }
             return true;
         }
         if (mIsRecognizingAnimEnabled) {
