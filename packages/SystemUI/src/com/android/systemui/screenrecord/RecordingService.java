@@ -82,8 +82,8 @@ public class RecordingService extends Service implements MediaRecorder.OnInfoLis
     private static final String ACTION_STOP_NOTIF =
             "com.android.systemui.screenrecord.STOP_FROM_NOTIF";
     private static final String ACTION_SHARE = "com.android.systemui.screenrecord.SHARE";
-    private static final String PERMISSION_SELF = "com.android.systemui.permission.SELF";
     private static final String ACTION_DELETE = "com.android.systemui.screenrecord.DELETE";
+    private static final String PERMISSION_SELF = "com.android.systemui.permission.SELF";
 
     private final RecordingController mController;
     private final KeyguardDismissUtil mKeyguardDismissUtil;
