@@ -684,7 +684,7 @@ public class NotificationMediaManager implements Dumpable {
             @Nullable Bitmap bmp) {
         Drawable artworkDrawable = null;
         // set media artwork as lockscreen wallpaper if player is playing
-        if (bmp != null && (mShowLockscreenMediaArt || !ENABLE_LOCKSCREEN_WALLPAPER) &&
+        if (bmp != null && !ENABLE_LOCKSCREEN_WALLPAPER &&
                 PlaybackState.STATE_PLAYING == getMediaControllerPlaybackState(mMediaController)) {
             switch (mAlbumArtFilter) {
                 case 0:
@@ -735,9 +735,7 @@ public class NotificationMediaManager implements Dumpable {
             mScrimController.setHasBackdrop(hasArtwork);
         }
 
-        // show artwork only if the media is playing
-        if (PlaybackState.STATE_PLAYING == getMediaControllerPlaybackState(mMediaController)
-                && (hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
+        if ((hasArtwork || DEBUG_MEDIA_FAKE_ARTWORK)
                 && (mStatusBarStateController.getState() != StatusBarState.SHADE || allowWhenShade)
                 &&  mBiometricUnlockController != null && mBiometricUnlockController.getMode()
                         != BiometricUnlockController.MODE_WAKE_AND_UNLOCK_PULSING
