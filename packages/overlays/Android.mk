@@ -65,35 +65,35 @@ LOCAL_REQUIRED_MODULES := \
 	FontGrandHotelSourceOverlay \
 	FontRedressedSourceOverlay \
 	IconPackCircularAndroidOverlay \
-	IconPackCircularLauncherOverlay \
+	IconPackCircularPixelLauncherOverlay \
 	IconPackCircularSettingsOverlay \
 	IconPackCircularSystemUIOverlay \
-	IconPackCircularThemePickerOverlay \
+	IconPackCircularPixelThemePickerOverlay \
 	IconPackVictorAndroidOverlay \
-    IconPackVictorLauncherOverlay \
+    IconPackVictorPixelLauncherOverlay \
     IconPackVictorSettingsOverlay \
     IconPackVictorSystemUIOverlay \
-    IconPackVictorThemePickerOverlay \
+    IconPackVictorPixelThemePickerOverlay \
     IconPackSamAndroidOverlay \
-    IconPackSamLauncherOverlay \
+    IconPackSamPixelLauncherOverlay \
     IconPackSamSettingsOverlay \
     IconPackSamSystemUIOverlay \
-    IconPackSamThemePickerOverlay \
+    IconPackSamPixelThemePickerOverlay \
     IconPackKaiAndroidOverlay \
-    IconPackKaiLauncherOverlay \
+    IconPackKaiPixelLauncherOverlay \
     IconPackKaiSettingsOverlay \
     IconPackKaiSystemUIOverlay \
-    IconPackKaiThemePickerOverlay \
+    IconPackKaiPixelThemePickerOverlay \
 	IconPackFilledAndroidOverlay \
-	IconPackFilledLauncherOverlay \
+	IconPackFilledPixelLauncherOverlay \
 	IconPackFilledSettingsOverlay \
 	IconPackFilledSystemUIOverlay \
-	IconPackFilledThemePickerOverlay \
+	IconPackFilledPixelThemePickerOverlay \
 	IconPackRoundedAndroidOverlay \
-	IconPackRoundedLauncherOverlay \
+	IconPackRoundedPixelLauncherOverlay \
 	IconPackRoundedSettingsOverlay \
 	IconPackRoundedSystemUIOverlay \
-	IconPackRoundedThemePickerOverlay \
+	IconPackRoundedPixelThemePickerOverlay \
       IconShapeCylinderOverlay \
       IconShapeHexagonOverlay \
       IconShapeLeafOverlay \
