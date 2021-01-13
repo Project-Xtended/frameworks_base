@@ -189,10 +189,18 @@ public class FODCircleView extends ImageView {
             }
 
             if (dreaming) {
-                mBurnInProtectionTimer = new Timer();
-                mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
-            } else if (mBurnInProtectionTimer != null) {
-                mBurnInProtectionTimer.cancel();
+                if (shouldShowOnDoze()) {
+                    mBurnInProtectionTimer = new Timer();
+                    mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
+                } else {
+                    setImageDrawable(null);
+                    invalidate();
+                }
+            } else {
+                if (mBurnInProtectionTimer != null) {
+                    mBurnInProtectionTimer.cancel();
+                    updatePosition();
+                }
             }
         }
 
@@ -520,10 +528,16 @@ public class FODCircleView extends ImageView {
             return;
         }
 
+        if (mIsDreaming && !shouldShowOnDoze()) {
+            setImageDrawable(null);
+        } else {
+            setImageResource(ICON_STYLES[mSelectedIcon]);
+        }
+
         updatePosition();
-        
+
+        setVisibility(View.VISIBLE);
         dispatchShow();
-        setVisibility(View.VISIBLE);        
     }
 
     public void hide() {
@@ -652,6 +666,11 @@ public class FODCircleView extends ImageView {
         }
 
         return false;
+    }
+
+    private boolean shouldShowOnDoze() {
+        return Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.FOD_ON_DOZE, 1) == 1;
     }
 
     private class BurnInProtectionTask extends TimerTask {
