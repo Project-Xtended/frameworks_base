@@ -194,4 +194,7 @@
     <string name="accessibility_quick_settings_fpsinfo_off">FPS Info off</string>
     <string name="accessibility_quick_settings_fpsinfo_on">FPS Info on</string>
 
+    <!-- Now playing lockscreen music Ticker -->
+    <string name="ambientmusic_songinfo" formatted="false">%s by %s</string>
+
 </resources>
