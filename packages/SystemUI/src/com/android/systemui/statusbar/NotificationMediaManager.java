@@ -680,7 +680,7 @@ public class NotificationMediaManager implements Dumpable {
             @Nullable Bitmap bmp) {
         Drawable artworkDrawable = null;
         // set media artwork as lockscreen wallpaper if player is playing
-        if (bmp != null && !ENABLE_LOCKSCREEN_WALLPAPER &&
+        if (bmp != null && (mShowLockscreenMediaArt || !ENABLE_LOCKSCREEN_WALLPAPER) &&
                 PlaybackState.STATE_PLAYING == getMediaControllerPlaybackState(mMediaController)) {
             artworkDrawable = new BitmapDrawable(mBackdropBack.getResources(), bmp);
         }
