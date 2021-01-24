@@ -140,6 +140,8 @@
     <dimen name="status_bar_mobile_type_padding">2dp</dimen>
     <dimen name="status_bar_mobile_type_padding_limit">10dp</dimen>
 
+    <!-- Ambient Music Ticker Dimens -->
     <dimen name="keyguard_security_fod_view_margin">140dp</dimen>
+    <dimen name="keyguard_charging_animation_margin">30dp</dimen>
 
 </resources>
