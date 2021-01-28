@@ -182,6 +182,9 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:visibility="gone"
+            android:paddingStart="@dimen/status_bar_center_clock_padding_start"
+            android:paddingEnd="@dimen/status_bar_center_clock_padding_end"
+            android:paddingTop="@dimen/status_bar_padding_top"
             android:singleLine="true"
             />
     </com.android.keyguard.AlphaOptimizedLinearLayout>
