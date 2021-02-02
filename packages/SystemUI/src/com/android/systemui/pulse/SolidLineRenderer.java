@@ -56,6 +56,7 @@ public class SolidLineRenderer extends Renderer {
     private int mWidth, mHeight, mUnits, mGravity;
 
     private boolean mSmoothingEnabled;
+    private boolean mRounded;
     private boolean mCenterMirrored;
     private boolean mVerticalMirror;
     private CMRendererObserver mObserver;
@@ -128,6 +129,7 @@ public class SolidLineRenderer extends Renderer {
         }
         barUnit = barWidth + (barUnit - barWidth) * units / (units - 1);
         mPaint.setStrokeWidth(barWidth);
+        mPaint.setStrokeCap(mRounded ? Paint.Cap.ROUND : Paint.Cap.BUTT);
         for (int i = 0; i < mUnits; i++) {
             mFFTPoints[i * 4] = mFFTPoints[i * 4 + 2] = i * barUnit + (barWidth / 2);
             mFFTPoints[i * 4 + 1] = startPoint;
@@ -149,6 +151,7 @@ public class SolidLineRenderer extends Renderer {
         }
         barUnit = barHeight + (barUnit - barHeight) * units / (units - 1);
         mPaint.setStrokeWidth(barHeight);
+        mPaint.setStrokeCap(mRounded ? Paint.Cap.ROUND : Paint.Cap.BUTT);
         for (int i = 0; i < mUnits; i++) {
             mFFTPoints[i * 4 + 1] = mFFTPoints[i * 4 + 3] = i * barUnit + (barHeight / 2);
             mFFTPoints[i * 4] = mLeftInLandscape ? 0 : startPoint;
@@ -307,14 +310,16 @@ public class SolidLineRenderer extends Renderer {
                     Settings.Secure.getUriFor(Settings.Secure.PULSE_SMOOTHING_ENABLED), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(
+                    Settings.Secure.getUriFor(Settings.Secure.PULSE_SOLID_UNITS_ROUNDED), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.VISUALIZER_CENTER_MIRRORED), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.PULSE_CUSTOM_GRAVITY), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.PULSE_VERTICAL_MIRROR), false,
-                    this,
+                    Settings.Secure.getUriFor(Settings.Secure.PULSE_VERTICAL_MIRROR), false, this,
                     UserHandle.USER_ALL);
         }
 
@@ -332,6 +337,8 @@ public class SolidLineRenderer extends Renderer {
                     UserHandle.USER_CURRENT);
             mSmoothingEnabled = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.PULSE_SMOOTHING_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
+            mRounded = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.PULSE_SOLID_UNITS_ROUNDED, 0, UserHandle.USER_CURRENT) == 1;
             mCenterMirrored = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.VISUALIZER_CENTER_MIRRORED, 0, UserHandle.USER_CURRENT) == 1;
             mVerticalMirror = Settings.Secure.getIntForUser(resolver,
