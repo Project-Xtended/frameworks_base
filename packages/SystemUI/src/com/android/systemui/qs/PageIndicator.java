@@ -113,9 +113,15 @@ public class PageIndicator extends ViewGroup {
         setNumPages(numPages, color);
     }
 
-    /** Overload of setNumPages that allows the indicator color to be specified.*/
     public void setNumPages(int numPages, int color) {
-        setVisibility(numPages > 1 ? View.VISIBLE : View.GONE);
+        boolean show = Settings.System.getInt(mContext.getContentResolver(),
+              Settings.System.QS_FOOTER_PAGE_INDICATOR, 1) != 0;
+        setNumPages(numPages, color, show);
+    }
+
+    /** Overload of setNumPages that allows the indicator color to be specified.*/
+    public void setNumPages(int numPages, int color, boolean show) {
+        setVisibility(numPages > 1 ? (show ? View.VISIBLE : View.GONE) : View.GONE);
         if (numPages == getChildCount()) {
             return;
         }
