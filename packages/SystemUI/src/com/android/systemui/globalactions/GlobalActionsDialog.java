@@ -1554,7 +1554,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         @Override
         public void onPress() {
             ComponentName cn = new ComponentName("com.android.systemui",
-                    "com.android.systemui.benzo.onthego.OnTheGoService");
+                    "com.android.systemui.xtended.onthego.OnTheGoService");
             Intent onTheGoIntent = new Intent();
             onTheGoIntent.setComponent(cn);
             onTheGoIntent.setAction("start");
