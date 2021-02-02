@@ -61,6 +61,7 @@ import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.settingslib.Utils;
 import com.android.settingslib.fuelgauge.BatteryStatus;
 import com.android.systemui.Dependency;
+import com.android.systemui.ambientmusic.AmbientIndicationContainer;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.broadcast.BroadcastDispatcher;
@@ -117,6 +118,7 @@ public class KeyguardIndicationController implements StateListener,
     private final DockManager mDockManager;
     private final DevicePolicyManager mDevicePolicyManager;
     private final UserManager mUserManager;
+    private AmbientIndicationContainer mAmbientIndicationContainer;
 
     private BroadcastReceiver mBroadcastReceiver;
     private LockscreenLockIconController mLockIconController;
@@ -646,6 +648,10 @@ public class KeyguardIndicationController implements StateListener,
         return mChargingIndication > 0 && mPowerPluggedIn;
     }
 
+    public void bindAmbientIndicationContainer(AmbientIndicationContainer ambientIndicationContainer) {
+        mAmbientIndicationContainer = ambientIndicationContainer;
+    }
+
     // animates textView - textView moves up and bounces down
     private void animateText(KeyguardIndicationTextView textView, String indication) {
         int yTranslation = mContext.getResources().getInteger(
@@ -947,6 +953,9 @@ public class KeyguardIndicationController implements StateListener,
                 } else if (wasPluggedIn && !mPowerPluggedIn) {
                     hideTransientIndication();
                 }
+            }
+            if (mAmbientIndicationContainer != null) {
+                mAmbientIndicationContainer.updatePosition();
             }
         }
 
