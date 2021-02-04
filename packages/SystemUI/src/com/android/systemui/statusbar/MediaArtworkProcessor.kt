@@ -32,11 +32,6 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.statusbar.notification.MediaNotificationProcessor
 import javax.inject.Inject
 
-private const val TAG = "MediaArtworkProcessor"
-private const val COLOR_ALPHA = (255 * 0.7f).toInt()
-//private const val BLUR_RADIUS = 25f
-private const val DOWNSAMPLE = 6
-
 @SysUISingleton
 class MediaArtworkProcessor @Inject constructor() {
 
@@ -45,7 +40,13 @@ class MediaArtworkProcessor @Inject constructor() {
     private var mDownSample: Int = DOWNSAMPLE
     //private var mColorAlpha: Int = COLOR_ALPHA
 
-    fun processArtwork(context: Context, artwork: Bitmap, blur_radius: Float): Bitmap? {
+    @JvmOverloads
+    fun processArtwork(
+        context: Context,
+        artwork: Bitmap,
+        radius: Float = BLUR_RADIUS,
+        withSwatchOverlay: Boolean = true,
+    ): Bitmap? {
         if (mArtworkCache != null) {
             return mArtworkCache
         }
@@ -55,7 +56,7 @@ class MediaArtworkProcessor @Inject constructor() {
         var output: Allocation? = null
         var inBitmap: Bitmap? = null
         try {
-            if (blur_radius < 5f) mDownSample = 2 else mDownSample = DOWNSAMPLE
+            if (radius < 5f) mDownSample = 2 else mDownSample = DOWNSAMPLE
             @Suppress("DEPRECATION")
             context.display?.getSize(mTmpSize)
             val rect = Rect(0, 0, artwork.width, artwork.height)
@@ -69,29 +70,31 @@ class MediaArtworkProcessor @Inject constructor() {
                 inBitmap = oldIn.copy(Bitmap.Config.ARGB_8888, false /* isMutable */)
                 oldIn.recycle()
             }
-            var outBitmap: Bitmap?
-            if (blur_radius >= 1f) {
-                outBitmap = Bitmap.createBitmap(inBitmap.width, inBitmap.height,
-                        Bitmap.Config.ARGB_8888)
-                input = Allocation.createFromBitmap(renderScript, inBitmap,
-                        Allocation.MipmapControl.MIPMAP_NONE, Allocation.USAGE_GRAPHICS_TEXTURE)
-                output = Allocation.createFromBitmap(renderScript, outBitmap)
-                    blur.setRadius(blur_radius)
-                    blur.setInput(input)
-                    blur.forEach(output)
-                output.copyTo(outBitmap)
-            } else {
-                outBitmap = inBitmap.copy(Bitmap.Config.ARGB_8888, true/*mutable*/)
+            val outBitmap = Bitmap.createBitmap(inBitmap.width, inBitmap.height,
+                    Bitmap.Config.ARGB_8888)
+
+            input = android.renderscript.Allocation.createFromBitmap(renderScript, inBitmap,
+                    android.renderscript.Allocation.MipmapControl.MIPMAP_NONE,
+                    android.renderscript.Allocation.USAGE_GRAPHICS_TEXTURE)
+            output = android.renderscript.Allocation.createFromBitmap(renderScript, outBitmap)
+
+            blur.setRadius(radius)
+            blur.setInput(input)
+            blur.forEach(output)
+            output.copyTo(outBitmap)
+
+            if (withSwatchOverlay) {
+                val swatch = MediaNotificationProcessor.findBackgroundSwatch(artwork)
+
+                val canvas = Canvas(outBitmap)
+                canvas.drawColor(ColorUtils.setAlphaComponent(swatch.rgb, COLOR_ALPHA))
             }
-            val swatch = MediaNotificationProcessor.findBackgroundSwatch(artwork)
-            val canvas = Canvas(outBitmap)
-            canvas.drawColor(ColorUtils.setAlphaComponent(swatch.rgb, COLOR_ALPHA/*mColorAlpha*/))
             return outBitmap
         } catch (ex: IllegalArgumentException) {
             Log.e(TAG, "error while processing artwork", ex)
             return null
         } finally {
-            if (blur_radius >= 1f) {
+            if (radius >= 1f) {
                 input?.destroy()
                 output?.destroy()
             }
@@ -103,5 +106,12 @@ class MediaArtworkProcessor @Inject constructor() {
     fun clearCache() {
         mArtworkCache?.recycle()
         mArtworkCache = null
+    }
+
+    companion object {
+        private const val TAG = "MediaArtworkProcessor"
+        private const val COLOR_ALPHA = 178 // 255 * 0.7
+        private const val BLUR_RADIUS = 25f
+        private const val DOWNSAMPLE = 6
     }
 }
