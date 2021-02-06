@@ -140,6 +140,9 @@ public class ScreenMediaRecorder {
         int vidBitRate = mLowQuality ? LOW_VIDEO_BIT_RATE :
                 screenHeight * screenWidth * refereshRate / VIDEO_FRAME_RATE
                 * VIDEO_FRAME_RATE_TO_RESOLUTION_RATIO;
+        int maxRefreshRate = mContext.getResources().getInteger(
+                com.android.internal.R.integer.config_screenRecorderMaxFramerate);
+        if (maxRefreshRate != 0 && refereshRate > maxRefreshRate) refereshRate = maxRefreshRate;
         /* PS: HEVC can be set too, to reduce file size without quality loss (h265 is more efficient than h264),
         but at the same time the cpu load is 8-10 times higher and some devices don't support it yet */
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
