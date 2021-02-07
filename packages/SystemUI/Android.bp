@@ -73,6 +73,7 @@ android_library {
         "dagger2-2.19",
         "jsr330",
         "airbnb-lottie",
+        "faceunlock_framework",
     ],
     manifest: "AndroidManifest.xml",
 
