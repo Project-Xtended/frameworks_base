@@ -169,4 +169,8 @@
         <item>com.facebook.katana.LoginActivity</item>
     </string-array>
 
+    <!-- Smart cutoff -->
+    <integer name="config_smartCutoffTemperature">30</integer>
+    <integer name="config_smartCutoffResumeTemperature">25</integer>
+
 </resources>
