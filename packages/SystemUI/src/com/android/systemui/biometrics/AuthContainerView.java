@@ -460,10 +460,12 @@ public class AuthContainerView extends LinearLayout
 
     @Override
     public void show(WindowManager wm, @Nullable Bundle savedState) {
+        boolean hasFod = false;
         if (mBiometricView != null) {
             mBiometricView.restoreState(savedState);
+            hasFod = mBiometricView.getHasFod();
         }
-        wm.addView(this, getLayoutParams(mWindowToken));
+        wm.addView(this, getLayoutParams(mWindowToken, hasFod));
     }
 
     @Override
@@ -629,7 +631,7 @@ public class AuthContainerView extends LinearLayout
      * @param windowToken token for the window
      * @return
      */
-    public static WindowManager.LayoutParams getLayoutParams(IBinder windowToken) {
+    public static WindowManager.LayoutParams getLayoutParams(IBinder windowToken, boolean hasFod) {
         final int windowFlags = WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
                 | WindowManager.LayoutParams.FLAG_SECURE;
         final WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
