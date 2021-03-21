@@ -139,6 +139,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
+import com.android.systemui.statusbar.policy.PulseController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.InjectionInflationController;
@@ -2294,7 +2295,7 @@ public class NotificationPanelViewController extends PanelViewController {
         return (int) totalHeight;
     }
 
-    private void updateNotificationTranslucency() {
+    public void updateNotificationTranslucency() {
         float alpha = 1f;
         if (mClosingWithAlphaFadeOut && !mExpandingFromHeadsUp
                 && !mHeadsUpManager.hasPinnedHeadsUp()) {
@@ -2307,6 +2308,7 @@ public class NotificationPanelViewController extends PanelViewController {
         mNotificationStackScroller.setAlpha(alpha);
         mStatusBar.updateDismissAllVisibility(true);
         mStatusBar.dismissAllButtonStyle();
+        mStatusBar.getPulseController().setQSShowing(mBarState != StatusBarState.KEYGUARD && !isFullyCollapsed());
     }
 
     private float getFadeoutAlpha() {
