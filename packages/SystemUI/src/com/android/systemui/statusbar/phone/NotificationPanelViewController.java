@@ -173,6 +173,7 @@ import com.android.systemui.statusbar.policy.KeyguardUserSwitcherController;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcherView;
 import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
 import com.android.systemui.statusbar.policy.PulseController;
+import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.Utils;
 import com.android.systemui.util.settings.SecureSettings;
 import com.android.systemui.wallet.controller.QuickAccessWalletController;
@@ -268,6 +269,9 @@ public class NotificationPanelViewController extends PanelViewController {
     private static final String COUNTER_PANEL_OPEN_QS = "panel_open_qs";
     private static final String COUNTER_PANEL_OPEN_PEEK = "panel_open_peek";
 
+    private static final String QS_SMART_PULLDOWN =
+            "system:" + Settings.System.QS_SMART_PULLDOWN;
+
     private static final Rect M_DUMMY_DIRTY_RECT = new Rect(0, 0, 1, 1);
     private static final Rect EMPTY_RECT = new Rect();
 
@@ -341,6 +345,7 @@ public class NotificationPanelViewController extends PanelViewController {
     private final QuickAccessWalletController mQuickAccessWalletController;
     private final ControlsComponent mControlsComponent;
     private final NotificationRemoteInputManager mRemoteInputManager;
+    private final TunerService mTunerService;
 
     // Maximum # notifications to show on Keyguard; extras will be collapsed in an overflow card.
     // If there are exactly 1 + mMaxKeyguardNotifications, then still shows all notifications
@@ -550,6 +555,7 @@ public class NotificationPanelViewController extends PanelViewController {
     private Runnable mExpandAfterLayoutRunnable;
 
     private int mOneFingerQuickSettingsIntercept;
+    private int mQsSmartPullDown;
 
     /**
      * The padding between the start of notifications and the qs boundary on the lockscreen.
@@ -762,7 +768,8 @@ public class NotificationPanelViewController extends PanelViewController {
             SecureSettings secureSettings,
             UnlockedScreenOffAnimationController unlockedScreenOffAnimationController,
             NotificationRemoteInputManager remoteInputManager,
-            ControlsComponent controlsComponent) {
+            ControlsComponent controlsComponent,
+            TunerService tunerService) {
         super(view, falsingManager, dozeLog, keyguardStateController,
                 (SysuiStatusBarStateController) statusBarStateController, vibratorHelper,
                 statusBarKeyguardViewManager, latencyTracker, flingAnimationUtilsBuilder.get(),
@@ -791,6 +798,7 @@ public class NotificationPanelViewController extends PanelViewController {
         mKeyguardUserSwitcherComponentFactory = keyguardUserSwitcherComponentFactory;
         mQSDetailDisplayer = qsDetailDisplayer;
         mFragmentService = fragmentService;
+        mTunerService = tunerService;
         mSettingsChangeObserver = new SettingsChangeObserver(handler);
         mShouldUseSplitNotificationShade =
                 Utils.shouldUseSplitNotificationShade(mFeatureFlags, mResources);
@@ -1995,6 +2003,14 @@ public class NotificationPanelViewController extends PanelViewController {
                 showQsOverride = true;
                 break;
         }
+
+        if (mQsSmartPullDown == 1 && !hasActiveClearableNotifications()
+                || mQsSmartPullDown == 2 &&
+                !mEntryManager.hasActiveOngoingNotifications()
+                || mQsSmartPullDown == 3 && !mEntryManager.hasActiveVisibleNotifications()) {
+                showQsOverride = true;
+        }
+
         showQsOverride &= mBarState == StatusBarState.SHADE;
 
         return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
@@ -4747,13 +4763,15 @@ public class NotificationPanelViewController extends PanelViewController {
         positionClockAndNotifications(true /* forceUpdate */);
     }
 
-    private class OnAttachStateChangeListener implements View.OnAttachStateChangeListener {
+    private class OnAttachStateChangeListener implements View.OnAttachStateChangeListener,
+            TunerService.Tunable {
         @Override
         public void onViewAttachedToWindow(View v) {
             mFragmentService.getFragmentHostManager(mView)
                             .addTagListener(QS.TAG, mFragmentListener);
             mStatusBarStateController.addCallback(mStatusBarStateListener);
             mConfigurationController.addCallback(mConfigurationListener);
+            mTunerService.addTunable(this, QS_SMART_PULLDOWN);
             mUpdateMonitor.registerCallback(mKeyguardUpdateCallback);
             // Theme might have changed between inflating this view and attaching it to the
             // window, so
@@ -4771,8 +4789,21 @@ public class NotificationPanelViewController extends PanelViewController {
                             .removeTagListener(QS.TAG, mFragmentListener);
             mStatusBarStateController.removeCallback(mStatusBarStateListener);
             mConfigurationController.removeCallback(mConfigurationListener);
+            mTunerService.removeTunable(this);
             mUpdateMonitor.removeCallback(mKeyguardUpdateCallback);
             mFalsingManager.removeTapListener(mFalsingTapListener);
+        }
+
+        @Override
+        public void onTuningChanged(String key, String newValue) {
+            switch (key) {
+                case QS_SMART_PULLDOWN:
+                    mQsSmartPullDown =
+                            TunerService.parseInteger(newValue, 0);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
