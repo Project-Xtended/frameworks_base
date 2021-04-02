@@ -21,4 +21,8 @@
 
     <!-- Padding added to keyguard status area when Type clock is in use -->
     <dimen name="keyguard_status_area_typeclock_padding">32dp</dimen>
+
+    <!-- Tag clock size -->
+    <dimen name="btlg_tag_width">300dp</dimen>
+    <dimen name="btlg_tag_height">165dp</dimen>
 </resources>
