@@ -952,7 +952,6 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         for (Notification.Action smartAction : imageData.smartActions) {
             ScreenshotActionChip actionChip = (ScreenshotActionChip) inflater.inflate(
                     R.layout.global_screenshot_action_chip, mActionsView, false);
-            actionChip.setText(smartAction.title);
             actionChip.setIcon(smartAction.getIcon(), false);
             actionChip.setPendingIntent(smartAction.actionIntent,
                     () -> {
@@ -1040,7 +1039,7 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
             mBackgroundProtection.setAlpha(t);
             float containerAlpha = t < alphaFraction ? t / alphaFraction : 1;
             mActionsContainer.setAlpha(containerAlpha);
-            mActionsContainerBackground.setAlpha(containerAlpha);
+            mActionsContainerBackground.setAlpha(containerAlpha/2);
             float containerScale = SCREENSHOT_ACTIONS_START_SCALE_X
                     + (t * (1 - SCREENSHOT_ACTIONS_START_SCALE_X));
             mActionsContainer.setScaleX(containerScale);
