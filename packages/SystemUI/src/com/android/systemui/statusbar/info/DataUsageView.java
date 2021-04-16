@@ -3,6 +3,7 @@ package com.android.systemui.statusbar.info;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.provider.Settings;
+import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.text.BidiFormatter;
 import android.text.format.Formatter;
@@ -16,6 +17,8 @@ import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.policy.NetworkController;
+
+import java.util.List;
 
 public class DataUsageView extends TextView {
 
@@ -56,7 +59,7 @@ public class DataUsageView extends TextView {
                         mobileDataController.getWifiDataUsageInfo()
                         : mobileDataController.getDataUsageInfo());
 
-        formatedinfo = formatDataUsage(info.usageLevel);
+        formatedinfo = getSlotCarrierName() + ": " + formatDataUsage(info.usageLevel);
     }
 
     public int isDataUsageEnabled() {
@@ -77,5 +80,22 @@ public class DataUsageView extends TextView {
         final BytesResult res = Formatter.formatBytes(mContext.getResources(), byteValue,
                 Formatter.FLAG_IEC_UNITS);
         return BidiFormatter.getInstance().unicodeWrap(res.value + res.units);
+    }
+
+    private String getSlotCarrierName() {
+        CharSequence result = "";
+        SubscriptionManager subManager = mContext.getSystemService(SubscriptionManager.class);
+        int subId = subManager.getDefaultDataSubscriptionId();
+        List<SubscriptionInfo> subInfoList =
+                subManager.getActiveSubscriptionInfoList(true);
+        if (subInfoList != null) {
+            for (SubscriptionInfo subInfo : subInfoList) {
+                if (subId == subInfo.getSubscriptionId()) {
+                    result = subInfo.getDisplayName();
+                    break;
+                }
+            }
+        }
+        return result.toString();
     }
 }
