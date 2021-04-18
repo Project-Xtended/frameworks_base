@@ -57,6 +57,7 @@ public class SolidLineRenderer extends Renderer {
 
     private boolean mSmoothingEnabled;
     private boolean mCenterMirrored;
+    private boolean mVerticalMirror;
     private CMRendererObserver mObserver;
 
     public SolidLineRenderer(Context context, Handler handler, PulseView view,
@@ -254,7 +255,16 @@ public class SolidLineRenderer extends Renderer {
 
     @Override
     public void draw(Canvas canvas) {
+        canvas.scale(1, 1, mWidth / 2f, mHeight / 2f);
         canvas.drawLines(mFFTPoints, mPaint);
+        if (mVerticalMirror) {
+            if (mVertical) {
+                canvas.scale(-1, 1, mWidth / 2f, mHeight / 2f);
+            } else {
+                canvas.scale(1, -1, mWidth / 2f, mHeight / 2f);
+            }
+            canvas.drawLines(mFFTPoints, mPaint);
+        }
     }
 
     @Override
@@ -302,6 +312,10 @@ public class SolidLineRenderer extends Renderer {
             resolver.registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.PULSE_CUSTOM_GRAVITY), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.Secure.getUriFor(Settings.Secure.PULSE_VERTICAL_MIRROR), false,
+                    this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -320,6 +334,8 @@ public class SolidLineRenderer extends Renderer {
                     Settings.Secure.PULSE_SMOOTHING_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
             mCenterMirrored = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.VISUALIZER_CENTER_MIRRORED, 0, UserHandle.USER_CURRENT) == 1;
+            mVerticalMirror = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.PULSE_VERTICAL_MIRROR, 0, UserHandle.USER_CURRENT) == 1;
             mGravity = Settings.Secure.getIntForUser(resolver,
                     Settings.Secure.PULSE_CUSTOM_GRAVITY, 0, UserHandle.USER_CURRENT);
 
