@@ -192,6 +192,11 @@ public class ThemesUtils {
         "org.blissroms.systemui.signalbar_a",
         "org.blissroms.systemui.signalbar_b",
         "org.blissroms.systemui.signalbar_c",
+        "org.blissroms.systemui.signalbar_d",
+        "org.blissroms.systemui.signalbar_e",
+        "org.blissroms.systemui.signalbar_f",
+        "org.blissroms.systemui.signalbar_g",
+        "org.blissroms.systemui.signalbar_h",
     };
 
     // Statusbar Wifi icons
@@ -199,5 +204,10 @@ public class ThemesUtils {
         "org.blissroms.systemui.wifibar_a",
         "org.blissroms.systemui.wifibar_b",
         "org.blissroms.systemui.wifibar_c",
+        "org.blissroms.systemui.wifibar_d",
+        "org.blissroms.systemui.wifibar_e",
+        "org.blissroms.systemui.wifibar_f",
+        "org.blissroms.systemui.wifibar_g",
+        "org.blissroms.systemui.wifibar_h",
     };
 }
