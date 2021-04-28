@@ -30,40 +30,6 @@ LOCAL_REQUIRED_MODULES := \
 	AccentColorAmethystOverlay \
 	AccentColorAquamarineOverlay \
 	AccentColorTangerineOverlay \
-	FontNotoSerifSourceOverlay \
-        FontAclonicaSourceOverlay \
-        FontAmaranteSourceOverlay \
-        FontBariolSourceOverlay \
-        FontCagliostroSourceOverlay \
-        FontCoolstorySourceOverlay \
-        FontLGSmartGothicSourceOverlay \
-        FontRosemarySourceOverlay \
-        FontSonySketchSourceOverlay \
-        FontSurferSourceOverlay \
-	FontAntipastoProSourceOverlay \
-	FontEvolveSansSourceOverlay \
-	FontFucekSourceOverlay \
-	FontGoogleSansMediumSourceOverlay \
-	FontLemonMilkSourceOverlay \
-	FontComfortaaSourceOverlay \
-	FontExotwoSourceOverlay \
-	FontStoropiaSourceOverlay \
-	FontUbuntuSourceOverlay \
-	FontComicSansSourceOverlay \
-	FontGoogleSansSourceOverlay \
-	FontOdudaSourceOverlay \
-	FontReemKufiSourceOverlay \
-	FontSimpleDaySourceOverlay \
-        FontLinotte \
-	FontOneplusSlateSource \
-	FontSamsungOneSourceOverlay \
-	FontNokiaPureSourceOverlay \
-	FontNunitoSourceOverlay \
-	FontFifa2018SourceOverlay \
-	FontCoconSourceOverlay \
-	FontQuandoSourceOverlay \
-	FontGrandHotelSourceOverlay \
-	FontRedressedSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularPixelLauncherOverlay \
 	IconPackCircularSettingsOverlay \
