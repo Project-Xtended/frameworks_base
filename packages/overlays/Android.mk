@@ -30,47 +30,6 @@ LOCAL_REQUIRED_MODULES := \
 	AccentColorAmethystOverlay \
 	AccentColorAquamarineOverlay \
 	AccentColorTangerineOverlay \
-	IconPackCircularAndroidOverlay \
-	IconPackCircularPixelLauncherOverlay \
-	IconPackCircularSettingsOverlay \
-	IconPackCircularSystemUIOverlay \
-	IconPackCircularPixelThemePickerOverlay \
-	IconPackVictorAndroidOverlay \
-    IconPackVictorPixelLauncherOverlay \
-    IconPackVictorSettingsOverlay \
-    IconPackVictorSystemUIOverlay \
-    IconPackVictorPixelThemePickerOverlay \
-    IconPackSamAndroidOverlay \
-    IconPackSamPixelLauncherOverlay \
-    IconPackSamSettingsOverlay \
-    IconPackSamSystemUIOverlay \
-    IconPackSamPixelThemePickerOverlay \
-    IconPackKaiAndroidOverlay \
-    IconPackKaiPixelLauncherOverlay \
-    IconPackKaiSettingsOverlay \
-    IconPackKaiSystemUIOverlay \
-    IconPackKaiPixelThemePickerOverlay \
-	IconPackFilledAndroidOverlay \
-	IconPackFilledPixelLauncherOverlay \
-	IconPackFilledSettingsOverlay \
-	IconPackFilledSystemUIOverlay \
-	IconPackFilledPixelThemePickerOverlay \
-	IconPackRoundedAndroidOverlay \
-	IconPackRoundedPixelLauncherOverlay \
-	IconPackRoundedSettingsOverlay \
-	IconPackRoundedSystemUIOverlay \
-	IconPackRoundedPixelThemePickerOverlay \
-      IconShapeCylinderOverlay \
-      IconShapeHexagonOverlay \
-      IconShapeLeafOverlay \
-	IconShapePebbleOverlay \
-	IconShapeRoundedHexagonOverlay \
-	IconShapeRoundedRectOverlay \
-	IconShapeSquareOverlay \
-	IconShapeSquircleOverlay \
-	IconShapeTaperedRectOverlay \
-	IconShapeTeardropOverlay \
-	IconShapeVesselOverlay \
 	NavigationBarMode2ButtonOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarModeGesturalOverlay \
