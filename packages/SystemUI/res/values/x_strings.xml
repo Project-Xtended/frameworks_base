@@ -156,7 +156,7 @@
     <string name="vpn_credentials_dialog_connect">Connect</string>
 
     <!-- Statusbar Tuner -->
-    <string name="statusbar_items_title">Statusbar Icons</string>
+    <string name="statusbar_items_title">Statusbar icons</string>
 
     <!-- OnTheGo Tile -->
     <string name="quick_settings_onthego_label">On-The-Go</string>
