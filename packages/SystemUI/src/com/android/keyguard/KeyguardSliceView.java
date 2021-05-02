@@ -73,6 +73,7 @@ import com.android.systemui.R;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.systemui.plugins.ActivityStarter;
+import com.android.systemui.plugins.ClockPlugin;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.wakelock.KeepAwakeAnimationListener;
@@ -125,6 +126,8 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private int mRowTextSize;
     private float mRowWithHeaderTextSize;
     private float mHeaderTextSize;
+
+    private ClockPlugin mClockPlugin;
 
     @Inject
     public KeyguardSliceView(@Named(VIEW_CONTEXT) Context context, AttributeSet attrs,
@@ -223,6 +226,11 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
      */
     public boolean hasHeader() {
         return mHasHeader;
+    }
+
+    public void setClockPlugin(ClockPlugin plugin) {
+        mClockPlugin = plugin;
+        if (mSlice != null) mClockPlugin.setSlice(mSlice);
     }
 
     private void showSlice() {
@@ -443,6 +451,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     public void onChanged(Slice slice) {
         mSlice = slice;
         showSlice();
+        if (mClockPlugin != null) mClockPlugin.setSlice(slice);
     }
 
     @Override
@@ -665,7 +674,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
      * Representation of an item that appears under the clock on main keyguard message.
      */
     @VisibleForTesting
-    static class KeyguardSliceTextView extends TextView implements
+    public static class KeyguardSliceTextView extends TextView implements
             ConfigurationController.ConfigurationListener {
 
         @StyleRes
