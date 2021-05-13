@@ -5540,6 +5540,13 @@ public final class Settings {
          */
         @Readable
         public static final String PROXIMITY_ON_WAKE = "proximity_on_wake";
+        
+        /**
+         * Whether auto brightness is applied one shot when screen is turned on.
+         * Default 0
+         * @hide
+         */
+        public static final String AUTO_BRIGHTNESS_ONE_SHOT = "auto_brightness_one_shot";
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
