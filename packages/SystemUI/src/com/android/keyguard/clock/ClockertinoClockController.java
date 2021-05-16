@@ -206,13 +206,10 @@ public class ClockertinoClockController implements ClockPlugin {
     public void onTimeZoneChanged(TimeZone timeZone) {
     }
 
-/*
     @Override
     public boolean shouldShowStatusArea() {
-        if (mContext == null) return true;
-        return Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_SHOW_STATUS_AREA, 1) == 1;
+        return false;
     }
-*/
 
     private int generateColorDesat(int color) {
         float[] hslParams = new float[3];
