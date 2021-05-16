@@ -22,12 +22,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.Paint.Style;
-import android.graphics.Typeface;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.TextClock;
+import android.widget.TextView;
+
+import androidx.core.graphics.ColorUtils;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -38,9 +40,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import static com.android.systemui.statusbar.phone
-        .KeyguardClockPositionAlgorithm.CLOCK_USE_DEFAULT_Y;
 
 /**
  * Plugin for the default clock face used only to provide a preview.
@@ -68,9 +67,14 @@ public class OronosClockController implements ClockPlugin {
     private final ViewPreviewer mRenderer = new ViewPreviewer();
 
     /**
+     * Helper to extract colors from wallpaper palette for clock face.
+     */
+    private final ClockPalette mPalette = new ClockPalette();
+
+    /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock for both hour and minute
@@ -89,39 +93,30 @@ public class OronosClockController implements ClockPlugin {
     /**
      * Create a DefaultClockController instance.
      *
-     * @param res Resources contains title and thumbnail.
-     * @param inflater Inflater used to inflate custom clock views.
+     * @param res            Resources contains title and thumbnail.
+     * @param inflater       Inflater used to inflate custom clock views.
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public OronosClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+                              SysuiColorExtractor colorExtractor) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.oronos_clock, null);
-        mHourClock = mView.findViewById(R.id.clockHr);
-        mMinuteClock = mView.findViewById(R.id.clockMin);
-        mLongDate = mView.findViewById(R.id.longDate);
+
+        mHourClock = mBigClockView.findViewById(R.id.clockHr);
+        mMinuteClock = mBigClockView.findViewById(R.id.clockMin);
+        mLongDate = mBigClockView.findViewById(R.id.longDate);
         onTimeTick();
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        int[] paletteLS = colors.getColorPalette();
-        if (paletteLS != null) {
-            setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        } else {
-            ColorExtractor.GradientColors sysColors = mColorExtractor.getColors(
-                    WallpaperManager.FLAG_SYSTEM);
-            setColorPalette(sysColors.supportsDarkText(), sysColors.getColorPalette());
-        }
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mHourClock = null;
         mMinuteClock = null;
         mLongDate = null;
@@ -145,77 +140,52 @@ public class OronosClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        View previewView = mLayoutInflater.inflate(R.layout.oronos_clock, null);
-        TextClock previewHourTime = previewView.findViewById(R.id.clockHr);
-        TextClock previewMinuteTime = previewView.findViewById(R.id.clockMin);
-        TextView previewDate = previewView.findViewById(R.id.longDate);
-
+        View previewView = getView();
         // Initialize state of plugin before generating preview.
+        setDarkAmount(1f);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
-        int[] palette = colors.getColorPalette();
-        if (palette == null) {
-            ColorExtractor.GradientColors sysColors = mColorExtractor.getColors(
-                    WallpaperManager.FLAG_SYSTEM);
-            palette = sysColors.getColorPalette();
-        }
-
-        final int bgColor = palette[Math.max(0, palette.length - 11)];
-        final int hiColor = palette[Math.max(0, palette.length - 5)];
-
-        GradientDrawable hourBg = (GradientDrawable) previewHourTime.getBackground();
-        GradientDrawable minBg = (GradientDrawable) previewMinuteTime.getBackground();
-        GradientDrawable dateBg = (GradientDrawable) previewDate.getBackground();
-
-        // Things that needs to be tinted with the background color
-        previewHourTime.setTextColor(bgColor);
-        minBg.setColor(bgColor);
-        dateBg.setColor(bgColor);
-
-        // Things that needs to be tinted with the highlighted color
-        hourBg.setColor(hiColor);
-        minBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
-                            hiColor);
-        dateBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
-                            hiColor);
-        previewMinuteTime.setTextColor(hiColor);
-        previewDate.setTextColor(hiColor);
-
-        mTime.setTimeInMillis(System.currentTimeMillis());
-        previewDate.setText(mResources.getString(R.string.date_long_title_today, mTime.getDisplayName(
-                Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())));
+        setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        onTimeTick();
 
         return mRenderer.createPreview(previewView, width, height);
     }
 
     @Override
     public View getView() {
-        if (mView == null) {
-            createViews();
-        }
-        return mView;
-    }
-
-    @Override
-    public View getBigClockView() {
         return null;
     }
 
     @Override
-    public int getPreferredY(int totalHeight) {
-        return CLOCK_USE_DEFAULT_Y;
+    public View getBigClockView() {
+        if (mBigClockView == null) {
+            createViews();
+        }
+        return mBigClockView;
     }
 
     @Override
-    public void setTextColor(int color) {}
+    public int getPreferredY(int totalHeight) {
+        return totalHeight / 2;
+    }
+
+    @Override
+    public void setStyle(Style style) {
+    }
+
+    @Override
+    public void setTextColor(int color) {
+    }
 
     @Override
     public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {
-        if (colorPalette == null || colorPalette.length == 0) {
-            return;
-        }
-        final int backgroundColor = colorPalette[Math.max(0, colorPalette.length - 11)];
-        final int highlightColor = colorPalette[Math.max(0, colorPalette.length - 5)];
+        mPalette.setColorPalette(supportsDarkText, colorPalette);
+        updateColor();
+    }
+
+    private void updateColor() {
+        int highlightColor = mPalette.getPrimaryColor();
+        int backgroundColor = generateColorDark(highlightColor);
 
         GradientDrawable hourBg = (GradientDrawable) mHourClock.getBackground();
         GradientDrawable minBg = (GradientDrawable) mMinuteClock.getBackground();
@@ -225,6 +195,7 @@ public class OronosClockController implements ClockPlugin {
         mHourClock.setTextColor(backgroundColor);
         minBg.setColor(backgroundColor);
         dateBg.setColor(backgroundColor);
+        mHourClock.setTextColor(backgroundColor);
 
         // Things that needs to be tinted with the highlighted color
         hourBg.setColor(highlightColor);
@@ -237,16 +208,15 @@ public class OronosClockController implements ClockPlugin {
     }
 
     @Override
+    public void setDarkAmount(float darkAmount) {
+        mPalette.setDarkAmount(darkAmount);
+    }
+
+    @Override
     public void onTimeTick() {
         mTime.setTimeInMillis(System.currentTimeMillis());
         mLongDate.setText(mResources.getString(R.string.date_long_title_today, mTime.getDisplayName(
                 Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())));
-
-    }
-
-    @Override
-    public void setDarkAmount(float darkAmount) {
-        mView.setDarkAmount(darkAmount);
     }
 
     @Override
@@ -259,5 +229,13 @@ public class OronosClockController implements ClockPlugin {
     @Override
     public boolean shouldShowStatusArea() {
         return false;
+    }
+
+    private int generateColorDark(int color) {
+        float[] hslParams = new float[3];
+        ColorUtils.colorToHSL(color, hslParams);
+        // Conversion to desature the color?
+        hslParams[2] = hslParams[2]*0.3f;
+        return ColorUtils.HSLToColor(hslParams);
     }
 }

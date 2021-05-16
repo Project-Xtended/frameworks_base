@@ -44,9 +44,6 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
-
-import static com.android.systemui.statusbar.phone.KeyguardClockPositionAlgorithm.CLOCK_USE_DEFAULT_Y;
-
 /**
  * Plugin for the default clock face used only to provide a preview.
  */
@@ -82,7 +79,7 @@ public class IDEJavaClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock for time, date, day and month
@@ -139,29 +136,29 @@ public class IDEJavaClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.clock_ide_java_mix, null);
-        mTime = mView.findViewById(R.id.clockTimeView);
-        mDate = mView.findViewById(R.id.clockDateView);
-        mMonth = mView.findViewById(R.id.clockMonthView);
-        mYear = mView.findViewById(R.id.clockYearView);
-        mtextPackage = mView.findViewById(R.id.textPackage);
-        mtextPackageSubclass = mView.findViewById(R.id.textPackageName);
-        mtextClassAccessMod = mView.findViewById(R.id.textDeclareClass);
-        mtextClassObject = mView.findViewById(R.id.textDeclareClassType);
-        mtextStringAccessMod = mView.findViewById(R.id.textStringDeclare);
-        mtextStringClass = mView.findViewById(R.id.textStringDeclareType);
-        mtextIntAccessMod = mView.findViewById(R.id.textIntDeclare);
-        mtextIntClass = mView.findViewById(R.id.textIntDeclareType);
-        mtextTimeVar = mView.findViewById(R.id.clockTime);
-        mtextDateVar = mView.findViewById(R.id.clockDate);
-        mtextMonthVar = mView.findViewById(R.id.clockMonth);
-        mtextYearVar = mView.findViewById(R.id.clockYear);
+        mTime = mBigClockView.findViewById(R.id.clockTimeView);
+        mDate = mBigClockView.findViewById(R.id.clockDateView);
+        mMonth = mBigClockView.findViewById(R.id.clockMonthView);
+        mYear = mBigClockView.findViewById(R.id.clockYearView);
+        mtextPackage = mBigClockView.findViewById(R.id.textPackage);
+        mtextPackageSubclass = mBigClockView.findViewById(R.id.textPackageName);
+        mtextClassAccessMod = mBigClockView.findViewById(R.id.textDeclareClass);
+        mtextClassObject = mBigClockView.findViewById(R.id.textDeclareClassType);
+        mtextStringAccessMod = mBigClockView.findViewById(R.id.textStringDeclare);
+        mtextStringClass = mBigClockView.findViewById(R.id.textStringDeclareType);
+        mtextIntAccessMod = mBigClockView.findViewById(R.id.textIntDeclare);
+        mtextIntClass = mBigClockView.findViewById(R.id.textIntDeclareType);
+        mtextTimeVar = mBigClockView.findViewById(R.id.clockTime);
+        mtextDateVar = mBigClockView.findViewById(R.id.clockDate);
+        mtextMonthVar = mBigClockView.findViewById(R.id.clockMonth);
+        mtextYearVar = mBigClockView.findViewById(R.id.clockYear);
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mTime = null;
         mDate = null;
         mMonth = null;
@@ -211,20 +208,20 @@ public class IDEJavaClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
-            createViews();
-        }
-        return mView;
+		return null;
     }
 
     @Override
     public View getBigClockView() {
-        return null;
+        if (mBigClockView == null) {
+            createViews();
+        }
+        return mBigClockView;
     }
 
     @Override
     public int getPreferredY(int totalHeight) {
-        return CLOCK_USE_DEFAULT_Y;
+        return totalHeight / 2;
     }
 
     @Override
@@ -240,7 +237,7 @@ public class IDEJavaClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
 
-        if (mView == null) createViews();
+        if (mBigClockView == null) createViews();
 
         TextView[] primaryViews = { mtextPackage, mtextClassAccessMod, mtextStringAccessMod, mtextIntAccessMod };
         TextView[] secondaryViews = { mtextClassObject, mtextStringClass, mtextIntClass };
@@ -260,7 +257,7 @@ public class IDEJavaClockController implements ClockPlugin {
     @Override
     public void setDarkAmount(float darkAmount) {
         mPalette.setDarkAmount(darkAmount);
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override
@@ -270,7 +267,7 @@ public class IDEJavaClockController implements ClockPlugin {
         DateFormat dateFormat = DateFormat.getInstanceForSkeleton("EEEEd", Locale.getDefault());
         dateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
         mDate.setText(dateFormat.format(mTimeCal.getInstance().getTimeInMillis()));
-        mView.onTimeChanged();
+        mBigClockView.onTimeChanged();
         mTime.refreshTime();
         mMonth.refreshTime();
         mYear.refreshTime();
