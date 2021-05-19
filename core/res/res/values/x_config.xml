@@ -191,7 +191,7 @@
     <integer name="config_screenRecorderMaxFramerate">0</integer>
 
     <!-- Button backlight -->
-    <dimen name="config_buttonBrightnessSettingDefaultFloat">1.0</dimen>
+    <dimen name="config_buttonBrightnessSettingDefaultFloat">0.4</dimen>
     <bool name="config_deviceHasVariableButtonBrightness">false</bool>
 
 </resources>

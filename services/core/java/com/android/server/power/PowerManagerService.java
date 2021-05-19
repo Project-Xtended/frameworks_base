@@ -245,7 +245,7 @@ public final class PowerManagerService extends SystemService
     private static final int HALT_MODE_REBOOT = 1;
     private static final int HALT_MODE_REBOOT_SAFE_MODE = 2;
 
-    private static final int DEFAULT_BUTTON_ON_DURATION = 5 * 1000;
+    private static final int DEFAULT_BUTTON_ON_DURATION = 1 * 1000;
 
     private final Context mContext;
     private final ServiceThread mHandlerThread;
