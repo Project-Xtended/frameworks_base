@@ -63,6 +63,7 @@ public class ThemesUtils {
         "com.android.system.switch.md2", // 5
         "com.android.system.switch.retro", // 6
         "com.android.system.switch.oos", // 7
+        "com.android.system.switch.fluid", // 8
     };
 
     public static final String[] NAVBAR_STYLES = {
