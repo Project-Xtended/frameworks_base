@@ -456,6 +456,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
         mScreenBrightnessDefault = clampAbsoluteBrightness(
                 pm.getBrightnessConstraint(PowerManager.BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT));
 
+        Settings.Global.putInt(mContext.getContentResolver(), Settings.Global.SCREEN_IS_DIMMING, 0);
+
         // VR SETTINGS
         mScreenBrightnessForVrDefault = clampAbsoluteBrightness(
                 pm.getBrightnessConstraint(PowerManager.BRIGHTNESS_CONSTRAINT_TYPE_DEFAULT_VR));
@@ -1103,9 +1105,11 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 slowChange = false;
             }
             mAppliedDimming = true;
+            Settings.Global.putInt(mContext.getContentResolver(), Settings.Global.SCREEN_IS_DIMMING, 1);
         } else if (mAppliedDimming) {
             slowChange = false;
             mAppliedDimming = false;
+            Settings.Global.putInt(mContext.getContentResolver(), Settings.Global.SCREEN_IS_DIMMING, 0);
         }
         // If low power mode is enabled, scale brightness by screenLowPowerBrightnessFactor
         // as long as it is above the minimum threshold.

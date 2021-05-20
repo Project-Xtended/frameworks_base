@@ -59,4 +59,7 @@
     <!-- Color of the FOD view -->
     <color name="config_fodColorBackground">#20000000</color>
 
+    <!-- Whether to dim FOD icon -->
+    <bool name="config_fodIconNeedsDim">false</bool>
+
 </resources>

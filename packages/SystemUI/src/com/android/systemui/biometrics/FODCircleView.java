@@ -21,20 +21,24 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Point;
 import android.hardware.biometrics.BiometricSourceType;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.provider.Settings;
+import android.util.Spline;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -86,6 +90,15 @@ public class FODCircleView extends ImageView {
     private boolean mIsDreaming;
     private boolean mIsKeyguard;
     private boolean mTouchedOutside;
+
+    private boolean mIsScreenDimming;
+    private boolean mFodIconNeedsDim;
+    private int mCurrentBrightness;
+    private int mDefaultScreenBrightness;
+    private int mScreenBrightnessDimConfig;
+    private Spline mFODiconBrightnessToDimAmountSpline;
+
+    private PowerManager mPowerManager;
 
     private Handler mHandler;
 
@@ -274,7 +287,19 @@ public class FODCircleView extends ImageView {
         mPaintFingerprintBackground.setColor(mColorBackground);
         mPaintFingerprintBackground.setAntiAlias(true);
 
+        mPowerManager = context.getSystemService(PowerManager.class);
         mWindowManager = context.getSystemService(WindowManager.class);
+
+        mFodIconNeedsDim = res.getBoolean(R.bool.config_fodIconNeedsDim);
+        float[] icon_dim_amount =
+                getFloatArray(res.obtainTypedArray(R.array.config_FODiconDimAmount));
+        float[] display_brightness =
+                getFloatArray(res.obtainTypedArray(R.array.config_FODiconDisplayBrightness));
+        mFODiconBrightnessToDimAmountSpline =
+                Spline.createSpline(display_brightness, icon_dim_amount);
+        mDefaultScreenBrightness = mPowerManager.getDefaultScreenBrightnessSetting();
+        mScreenBrightnessDimConfig = res.getInteger(
+                com.android.internal.R.integer.config_screenBrightnessDim);
 
         mNavigationBarSize = res.getDimensionPixelSize(R.dimen.navigation_bar_size);
 
@@ -348,6 +373,12 @@ public class FODCircleView extends ImageView {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FOD_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SCREEN_BRIGHTNESS),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.SCREEN_IS_DIMMING),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -356,11 +387,34 @@ public class FODCircleView extends ImageView {
                     uri.equals(Settings.System.getUriFor(Settings.System.FOD_ICON)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.FOD_COLOR))) {
                 updateStyle();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SCREEN_BRIGHTNESS))) {
+                updateIconDim();
+            } else if (uri.equals(Settings.Global.getUriFor(
+                    Settings.Global.SCREEN_IS_DIMMING))) {
+                updateIconDim();
             }
         }
 
         public void update() {
             updateStyle();
+            updateIconDim();
+        }
+    }
+
+    private float getDimAlpha() {
+        return mFODiconBrightnessToDimAmountSpline.interpolate(
+                mIsScreenDimming ? mScreenBrightnessDimConfig : mCurrentBrightness);
+    }
+
+    public void updateIconDim() {
+        mCurrentBrightness = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SCREEN_BRIGHTNESS, mDefaultScreenBrightness, UserHandle.USER_CURRENT);
+        mIsScreenDimming = Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.SCREEN_IS_DIMMING, 0) == 1;
+        if (mFodIconNeedsDim) {
+            int icon_dim_mount = Math.round(getDimAlpha());
+            mHandler.post(() -> setColorFilter(Color.argb(icon_dim_mount, 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
         }
     }
 
@@ -677,4 +731,14 @@ public class FODCircleView extends ImageView {
             mHandler.post(() -> updatePosition());
         }
     };
+
+    private static float[] getFloatArray(TypedArray array) {
+        int length = array.length();
+        float[] floatArray = new float[length];
+        for (int i = 0; i < length; i++) {
+            floatArray[i] = array.getFloat(i, Float.NaN);
+        }
+        array.recycle();
+        return floatArray;
+    }
 }
