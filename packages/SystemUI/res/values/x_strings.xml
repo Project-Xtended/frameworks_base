@@ -162,8 +162,8 @@
     <string name="refresh_rate_forced_mode_placeholder"><xliff:g id="refresh_rate" example="60">%1$d</xliff:g> Hz</string>
 
     <!-- Heads up snooze toast -->
-    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking notification are snoozing for 1 minute.</string>
-    <string name="heads_up_snooze_message"><xliff:g id="string">%1$s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%1$d</xliff:g> minutes.</string>
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - Peeking notification are snoozing for 2 minute.</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%1$s</xliff:g> - Peeking notifications are snoozing for <xliff:g id="number">%2$d</xliff:g> minutes</string>
 
     <!-- AOD QS tile -->
     <string name="quick_settings_aod_label">AOD</string>
