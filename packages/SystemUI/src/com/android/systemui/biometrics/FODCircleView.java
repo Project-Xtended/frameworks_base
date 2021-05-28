@@ -22,6 +22,9 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -31,10 +34,12 @@ import android.graphics.Point;
 import android.hardware.biometrics.BiometricSourceType;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.UserHandle;
 import android.os.Looper;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.os.UserHandle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
@@ -57,6 +62,14 @@ import com.android.systemui.R;
 import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreen;
 import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreenCallback;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -140,6 +153,8 @@ public class FODCircleView extends ImageView {
         R.drawable.fod_icon_pressed_yellow,
         R.drawable.fod_icon_pressed_light_yellow
     };
+
+    private boolean mCustomFpIconEnabled;
 
     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
             new IFingerprintInscreenCallback.Stub() {
@@ -358,6 +373,12 @@ public class FODCircleView extends ImageView {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.FOD_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.OMNI_CUSTOM_FP_ICON_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.OMNI_CUSTOM_FP_ICON),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -366,11 +387,15 @@ public class FODCircleView extends ImageView {
                     uri.equals(Settings.System.getUriFor(Settings.System.FOD_ICON)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.FOD_COLOR))) {
                 updateStyle();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.OMNI_CUSTOM_FP_ICON_ENABLED)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.OMNI_CUSTOM_FP_ICON))) {
+                setCustomIcon();
             }
         }
 
         public void update() {
             updateStyle();
+            setCustomIcon();
         }
     }
 
@@ -490,7 +515,7 @@ public class FODCircleView extends ImageView {
     public void hideCircle() {
         mIsCircleShowing = false;
 
-        setImageResource(ICON_STYLES[mSelectedIcon]);
+        setCustomIcon();
         invalidate();
 
         dispatchRelease();
@@ -531,7 +556,7 @@ public class FODCircleView extends ImageView {
         if (mIsDreaming && !shouldShowOnDoze()) {
             setImageDrawable(null);
         } else {
-            setImageResource(ICON_STYLES[mSelectedIcon]);
+            setCustomIcon();
         }
 
         updatePosition();
@@ -567,9 +592,33 @@ public class FODCircleView extends ImageView {
                 Settings.System.FOD_ICON, 0);
         mPressedColor = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_COLOR, mDefaultPressedColor);
-
         if (mIsFodAnimationAvailable && mFODAnimation != null) {
             mFODAnimation.update(mIsRecognizingAnimEnabled);
+        }
+    }
+
+    private void setCustomIcon() {
+        mCustomFpIconEnabled = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.OMNI_CUSTOM_FP_ICON_ENABLED, 0) == 1;
+
+        final String customIconURI = Settings.System.getStringForUser(getContext().getContentResolver(),
+                Settings.System.OMNI_CUSTOM_FP_ICON,
+                UserHandle.USER_CURRENT);
+
+        if (!TextUtils.isEmpty(customIconURI) && mCustomFpIconEnabled) {
+            try {
+                ParcelFileDescriptor parcelFileDescriptor =
+                    getContext().getContentResolver().openFileDescriptor(Uri.parse(customIconURI), "r");
+                FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+                Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+                parcelFileDescriptor.close();
+                setImageBitmap(image);
+            }
+            catch (Exception e) {
+                setImageResource(ICON_STYLES[mSelectedIcon]);
+            }
+        } else {
+            setImageResource(ICON_STYLES[mSelectedIcon]);
         }
     }
 
