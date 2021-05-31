@@ -18,6 +18,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:gravity="center_horizontal"
-    style="@style/widget_big"
+    style="@style/custom_widget_big"
     android:textSize="40dp"
     />

@@ -110,7 +110,7 @@ public class LineageClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        View previewView = getView();
+        View previewView = getBigClockView();
         TextClock clock = previewView.findViewById(R.id.clock);
         clock.setFormat12Hour("hh\nmm");
         clock.setFormat24Hour("kk\nmm");

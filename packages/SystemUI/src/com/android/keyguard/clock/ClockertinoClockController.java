@@ -144,7 +144,7 @@ public class ClockertinoClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        View previewView = getView();
+        View previewView = getBigClockView();
         // Initialize state of plugin before generating preview.
         setDarkAmount(1f);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(

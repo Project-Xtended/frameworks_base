@@ -194,8 +194,7 @@ public class IDEJavaClockController implements ClockPlugin {
 
     @Override
     public Bitmap getPreview(int width, int height) {
-        setTextColor(Color.WHITE);
-        View previewView = getView();
+        View previewView = getBigClockView();
 
         // Initialize state of plugin before generating preview.
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
@@ -208,7 +207,7 @@ public class IDEJavaClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-		return null;
+	return null;
     }
 
     @Override

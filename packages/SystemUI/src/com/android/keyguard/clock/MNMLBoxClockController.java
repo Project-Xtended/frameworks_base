@@ -130,7 +130,7 @@ public class MNMLBoxClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        View previewView = mLayoutInflater.inflate(R.layout.digital_mnml_box, null);
+        View previewView = getBigClockView();
         TextView previewTime = previewView.findViewById(R.id.clock);
         TextView previewDate = previewView.findViewById(R.id.bigDate);
 

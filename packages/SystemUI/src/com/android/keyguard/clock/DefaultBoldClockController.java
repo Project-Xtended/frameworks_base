@@ -33,6 +33,9 @@ import com.android.systemui.plugins.ClockPlugin;
 
 import java.util.TimeZone;
 
+import static com.android.systemui.statusbar.phone
+        .KeyguardClockPositionAlgorithm.CLOCK_USE_DEFAULT_Y;
+
 /**
  * Plugin for the default clock face used only to provide a preview.
  */
@@ -114,15 +117,13 @@ public class DefaultBoldClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        View previewView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
-        TextClock previewTime = previewView.findViewById(R.id.time);
+        View previewView = getBigClockView();
+        TextClock previewTime = previewView.findViewById(R.id.clock);
         previewTime.setFormat12Hour(Html.fromHtml("<strong>h</strong>:mm"));
         previewTime.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:mm"));
-        TextClock previewDate = previewView.findViewById(R.id.date);
 
         // Initialize state of plugin before generating preview.
         previewTime.setTextColor(Color.WHITE);
-        previewDate.setTextColor(Color.WHITE);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
@@ -146,7 +147,7 @@ public class DefaultBoldClockController implements ClockPlugin {
 
     @Override
     public int getPreferredY(int totalHeight) {
-        return totalHeight / 2;
+       return totalHeight / 2;
     }
 
     @Override

@@ -159,8 +159,7 @@ public class IDEClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        View previewView = mLayoutInflater.inflate(R.layout.p404_ide_clock_preview, null);
-        setViews(previewView);
+        View previewView = getBigClockView();
 
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);

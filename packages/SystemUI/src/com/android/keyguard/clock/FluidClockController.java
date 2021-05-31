@@ -129,9 +129,7 @@ public class FluidClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        View previewView = mLayoutInflater.inflate(R.layout.digital_fluid_preview, null);
-
-        setViews(previewView);
+        View previewView = getBigClockView();
 
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);

@@ -149,7 +149,7 @@ public class StickerTagClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         // Use the big clock view for the preview
-        View view = getView();
+        View view = getBigClockView();
 
         // Initialize state of plugin before generating preview.
         setDarkAmount(1f);
