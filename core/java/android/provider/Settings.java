@@ -6328,6 +6328,12 @@ public final class Settings {
         public static final String FORCE_SHOW_NAVBAR = "navigation_bar_show_new";
 
         /**
+         * Charging symbol near battery text percentage
+         * @hide
+         */
+        public static final String TEXT_CHARGING_SYMBOL = "text_charging_symbol";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
