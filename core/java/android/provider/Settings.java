@@ -5769,11 +5769,6 @@ public final class Settings {
         public static final String HEADS_UP_NOTIFICATION_SNOOZE = "heads_up_notification_snooze";
 
         /**
-         * Whether to take partial screenshot with volume down + power click.
-         */
-        public static final String CLICK_PARTIAL_SCREENSHOT = "click_partial_screenshot";
-
-        /**
          * @hide
          */
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
