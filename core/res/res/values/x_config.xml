@@ -218,4 +218,9 @@
 
     <!-- Whether key handler sends intent when changing slider position -->
     <string name="config_alertSliderIntent"></string>
+
+    <!-- OnePlus uses a proprietary vibrator hal to utilize the new powerful motor since the
+         OnePlus 7 Pro. -->
+    <bool name="config_hasOnePlusHapticMotor">false</bool>
+
 </resources>
