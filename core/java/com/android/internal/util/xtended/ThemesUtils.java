@@ -88,6 +88,23 @@ public class ThemesUtils {
 
     public static final String HEADER_XLARGE = "com.android.theme.header.xlarge";
 
+    // Brightness Slider Styles, DU-Way
+    public static final String[] BRIGHTNESS_SLIDER_DANIEL = {
+            "com.android.systemui.brightness.slider.daniel",
+    };
+    public static final String[] BRIGHTNESS_SLIDER_MEMEMINII = {
+            "com.android.systemui.brightness.slider.mememini",
+    };
+    public static final String[] BRIGHTNESS_SLIDER_MEMEROUND = {
+            "com.android.systemui.brightness.slider.memeround",
+    };
+    public static final String[] BRIGHTNESS_SLIDER_MEMEROUNDSTROKE = {
+            "com.android.systemui.brightness.slider.memeroundstroke",
+    };
+    public static final String[] BRIGHTNESS_SLIDER_MEMESTROKE = {
+            "com.android.systemui.brightness.slider.memestroke",
+    };
+
     // Switches qs tile style to user selected.
     public static void updateNewTileStyle(IOverlayManager om, int userId, int qsTileStyle) {
         if (qsTileStyle == 0) {
