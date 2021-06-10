@@ -485,7 +485,7 @@ public class KeyguardIndicationController implements StateListener,
                 }
                 updateChargingIndication();
             }
-			
+
             int userId = KeyguardUpdateMonitor.getCurrentUser();
             String trustGrantedIndication = getTrustGrantedIndication();
             String trustManagedIndication = getTrustManagedIndication();
@@ -541,10 +541,11 @@ public class KeyguardIndicationController implements StateListener,
             }
             mTextView.setTextColor(isError ? Utils.getColorError(mContext)
                     : mInitialTextColorState);
+            updateChargingIndication();
             if (hideIndication) {
                 mIndicationArea.setVisibility(View.GONE);
             }
-		}
+	}
     }
 
     public void updateChargingIndication() {
