@@ -62,4 +62,7 @@
     <!-- Whether to dim FOD icon -->
     <bool name="config_fodIconNeedsDim">false</bool>
 
+    <!-- Whether to invert the sim slots for VoLTE/VoWiFi icon -->
+    <bool name="config_invertImsSlots">true</bool>
+
 </resources>
