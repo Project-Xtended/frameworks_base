@@ -271,4 +271,7 @@
   <java-symbol type="string" name="config_alertSliderIntent" />
   <java-symbol type="integer" name="config_alertSliderLocation" />
   <java-symbol type="string" name="config_alertSliderIntent" />
+
+  <!-- App Lock -->
+  <java-symbol type="string" name="lockscreen_pattern_instructions" />
 </resources>
