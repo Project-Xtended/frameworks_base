@@ -19,17 +19,40 @@ package com.android.internal.util.xtended;
 import static android.os.UserHandle.USER_SYSTEM;
 
 import android.app.UiModeManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.om.IOverlayManager;
 import android.content.om.OverlayInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
+import android.database.Cursor;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.provider.Settings;
 import android.util.Log;
+import android.net.Uri;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.android.internal.util.xtended.clock.ClockFace;
 
 public class ThemesUtils {
 
     public static final String TAG = "ThemesUtils";
+
+    private Context mContext;
+    private UiModeManager mUiModeManager;
+    private IOverlayManager mOverlayManager;
+    private PackageManager pm;
+
+    public ThemesUtils(Context context) {
+        mContext = context;
+        mUiModeManager = context.getSystemService(UiModeManager.class);
+        mOverlayManager = IOverlayManager.Stub
+                .asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
+        pm = context.getPackageManager();
+    }
 
     // QS Tile Styles
     public static final String[] QS_TILE_THEMES = {
@@ -215,4 +238,39 @@ public class ThemesUtils {
             }
         }
     }
+
+    public List<ClockFace> getClocks() {
+        ProviderInfo providerInfo = mContext.getPackageManager().resolveContentProvider("com.android.keyguard.clock",
+                        PackageManager.MATCH_SYSTEM_ONLY);
+
+        Uri optionsUri = new Uri.Builder()
+                .scheme(ContentResolver.SCHEME_CONTENT)
+                .authority(providerInfo.authority)
+                .appendPath("list_options")
+                .build();
+
+        ContentResolver resolver = mContext.getContentResolver();
+
+        List<ClockFace> clocks = new ArrayList<>();
+        try (Cursor c = resolver.query(optionsUri, null, null, null, null)) {
+            while(c.moveToNext()) {
+                String id = c.getString(c.getColumnIndex("id"));
+                String title = c.getString(c.getColumnIndex("title"));
+                String previewUri = c.getString(c.getColumnIndex("preview"));
+                Uri preview = Uri.parse(previewUri);
+                String thumbnailUri = c.getString(c.getColumnIndex("thumbnail"));
+                Uri thumbnail = Uri.parse(thumbnailUri);
+
+                ClockFace.Builder builder = new ClockFace.Builder();
+                builder.setId(id).setTitle(title).setPreview(preview).setThumbnail(thumbnail);
+                clocks.add(builder.build());
+            }
+        } catch (Exception e) {
+            clocks = null;
+        } finally {
+            // Do Nothing
+        }
+        return clocks;
+    }
+
 }
