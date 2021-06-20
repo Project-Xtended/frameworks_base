@@ -78,7 +78,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     protected View mSettingsContainer;
     private PageIndicator mPageIndicator;
     private TextView mBuildText;
-    private boolean mShouldShowBuildText;
     private View mRunningServicesButton;
 
     private boolean mQsDisabled;
@@ -152,13 +151,11 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         mActionsContainer = findViewById(R.id.qs_footer_actions_container);
         mEditContainer = findViewById(R.id.qs_footer_actions_edit_container);
-        mBuildText = findViewById(R.id.build);
 
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
         ((RippleDrawable) mRunningServicesButton.getBackground()).setForceSoftware(true);
-
 
         updateResources();
 
@@ -180,7 +177,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                         UserHandle.USER_CURRENT);
         if (isShow) {
             if (text == null || text == "") {
-                v.setText("MSM-Xtended");
+                v.setText("Xtended");
                 v.setVisibility(View.VISIBLE);
             } else {
                 v.setText(text);
@@ -341,7 +338,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mSettingsButton.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mRunningServicesButton.setVisibility(!isDemo && mExpanded ? View.VISIBLE : View.INVISIBLE);
-        mBuildText.setVisibility(mExpanded && mShouldShowBuildText ? View.VISIBLE : View.GONE);
     }
 
     private boolean showUserSwitcher() {
