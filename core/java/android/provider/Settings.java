@@ -16698,12 +16698,6 @@ public final class Settings {
          */
         public static final String NR_NSA_TRACKING_SCREEN_OFF_MODE =
                 "nr_nsa_tracking_screen_off_mode";
-
-        /**
-         * Track of screen dim state
-         * @hide
-         */
-        public static final String SCREEN_IS_DIMMING = "screen_is_dimming";
     }
 
     /**

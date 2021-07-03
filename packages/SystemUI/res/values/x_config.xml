@@ -59,9 +59,6 @@
     <!-- Color of the FOD view -->
     <color name="config_fodColorBackground">#20000000</color>
 
-    <!-- Whether to dim FOD icon -->
-    <bool name="config_fodIconNeedsDim">false</bool>
-
     <!-- Whether to invert the sim slots for VoLTE/VoWiFi icon -->
     <bool name="config_invertImsSlots">true</bool>
     
