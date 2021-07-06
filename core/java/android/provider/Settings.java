@@ -6342,12 +6342,6 @@ public final class Settings {
         public static final String ALERT_SLIDER_SILENT_MODE = "alert_slider_silent_mode";
 
         /**
-         * Whether StatusBar icons should use app icon
-         * @hide
-         */
-        public static final String STATUSBAR_ICONS_STYLE = "statusbar_icons_style";
-
-        /**
          * Whether to show the battery bar
          * @hide
          */
@@ -6771,7 +6765,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FORCE_FULLSCREEN_CUTOUT_APPS);
             PRIVATE_SETTINGS.add(SYSTEMUI_PLUGIN_VOLUME);
             PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
-            PRIVATE_SETTINGS.add(STATUSBAR_ICONS_STYLE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
         }
 
