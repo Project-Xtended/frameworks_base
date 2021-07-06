@@ -314,7 +314,7 @@ public class FODCircleView extends ImageView {
 
         mCustomSettingsObserver.observe();
         mCustomSettingsObserver.update();
-        updatePosition();
+
         hide();
 
         mLockPatternUtils = new LockPatternUtils(mContext);
