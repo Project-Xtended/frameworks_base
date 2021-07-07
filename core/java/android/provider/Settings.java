@@ -6596,6 +6596,12 @@ public final class Settings {
         public static final String STATUS_BAR_TICKER_TICK_DURATION =
                 "status_bar_ticker_tick_duration";
 
+        /**
+         * Hide Statusbar on LockScreen
+         * @hide
+         */
+        public static final String HIDE_LOCKSCREEN_STATUS_BAR = "hide_lockscreen_status_bar";
+
 	/**
          * Whether to enable or disable lockscreen background blur
          * @hide
