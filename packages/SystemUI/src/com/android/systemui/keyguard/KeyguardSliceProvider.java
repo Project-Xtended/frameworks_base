@@ -408,10 +408,10 @@ public class KeyguardSliceProvider extends SliceProvider implements
             case 4: case 6: case 8:
                  mDatePattern = getContext().getString(R.string.abbrev_wday_day_no_year);
                  break;
-            case 5: case 7: case 9:
+            case 5: case 7: case 9: case 13:
                  mDatePattern = getContext().getString(R.string.abbrev_wday_no_year);
                  break;
-            case 10:
+            case 10: case 14:
                  mDatePattern = getContext().getString(R.string.abbrev_wday_month_no_year);
                  break;
             default:
