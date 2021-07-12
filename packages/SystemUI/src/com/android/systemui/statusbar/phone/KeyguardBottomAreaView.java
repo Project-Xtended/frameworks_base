@@ -428,7 +428,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
     private void updateRightAffordanceIcon() {
         IconState state = mRightButton.getIcon();
-        mRightAffordanceView.setVisibility(!mDozing && state.isVisible ? View.VISIBLE : View.GONE);
+        mRightAffordanceView.setVisibility(!hideShortcuts() && !mDozing && state.isVisible ? View.VISIBLE : View.GONE);
         if (state.isVisible) {
             if (state.drawable != mRightAffordanceView.getDrawable()
                     || state.tint != mRightAffordanceView.shouldTint()
@@ -510,7 +510,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     }
 
     private void updateLeftAffordanceIcon() {
-        if (!mShowLeftAffordance || mDozing) {
+        if (!mShowLeftAffordance || mDozing || hideShortcuts()) {
             mLeftAffordanceView.setVisibility(GONE);
             return;
         }
