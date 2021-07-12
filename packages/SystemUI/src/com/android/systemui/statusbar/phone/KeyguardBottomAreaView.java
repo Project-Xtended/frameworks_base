@@ -368,7 +368,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
 
     private void updateRightAffordanceIcon() {
         IconState state = mRightButton.getIcon();
-        mRightAffordanceView.setVisibility(!mDozing && state.isVisible ? View.VISIBLE : View.GONE);
+        mRightAffordanceView.setVisibility(!hideShortcuts() && !mDozing && state.isVisible ? View.VISIBLE : View.GONE);
         if (state.isVisible) {
             if (state.drawable != mRightAffordanceView.getDrawable()
                     || state.tint != mRightAffordanceView.shouldTint()
@@ -457,12 +457,12 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     }
 
     private void updateLeftAffordanceIcon() {
-        if (!mShowLeftAffordance || mDozing) {
+        if (!mShowLeftAffordance) {
             mLeftAffordanceView.setVisibility(GONE);
             return;
         }
         IconState state = mLeftButton.getIcon();
-        mLeftAffordanceView.setVisibility(state.isVisible ? View.VISIBLE : View.GONE);
+        mLeftAffordanceView.setVisibility(!hideShortcuts() && !mDozing && state.isVisible ? View.VISIBLE : View.GONE);
         if (state.isVisible) {
             if (state.drawable != mLeftAffordanceView.getDrawable()
                     || state.tint != mLeftAffordanceView.shouldTint()
@@ -912,7 +912,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         public IconState getIcon() {
             mLeftIsVoiceAssist = canLaunchVoiceAssist();
             if (mLeftIsVoiceAssist) {
-                mIconState.isVisible = mUserSetupComplete && mShowLeftAffordance && !hideShortcuts();
+                mIconState.isVisible = mUserSetupComplete && mShowLeftAffordance;
                 if (mLeftAssistIcon == null) {
                     mIconState.drawable = mContext.getDrawable(R.drawable.ic_mic_26dp);
                 } else {
@@ -922,7 +922,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
                         R.string.accessibility_voice_assist_button);
             } else {
                 mIconState.isVisible = mUserSetupComplete && mShowLeftAffordance
-                        && isPhoneVisible() && !hideShortcuts();
+                        && isPhoneVisible();
                 mIconState.drawable = mContext.getDrawable(
                         com.android.internal.R.drawable.ic_phone);
                 mIconState.contentDescription = mContext.getString(
@@ -947,8 +947,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
             mIconState.isVisible = !isCameraDisabled
                     && mShowCameraAffordance
                     && mUserSetupComplete
-                    && resolveCameraIntent() != null
-                    && !hideShortcuts();
+                    && resolveCameraIntent() != null;
             mIconState.drawable = mContext.getDrawable(R.drawable.ic_camera_alt_24dp);
             mIconState.contentDescription =
                     mContext.getString(R.string.accessibility_camera_button);
