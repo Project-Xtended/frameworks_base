@@ -24,12 +24,17 @@ import static com.android.systemui.DejankUtils.whitelistIpcs;
 import static com.android.systemui.statusbar.NotificationRemoteInputManager.ENABLE_REMOTE_INPUT;
 
 import android.app.IActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.os.Trace;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -98,6 +103,7 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
     private boolean mHasTopUiChanged;
     private float mScreenBrightnessDoze;
     private final State mCurrentState = new State();
+    private long mCurrentTimeout;
     private OtherwisedCollapsedListener mListener;
     private ForcePluginOpenListener mForcePluginOpenListener;
     private Consumer<Integer> mScrimsVisibilityListener;
@@ -160,6 +166,9 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
         // know that we're not falsing (because we unlocked.)
         mKeyguardMaxRefreshRate = context.getResources()
                 .getInteger(R.integer.config_keyguardMaxRefreshRate);
+
+        SettingsObserver observer = new SettingsObserver(new Handler());
+        observer.observe(context);
     }
 
     /**
@@ -402,11 +411,14 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
     }
 
     private void applyUserActivityTimeout(State state) {
+
+        updateSettings();
+
         if (state.isKeyguardShowingAndNotOccluded()
                 && state.mStatusBarState == StatusBarState.KEYGUARD
                 && !state.mQsExpanded) {
             mLpChanged.userActivityTimeout = state.mBouncerShowing
-                    ? KeyguardViewMediator.AWAKE_INTERVAL_BOUNCER_MS : mLockScreenDisplayTimeout;
+                    ? KeyguardViewMediator.AWAKE_INTERVAL_BOUNCER_MS : mCurrentTimeout;
         } else {
             mLpChanged.userActivityTimeout = -1;
         }
@@ -714,6 +726,36 @@ public class NotificationShadeWindowControllerImpl implements NotificationShadeW
     @Override
     public void setForcePluginOpenListener(ForcePluginOpenListener listener) {
         mForcePluginOpenListener = listener;
+    }
+
+
+    private void updateSettings() {
+        final ContentResolver resolver = mContext.getContentResolver();
+
+        mCurrentTimeout = Settings.System.getIntForUser(resolver,
+                Settings.System.LOCKSCREEN_TIMEOUT, 15000,
+                UserHandle.USER_CURRENT);
+    }
+
+    private class SettingsObserver extends ContentObserver {
+        public SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        public void observe(Context context) {
+            context.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_TIMEOUT),
+                    false, this, UserHandle.USER_ALL);
+		}
+
+        public void unobserve(Context context) {
+            context.getContentResolver().unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            updateSettings();
+        }
     }
 
     @Override
