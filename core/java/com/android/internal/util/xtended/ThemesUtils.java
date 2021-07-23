@@ -54,7 +54,7 @@ public class ThemesUtils {
     };
 
      // Switch themes
-    private static final String[] SWITCH_THEMES = {
+    public static final String[] SWITCH_THEMES = {
         "com.android.system.switch.stock", // 0
         "com.android.system.switch.oneplus", // 1
 	"com.android.system.switch.narrow", // 2
@@ -77,6 +77,30 @@ public class ThemesUtils {
             "com.android.theme.navbar.oneui",
             "com.android.theme.navbar.sammy",
             "com.android.theme.navbar.tecno",
+    };
+
+    // Statusbar Signal icons
+    public static final String[] SIGNAL_BAR = {
+        "org.blissroms.systemui.signalbar_a",
+        "org.blissroms.systemui.signalbar_b",
+        "org.blissroms.systemui.signalbar_c",
+        "org.blissroms.systemui.signalbar_d",
+        "org.blissroms.systemui.signalbar_e",
+        "org.blissroms.systemui.signalbar_f",
+        "org.blissroms.systemui.signalbar_g",
+        "org.blissroms.systemui.signalbar_h",
+    };
+
+    // Statusbar Wifi icons
+    public static final String[] WIFI_BAR = {
+        "org.blissroms.systemui.wifibar_a",
+        "org.blissroms.systemui.wifibar_b",
+        "org.blissroms.systemui.wifibar_c",
+        "org.blissroms.systemui.wifibar_d",
+        "org.blissroms.systemui.wifibar_e",
+        "org.blissroms.systemui.wifibar_f",
+        "org.blissroms.systemui.wifibar_g",
+        "org.blissroms.systemui.wifibar_h",
     };
 
     public static final String[] STATUSBAR_HEIGHT = {
@@ -181,7 +205,7 @@ public class ThemesUtils {
     }
 
     public static void stockSwitchStyle(IOverlayManager om, int userId) {
-        for (int i = 0; i < SWITCH_THEMES.length; i++) {
+        for (int i = 1; i < SWITCH_THEMES.length; i++) {
             String switchtheme = SWITCH_THEMES[i];
             try {
                 om.setEnabled(switchtheme,
@@ -191,28 +215,4 @@ public class ThemesUtils {
             }
         }
     }
-
-    // Statusbar Signal icons
-    private static final String[] SIGNAL_BAR = {
-        "org.blissroms.systemui.signalbar_a",
-        "org.blissroms.systemui.signalbar_b",
-        "org.blissroms.systemui.signalbar_c",
-        "org.blissroms.systemui.signalbar_d",
-        "org.blissroms.systemui.signalbar_e",
-        "org.blissroms.systemui.signalbar_f",
-        "org.blissroms.systemui.signalbar_g",
-        "org.blissroms.systemui.signalbar_h",
-    };
-
-    // Statusbar Wifi icons
-    private static final String[] WIFI_BAR = {
-        "org.blissroms.systemui.wifibar_a",
-        "org.blissroms.systemui.wifibar_b",
-        "org.blissroms.systemui.wifibar_c",
-        "org.blissroms.systemui.wifibar_d",
-        "org.blissroms.systemui.wifibar_e",
-        "org.blissroms.systemui.wifibar_f",
-        "org.blissroms.systemui.wifibar_g",
-        "org.blissroms.systemui.wifibar_h",
-    };
 }
