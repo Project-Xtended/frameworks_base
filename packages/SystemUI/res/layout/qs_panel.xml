@@ -41,7 +41,9 @@
         android:layout_height="@*android:dimen/quick_qs_offset_height"
         android:clipToPadding="false"
         android:clipChildren="false"
-        android:background="@android:color/transparent" />
+        android:layout_marginBottom="3dp"
+        android:paddingEnd="@dimen/notification_side_paddings"
+        android:paddingStart="@dimen/notification_side_paddings" />
 
     <!-- Gradient view behind QS -->
     <View

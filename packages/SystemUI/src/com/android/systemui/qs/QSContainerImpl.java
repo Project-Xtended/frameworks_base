@@ -113,6 +113,7 @@ public class QSContainerImpl extends FrameLayout {
     private View mStatusBarBackground;
     private Drawable mQsBackGround;
     private int mQsBgNewEnabled;
+    private int mQsHeaderBgNew;
 
     private int mSideMargins;
     private boolean mQsDisabled;
@@ -123,6 +124,7 @@ public class QSContainerImpl extends FrameLayout {
     private int mQsBackGroundAlpha;
     private int mCurrentColor;
     private Drawable mQsHeaderBackGround;
+    private Drawable mSbHeaderBackGround;
     private boolean mQsBackgroundBlur;
     private boolean mQsBackGroundType;
 
@@ -154,6 +156,7 @@ public class QSContainerImpl extends FrameLayout {
         mBackground = findViewById(R.id.quick_settings_background);
         mQsBackgroundImage = findViewById(R.id.qs_image_view);
         mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
+        mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_primary);
         mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
         updateResources();
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
@@ -221,6 +224,9 @@ public class QSContainerImpl extends FrameLayout {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_NEW_BG_ENABLED), false, this,
                     UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_NEW_BG), false, this,
+                    UserHandle.USER_ALL);
         }
 
         @Override
@@ -245,6 +251,8 @@ public class QSContainerImpl extends FrameLayout {
                 Settings.System.DISPLAY_CUTOUT_MODE, 0, UserHandle.USER_CURRENT) == 1;
         mQsBgNewEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
                     Settings.System.QS_NEW_BG_ENABLED, 0, UserHandle.USER_CURRENT);
+        mQsHeaderBgNew = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_HEADER_NEW_BG, 0, UserHandle.USER_CURRENT);
         post(new Runnable() {
             public void run() {
                 setQsBackground();
@@ -323,8 +331,29 @@ public class QSContainerImpl extends FrameLayout {
                 }
             }
 	}
+        switch(mQsHeaderBgNew) {
+               // Accent Border
+            case 1:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_accent_brdr);
+                break;
+               // Gradient Border
+            case 2:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_grad_brdr);
+                break;
+               // Reverse Gradient Border
+            case 3:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_rev_grad_brdr);
+                break;
+            default:
+            case 0:
+                mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_primary);
+                break;
+        }
 	mBackground.setBackground(mQsBackGround);
+        mStatusBarBackground.setBackground(mSbHeaderBackGround);
 	mQsBackGround.setAlpha(mQsBackGroundAlpha);
+        mStatusBarBackground.setAlpha(mQsBackGroundAlpha);
+        mSbHeaderBackGround.setAlpha(mQsBackGroundAlpha);
         mQsHeaderBackGround.setAlpha(mQsBackGroundAlpha);
     }
 
@@ -503,10 +532,8 @@ public class QSContainerImpl extends FrameLayout {
     private void setBackgroundGradientVisibility(Configuration newConfig) {
         if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
             mBackgroundGradient.setVisibility(View.INVISIBLE);
-            mStatusBarBackground.setVisibility(View.INVISIBLE);
         } else {
             mBackgroundGradient.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
-            mStatusBarBackground.setVisibility(View.VISIBLE);
         }
     }
 
@@ -519,7 +546,7 @@ public class QSContainerImpl extends FrameLayout {
     private void updatePaddingsAndMargins() {
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
-            if (view == mStatusBarBackground || view == mBackgroundGradient
+            if (view == mBackgroundGradient
                     || view == mQSCustomizer) {
                 // Some views are always full width
                 continue;

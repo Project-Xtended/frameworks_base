@@ -29,8 +29,8 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:paddingTop="0dp"
-    android:paddingEnd="0dp"
-    android:paddingStart="0dp"
+    android:paddingEnd="@dimen/notification_side_paddings"
+    android:paddingStart="@dimen/notification_side_paddings"
     android:elevation="4dp" >
 
     <!-- The clock -->
