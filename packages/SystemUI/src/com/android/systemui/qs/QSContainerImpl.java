@@ -158,9 +158,9 @@ public class QSContainerImpl extends FrameLayout {
         mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
         mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_primary);
         mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
-        updateResources();
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+        updateResources();
         updateSettings();
         mHeader.getHeaderQsPanel().setMediaVisibilityChangedListener((visible) -> {
             if (mHeader.getHeaderQsPanel().isShown()) {
@@ -278,12 +278,13 @@ public class QSContainerImpl extends FrameLayout {
         }
         if (currentImage != null && mQsBackGroundType) {
             int width = mQSPanel.getWidth();
-            int height = mQSPanel.getHeight() + mDragHandle.getHeight();
+            int height = mQSPanelContainer.getHeight() + mDragHandle.getHeight();
+            int corner = getContext().getResources().getDimensionPixelSize(R.dimen.qs_corner_radius);
 
             Bitmap bitmap = mQsBackgroundBlur ? XImageUtils.getBlurredImage(mContext, currentImage.getBitmap()) : currentImage.getBitmap();
             Bitmap toCenter = XImageUtils.scaleCenterCrop(bitmap, width, height);
             BitmapDrawable bDrawable = new BitmapDrawable(mContext.getResources(),
-                            XImageUtils.getRoundedCornerBitmap(toCenter, 15, width, height, mCurrentColor));
+                            XImageUtils.getRoundedCornerBitmap(toCenter, corner, width, height, mCurrentColor));
 
             mQsBackGround = new InsetDrawable(bDrawable, 0, 0, 0, mContext.getResources().getDimensionPixelSize(com.android.internal.R.dimen.qs_background_inset));
 
