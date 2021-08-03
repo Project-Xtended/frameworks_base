@@ -134,7 +134,4 @@
     <!-- QS detail view scrolling -->
     <dimen name="qs_detail_item_height_twoline">72dp</dimen>
 
-    <dimen name="quick_settings_top_margin_media">10dp</dimen>
-    <dimen name="quick_settings_top_margin_media_extra">14dp</dimen>
-
 </resources>

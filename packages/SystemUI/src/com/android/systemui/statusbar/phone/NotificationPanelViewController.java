@@ -4359,12 +4359,6 @@ public class NotificationPanelViewController extends PanelViewController {
                 int col;
                 col = row.getEntry().getSbn().getNotification().color;
                 mAppExceptions = mView.getContext().getResources().getStringArray(R.array.app_exceptions);
-                //check if we need to override the color
-                for (int i=0; i < mAppExceptions.length; i++) {
-                    if (mAppExceptions[i].contains(pkgname)) {
-                        col = Color.parseColor(mAppExceptions[i+=1]);
-                    }
-                }
                 Drawable dw = mView.getContext().getDrawable(R.drawable.reticker_background);
                 dw.setTint(col);
                 mReTickerComeback.setBackground(dw);
