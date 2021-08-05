@@ -81,7 +81,6 @@
              android:maxLines="1"
              android:layout_gravity="center_vertical"
              android:gravity="center_vertical|end"
-             android:textAppearance="@style/TextAppearance.StatusBar.Clock"
              android:paddingStart="2dp"
              android:paddingEnd="2dp" />
 

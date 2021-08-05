@@ -23,8 +23,11 @@ import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -57,6 +60,7 @@ public class StatusBarWeatherImage extends ImageView implements
     private boolean mWeatherInHeaderView;
     private boolean mAttached;
     private int mTintColor;
+    private int mWeatherIconColor;
 
     Handler mHandler;
 
@@ -78,6 +82,7 @@ public class StatusBarWeatherImage extends ImageView implements
         mTintColor = resources.getColor(android.R.color.white);
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
+        updateColor();
     }
 
     @Override
@@ -121,6 +126,7 @@ public class StatusBarWeatherImage extends ImageView implements
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
+            updateColor();
         }
     }
 
@@ -184,7 +190,24 @@ public class StatusBarWeatherImage extends ImageView implements
 
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+        if (mWeatherImage == null) return;
+        if (mWeatherIconColor == 0xFFFFFFFF) {
+            mWeatherImage.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+        } else {
+            mWeatherImage.setColorFilter(mWeatherIconColor, PorterDuff.Mode.MULTIPLY);
+        }
         queryAndUpdateWeather();
+    }
+
+    private void updateColor() {
+        mWeatherIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_ICON_COLOR, 0xffffffff);
+        if (mWeatherImage == null) return;
+        if (mWeatherIconColor == 0xFFFFFFFF) {
+            mWeatherImage.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+        } else {
+            mWeatherImage.setColorFilter(mWeatherIconColor, PorterDuff.Mode.MULTIPLY);
+        }
     }
 }
 
