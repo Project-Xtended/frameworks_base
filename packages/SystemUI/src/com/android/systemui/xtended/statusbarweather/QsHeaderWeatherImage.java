@@ -22,9 +22,13 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.graphics.Rect;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -60,6 +64,7 @@ public class QsHeaderWeatherImage extends ImageView implements
     private boolean mAttached;
     private boolean mWeatherInHeaderView;
     private int mTintColor;
+    private int mWeatherIconColor;
 
     Handler mHandler;
 
@@ -81,6 +86,7 @@ public class QsHeaderWeatherImage extends ImageView implements
         mTintColor = resources.getColor(android.R.color.white);
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
+        updateColor();
     }
 
     @Override
@@ -116,14 +122,18 @@ public class QsHeaderWeatherImage extends ImageView implements
                     Settings.System.STATUS_BAR_SHOW_WEATHER_TEMP), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-			        Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
-			        UserHandle.USER_ALL);
+                    Settings.System.STATUS_BAR_SHOW_WEATHER_LOCATION), false, this,
+                    UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_WEATHER_ICON_COLOR), false, this,
+                    UserHandle.USER_ALL);
             updateSettings();
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
+            updateColor();
         }
     }
 
@@ -182,7 +192,24 @@ public class QsHeaderWeatherImage extends ImageView implements
 
     public void onDarkChanged(ArrayList<Rect> areas, float darkIntensity, int tint) {
         mTintColor = DarkIconDispatcher.getTint(areas, this, tint);
+        if (mWeatherImage == null) return;
+        if (mWeatherIconColor == 0xFFFFFFFF) {
+            mWeatherImage.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+        } else {
+            mWeatherImage.setColorFilter(mWeatherIconColor, PorterDuff.Mode.MULTIPLY);
+        }
         queryAndUpdateWeather();
+    }
+
+    private void updateColor() {
+        mWeatherIconColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_WEATHER_ICON_COLOR, 0xffffffff);
+        if (mWeatherImage == null) return;
+        if (mWeatherIconColor == 0xFFFFFFFF) {
+            mWeatherImage.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+        } else {
+            mWeatherImage.setColorFilter(mWeatherIconColor, PorterDuff.Mode.MULTIPLY);
+        }
     }
 }
 

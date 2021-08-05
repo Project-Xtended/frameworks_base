@@ -6878,6 +6878,30 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_WEATHER_LOCATION = "status_bar_show_weather_location";
 
         /**
+         * Status bar weather font style
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_FONT_STYLE = "status_bar_weather_font_style";
+
+        /**
+         * Status bar weather font size
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_FONT_SIZE = "status_bar_weather_font_size";
+
+        /**
+         * Status bar weather font color
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_FONT_COLOR = "status_bar_weather_font_color";
+
+        /**
+         * Status bar weather icon color
+         * @hide
+         */
+        public static final String STATUS_BAR_WEATHER_ICON_COLOR = "status_bar_weather_icon_color";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
