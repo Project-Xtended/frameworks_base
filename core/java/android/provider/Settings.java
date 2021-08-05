@@ -6889,6 +6889,13 @@ public final class Settings {
          */
         public static final String ARTWORK_MEDIA_BACKGROUND = "artwork_media_background";
 
+	/**
+         * The fade level of Artwork on background media notification
+         * requires ARTWORK_MEDIA_BACKGROUND to be enabled
+         * @hide
+         */
+        public static final String ARTWORK_MEDIA_FADE_LEVEL = "artwork_media_fade_level";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
