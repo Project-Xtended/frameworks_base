@@ -38,6 +38,9 @@ import com.android.systemui.Dependency;
 import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.omni.OmniJawsClient;
 
+import com.android.systemui.plugins.DarkIconDispatcher;
+import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
+
 public class QsHeaderWeatherImage extends ImageView implements
         OmniJawsClient.OmniJawsObserver {
 
@@ -54,6 +57,7 @@ public class QsHeaderWeatherImage extends ImageView implements
     private boolean mEnabled;
     private boolean mAttached;
     private boolean mWeatherInHeaderView;
+    private int mTintColor;
 
     Handler mHandler;
 
@@ -72,6 +76,7 @@ public class QsHeaderWeatherImage extends ImageView implements
         mHandler = new Handler();
         mWeatherClient = new OmniJawsClient(mContext);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
+        mTintColor = resources.getColor(android.R.color.white);
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
     }
@@ -86,6 +91,7 @@ public class QsHeaderWeatherImage extends ImageView implements
         super.onAttachedToWindow();
         mEnabled = mWeatherClient.isOmniJawsEnabled();
         mWeatherClient.addObserver(this);
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
         queryAndUpdateWeather();
     }
 
@@ -94,6 +100,7 @@ public class QsHeaderWeatherImage extends ImageView implements
         super.onDetachedFromWindow();
         mWeatherClient.removeObserver(this);
         mWeatherClient.cleanupObserver();
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
     }
 
     class SettingsObserver extends ContentObserver {
@@ -169,6 +176,11 @@ public class QsHeaderWeatherImage extends ImageView implements
         } catch(Exception e) {
             // Do nothing
         }
+    }
+
+    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
+        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+        queryAndUpdateWeather();
     }
 }
 
