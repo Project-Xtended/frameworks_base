@@ -342,9 +342,9 @@ public class GamingModeController {
     }
 
     private void activateGamingMode(boolean enabled) {
-        if (mGamingModeActivated == enabled && mGamingModeEnabled)
+        if (mGamingModeActivated == enabled)
             return;
-        mGamingModeActivated = enabled && mGamingModeEnabled;
+        mGamingModeActivated = enabled;
         if (mGamingModeActivated) {
             enableGamingFeatures();
         } else {
@@ -397,7 +397,7 @@ public class GamingModeController {
                                    Settings.System.GAMING_MODE_ACTIVE))) {
                 boolean enable = Settings.System.getInt(mContext.getContentResolver(),
                     Settings.System.GAMING_MODE_ACTIVE, 0) == 1;
-                activateGamingMode(enable);
+                activateGamingMode(enable && mGamingModeEnabled);
             }
         }
     }
