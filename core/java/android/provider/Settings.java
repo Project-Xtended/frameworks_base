@@ -5561,6 +5561,12 @@ public final class Settings {
                 "double_tap_sleep_lockscreen";
 
         /**
+         * Enable\Disable swipe up or down gesture on ambient display like OOS
+         * @hide
+         */
+        public static final String AMBIENT_SWIPE = "ambient_swipe";
+
+        /**
           * Volume dialog timeout
           * @hide
           */
@@ -6964,6 +6970,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
+            PRIVATE_SETTINGS.add(AMBIENT_SWIPE);
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
             PRIVATE_SETTINGS.add(SCREENSHOT_TYPE);
             PRIVATE_SETTINGS.add(COLOR_BUCKET_OVERLAY);

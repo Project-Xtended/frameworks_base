@@ -100,6 +100,7 @@ public class NotificationShadeWindowViewController {
     private boolean mExpandingBelowNotch;
     private final DockManager mDockManager;
     private final NotificationPanelViewController mNotificationPanelViewController;
+    private final DozeServiceHost mDozeServiceHost;
     private final SuperStatusBarViewFactory mStatusBarViewFactory;
 
     // Used for determining view / touch intersection
@@ -132,6 +133,7 @@ public class NotificationShadeWindowViewController {
             NotificationShadeDepthController depthController,
             NotificationShadeWindowView notificationShadeWindowView,
             NotificationPanelViewController notificationPanelViewController,
+            DozeServiceHost dozeServiceHost,
             SuperStatusBarViewFactory statusBarViewFactory) {
         mInjectionInflationController = injectionInflationController;
         mCoordinator = coordinator;
@@ -152,6 +154,7 @@ public class NotificationShadeWindowViewController {
         mShadeController = shadeController;
         mDockManager = dockManager;
         mNotificationPanelViewController = notificationPanelViewController;
+        mDozeServiceHost = dozeServiceHost;
         mDepthController = depthController;
         mStatusBarViewFactory = statusBarViewFactory;
 
@@ -498,12 +501,18 @@ public class NotificationShadeWindowViewController {
         boolean isDoubleTapEnabled = Settings.System.getIntForUser(
                 mView.getContext().getContentResolver(), Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN, 1,
                 UserHandle.USER_CURRENT) == 1;
+        boolean isAmbientSwipeEnabled = Settings.System.getIntForUser(
+                mView.getContext().getContentResolver(), Settings.System.AMBIENT_SWIPE, 1,
+                UserHandle.USER_CURRENT) == 1;
         if (mNotificationPanelViewController != null) {
             mNotificationPanelViewController.updateDoubleTapToSleep(doubleTapToSleepEnabled);
             mNotificationPanelViewController.setLockscreenDoubleTapToSleep(isDoubleTapEnabled);
         }
         if (mDragDownHelper != null) {
             mDragDownHelper.updateDoubleTapToSleep(doubleTapToSleepEnabled);
+        }
+        if (mDozeServiceHost != null) {
+            mDozeServiceHost.setAmbientSwipeGesture(isAmbientSwipeEnabled);
         }
     }
 }
