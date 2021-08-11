@@ -93,6 +93,7 @@ public final class DozeServiceHost implements DozeHost {
     private View mAmbientIndicationContainer;
     private StatusBar mStatusBar;
     private boolean mSuppressed;
+    private boolean mIsAmbientSwipeEnabled;
 
     @Inject
     public DozeServiceHost(DozeLog dozeLog, PowerManager powerManager,
@@ -240,7 +241,9 @@ public final class DozeServiceHost implements DozeHost {
             @Override
             public void onPulseStarted() {
                 callback.onPulseStarted();
-                mStatusBar.updateNotificationPanelTouchState();
+                if (mIsAmbientSwipeEnabled) {
+                    mStatusBar.updateNotificationPanelTouchState();
+                }
                 setPulsing(true);
             }
 
@@ -265,7 +268,9 @@ public final class DozeServiceHost implements DozeHost {
                 }
                 mStatusBar.updateScrimController();
                 mPulseExpansionHandler.setPulsing(pulsing);
-                mNotificationWakeUpCoordinator.setPulsing(pulsing);
+                if (mIsAmbientSwipeEnabled) {
+                    mNotificationWakeUpCoordinator.setPulsing(pulsing);
+                }
             }
         }, reason);
         // DozeScrimController is in pulse state, now let's ask ScrimController to start
@@ -396,8 +401,6 @@ public final class DozeServiceHost implements DozeHost {
         mScrimController.setAodFrontScrimAlpha(scrimOpacity);
     }
 
-
-
     @Override
     public void prepareForGentleSleep(Runnable onDisplayOffCallback) {
         if (mPendingScreenOffCallback != null) {
@@ -460,5 +463,9 @@ public final class DozeServiceHost implements DozeHost {
 
     public boolean isDozeSuppressed() {
         return mSuppressed;
+    }
+
+    public void setAmbientSwipeGesture(boolean IsAmbientSwipeEnabled) {
+        mIsAmbientSwipeEnabled = IsAmbientSwipeEnabled;
     }
 }
