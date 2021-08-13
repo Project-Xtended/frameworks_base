@@ -6668,12 +6668,6 @@ public final class Settings {
         public static final String STATUS_BAR_WEATHER_ICON_COLOR = "status_bar_weather_icon_color";
 
         /**
-         * Whether to enable or disable lockscreen background blur
-         * @hide
-         */
-        public static final String LOCKSCREEN_BLUR = "lockscreen_blur";
-
-        /**
          * Transparent power menu and dialogs
          * @hide
          */
