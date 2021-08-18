@@ -869,4 +869,3 @@ void get_args_from_report(IncidentReportArgs* out, const ReportFileProto_Report&
 }  // namespace incidentd
 }  // namespace os
 }  // namespace android
-
