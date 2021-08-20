@@ -933,28 +933,25 @@ public class KeyguardStatusView extends GridLayout implements
 
         switch (mClockAnimationSelection) {
             case 1:
-                mClockAnimationLottie.setAnimation(R.raw.explosion_animation);
-                mClockAnimationLottie.playAnimation();
+                mClockAnimationLottie.setFileName("explosion_animation.json");
                 break;
             case 2:
-                mClockAnimationLottie.setAnimation(R.raw.blue_circle_animation);
-                mClockAnimationLottie.playAnimation();
+                mClockAnimationLottie.setFileName("blue_circle_animation.json");
                 break;
             case 3:
-                mClockAnimationLottie.setAnimation(R.raw.bluev2_circle_animation);
-                mClockAnimationLottie.playAnimation();
+                mClockAnimationLottie.setFileName("bluev2_circle_animation.json");
                 break;
             case 4:
-                mClockAnimationLottie.setAnimation(R.raw.rainbow_cirlce_animation);
-                mClockAnimationLottie.playAnimation();
+                mClockAnimationLottie.setFileName("rainbow_circle_animation.json");
                 break;
             case 5:
-                mClockAnimationLottie.setAnimation(R.raw.fire_circle_animation);
-                mClockAnimationLottie.playAnimation();
+                mClockAnimationLottie.setFileName("fire_circle_animation.json");
                 break;
         }
-
-        if (mClockAnimationSelection == 0) {
+        if (mClockAnimationSelection > 0 && mClockSelection > 3 && mClockSelection < 8) {
+            mClockAnimationLottie.setVisibility(View.VISIBLE);
+            mClockAnimationLottie.playAnimation();
+        } else {
             mClockAnimationLottie.setVisibility(View.GONE);
         }
     }
@@ -973,7 +970,6 @@ public class KeyguardStatusView extends GridLayout implements
         mTextClock = findViewById(R.id.custom_text_clock_view);
         mCustomClockView = findViewById(R.id.custom_clock_view);
         mCustomNumClockView = findViewById(R.id.custom_num_clock_view);
-        mClockAnimationLottie = findViewById(R.id.animation_circle_lottie);
 
         switch (mClockSelection) {
             case 1: // hidden
@@ -981,7 +977,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mTextClock.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
                 mCustomNumClockView.setVisibility(View.GONE);
-                mClockAnimationLottie.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 break;
             case 2: // default
@@ -989,7 +984,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mTextClock.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
                 mCustomNumClockView.setVisibility(View.GONE);
-                mClockAnimationLottie.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 break;
             case 3: // default (bold)
@@ -997,7 +991,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mTextClock.setVisibility(View.GONE);
                 mCustomClockView.setVisibility(View.GONE);
                 mCustomNumClockView.setVisibility(View.GONE);
-                mClockAnimationLottie.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 break;
             case 4: // sammy
@@ -1007,7 +1000,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mCustomClockView.setVisibility(View.GONE);
                 mCustomNumClockView.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                updateLottieAnimations();
                 break;
             case 5: // sammy (bold)
                 mSmallClockView.setVisibility(View.VISIBLE);
@@ -1016,7 +1008,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mCustomClockView.setVisibility(View.GONE);
                 mCustomNumClockView.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                updateLottieAnimations();
                 break;
             case 6: // sammy (hour accent)
                 mSmallClockView.setVisibility(View.VISIBLE);
@@ -1025,7 +1016,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mCustomClockView.setVisibility(View.GONE);
                 mCustomNumClockView.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                updateLottieAnimations();
                 break;
             case 7: // sammy (minute accent)
                 mSmallClockView.setVisibility(View.VISIBLE);
@@ -1034,7 +1024,6 @@ public class KeyguardStatusView extends GridLayout implements
                 mCustomClockView.setVisibility(View.GONE);
                 mCustomNumClockView.setVisibility(View.GONE);
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
-                updateLottieAnimations();
                 break;
             case 8: // custom text clock
                 mTextClock.setVisibility(View.VISIBLE);
@@ -1057,6 +1046,7 @@ public class KeyguardStatusView extends GridLayout implements
                 params.addRule(RelativeLayout.BELOW, R.id.custom_num_clock_view);
                 break;
         }
+        updateLottieAnimations();
     }
 
     private void updateClockAlignment() {
