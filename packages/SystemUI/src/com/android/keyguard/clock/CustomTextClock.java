@@ -26,19 +26,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.android.internal.colorextraction.ColorExtractor;
-import com.android.internal.colorextraction.ColorExtractor.GradientColors;
-import com.android.internal.graphics.ColorUtils;
-import com.android.internal.util.NotificationColorUtil;
 import com.android.systemui.R;
-import com.android.systemui.Dependency;
-import com.android.systemui.colorextraction.SysuiColorExtractor;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class CustomTextClock extends TextView implements ColorExtractor.OnColorsChangedListener {
+public class CustomTextClock extends TextView {
 
     private String mDescFormat;
     private final String[] mHours;
@@ -46,15 +40,7 @@ public class CustomTextClock extends TextView implements ColorExtractor.OnColors
     private final Resources mResources;
     private final Calendar mTime;
     private TimeZone mTimeZone;
-    private SysuiColorExtractor mColorExtractor;
-
-    private int mPrimaryColor;
-    private int mAmbientColor;
-    private int mSystemAccent;
-    private int mFallbackColor;
-    private int mCurrentAccent;
-    private float mDarkAmount;
-    private float[] mHslOut = new float[3];
+    private int mAccentColor;
 
     private int mClockColor = 0xffffffff;
     private int mClockSize = 40;
@@ -82,16 +68,12 @@ public class CustomTextClock extends TextView implements ColorExtractor.OnColors
     public CustomTextClock(Context context, AttributeSet attributeSet, int defStyleAttr) {
         super(context, attributeSet, defStyleAttr);
 
-        mColorExtractor = Dependency.get(SysuiColorExtractor.class);
-        mColorExtractor.addOnColorsChangedListener(this);
         mTime = Calendar.getInstance(TimeZone.getDefault());
         mDescFormat = ((SimpleDateFormat) DateFormat.getTimeFormat(context)).toLocalizedPattern();
         mResources = context.getResources();
         mHours = mResources.getStringArray(R.array.type_clock_hours);
         mMinutes = mResources.getStringArray(R.array.type_clock_minutes);
-        mSystemAccent = mResources.getColor(R.color.accent_device_default_light, null);
-        mFallbackColor = mResources.getColor(R.color.custom_text_clock_top_fallback_color, null);
-        onColorsChanged(mColorExtractor, 0);
+        mAccentColor = mResources.getColor(R.color.accent_device_default_light, null);
     }
 
     public void onTimeChanged() {
@@ -104,7 +86,7 @@ public class CustomTextClock extends TextView implements ColorExtractor.OnColors
         SpannableString colored = new SpannableString(rawFormat);
         for (Annotation annotation : annotationArr) {
             if ("color".equals(annotation.getValue())) {
-                colored.setSpan(new ForegroundColorSpan(mCurrentAccent),
+                colored.setSpan(new ForegroundColorSpan(mAccentColor),
                         colored.getSpanStart(annotation),
                         colored.getSpanEnd(annotation),
                         Spanned.SPAN_POINT_POINT);
@@ -118,53 +100,8 @@ public class CustomTextClock extends TextView implements ColorExtractor.OnColors
         mTime.setTimeZone(timeZone);
     }
 
-    @Override
-    public void onColorsChanged(ColorExtractor extractor, int which) {
-        GradientColors colors = extractor.getColors(WallpaperManager.FLAG_LOCK);
-        setWallpaperColors(colors.getMainColor(), colors.supportsDarkText(), colors.getColorPalette());
-    }
-
-    private void setWallpaperColors(int mainColor, boolean supportsDarkText, int[] colorPalette) {
-        int scrimColor = supportsDarkText ? Color.WHITE : Color.BLACK;
-        int scrimTinted = ColorUtils.setAlphaComponent(ColorUtils.blendARGB(scrimColor, mainColor, 0.5f), 64);
-        int bgColor = ColorUtils.compositeColors(scrimTinted, mainColor);
-
-        int paletteColor = getColorFromPalette(colorPalette);
-        bgColor = ColorUtils.compositeColors(bgColor, Color.BLACK);
-        mPrimaryColor = findColor(paletteColor, bgColor, !supportsDarkText, mSystemAccent, mFallbackColor);
-        mAmbientColor = findColor(paletteColor, Color.BLACK, true, mSystemAccent, mFallbackColor);
-
-        setDarkAmount(mDarkAmount);
-    }
-
-    private int getColorFromPalette(int[] palette) {
-        if (palette != null && palette.length != 0) {
-            return palette[Math.max(0, palette.length - 5)];
-        } else {
-            return mSystemAccent;
-        }
-    }
-
-    private int findColor(int color, int background, boolean againstDark, int accent, int fallback) {
-        if (!isGreyscale(color)) {
-            return color;
-        }
-        int contrastAccent = NotificationColorUtil.ensureTextContrast(accent, background, againstDark);
-        if (!isGreyscale(contrastAccent)) {
-            return contrastAccent;
-        } else {
-            return fallback;
-        }
-    }
-
-    private boolean isGreyscale(int color) {
-        ColorUtils.RGBToHSL(Color.red(color), Color.green(color), Color.blue(color), mHslOut);
-        return mHslOut[1] < 0.1f || mHslOut[2] < 0.1f;
-    }
-
-    public void setDarkAmount(float dark) {
-        mDarkAmount = dark;
-        mCurrentAccent = ColorUtils.blendARGB(mPrimaryColor, mAmbientColor, mDarkAmount);
+    public void setClockColor(int i) {
+        mAccentColor = i;
         onTimeChanged();
     }
 
@@ -200,7 +137,6 @@ public class CustomTextClock extends TextView implements ColorExtractor.OnColors
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         getContext().unregisterReceiver(mTimeZoneChangedReceiver);
-        mColorExtractor.removeOnColorsChangedListener(this);
     }
 
     @Override
