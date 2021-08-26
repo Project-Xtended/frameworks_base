@@ -244,9 +244,6 @@
   <!-- Default value for FOD animation package resources -->
   <java-symbol type="string" name="config_fodAnimationPackage" />
 
-  <!-- NightLight FOD -->
-  <java-symbol type="bool" name="disable_fod_night_light"/>
-
   <!-- Whether the device supports Smart Pixels -->
   <java-symbol type="bool" name="config_supportSmartPixels" />
 
