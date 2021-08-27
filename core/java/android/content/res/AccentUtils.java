@@ -1,7 +1,10 @@
 package android.content.res;
 
+import android.app.ActivityThread;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.SystemProperties;
+import android.provider.Settings;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -50,10 +53,19 @@ public class AccentUtils {
     }
 
     private static int getAccentColor(int defaultColor, String property) {
+        final Context context = ActivityThread.currentApplication();
+        boolean randomAccent = Settings.System.getInt(context.getContentResolver(),
+                        Settings.System.ENABLE_RANDOM_ACCENT, 0) == 1;
+        boolean randomGradient = Settings.System.getInt(context.getContentResolver(),
+                        Settings.System.ENABLE_RANDOM_GRADIENT, 0) == 1;
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        if (cal.get(Calendar.MONTH) == 3 && cal.get(Calendar.DAY_OF_MONTH) == 1) {
+        if ((cal.get(Calendar.MONTH) == 3 && cal.get(Calendar.DAY_OF_MONTH) == 1) ||
+             randomAccent) {
             return ColorUtils.genRandomAccentColor(property == ACCENT_COLOR_PROP);
+        }
+        if (randomGradient) {
+            return ColorUtils.genRandomAccentColor(property == GRADIENT_COLOR_PROP);
         }
         try {
             String colorValue = SystemProperties.get(property, "-1");

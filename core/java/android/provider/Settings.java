@@ -6914,6 +6914,21 @@ public final class Settings {
          */
         public static final String CHARGING_ANIMATION_BG = "charging_animation_bg";
 
+        /**
+         * @hide
+         */
+        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
+
+        /**
+         * @hide
+         */
+        public static final String ENABLE_RANDOM_ACCENT = "enable_random_accent";
+
+        /**
+         * @hide
+         */
+        public static final String ENABLE_RANDOM_GRADIENT = "enable_random_gradient";
+
 	/**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -6925,12 +6940,6 @@ public final class Settings {
          */
         public static final String[] LEGACY_RESTORE_SETTINGS = {
         };
-
-
-        /**
-         * @hide
-         */
-        public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";        
 
         /**
          * These are all public system settings
