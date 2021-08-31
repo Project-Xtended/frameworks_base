@@ -2437,6 +2437,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_NEW_TILE_SIZE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2492,6 +2495,10 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setPulseOnNewTracks();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
                 setMaxKeyguardNotifConfig();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_NEW_TILE_SIZE))) {
+                stockQsTileSize();
+                updateQsTileSize();
+                mQSPanel.getHost().reloadAllTiles();
             }
         }
 
@@ -2515,6 +2522,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTickerTickDuration();
             setPulseOnNewTracks();
             setMaxKeyguardNotifConfig();
+            stockQsTileSize();
+            updateQsTileSize();
         }
     }
 
@@ -4393,6 +4402,20 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Unload all qs tile styles back to stock
     public void stockTileStyle() {
         ThemesUtils.stockNewTileStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    /**
+     * Switches qs tile size.
+     */
+    public void updateQsTileSize() {
+        int newQsSizeStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_NEW_TILE_SIZE, 0, mLockscreenUserManager.getCurrentUserId());
+        ThemesUtils.updateNewQsTileStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), newQsSizeStyle);
+    }
+
+    // Unload all qs tile size back to stock
+    public void stockQsTileSize() {
+        ThemesUtils.stockNewQsTileSize(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 
     /**

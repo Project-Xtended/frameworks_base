@@ -76,6 +76,15 @@ public class ThemesUtils {
         "com.bootleggers.qstile.triangles", // 17
     };
 
+    // QS Tile Size
+    public static final String[] QS_TILE_SIZE_STYLE = {
+        "com.android.qstilesize.default", // 0
+        "com.android.qstilesize.xsmall", // 1
+        "com.android.qstilesize.small", // 2
+        "com.android.qstilesize.large", // 3
+        "com.android.qstilesize.xlarge", // 4
+    };
+
      // Switch themes
     public static final String[] SWITCH_THEMES = {
         "com.android.system.switch.stock", // 0
@@ -207,6 +216,34 @@ public class ThemesUtils {
             String qstiletheme = QS_TILE_THEMES[i];
             try {
                 om.setEnabled(qstiletheme,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Switches qs tile size to user selected.
+    public static void updateNewQsTileStyle(IOverlayManager om, int userId, int newQsSizeStyle) {
+        if (newQsSizeStyle == 0) {
+            stockNewQsTileSize(om, userId);
+        } else {
+            try {
+                om.setEnabled(QS_TILE_SIZE_STYLE[newQsSizeStyle],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change qs tile size", e);
+            }
+        }
+    }
+
+    // Switches qs tile size back to stock.
+    public static void stockNewQsTileSize(IOverlayManager om, int userId) {
+        // skip index 0
+        for (int i = 1; i < QS_TILE_SIZE_STYLE.length; i++) {
+            String qsNewTilesize = QS_TILE_SIZE_STYLE[i];
+            try {
+                om.setEnabled(qsNewTilesize,
                         false /*disable*/, userId);
             } catch (RemoteException e) {
                 e.printStackTrace();
