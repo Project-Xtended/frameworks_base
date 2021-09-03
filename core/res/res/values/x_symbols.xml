@@ -34,6 +34,9 @@
     <!-- Whether device supports an alt. ambient display -->
     <java-symbol type="bool" name="config_alt_ambient_display"/>
 
+    <!-- Device has OnePlus haptic motor -->
+    <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
+
     <!-- Vendor mismatch fingerprint warning -->
     <java-symbol type="string" name="system_error_vendorprint" />
 
@@ -261,9 +264,6 @@
 
   <!-- App Lock -->
   <java-symbol type="string" name="lockscreen_pattern_instructions" />
-
-  <!-- OnePlus haptic motor -->
-  <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
 
   <!-- Pocket Lock -->
   <java-symbol type="layout" name="pocket_lock_view" />
