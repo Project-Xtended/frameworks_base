@@ -348,4 +348,9 @@
     <!-- Ambient Music Ticker -->
     <string name="ambientmusic_songinfo" formatted="false">%s by %s</string>
 
+    <!-- Text for the quick setting tile for sensor privacy [CHAR LIMIT=30] -->
+    <string name="sensor_privacy_mode_tile">Sensors</string>
+    <string name="quick_settings_on">On</string>
+    <string name="quick_settings_off">Off</string>
+
 </resources>
