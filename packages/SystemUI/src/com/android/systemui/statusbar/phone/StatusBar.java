@@ -2443,7 +2443,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.STATUS_BAR_TICKER_TICK_DURATION),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.PULSE_ON_NEW_TRACKS),
+                    Settings.System.AMBIENT_MUSIC_TICKER),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
@@ -2502,7 +2502,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.FORCE_SHOW_NAVBAR))) {
                 updateNavigationBar(false);
             } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.PULSE_ON_NEW_TRACKS))) {
+                    Settings.System.AMBIENT_MUSIC_TICKER))) {
                 setPulseOnNewTracks();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
                 setMaxKeyguardNotifConfig();
@@ -2646,7 +2646,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private void setPulseOnNewTracks() {
         if (KeyguardSliceProvider.getAttachedInstance() != null) {
             KeyguardSliceProvider.getAttachedInstance().setPulseOnNewTracks(Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.PULSE_ON_NEW_TRACKS, 1,
+                    Settings.System.AMBIENT_MUSIC_TICKER, 1,
                     UserHandle.USER_CURRENT) == 1);
         }
     }
