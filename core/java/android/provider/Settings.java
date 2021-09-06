@@ -6192,7 +6192,7 @@ public final class Settings {
          * @hide
          */
         public static final String FOD_COLOR = "fod_color";
-        
+
         /**
          * FOD night light
          * @hide
@@ -7129,6 +7129,18 @@ public final class Settings {
          * @hide
          */
         public static final String SETTINGS_SPACER_CUSTOM = "settings_spacer_custom";
+
+        /**
+         * Whether to add left padding on statusbar
+         * @hide
+         */
+        public static final String LEFT_PADDING = "statusbar_left_padding";
+
+        /**
+         * Whether to add right padding on statusbar
+         * @hide
+         */
+        public static final String RIGHT_PADDING = "statusbar_right_padding";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
