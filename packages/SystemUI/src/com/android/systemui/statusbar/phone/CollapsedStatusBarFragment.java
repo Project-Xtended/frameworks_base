@@ -34,6 +34,8 @@ import android.provider.Settings;
 import android.util.SparseArray;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -43,8 +45,11 @@ import android.graphics.PorterDuff.Mode;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +78,12 @@ import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +140,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private int mLogoStyle;
     private int mShowLogo;
     private int mLogoColor;
+    // Custom Image as SB LOGO
+    private boolean mCustomSbLogoEnabled;
 
     private final Handler mHandler = new Handler();
     private BatteryMeterView mBatteryMeterView;
@@ -156,14 +169,22 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 	 mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_LOGO_COLOR),
 		    false, this, UserHandle.USER_ALL);
+         mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_SB_LOGO_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+         mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.CUSTOM_SB_LOGO_IMAGE),
+                    false, this, UserHandle.USER_ALL);
        }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             if ((uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO))) ||
                 (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO_STYLE))) ||
-                (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO_COLOR)))){
-                 updateLogoSettings(true);
+                (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_LOGO_COLOR))) ||
+                (uri.equals(Settings.System.getUriFor(Settings.System.CUSTOM_SB_LOGO_ENABLED))) ||
+                (uri.equals(Settings.System.getUriFor(Settings.System.CUSTOM_SB_LOGO_IMAGE)))){
+                updateLogoSettings(true);
 	    }
             updateSettings(true);
         }
@@ -258,7 +279,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 	mXtendedLogo = mStatusBar.findViewById(R.id.status_bar_logo);
 	mXtendedLogoRight = mStatusBar.findViewById(R.id.status_bar_logo_right);
         updateSettings(false);
-	updateLogoSettings(false);
         mSignalClusterEndPadding = getResources().getDimensionPixelSize(R.dimen.signal_cluster_battery_padding);
         mStatusIcons = mStatusBar.findViewById(R.id.statusIcons);
         int batteryStyle = Settings.System.getInt(getContext().getContentResolver(),
@@ -351,9 +371,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             if ((state1 & DISABLE_SYSTEM_INFO) != 0 || ((state2 & DISABLE2_SYSTEM_ICONS) != 0)) {
                 hideSystemIconArea(animate);
                 hideOperatorName(animate);
+                hideSbLogoRight(animate);
             } else {
                 showSystemIconArea(animate);
                 showOperatorName(animate);
+                showSbLogoRight(animate);
             }
         }
 
@@ -419,9 +441,11 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         if (disableNotifications || hasOngoingCall) {
             hideNotificationIconArea(animate);
             animateHide(mClockView, animate, false);
+            hideSbLogoLeft(animate);
         } else {
             showNotificationIconArea(animate);
             updateClockStyle(animate);
+            showSbLogoLeft(animate);
         }
 
         // Show the ongoing call chip only if there is an ongoing call *and* notification icons
@@ -471,6 +495,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mSystemIconArea, animate);
             if (mShowLogo == 2) {
                 animateShow(mXtendedLogoRight, animate);
+                updateLogoSettings(animate);
             }
             for (View batteryBar: mBatteryBars) {
                  animateShow(batteryBar, animate);
@@ -515,6 +540,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 	animateHide(mCenterClockLayout, animate, true);
         if (mShowLogo == 1) {
             animateHide(mXtendedLogo, animate, false);
+            updateLogoSettings(animate);
         }
     }
 
@@ -524,6 +550,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateShow(mCenterClockLayout, animate);
          if (mShowLogo == 1) {
              animateShow(mXtendedLogo, animate);
+             updateLogoSettings(animate);
          }
     }
 
@@ -536,6 +563,32 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     public void showOperatorName(boolean animate) {
         if (mOperatorNameFrame != null) {
             animateShow(mOperatorNameFrame, animate);
+        }
+    }
+
+    public void hideSbLogoLeft(boolean animate) {
+        if (mShowLogo == 1) {
+            animateHide(mXtendedLogo, animate, false);
+        }
+    }
+
+    public void hideSbLogoRight(boolean animate) {
+        if (mShowLogo == 2) {
+            animateHide(mXtendedLogoRight, animate, false);
+        }
+    }
+
+    public void showSbLogoLeft(boolean animate) {
+        if (mShowLogo == 1) {
+            animateShow(mXtendedLogo, animate);
+            updateLogoSettings(animate);
+        }
+    }
+
+    public void showSbLogoRight(boolean animate) {
+        if (mShowLogo == 2) {
+            animateShow(mXtendedLogoRight, animate);
+            updateLogoSettings(animate);
         }
     }
 
@@ -697,6 +750,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         } catch (Exception e) {
         }
 	updateClockStyle(animate);
+        updateLogoSettings(animate);
     }
 
     public void updateLogoSettings(boolean animate) {
@@ -717,187 +771,203 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mLogoStyle = Settings.System.getIntForUser(
                 getContext().getContentResolver(), Settings.System.STATUS_BAR_LOGO_STYLE, 0,
                 UserHandle.USER_CURRENT);
+        mCustomSbLogoEnabled = Settings.System.getIntForUser(
+                getContext().getContentResolver(), Settings.System.CUSTOM_SB_LOGO_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
 
-        switch(mLogoStyle) {
-                // Xtnd Old
-            case 1:
-                logo = getContext().getDrawable(R.drawable.ic_xtnd_logo);
-                break;
-                // XTND Short
-            case 2:
-                logo = getContext().getDrawable(R.drawable.ic_xtnd_short);
-                break;
-                // GZR Skull
-            case 3:
-                logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_skull_logo);
-                break;
-                // GZR Circle
-            case 4:
-                logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_circle_logo);
-                break;
-                // Batman
-            case 5:
-                logo = getContext().getDrawable(R.drawable.ic_batman_logo);
-                break;
-                // Deadpool
-            case 6:
-                logo = getContext().getDrawable(R.drawable.ic_deadpool_logo);
-                break;
-                // Superman
-            case 7:
-                logo = getContext().getDrawable(R.drawable.ic_superman_logo);
-                break;
-                // Ironman
-            case 8:
-                logo = getContext().getDrawable(R.drawable.ic_ironman_logo);
-                break;
-                // Spiderman
-            case 9:
-                logo = getContext().getDrawable(R.drawable.ic_spiderman_logo);
-                break;
-                // Decepticons
-            case 10:
-                logo = getContext().getDrawable(R.drawable.ic_decpeticons_logo);
-                break;
-                // Minions
-            case 11:
-                logo = getContext().getDrawable(R.drawable.ic_minions_logo);
-                break;
-            case 12:
-                logo = getContext().getDrawable(R.drawable.ic_android_logo);
-                break;
-                // Shit
-            case 13:
-                logo = getContext().getDrawable(R.drawable.ic_apple_logo);
-                break;
-                // Shitty Logo
-            case 14:
-                logo = getContext().getDrawable(R.drawable.ic_ios_logo);
-                break;
-                // Others
-            case 15:
-                logo = getContext().getDrawable(R.drawable.ic_blackberry);
-                break;
-                // Cake
-            case 16:
-                logo = getContext().getDrawable(R.drawable.ic_cake_new);
-                break;
-            case 17:
-                logo = getContext().getDrawable(R.drawable.ic_blogger);
-                break;
-            case 18:
-                logo = getContext().getDrawable(R.drawable.ic_biohazard);
-                break;
-            case 19:
-                logo = getContext().getDrawable(R.drawable.ic_linux);
-                break;
-            case 20:
-                logo = getContext().getDrawable(R.drawable.ic_yin_yang);
-                break;
-            case 21:
-                logo = getContext().getDrawable(R.drawable.ic_windows);
-                break;
-            case 22:
-                logo = getContext().getDrawable(R.drawable.ic_robot);
-                break;
-            case 23:
-                logo = getContext().getDrawable(R.drawable.ic_ninja);
-                break;
-            case 24:
-                logo = getContext().getDrawable(R.drawable.ic_heart);
-                break;
-            case 25:
-                logo = getContext().getDrawable(R.drawable.ic_ghost);
-                break;
-            case 26:
-                logo = getContext().getDrawable(R.drawable.ic_google);
-                break;
-            case 27:
-                logo = getContext().getDrawable(R.drawable.ic_human_male);
-                break;
-            case 28:
-                logo = getContext().getDrawable(R.drawable.ic_human_female);
-                break;
-            case 29:
-                logo = getContext().getDrawable(R.drawable.ic_human_male_female);
-                break;
-            case 30:
-                logo = getContext().getDrawable(R.drawable.ic_gender_male);
-                break;
-            case 31:
-                logo = getContext().getDrawable(R.drawable.ic_gender_female);
-                break;
-            case 32:
-                logo = getContext().getDrawable(R.drawable.ic_gender_male_female);
-                break;
-            case 33:
-                logo = getContext().getDrawable(R.drawable.ic_guitar_electric);
-                break;
-            case 34:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon);
-                break;
-            case 35:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon_neutral);
-                break;
-            case 36:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon_happy);
-                break;
-            case 37:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon_sad);
-                break;
-            case 38:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon_tongue);
-                break;
-            case 39:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon_dead);
-                break;
-            case 40:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon_cool);
-                break;
-            case 41:
-                logo = getContext().getDrawable(R.drawable.ic_emoticon_devil);
-                break;
-                // Default (Xtended Main)
-            case 0:
-            default:
-                logo = getContext().getDrawable(R.drawable.status_bar_logo);
-                break;
-        }
+        final String customSbLogoURI = Settings.System.getStringForUser(
+                getContext().getContentResolver(), Settings.System.CUSTOM_SB_LOGO_IMAGE,
+                UserHandle.USER_CURRENT);
 
-        if (mShowLogo == 1) {
-	    mXtendedLogo.setImageDrawable(null);
-	    mXtendedLogo.setImageDrawable(logo);
-            if (mLogoColor == 0xFFFFFFFF) {
-                mXtendedLogo.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
-            } else {
-   	        mXtendedLogo.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
+        if (!TextUtils.isEmpty(customSbLogoURI) && mCustomSbLogoEnabled) {
+            try {
+                ParcelFileDescriptor parcelFileDescriptor =
+                    getContext().getContentResolver().openFileDescriptor(Uri.parse(customSbLogoURI), "r");
+                FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+                Bitmap imageSbLogo = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+                parcelFileDescriptor.close();
+                if (mShowLogo == 1) {
+                    mXtendedLogoRight.setImageDrawable(null);
+                    mXtendedLogoRight.setVisibility(View.GONE);
+                    mXtendedLogo.setImageDrawable(null);
+                    mXtendedLogo.setImageBitmap(imageSbLogo);
+                    mLogoColor = 0x00000000;
+                    mXtendedLogo.setVisibility(View.VISIBLE);
+                } else if (mShowLogo == 2) {
+                    mXtendedLogo.setImageDrawable(null);
+                    mXtendedLogo.setVisibility(View.GONE);
+                    mXtendedLogoRight.setImageDrawable(null);
+                    mXtendedLogoRight.setImageBitmap(imageSbLogo);
+                    mLogoColor = 0x00000000;
+                    mXtendedLogoRight.setVisibility(View.VISIBLE);
+                }
             }
-	} else if (mShowLogo == 2) {
-	    mXtendedLogoRight.setImageDrawable(null);
-	    mXtendedLogoRight.setImageDrawable(logo);
-            if (mLogoColor == 0xFFFFFFFF) {
-                mXtendedLogoRight.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
-            } else {
-                mXtendedLogoRight.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
+            catch (Exception e) {
             }
-	}
-
-        if (mNotificationIconAreaInner != null) {
+        } else {
+            switch(mLogoStyle) {
+                    // Xtnd Old
+                case 1:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_xtnd_logo);
+                    break;
+                    // XTND Short
+                case 2:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_xtnd_short);
+                    break;
+                    // GZR Skull
+                case 3:
+                    logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_skull_logo);
+                    break;
+                    // GZR Circle
+                case 4:
+                    logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_circle_logo);
+                    break;
+                    // Batman
+                case 5:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_batman_logo);
+                    break;
+                    // Deadpool
+                case 6:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_deadpool_logo);
+                    break;
+                    // Superman
+                case 7:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_superman_logo);
+                    break;
+                    // Ironman
+                case 8:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_ironman_logo);
+                    break;
+                    // Spiderman
+                case 9:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_spiderman_logo);
+                    break;
+                    // Decepticons
+                case 10:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_decpeticons_logo);
+                    break;
+                    // Minions
+                case 11:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_minions_logo);
+                    break;
+                case 12:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_android_logo);
+                    break;
+                    // Shit
+                case 13:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_apple_logo);
+                    break;
+                    // Shitty Logo
+                case 14:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_ios_logo);
+                    break;
+                    // Others
+                case 15:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_blackberry);
+                    break;
+                case 16:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_cake);
+                    break;
+                case 17:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_blogger);
+                    break;
+                case 18:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_biohazard);
+                    break;
+                case 19:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_linux);
+                    break;
+                case 20:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_yin_yang);
+                    break;
+                case 21:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_windows);
+                    break;
+                case 22:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_robot);
+                    break;
+                case 23:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_ninja);
+                    break;
+                case 24:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_heart);
+                    break;
+                case 25:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_ghost);
+                    break;
+                case 26:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_google);
+                    break;
+                case 27:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_human_male);
+                    break;
+                case 28:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_human_female);
+                    break;
+                case 29:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_human_male_female);
+                    break;
+                case 30:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_gender_male);
+                    break;
+                case 31:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_gender_female);
+                    break;
+                case 32:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_gender_male_female);
+                    break;
+                case 33:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_guitar_electric);
+                    break;
+                case 34:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon);
+                    break;
+                case 35:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_neutral);
+                    break;
+                case 36:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_happy);
+                    break;
+                case 37:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_sad);
+                    break;
+                case 38:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_tongue);
+                    break;
+                case 39:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_dead);
+                    break;
+                case 40:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_cool);
+                    break;
+                case 41:
+                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_devil);
+                    break;
+                case 0:
+                default: // Default (Xtended Main)
+                    logo = getContext().getResources().getDrawable(R.drawable.status_bar_logo);
+                    break;
+            }
             if (mShowLogo == 1) {
-                if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
-                    animateShow(mXtendedLogo, animate);
+                mXtendedLogoRight.setImageDrawable(null);
+                mXtendedLogoRight.setVisibility(View.GONE);
+                mXtendedLogo.setVisibility(View.VISIBLE);
+                mXtendedLogo.setImageDrawable(logo);
+                if (mLogoColor == 0xFFFFFFFF) {
+                    mXtendedLogo.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+                } else {
+                    mXtendedLogo.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
                 }
-            } else if (mShowLogo != 1) {
-                animateHide(mXtendedLogo, animate, false);
-            }
-        }
-        if (mSystemIconArea != null) {
-            if (mShowLogo == 2) {
-                if (mSystemIconArea.getVisibility() == View.VISIBLE) {
-                    animateShow(mXtendedLogoRight, animate);
+            } else if (mShowLogo == 2) {
+                mXtendedLogo.setImageDrawable(null);
+                mXtendedLogo.setVisibility(View.GONE);
+                mXtendedLogoRight.setVisibility(View.VISIBLE);
+                mXtendedLogoRight.setImageDrawable(logo);
+                if (mLogoColor == 0xFFFFFFFF) {
+                    mXtendedLogoRight.setColorFilter(mTintColor, PorterDuff.Mode.MULTIPLY);
+                } else {
+                    mXtendedLogoRight.setColorFilter(mLogoColor, PorterDuff.Mode.MULTIPLY);
                 }
-            } else if (mShowLogo != 2) {
-                   animateHide(mXtendedLogoRight, animate, false);
             }
         }
     }
