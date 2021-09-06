@@ -6977,6 +6977,26 @@ public final class Settings {
         public static final String PERMISSIONS_HUB_ENABLED = "permissions_hub_enabled";
 
         /**
+         * @hide
+         */
+        public static final String CUSTOM_SB_LOGO_ENABLED = "custom_sb_logo_enabled";
+
+        /**
+         * @hide
+         */
+        public static final String CUSTOM_SB_LOGO_IMAGE = "custom_sb_logo_image";
+
+        /**
+         * @hide
+         */
+        public static final String CUSTOM_QS_LOGO_ENABLED = "custom_qs_logo_enabled";
+
+        /**
+         * @hide
+         */
+        public static final String CUSTOM_QS_LOGO_IMAGE = "custom_qs_logo_image";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
