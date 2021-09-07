@@ -144,4 +144,6 @@
     <dimen name="keyguard_security_fod_view_margin">140dp</dimen>
     <dimen name="keyguard_charging_animation_margin">30dp</dimen>
 
+    <dimen name="qs_logo_size">22dip</dimen>
+
 </resources>

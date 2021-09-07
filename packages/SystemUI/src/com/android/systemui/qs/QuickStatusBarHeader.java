@@ -249,12 +249,16 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(Settings.System
                    .getUriFor(Settings.System.CUSTOM_QS_LOGO_IMAGE), false,
                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                   .getUriFor(Settings.System.CUSTOM_QS_LOGO_SIZE), false,
+                   this, UserHandle.USER_ALL);
             }
 
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
             updateLogoSettings();
+            updateQsLogoSize();
         }
     }
     private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
@@ -1138,6 +1142,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     mXtendedQsLogo.setImageBitmap(imageQsLogo);
                     mQsLogoColor = 0x00000000;
                     mXtendedQsLogo.setVisibility(View.VISIBLE);
+                    mXtendedQsLogo.getLayoutParams().height = updateQsLogoSize();
+                    mXtendedQsLogo.getLayoutParams().width = updateQsLogoSize();
                 } else if (mQsShowLogo == 2) {
                     mXtendedQsLogo.setImageDrawable(null);
                     mXtendedQsLogo.setVisibility(View.GONE);
@@ -1145,6 +1151,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     mXtendedQsLogoRight.setImageBitmap(imageQsLogo);
                     mQsLogoColor = 0x00000000;
                     mXtendedQsLogoRight.setVisibility(View.VISIBLE);
+                    mXtendedQsLogoRight.getLayoutParams().height = updateQsLogoSize();
+                    mXtendedQsLogoRight.getLayoutParams().width = updateQsLogoSize();
                 }
             }
             catch (Exception e) {
@@ -1299,12 +1307,16 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mXtendedQsLogo.setVisibility(View.VISIBLE);
                 mXtendedQsLogo.setImageDrawable(logo);
                 mXtendedQsLogo.setColorFilter(mQsLogoColor, PorterDuff.Mode.MULTIPLY);
+                mXtendedQsLogo.getLayoutParams().height = updateQsLogoSize();
+                mXtendedQsLogo.getLayoutParams().width = updateQsLogoSize();
             } else if (mQsShowLogo == 2) {
                 mXtendedQsLogo.setImageDrawable(null);
                 mXtendedQsLogo.setVisibility(View.GONE);
                 mXtendedQsLogoRight.setVisibility(View.VISIBLE);
                 mXtendedQsLogoRight.setImageDrawable(logo);
                 mXtendedQsLogoRight.setColorFilter(mQsLogoColor, PorterDuff.Mode.MULTIPLY);
+                mXtendedQsLogoRight.getLayoutParams().height = updateQsLogoSize();
+                mXtendedQsLogoRight.getLayoutParams().width = updateQsLogoSize();
             }
 	}
         if (mQsShowLogo == 0) {
@@ -1313,5 +1325,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mXtendedQsLogoRight.setImageDrawable(null);
             mXtendedQsLogoRight.setVisibility(View.GONE);
         }
+    }
+
+    private int updateQsLogoSize() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_QS_LOGO_SIZE, res.getDimensionPixelSize(R.dimen.qs_logo_size));
     }
 }

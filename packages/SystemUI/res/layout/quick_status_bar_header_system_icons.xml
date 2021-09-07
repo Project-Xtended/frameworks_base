@@ -36,8 +36,8 @@
 
    <ImageView
         android:id="@+id/qs_panel_logo"
-        android:layout_width="@dimen/status_bar_icon_size"
-        android:layout_height="@dimen/status_bar_icon_size"
+        android:layout_width="@dimen/qs_logo_size"
+        android:layout_height="@dimen/qs_logo_size"
         android:scaleType="centerInside"
         android:layout_gravity="center_vertical"
         android:gravity="start|center_vertical"
@@ -130,8 +130,8 @@
 
         <ImageView
             android:id="@+id/qs_panel_logo_right"
-            android:layout_width="@dimen/status_bar_icon_size"
-            android:layout_height="@dimen/status_bar_icon_size"
+            android:layout_width="@dimen/qs_logo_size"
+            android:layout_height="@dimen/qs_logo_size"
             android:scaleType="centerInside"
             android:layout_gravity="center_vertical"
             android:gravity="start|center_vertical"
