@@ -34,7 +34,9 @@
         <item>com.google.android.dialer</item>
         <item>#FF2162D7</item>
         <item>com.google.android.youtube</item>
+        <item>#FFDE4B4B</item>
         <item>com.android.dialer</item>
+        <item>#FFF94B4B</item>
     </string-array>
 
 </resources>
