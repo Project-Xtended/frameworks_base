@@ -413,7 +413,9 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
 
     void hideScreenshotSelector() {
         setLockedScreenOrientation(false);
-        mWindowManager.removeView(mScreenshotLayout);
+        if (mScreenshotLayout.getWindowToken() != null) {
+            mWindowManager.removeView(mScreenshotLayout);
+        }
         mScreenshotSelectorView.stopSelection();
         mScreenshotSelectorView.setVisibility(View.GONE);
         mCaptureButton.setVisibility(View.GONE);
@@ -433,9 +435,11 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
     }
 
     void setLockedScreenOrientation(boolean locked) {
-        mWindowLayoutParams.screenOrientation = locked
-                ? ActivityInfo.SCREEN_ORIENTATION_LOCKED
-                : ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+        if (locked) {
+            mWindowLayoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED;
+        } else {
+            mWindowLayoutParams.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+        }
     }
 
     Rect getRotationAdjustedRect(Rect rect) {
@@ -866,6 +870,7 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
         mActionsContainer.setTranslationY(0);
         mActionsContainerBackground.setTranslationY(0);
         mScreenshotPreview.setTranslationY(0);
+        hideScreenshotSelector();
     }
 
     /**
