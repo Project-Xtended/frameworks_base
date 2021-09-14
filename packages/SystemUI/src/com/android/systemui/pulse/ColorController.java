@@ -34,6 +34,8 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.TypedValue;
 
+import com.android.systemui.R;
+
 import com.android.internal.util.ContrastColorUtil;
 
 public class ColorController extends ContentObserver
@@ -127,9 +129,7 @@ public class ColorController extends ContentObserver
     }
 
     int getAccentColor() {
-        final TypedValue value = new TypedValue();
-        mContext.getTheme().resolveAttribute(android.R.attr.colorAccent, value, true);
-        return value.data;
+        return mContext.getResources().getColor(R.color.accent_device_default_light);
     }
 
     @Override
