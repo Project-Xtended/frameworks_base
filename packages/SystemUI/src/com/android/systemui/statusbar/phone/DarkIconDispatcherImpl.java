@@ -124,6 +124,10 @@ public class DarkIconDispatcherImpl implements SysuiDarkIconDispatcher,
         }
     }
 
+    public void updateColors() {
+        applyDarkIntensity(mDarkIntensity);
+    }
+
     @Override
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
         pw.println("DarkIconDispatcher: ");

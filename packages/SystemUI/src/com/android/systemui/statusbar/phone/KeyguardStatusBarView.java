@@ -50,6 +50,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.internal.util.xtended.StatusBarColorHelper;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.Dependency;
@@ -491,13 +492,15 @@ public class KeyguardStatusBarView extends RelativeLayout
         onThemeChanged();
     }
 
-    private void updateIconsAndTextColors() {
-        @ColorInt int textColor = Utils.getColorAttrDefaultColor(mContext,
+    public void updateIconsAndTextColors() {
+        @ColorInt int wallpaperTextColor = Utils.getColorAttrDefaultColor(mContext,
                 R.attr.wallpaperTextColor);
-        @ColorInt int iconColor = Utils.getColorStateListDefaultColor(mContext,
-                Color.luminance(textColor) < 0.5 ? R.color.dark_mode_icon_color_single_tone :
-                R.color.light_mode_icon_color_single_tone);
-        float intensity = textColor == Color.WHITE ? 0 : 1;
+        float intensity = wallpaperTextColor == Color.WHITE ? 0 : 1;
+        @ColorInt int textColor = StatusBarColorHelper.getTextSingleToneTint(getContext(), mEmptyRect, this,
+                    intensity);
+        @ColorInt int iconColor = StatusBarColorHelper.getIconSingleToneTint(getContext(), mEmptyRect, this,
+                    intensity);
+
         mCarrierLabel.setTextColor(iconColor);
         if (mIconManager != null) {
             mIconManager.setTint(iconColor);
