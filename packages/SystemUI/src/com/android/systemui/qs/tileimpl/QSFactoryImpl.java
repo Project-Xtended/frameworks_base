@@ -49,6 +49,7 @@ import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.QuickAccessWalletTile;
 import com.android.systemui.qs.tiles.ReduceBrightColorsTile;
+import com.android.systemui.qs.tiles.RefreshRateTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenRecordTile;
 import com.android.systemui.qs.tiles.SyncTile;
@@ -108,6 +109,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CompassTile> mCompassTileProvider;
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<AODTile> mAODTileProvider;
+    private final Provider<RefreshRateTile> mRefreshRateTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
     private final Provider<CustomTile.Builder> mCustomTileBuilderProvider;
@@ -151,7 +153,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<CompassTile> compassTileProvider,
             Provider<HeadsUpTile> headsupTileProvider,
-            Provider<AODTile> aodTileProvider) {
+            Provider<AODTile> aodTileProvider,
+            Provider<RefreshRateTile> refreshRateTileProvider) {
         mQsHostLazy = qsHostLazy;
         mCustomTileBuilderProvider = customTileBuilderProvider;
 
@@ -191,6 +194,7 @@ public class QSFactoryImpl implements QSFactory {
         mCompassTileProvider = compassTileProvider;
         mHeadsUpTileProvider = headsupTileProvider;
         mAODTileProvider = aodTileProvider;
+        mRefreshRateTileProvider = refreshRateTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -275,6 +279,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mHeadsUpTileProvider.get();
             case "aod":
                 return mAODTileProvider.get();
+            case "refresh_rate":
+                return mRefreshRateTileProvider.get();
         }
 
         // Custom tiles
