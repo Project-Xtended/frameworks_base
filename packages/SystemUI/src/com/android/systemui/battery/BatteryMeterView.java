@@ -63,13 +63,15 @@ import java.util.ArrayList;
 public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
     protected static final int BATTERY_STYLE_PORTRAIT = 0;
-    protected static final int BATTERY_STYLE_CIRCLE = 1;
-    protected static final int BATTERY_STYLE_DOTTED_CIRCLE = 2;
-    protected static final int BATTERY_STYLE_FULL_CIRCLE = 3;
-    protected static final int BATTERY_STYLE_TEXT = 4;
-    protected static final int BATTERY_STYLE_HIDDEN = 5;
-    protected static final int BATTERY_STYLE_RLANDSCAPE = 6;
-    protected static final int BATTERY_STYLE_LANDSCAPE = 7;
+    protected static final int BATTERY_STYLE_RLANDSCAPE = 1;
+    protected static final int BATTERY_STYLE_LANDSCAPE = 2;
+    protected static final int BATTERY_STYLE_CIRCLE = 3;
+    protected static final int BATTERY_STYLE_DOTTED_CIRCLE = 4;
+    protected static final int BATTERY_STYLE_BIG_CIRCLE = 5;
+    protected static final int BATTERY_STYLE_BIG_DOTTED_CIRCLE = 6;
+    protected static final int BATTERY_STYLE_FULL_CIRCLE = 7;
+    protected static final int BATTERY_STYLE_TEXT = 8;
+    protected static final int BATTERY_STYLE_HIDDEN = 9;
 
     @Retention(SOURCE)
     @IntDef({MODE_DEFAULT, MODE_ON, MODE_OFF, MODE_ESTIMATE})
@@ -158,6 +160,11 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                case BATTERY_STYLE_RLANDSCAPE:
                     batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height_landscape);
                     batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width_landscape);
+                    break;
+                case BATTERY_STYLE_BIG_CIRCLE:
+                case BATTERY_STYLE_BIG_DOTTED_CIRCLE:
+                    batteryHeight = res.getDimensionPixelSize(R.dimen.big_battery_height);
+                    batteryWidth = res.getDimensionPixelSize(R.dimen.big_battery_height);
                     break;
                case BATTERY_STYLE_PORTRAIT:
                default:
@@ -543,6 +550,11 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 	            batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height_landscape);
 		    batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width_landscape);
 	         break;
+              case BATTERY_STYLE_BIG_CIRCLE:
+              case BATTERY_STYLE_BIG_DOTTED_CIRCLE:
+	            batteryHeight = res.getDimensionPixelSize(R.dimen.big_battery_height);
+	     	    batteryWidth = res.getDimensionPixelSize(R.dimen.big_battery_height);
+	         break;
                case BATTERY_STYLE_PORTRAIT:
 	       default:
 	            batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width);
@@ -606,6 +618,8 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 break;
             case BATTERY_STYLE_CIRCLE:
             case BATTERY_STYLE_DOTTED_CIRCLE:
+            case BATTERY_STYLE_BIG_CIRCLE:
+            case BATTERY_STYLE_BIG_DOTTED_CIRCLE:
                 mCircleDrawable.setMeterStyle(mBatteryStyle);
                 mBatteryIconView.invalidateDrawable(mCircleDrawable);
                 mBatteryIconView.setImageDrawable(mCircleDrawable);
@@ -688,4 +702,3 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         mCallbacks.remove(callbacks);
     }
 }
-
