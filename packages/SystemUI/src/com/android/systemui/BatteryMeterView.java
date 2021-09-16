@@ -89,9 +89,11 @@ public class BatteryMeterView extends LinearLayout implements
     private static final int BATTERY_STYLE_LANDSCAPE = 2;
     private static final int BATTERY_STYLE_CIRCLE = 3;
     private static final int BATTERY_STYLE_DOTTED_CIRCLE = 4;
-    private static final int BATTERY_STYLE_FULL_CIRCLE = 5;
-    private static final int BATTERY_STYLE_TEXT = 6; /*hidden icon*/
-    private static final int BATTERY_STYLE_HIDDEN = 7;
+    private static final int BATTERY_STYLE_BIG_CIRCLE = 5;
+    private static final int BATTERY_STYLE_BIG_DOTTED_CIRCLE = 6;
+    private static final int BATTERY_STYLE_FULL_CIRCLE = 7;
+    private static final int BATTERY_STYLE_TEXT = 8; /*hidden icon*/
+    private static final int BATTERY_STYLE_HIDDEN = 9;
 
     private static final int BATTERY_PERCENT_HIDDEN = 0;
     private static final int BATTERY_PERCENT_SHOW_INSIDE = 1;
@@ -521,9 +523,12 @@ public class BatteryMeterView extends LinearLayout implements
             batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width_landscape);
             batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height_landscape);
         } else if (mBatteryStyle == BATTERY_STYLE_CIRCLE || mBatteryStyle == BATTERY_STYLE_DOTTED_CIRCLE
-                    || mBatteryStyle == BATTERY_STYLE_FULL_CIRCLE){
+                    || mBatteryStyle == BATTERY_STYLE_FULL_CIRCLE) {
             batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_circle_width);
             batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_circle_width);
+        } else if (mBatteryStyle == BATTERY_STYLE_BIG_CIRCLE || mBatteryStyle == BATTERY_STYLE_BIG_DOTTED_CIRCLE) {
+            batteryHeight = res.getDimensionPixelSize(R.dimen.big_battery_height);
+            batteryWidth = res.getDimensionPixelSize(R.dimen.big_battery_height);
         } else {
             batteryWidth = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_width);
             batteryHeight = res.getDimensionPixelSize(R.dimen.status_bar_battery_icon_height);
