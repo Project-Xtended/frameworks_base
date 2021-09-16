@@ -53,6 +53,8 @@ class CircleBatteryDrawable(private val context: Context, frameColor: Int) : Dra
 
     private var BATTERY_STYLE_CIRCLE = 3
     private var BATTERY_STYLE_DOTTED_CIRCLE = 4
+    private var BATTERY_STYLE_BIG_CIRCLE = 5
+    private var BATTERY_STYLE_BIG_DOTTED_CIRCLE = 6
 
     // Dual tone implies that battery level is a clipped overlay over top of the whole shape
     private var dualTone = false
@@ -107,8 +109,14 @@ class CircleBatteryDrawable(private val context: Context, frameColor: Int) : Dra
         height = bounds.bottom - padding.bottom - (bounds.top + padding.top)
         width = bounds.right - padding.right - (bounds.left + padding.left)
         warningTextPaint.textSize = height * 0.75f
-        intrinsicHeight = res.getDimensionPixelSize(R.dimen.battery_height)
-        intrinsicWidth = res.getDimensionPixelSize(R.dimen.battery_height)
+        if (meterStyle == BATTERY_STYLE_CIRCLE ||
+            meterStyle == BATTERY_STYLE_DOTTED_CIRCLE) {
+            intrinsicHeight = res.getDimensionPixelSize(R.dimen.battery_height)
+            intrinsicWidth = res.getDimensionPixelSize(R.dimen.battery_height)
+        } else {
+            intrinsicHeight = res.getDimensionPixelSize(R.dimen.big_battery_height)
+            intrinsicWidth = res.getDimensionPixelSize(R.dimen.big_battery_height)
+        }
     }
 
     override fun getPadding(padding: Rect): Boolean {
@@ -168,7 +176,8 @@ class CircleBatteryDrawable(private val context: Context, frameColor: Int) : Dra
         framePaint.style = Paint.Style.STROKE
         batteryPaint.strokeWidth = strokeWidth
         batteryPaint.style = Paint.Style.STROKE
-        if (meterStyle == BATTERY_STYLE_DOTTED_CIRCLE) {
+        if (meterStyle == BATTERY_STYLE_DOTTED_CIRCLE ||
+            meterStyle == BATTERY_STYLE_BIG_DOTTED_CIRCLE) {
             batteryPaint.pathEffect = pathEffect
             powerSavePaint.pathEffect = pathEffect
         } else {
