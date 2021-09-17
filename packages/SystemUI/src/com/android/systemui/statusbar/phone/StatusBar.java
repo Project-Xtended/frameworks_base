@@ -2476,6 +2476,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BATTERY_TEXT_COLOR_DARK_MODE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_TICKER_FONT_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2547,7 +2550,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_TEXT_COLOR_DARK_MODE)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_ICON_COLOR_DARK_MODE)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BATTERY_TEXT_COLOR)) ||
-                uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BATTERY_TEXT_COLOR_DARK_MODE))) {
+                uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BATTERY_TEXT_COLOR_DARK_MODE)) ||
+                uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_TICKER_FONT_STYLE))) {
                 updateStatusbarColors();
             }
         }
@@ -4512,6 +4516,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         Dependency.get(DarkIconDispatcher.class).updateColors();
         if (mKeyguardStatusBar != null) {
             mKeyguardStatusBar.updateIconsAndTextColors();
+        }
+        if (mTicker != null) {
+            mTicker.updateTickerFontStyle();
         }
     }
 

@@ -22,8 +22,10 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.media.MediaMetadata;
 import android.os.Handler;
+import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
 import android.text.Layout.Alignment;
 import android.text.StaticLayout;
@@ -57,14 +59,52 @@ public abstract class Ticker implements DarkReceiver {
     private ImageSwitcher mIconSwitcher;
     private TextSwitcher mTextSwitcher;
     private float mIconScale;
-    private int mIconTint =  0xffffffff;
+    private int mIconTint = 0xffffffff;
     private int mTextColor = 0xffffffff;
     private int mTickerSegmentDelay = 3000;
+    private Typeface mFontStyle;
 
     private MediaMetadata mShowingMediaMetadata;
     private String mShowingNotificationText;
 
     private ContrastColorUtil mNotificationColorUtil;
+
+    public static final int FONT_NORMAL = 0;
+    public static final int FONT_ITALIC = 1;
+    public static final int FONT_BOLD = 2;
+    public static final int FONT_BOLD_ITALIC = 3;
+    public static final int FONT_LIGHT = 4;
+    public static final int FONT_LIGHT_ITALIC = 5;
+    public static final int FONT_THIN = 6;
+    public static final int FONT_THIN_ITALIC = 7;
+    public static final int FONT_CONDENSED = 8;
+    public static final int FONT_CONDENSED_ITALIC = 9;
+    public static final int FONT_CONDENSED_LIGHT = 10;
+    public static final int FONT_CONDENSED_LIGHT_ITALIC = 11;
+    public static final int FONT_CONDENSED_BOLD = 12;
+    public static final int FONT_CONDENSED_BOLD_ITALIC = 13;
+    public static final int FONT_MEDIUM = 14;
+    public static final int FONT_MEDIUM_ITALIC = 15;
+    public static final int FONT_BLACK = 16;
+    public static final int FONT_BLACK_ITALIC = 17;
+    public static final int FONT_DANCINGSCRIPT = 18;
+    public static final int FONT_DANCINGSCRIPT_BOLD = 19;
+    public static final int FONT_COMINGSOON = 20;
+    public static final int FONT_NOTOSERIF = 21;
+    public static final int FONT_NOTOSERIF_ITALIC = 22;
+    public static final int FONT_NOTOSERIF_BOLD = 23;
+    public static final int FONT_NOTOSERIF_BOLD_ITALIC = 24;
+    public static final int GOBOLD_LIGHT = 25;
+    public static final int ROADRAGE = 26;
+    public static final int SNOWSTORM = 27;
+    public static final int GOOGLESANS = 28;
+    public static final int NEONEON = 29;
+    public static final int THEMEABLE = 30;
+    public static final int SAMSUNG = 31;
+    public static final int MEXCELLENT = 32;
+    public static final int BURNSTOWN = 33;
+    public static final int DUMBLEDOR = 34;
+    public static final int PHANTOMBOLD = 35;
 
     public static boolean isGraphicOrEmoji(char c) {
         int gc = Character.getType(c);
@@ -193,6 +233,7 @@ public abstract class Ticker implements DarkReceiver {
         mNotificationColorUtil = ContrastColorUtil.getInstance(mContext);
 
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
+        updateTickerFontStyle();
     }
 
     public void updateAnimation(int animationMode) {
@@ -308,7 +349,9 @@ public abstract class Ticker implements DarkReceiver {
             mTextSwitcher.reset();
             mTextSwitcher.setText(seg.getText());
             mTextSwitcher.setTextColor(mTextColor);
+            mTextSwitcher.setTypeface(mFontStyle);
 
+            updateTickerFontStyle();
             tickerStarting();
             scheduleAdvance();
         }
@@ -374,6 +417,8 @@ public abstract class Ticker implements DarkReceiver {
             CharSequence text = seg.getText();
             mTextSwitcher.setCurrentText(text);
             mTextSwitcher.setTextColor(mTextColor);
+            mTextSwitcher.setTypeface(mFontStyle);
+            updateTickerFontStyle();
         }
     }
 
@@ -395,7 +440,9 @@ public abstract class Ticker implements DarkReceiver {
                 }
                 mTextSwitcher.setText(text);
                 mTextSwitcher.setTextColor(mTextColor);
+                mTextSwitcher.setTypeface(mFontStyle);
 
+                updateTickerFontStyle();
                 scheduleAdvance();
                 break;
             }
@@ -426,6 +473,7 @@ public abstract class Ticker implements DarkReceiver {
         if (mSegments.size() > 0) {
             Segment seg = mSegments.get(0);
             mTextSwitcher.setTextColor(mTextColor);
+            mTextSwitcher.setTypeface(mFontStyle);
             mIconSwitcher.reset();
             setAppIconColor(seg.icon);
         }
@@ -434,5 +482,162 @@ public abstract class Ticker implements DarkReceiver {
     private void setAppIconColor(Drawable icon) {
         boolean isGrayscale = mNotificationColorUtil.isGrayscaleIcon(icon);
         mIconSwitcher.setImageDrawableTint(icon, mIconTint, isGrayscale);
+    }
+
+    public void updateTickerFontStyle() {
+        final int mTickerFontStyle = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_TICKER_FONT_STYLE, FONT_NORMAL);
+
+        getFontStyle(mTickerFontStyle);
+    }
+
+    public void getFontStyle(int font) {
+        switch (font) {
+            case FONT_NORMAL:
+            default:
+                mFontStyle = Typeface.create("sans-serif",
+                    Typeface.NORMAL);
+                break;
+            case FONT_ITALIC:
+                mFontStyle = Typeface.create("sans-serif",
+                    Typeface.ITALIC);
+                break;
+            case FONT_BOLD:
+                mFontStyle = Typeface.create("sans-serif",
+                    Typeface.BOLD);
+                break;
+            case FONT_BOLD_ITALIC:
+                mFontStyle = Typeface.create("sans-serif",
+                    Typeface.BOLD_ITALIC);
+                break;
+            case FONT_LIGHT:
+                mFontStyle = Typeface.create("sans-serif-light",
+                    Typeface.NORMAL);
+                break;
+            case FONT_LIGHT_ITALIC:
+                mFontStyle = Typeface.create("sans-serif-light",
+                    Typeface.ITALIC);
+                break;
+            case FONT_THIN:
+                mFontStyle = Typeface.create("sans-serif-thin",
+                    Typeface.NORMAL);
+                break;
+            case FONT_THIN_ITALIC:
+                mFontStyle = Typeface.create("sans-serif-thin",
+                    Typeface.ITALIC);
+                break;
+            case FONT_CONDENSED:
+                mFontStyle = Typeface.create("sans-serif-condensed",
+                    Typeface.NORMAL);
+                break;
+            case FONT_CONDENSED_ITALIC:
+                mFontStyle = Typeface.create("sans-serif-condensed",
+                    Typeface.ITALIC);
+                break;
+            case FONT_CONDENSED_LIGHT:
+                mFontStyle = Typeface.create("sans-serif-condensed-light",
+                    Typeface.NORMAL);
+                break;
+            case FONT_CONDENSED_LIGHT_ITALIC:
+                mFontStyle = Typeface.create("sans-serif-condensed-light",
+                    Typeface.ITALIC);
+                break;
+            case FONT_CONDENSED_BOLD:
+                mFontStyle = Typeface.create("sans-serif-condensed",
+                    Typeface.BOLD);
+                break;
+            case FONT_CONDENSED_BOLD_ITALIC:
+                mFontStyle = Typeface.create("sans-serif-condensed",
+                    Typeface.BOLD_ITALIC);
+                break;
+            case FONT_MEDIUM:
+                mFontStyle = Typeface.create("sans-serif-medium",
+                    Typeface.NORMAL);
+                break;
+            case FONT_MEDIUM_ITALIC:
+                mFontStyle = Typeface.create("sans-serif-medium",
+                    Typeface.ITALIC);
+                break;
+            case FONT_BLACK:
+                mFontStyle = Typeface.create("sans-serif-black",
+                    Typeface.NORMAL);
+                break;
+            case FONT_BLACK_ITALIC:
+                mFontStyle = Typeface.create("sans-serif-black",
+                    Typeface.ITALIC);
+                break;
+            case FONT_DANCINGSCRIPT:
+                mFontStyle = Typeface.create("cursive",
+                    Typeface.NORMAL);
+                break;
+            case FONT_DANCINGSCRIPT_BOLD:
+                mFontStyle = Typeface.create("cursive",
+                    Typeface.BOLD);
+                break;
+            case FONT_COMINGSOON:
+                mFontStyle = Typeface.create("casual",
+                    Typeface.NORMAL);
+                break;
+            case FONT_NOTOSERIF:
+                mFontStyle = Typeface.create("serif",
+                    Typeface.NORMAL);
+                break;
+            case FONT_NOTOSERIF_ITALIC:
+                mFontStyle = Typeface.create("serif",
+                    Typeface.ITALIC);
+                break;
+            case FONT_NOTOSERIF_BOLD:
+                mFontStyle = Typeface.create("serif",
+                    Typeface.BOLD);
+                break;
+            case FONT_NOTOSERIF_BOLD_ITALIC:
+                mFontStyle = Typeface.create("serif",
+                    Typeface.BOLD_ITALIC);
+                break;
+            case GOBOLD_LIGHT:
+                mFontStyle = Typeface.create("gobold-light-sys",
+                    Typeface.NORMAL);
+                break;
+            case ROADRAGE:
+                mFontStyle = Typeface.create("roadrage-sys",
+		   Typeface.NORMAL);
+                break;
+            case SNOWSTORM:
+                mFontStyle = Typeface.create("snowstorm-sys",
+                    Typeface.NORMAL);
+                break;
+            case GOOGLESANS:
+                mFontStyle = Typeface.create("googlesans-sys",
+                    Typeface.NORMAL);
+                break;
+            case NEONEON:
+                mFontStyle = Typeface.create("neoneon-sys",
+                    Typeface.NORMAL);
+                break;
+            case THEMEABLE:
+                mFontStyle = Typeface.create("themeable-sys",
+                    Typeface.NORMAL);
+                break;
+            case SAMSUNG:
+                mFontStyle = Typeface.create("samsung-sys",
+                    Typeface.NORMAL);
+                break;
+            case MEXCELLENT:
+                mFontStyle = Typeface.create("mexcellent-sys",
+                    Typeface.NORMAL);
+                break;
+            case BURNSTOWN:
+                mFontStyle = Typeface.create("burnstown-sys",
+                    Typeface.NORMAL);
+                break;
+            case DUMBLEDOR:
+                mFontStyle = Typeface.create("dumbledor-sys",
+                    Typeface.NORMAL);
+                break;
+            case PHANTOMBOLD:
+                mFontStyle = Typeface.create("phantombold-sys",
+                    Typeface.NORMAL);
+                break;
+        }
     }
 }
