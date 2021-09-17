@@ -778,7 +778,7 @@ public abstract class AuthBiometricView extends LinearLayout {
                     // The view is invisible, so it still takes space and
                     // we use that to adjust for the FOD icon
                     final int fodHeight = Dependency.get(StatusBar.class).getFodHeight(true) -
-                            buttonBarHeight - findViewById(R.id.button_bar).getPaddingTop();
+                            buttonBarHeight - findViewById(R.id.button_bar).getPaddingTop() + 100;
 
                     child.measure(
                             MeasureSpec.makeMeasureSpec(newWidth, MeasureSpec.AT_MOST),
