@@ -247,6 +247,6 @@
      <bool name="config_has_Soli">false</bool>
 
     <!-- Wheter device supports an gaming mode profiles -->
-    <bool name="config_gamingmode_performance">false</bool>
+    <bool name="config_gamingmode_performance">true</bool>
 
 </resources>
