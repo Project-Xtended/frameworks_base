@@ -7097,6 +7097,9 @@ public final class Settings {
         /** @hide */
         public static final String QS_CUSTOM_HEADER_SHADOW = "qs_custom_header_shadow";
 
+        /** @hide */
+        public static final String QS_PANEL_IMAGE_SHADOW = "qs_panel_image_shadow";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -7310,6 +7313,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_HEADER_TYPE_BACKGROUND);
             PRIVATE_SETTINGS.add(QS_HEADER_CUSTOM_IMAGE);
             PRIVATE_SETTINGS.add(QS_CUSTOM_HEADER_SHADOW);
+            PRIVATE_SETTINGS.add(QS_PANEL_IMAGE_SHADOW);
         }
 
         /**

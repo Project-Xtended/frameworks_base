@@ -133,6 +133,7 @@ public class QSContainerImpl extends FrameLayout {
     private boolean mQsHeaderBackGroundType;
     private boolean mQsDragHandle;
     private int mQsHeaderShadow;
+    private int mQsPanelImageShadow;
 
     private Context mContext;
 
@@ -243,12 +244,17 @@ public class QSContainerImpl extends FrameLayout {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_CUSTOM_HEADER_SHADOW), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_PANEL_IMAGE_SHADOW), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
          public void onChange(boolean selfChange, Uri uri) {
             if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_CUSTOM_IMAGE)) ||
-                uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_TYPE_BACKGROUND))) {
+                uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_TYPE_BACKGROUND)) ||
+                uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_IMAGE_SHADOW))) {
+                applyQsPanelImageShadow();
                 updateSettings();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_HEADER_CUSTOM_IMAGE)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.QS_HEADER_TYPE_BACKGROUND)) ||
@@ -278,6 +284,8 @@ public class QSContainerImpl extends FrameLayout {
                     Settings.System.QS_HEADER_NEW_BG, 0, UserHandle.USER_CURRENT);
         mQsHeaderShadow = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_CUSTOM_HEADER_SHADOW, 0, UserHandle.USER_CURRENT);
+        mQsPanelImageShadow = Settings.System.getIntForUser(resolver,
+                Settings.System.QS_PANEL_IMAGE_SHADOW, 0, UserHandle.USER_CURRENT);
         mQsDragHandle = Settings.System.getIntForUser(resolver,
                     Settings.System.QS_SHOW_DRAG_HANDLE, 0, UserHandle.USER_CURRENT) == 1;
         mDragHandle.setVisibility(mQsDragHandle ? View.VISIBLE : View.GONE);
@@ -294,6 +302,7 @@ public class QSContainerImpl extends FrameLayout {
             saveCustomFileFromString(Uri.parse(headerImageUri), QS_HEADER_FILE_IMAGE);
         }
         applyQsHeaderBackgroundShadow();
+        applyQsPanelImageShadow();
         updateResources();
     }
 
@@ -323,6 +332,7 @@ public class QSContainerImpl extends FrameLayout {
 
             mBackground.setBackground(mQsBackGround);
             mBackground.setClipToOutline(true);
+            applyQsPanelImageShadow();
         } else {
 	    if (!mQsBackGroundType) {
 		switch(mQsBgNewEnabled) {
@@ -425,6 +435,20 @@ public class QSContainerImpl extends FrameLayout {
                 mSbHeaderBackGround.setColorFilter(shadow, Mode.SRC_ATOP);
             } else {
                 mSbHeaderBackGround.setColorFilter(null);
+            }
+        }
+    }
+
+    private void applyQsPanelImageShadow() {
+        mQsPanelImageShadow = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_PANEL_IMAGE_SHADOW, 0,
+                UserHandle.USER_CURRENT);
+        if (mQsBackGround != null) {
+            if (mQsPanelImageShadow != 0) {
+                int shadow = Color.argb(mQsPanelImageShadow, 0, 0, 0);
+                mQsBackGround.setColorFilter(shadow, Mode.SRC_ATOP);
+            } else {
+                mQsBackGround.setColorFilter(null);
             }
         }
     }
