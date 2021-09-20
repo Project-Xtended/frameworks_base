@@ -111,8 +111,7 @@ public class QSContainerImpl extends FrameLayout {
 
     private ViewGroup mBackground;
     private ImageView mQsBackgroundImage;
-    private View mBackgroundGradient;
-    private View mStatusBarBackground;
+    private ViewGroup mStatusBarBackground;
     private Drawable mQsBackGround;
     private int mQsBgNewEnabled;
     private int mQsHeaderBgNew;
@@ -125,7 +124,6 @@ public class QSContainerImpl extends FrameLayout {
 
     private int mQsBackGroundAlpha;
     private int mCurrentColor;
-    private Drawable mQsHeaderBackGround;
     private Drawable mSbHeaderBackGround;
     private boolean mQsBackgroundBlur;
     private boolean mQsBackGroundType;
@@ -160,9 +158,7 @@ public class QSContainerImpl extends FrameLayout {
         mQsBackgroundImage = findViewById(R.id.qs_image_view);
         mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
         mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_primary);
-        mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-        mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         updateResources();
         updateSettings();
         mHeader.getHeaderQsPanel().setMediaVisibilityChangedListener((visible) -> {
@@ -197,7 +193,6 @@ public class QSContainerImpl extends FrameLayout {
     @Override
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setBackgroundGradientVisibility(newConfig);
         updateResources();
         mSizePoint.set(0, 0); // Will be retrieved on next measure pass.
     }
@@ -305,38 +300,31 @@ public class QSContainerImpl extends FrameLayout {
 			// Accent Bottom
 	               case 1:
 		            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent);
-			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent);
 			    break;
 			// Gradient Bottom
 		       case 2:
 			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad);
-			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad);
 			    break;
 			// Reverse Gradient Bottom
 		       case 3:
 			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad);
-			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad);
 			    break;
                         // Accent Border
                        case 4:
                             mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent_brdr);
-                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_accent_brdr);
                             break;
                         // Gradient Border
                        case 5:
                             mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad_brdr);
-                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_grad_brdr);
                             break;
                         // Reverse Gradient Border
                        case 6:
                             mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad_brdr);
-                            mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad_brdr);
                             break;
 		        // Default Black
 		       default:
 		       case 0:
 			    mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
-			    mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
 		            break;
                 }
             }
@@ -364,7 +352,6 @@ public class QSContainerImpl extends FrameLayout {
 	mQsBackGround.setAlpha(mQsBackGroundAlpha);
         mStatusBarBackground.setAlpha(mQsBackGroundAlpha);
         mSbHeaderBackGround.setAlpha(mQsBackGroundAlpha);
-        mQsHeaderBackGround.setAlpha(mQsBackGroundAlpha);
     }
 
     @Override
@@ -432,7 +419,6 @@ public class QSContainerImpl extends FrameLayout {
         final boolean disabled = (state2 & DISABLE2_QUICK_SETTINGS) != 0;
         if (disabled == mQsDisabled) return;
         mQsDisabled = disabled;
-        setBackgroundGradientVisibility(getResources().getConfiguration());
         mBackground.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
     }
 
@@ -539,14 +525,6 @@ public class QSContainerImpl extends FrameLayout {
                 + mHeader.getHeight();
     }
 
-    private void setBackgroundGradientVisibility(Configuration newConfig) {
-        if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
-            mBackgroundGradient.setVisibility(View.INVISIBLE);
-        } else {
-            mBackgroundGradient.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
-        }
-    }
-
     public void setExpansion(float expansion) {
         mQsExpansion = expansion;
         mDragHandle.setAlpha(1.0f - expansion);
@@ -556,8 +534,7 @@ public class QSContainerImpl extends FrameLayout {
     private void updatePaddingsAndMargins() {
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
-            if (view == mBackgroundGradient
-                    || view == mQSCustomizer) {
+            if (view == mQSCustomizer) {
                 // Some views are always full width
                 continue;
             }
