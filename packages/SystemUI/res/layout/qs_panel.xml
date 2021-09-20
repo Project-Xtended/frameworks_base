@@ -35,15 +35,22 @@
             android:visibility="gone" />
     </FrameLayout>
     <!-- Black part behind the status bar -->
-    <View
+    <FrameLayout
         android:id="@+id/quick_settings_status_bar_background"
         android:layout_width="match_parent"
         android:layout_height="@*android:dimen/quick_qs_offset_height"
         android:clipToPadding="false"
         android:clipChildren="false"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="4dp"
         android:paddingEnd="@dimen/notification_side_paddings"
-        android:paddingStart="@dimen/notification_side_paddings" />
+        android:paddingStart="@dimen/notification_side_paddings">
+
+        <ImageView android:id="@+id/qs_header_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="@*android:dimen/quick_qs_offset_height"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <com.android.systemui.qs.NonInterceptingScrollView
         android:id="@+id/expanded_qs_scroll_view"

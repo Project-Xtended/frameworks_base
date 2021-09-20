@@ -4072,4 +4072,7 @@
 
   <java-symbol type="attr" name="colorBackgroundFloating" />
 
+  <!-- QS Header Inset -->
+  <java-symbol type="dimen" name="qs_header_background_inset" />
+
 </resources>

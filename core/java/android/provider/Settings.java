@@ -7086,6 +7086,18 @@ public final class Settings {
         public static final String STATUS_BAR_TICKER_FONT_STYLE = "status_bar_ticker_font_style";
 
         /**
+        * by.SuperDroidBond
+        * @hide
+        */
+        public static final String QS_HEADER_TYPE_BACKGROUND = "qs_header_type_background";
+
+        /** @hide */
+        public static final String QS_HEADER_CUSTOM_IMAGE = "qs_header_custom_image";
+
+        /** @hide */
+        public static final String QS_CUSTOM_HEADER_SHADOW = "qs_custom_header_shadow";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -7295,6 +7307,9 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OMNI_CUSTOM_FP_ICON);
             PRIVATE_SETTINGS.add(BURN_IN_PROTECTION);
             PRIVATE_SETTINGS.add(BURN_IN_PROTECTION_INTERVAL);
+            PRIVATE_SETTINGS.add(QS_HEADER_TYPE_BACKGROUND);
+            PRIVATE_SETTINGS.add(QS_HEADER_CUSTOM_IMAGE);
+            PRIVATE_SETTINGS.add(QS_CUSTOM_HEADER_SHADOW);
         }
 
         /**
