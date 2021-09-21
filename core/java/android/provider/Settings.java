@@ -7101,6 +7101,36 @@ public final class Settings {
         public static final String QS_PANEL_IMAGE_SHADOW = "qs_panel_image_shadow";
 
         /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_STYLE = "settings_spacer_style";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_FONT_STYLE = "settings_spacer_font_style";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_IMAGE_STYLE = "settings_spacer_image_style";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_IMAGE_SEARCHBAR = "settings_spacer_image_searchbar";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_IMAGE_CROP = "settings_spacer_image_crop";
+
+        /**
+         * @hide
+         */
+        public static final String SETTINGS_SPACER_CUSTOM = "settings_spacer_custom";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
