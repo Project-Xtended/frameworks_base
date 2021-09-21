@@ -52,4 +52,5 @@
     <string name="salute_evening">Good evening</string>
     <string name="salute_night">Good night</string>
     <string name="salute_sleep">Go to Sleep</string>
+    <string name="kosp_clock_title" translatable="false">KOSP</string>
 </resources>
