@@ -360,6 +360,18 @@ public class QSContainerImpl extends FrameLayout {
                        case 6:
                             mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary_rev_grad_brdr);
                             break;
+                        // Accent Kece
+                       case 7:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_accent_kece);
+                            break;
+                        // Gradient Kece
+                       case 8:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_grad_kece);
+                            break;
+                        // Reverse Gradient Kece
+                       case 9:
+                            mQsBackGround = getContext().getDrawable(R.drawable.qs_background_rev_grad_kece);
+                            break;
 		        // Default Black
 		       default:
 		       case 0:
@@ -412,6 +424,18 @@ public class QSContainerImpl extends FrameLayout {
                     // Reverse Gradient Border
                 case 3:
                     mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_rev_grad_brdr);
+                    break;
+                    // Accent Kece
+                case 4:
+                    mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_accent_kece);
+                    break;
+                    // Gradient Kece
+                case 5:
+                    mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_grad_kece);
+                    break;
+                    // Reverse Gradient Kece
+                case 6:
+                    mSbHeaderBackGround = getContext().getDrawable(R.drawable.qs_header_bg_rev_grad_kece);
                     break;
                 default:
                 case 0:
