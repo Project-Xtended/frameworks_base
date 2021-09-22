@@ -199,6 +199,9 @@ public class ThemesUtils {
         "com.jrinfected.panel.batik", // 1
         "com.jrinfected.panel.kece", // 2
         "com.jrinfected.panel.outline", // 3
+        "com.jrinfected.panel.xaccent", // 4
+        "com.jrinfected.panel.xgradient", // 5
+        "com.jrinfected.panel.xrevgrad", // 6
     };
 
     // Switches qs tile style to user selected.
