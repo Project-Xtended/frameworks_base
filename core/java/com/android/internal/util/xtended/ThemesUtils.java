@@ -202,6 +202,8 @@ public class ThemesUtils {
         "com.jrinfected.panel.xaccent", // 4
         "com.jrinfected.panel.xgradient", // 5
         "com.jrinfected.panel.xrevgrad", // 6
+        "com.jrinfected.panel.kecegrad", // 7
+        "com.jrinfected.panel.kecerevgrad", // 8
     };
 
     // Switches qs tile style to user selected.
