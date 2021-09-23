@@ -206,6 +206,12 @@ public class ThemesUtils {
         "com.jrinfected.panel.kecerevgrad", // 8
     };
 
+    public static final String[] NOTIF_CAT_STYLE = {
+        "com.xtended.notif.accentnotifcat", // 1
+        "com.xtended.notif.gradnotifcat", // 2
+        "com.xtended.notif.revgradnotifcat", // 3
+    };
+
     // Switches qs tile style to user selected.
     public static void updateNewTileStyle(IOverlayManager om, int userId, int qsTileStyle) {
         if (qsTileStyle == 0) {
