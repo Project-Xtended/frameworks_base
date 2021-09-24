@@ -1169,11 +1169,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     break;
                     // GZR Skull
                 case 3:
-                    logo = mContext.getResources().getDrawable(R.drawable.status_bar_gzr_skull_logo);
+                    logo = mContext.getDrawable(R.drawable.status_bar_gzr_skull_logo);
                     break;
                     // GZR Circle
                 case 4:
-                    logo = mContext.getResources().getDrawable(R.drawable.status_bar_gzr_circle_logo);
+                    logo = mContext.getDrawable(R.drawable.status_bar_gzr_circle_logo);
                     break;
                     // Batman
                 case 5:
