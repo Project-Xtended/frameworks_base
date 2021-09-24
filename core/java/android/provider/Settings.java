@@ -7173,6 +7173,12 @@ public final class Settings {
         public static final String QS_FOOTER_PAGE_INDICATOR = "qs_footer_page_indicator";
 
         /**
+         * Notif. dismiss all button style
+         * @hide
+         */
+        public static final String NOTIF_DISMISSALL_STYLE = "notif_dismissall_style";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *

@@ -551,6 +551,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private ImageButton mDismissAllButton;
     public boolean mClearableNotifications = true;
     public float mQsExpansionFraction = 0f;
+    private int mDismissAllStyle;
 
     Runnable mLongPressBrightnessChange = new Runnable() {
         @Override
@@ -1604,20 +1605,14 @@ public class StatusBar extends SystemUI implements DemoMode,
             int DismissAllAlpha = Math.round(255.0f * mNotificationPanelViewController.getExpandedFraction());
             mDismissAllButton.setAlpha(DismissAllAlpha);
             mDismissAllButton.getBackground().setAlpha(DismissAllAlpha);
-            mDismissAllButton.setRotation(Math.round(180.0f * mNotificationPanelViewController.getExpandedFraction()));
-            mDismissAllButton.setTranslationY(MathUtils.lerp(-500f, 0f, mNotificationPanelViewController.getExpandedFraction()));
         } else if (mClearableNotifications && mState != StatusBarState.KEYGUARD && visible && mQsExpansionFraction != 0) {
             float fraction = MathUtils.lerp(1f, 0f, mQsExpansionFraction);
             mDismissAllButton.setVisibility(View.VISIBLE);
             mDismissAllButton.setAlpha(Math.round(255.0f * fraction));
             mDismissAllButton.getBackground().setAlpha(Math.round(255.0f * fraction));
-            mDismissAllButton.setRotation(Math.round(180.0f * mQsExpansionFraction));
-            mDismissAllButton.setTranslationY(MathUtils.lerp(0f, 100f, mQsExpansionFraction));
         } else {
             mDismissAllButton.setAlpha(0);
             mDismissAllButton.getBackground().setAlpha(0);
-            mDismissAllButton.setRotation(0);
-            mDismissAllButton.setTranslationY(0f);
             mDismissAllButton.setVisibility(View.INVISIBLE);
         }
 
@@ -1634,6 +1629,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 break;
         }
         mDismissAllButton.setLayoutParams(lp);
+        dismissAllButtonStyle();
     }
 
     public void updateDismissAllButton(int iconcolor) {
@@ -2520,6 +2516,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_TICKER_FONT_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NOTIF_DISMISSALL_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2594,6 +2593,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BATTERY_TEXT_COLOR_DARK_MODE)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_TICKER_FONT_STYLE))) {
                 updateStatusbarColors();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_DISMISSALL_STYLE))) {
+                dismissAllButtonStyle();
             }
         }
 
@@ -2621,6 +2622,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateQsTileSize();
             updateBurnInSets();
             updateStatusbarColors();
+            dismissAllButtonStyle();
         }
     }
 
@@ -2741,6 +2743,103 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.AMBIENT_MUSIC_TICKER, 1,
                     UserHandle.USER_CURRENT) == 1);
         }
+    }
+
+    public void dismissAllButtonStyle() {
+        Drawable d = null;
+
+        if (mContext == null) {
+            return;
+        }
+
+        mDismissAllStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+	            Settings.System.NOTIF_DISMISSALL_STYLE, 0, UserHandle.USER_CURRENT);
+        switch(mDismissAllStyle) {
+            case 1:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all);
+                break;
+            case 2:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all1);
+                break;
+            case 3:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all2);
+                break;
+            case 4:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all3);
+                break;
+            case 5:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all4);
+                break;
+            case 6:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all5);
+                break;
+            case 7:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all6);
+                break;
+            case 8:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all7);
+                break;
+            case 9:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all8);
+                break;
+            case 10:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all9);
+                break;
+            case 11:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all10);
+                break;
+            case 12:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all11);
+                break;
+            case 13:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all12);
+                break;
+            case 14:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all13);
+                break;
+            case 15:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all14);
+                break;
+            case 16:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all15);
+                break;
+            case 17:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all16);
+                break;
+            case 18:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all17);
+                break;
+            case 19:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all18);
+                break;
+            case 20:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all19);
+                break;
+            case 21:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all20);
+                break;
+            case 22:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all21);
+                break;
+            case 23:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all22);
+                break;
+            case 24:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all23);
+                break;
+            case 25:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all24);
+                break;
+            case 26:
+                d = mContext.getDrawable(R.drawable.ic_dismiss_all25);
+                break;
+            case 0:
+            default: // Default
+                d = mContext.getDrawable(R.drawable.dismiss_all_icon);
+                break;
+        }
+	mDismissAllButton.setImageDrawable(null);
+	mDismissAllButton.setImageDrawable(d);
     }
 
     /**

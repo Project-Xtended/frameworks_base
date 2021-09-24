@@ -144,7 +144,6 @@
             android:background="@drawable/dismiss_all_background"
             android:elevation="@dimen/dismiss_all_button_elevation"
             android:scaleType="centerInside"
-            android:src="@drawable/dismiss_all_icon"
             android:visibility="gone" />
 
         <Button

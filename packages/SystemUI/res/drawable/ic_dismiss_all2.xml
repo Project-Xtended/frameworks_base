@@ -1,0 +1,8 @@
+<!-- drawable/poll.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/dismiss_all_fab_src_size"
+    android:height="@dimen/dismiss_all_fab_src_size"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path android:fillColor="@color/dismiss_all_icon_color" android:pathData="M3,22V8H7V22H3M10,22V2H14V22H10M17,22V14H21V22H17Z" />
+</vector>

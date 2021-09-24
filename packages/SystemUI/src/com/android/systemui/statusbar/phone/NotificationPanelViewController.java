@@ -2306,6 +2306,7 @@ public class NotificationPanelViewController extends PanelViewController {
         }
         mNotificationStackScroller.setAlpha(alpha);
         mStatusBar.updateDismissAllVisibility(true);
+        mStatusBar.dismissAllButtonStyle();
     }
 
     private float getFadeoutAlpha() {
