@@ -18,6 +18,8 @@ package com.android.keyguard.clock;
 import static android.content.res.Configuration.UI_MODE_NIGHT_YES;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.ColorUtils;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import com.android.systemui.plugins.ClockPlugin;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 
+import java.util.Random;
 import java.util.TimeZone;
 
 public class KospClockController implements ClockPlugin, ConfigurationListener {
@@ -122,6 +125,7 @@ public class KospClockController implements ClockPlugin, ConfigurationListener {
         if (mClockLayout != null) {
             mClockLayout.onTimeChanged();
         }
+        updateAccentColorForClock();
     }
 
     @Override
@@ -139,6 +143,7 @@ public class KospClockController implements ClockPlugin, ConfigurationListener {
             mDayTextClock.setTimeZone(id);
             mTimeTextClock.setTimeZone(id);
         }
+        updateAccentColorForClock();
     }
 
     @Override
@@ -169,12 +174,23 @@ public class KospClockController implements ClockPlugin, ConfigurationListener {
         mLeftBar = mClockLayout.findViewById(R.id.left_bar);
         mRightBar = mClockLayout.findViewById(R.id.right_bar);
 
-        mDayTextClock.setTextColor(Utils.getColorAccentDefaultColor(mContext));
+        mDayTextClock.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(mContext)));
     }
 
     private void updateAccentColorForClock() {
         if (mDayTextClock != null) {
-            mDayTextClock.setTextColor(Utils.getColorAccentDefaultColor(mContext));
+            mDayTextClock.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(mContext)));
+        }
+    }
+
+    private static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
         }
     }
 }
