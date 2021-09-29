@@ -74,6 +74,10 @@ public class ThemesUtils {
         "com.bootleggers.qstile.neonlike", // 15
         "com.bootleggers.qstile.oos", // 16
         "com.bootleggers.qstile.triangles", // 17
+        "com.xtended.qstile.circledecor", // 18
+        "com.xtended.qstile.hexdecor", // 19
+        "com.xtended.qstile.xtnddecor", // 20
+        "com.xtended.qstile.royalcrown", // 21
     };
 
     // QS Tile Size
