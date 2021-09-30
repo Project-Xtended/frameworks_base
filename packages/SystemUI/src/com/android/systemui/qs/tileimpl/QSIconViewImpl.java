@@ -185,6 +185,9 @@ public class QSIconViewImpl extends QSIconView {
         int setQsUseNewTint = System.getIntForUser(getContext().getContentResolver(),
                      System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT);
 
+        int setQsIconTintStyle = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_TILE_ICON_TINT_STYLE, 0, UserHandle.USER_CURRENT);
+
         if (mAnimationEnabled && ValueAnimator.areAnimatorsEnabled()) {
             final float fromAlpha = Color.alpha(fromColor);
             final float toAlpha = Color.alpha(toColor);
@@ -198,7 +201,7 @@ public class QSIconViewImpl extends QSIconView {
                 int alpha = (int) (fromAlpha + (toAlpha - fromAlpha) * fraction);
                 int channel = (int) (fromChannel + (toChannel - fromChannel) * fraction);
 
-                if (setQsUseNewTint > 1) {
+                if (setQsUseNewTint > 1 || setQsIconTintStyle > 2) {
                     setTint(iv, toColor);
                 } else {
                     setTint(iv, Color.argb(alpha, channel, channel, channel));

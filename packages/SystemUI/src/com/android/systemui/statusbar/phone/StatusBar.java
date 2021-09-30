@@ -2408,6 +2408,12 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_PANEL_BG_USE_NEW_TINT),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.XTENDED_STYLE_QS_TILE_ICON),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TILE_ICON_TINT_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_LABEL_USE_NEW_TINT),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2536,7 +2542,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 updateKeyguardStatusSettings();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_NEW_TINT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT)) ||
-                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY))) {
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_PRIMARY)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.XTENDED_STYLE_QS_TILE_ICON)) ||
+                    uri.equals(Settings.System.getUriFor(Settings.System.QS_TILE_ICON_TINT_STYLE))) {
                 mQSPanel.getHost().reloadAllTiles();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.XTENSIONS_STYLE))) {
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_ROWS_PORTRAIT)) ||

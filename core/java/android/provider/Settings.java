@@ -7179,6 +7179,18 @@ public final class Settings {
         public static final String NOTIF_DISMISSALL_STYLE = "notif_dismissall_style";
 
         /**
+         * Tile Icon Qs Style
+         * @hide
+         */
+        public static final String QS_TILE_ICON_TINT_STYLE = "qs_tile_icon_tint_style";
+
+        /**
+         * Xtended Style Qs Icon
+         * @hide
+         */
+        public static final String XTENDED_STYLE_QS_TILE_ICON = "xtended_style_qs_tile_icon";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -7392,6 +7404,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_HEADER_CUSTOM_IMAGE);
             PRIVATE_SETTINGS.add(QS_CUSTOM_HEADER_SHADOW);
             PRIVATE_SETTINGS.add(QS_PANEL_IMAGE_SHADOW);
+            PRIVATE_SETTINGS.add(QS_TILE_ICON_TINT_STYLE);
+            PRIVATE_SETTINGS.add(XTENDED_STYLE_QS_TILE_ICON);
         }
 
         /**

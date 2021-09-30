@@ -537,6 +537,12 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
         boolean qsIconPrimary = Settings.System.getIntForUser(context.getContentResolver(),
                     Settings.System.QS_TILE_ICON_PRIMARY, 0, UserHandle.USER_CURRENT) == 1;
 
+        int setQsIconTintStyle = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_ICON_TINT_STYLE, 0, UserHandle.USER_CURRENT);
+
+        boolean setXtendedStyleIcon = Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.XTENDED_STYLE_QS_TILE_ICON, 1, UserHandle.USER_CURRENT) == 1;
+
         switch (state) {
             case Tile.STATE_UNAVAILABLE:
                 return Utils.getDisabled(context,
@@ -548,19 +554,37 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                      return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
                  }
             case Tile.STATE_ACTIVE:
-                 if (setQsUseNewTint == 2 || setQsUseNewTint == 7) {
-                     return ColorUtils.genRandomAccentColor(isThemeDark(context));
-                 } else if (setQsUseNewTint == 3 || setQsUseNewTint == 6) {
-                     return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
-                 } else if (setQsUseNewTint == 4) {
-                     return context.getResources().getColor(R.color.qs_tile_oos);
-                 } else if (setQsUseNewTint == 5) {
-                     return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimaryInverse);
-                 } else {
-                     if (qsIconPrimary) {
-                         return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                 if (setXtendedStyleIcon) {
+                     if (setQsUseNewTint == 2 || setQsUseNewTint == 7) {
+                         return ColorUtils.genRandomAccentColor(isThemeDark(context));
+                     } else if (setQsUseNewTint == 3 || setQsUseNewTint == 6) {
+                         return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                     } else if (setQsUseNewTint == 4) {
+                         return context.getResources().getColor(R.color.qs_tile_oos);
+                     } else if (setQsUseNewTint == 5) {
+                         return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimaryInverse);
                      } else {
+                         if (qsIconPrimary) {
+                             return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                         } else {
+                             return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
+                         }
+                     }
+                 } else {
+                     if (setQsIconTintStyle == 0) {
+                         return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary);
+                     } else if (setQsIconTintStyle == 1) {
+                         return Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimaryInverse);
+                     } else if (setQsIconTintStyle == 2) {
                          return Utils.getColorAttrDefaultColor(context, android.R.attr.colorPrimary);
+                     } else if (setQsIconTintStyle == 3) {
+                         return context.getResources().getColor(R.color.qs_tile_oos);
+                     } else if (setQsIconTintStyle == 4) {
+                         return Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+                     } else if (setQsIconTintStyle == 5) {
+                         return context.getResources().getColor(com.android.internal.R.color.gradient_end);
+                     } else if (setQsIconTintStyle == 6) {
+                         return ColorUtils.genRandomAccentColor(isThemeDark(context));
                      }
                  }
             default:
