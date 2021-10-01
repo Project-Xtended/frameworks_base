@@ -185,7 +185,17 @@ import javax.inject.Named;
  */
 public class NotificationStackScrollLayout extends ViewGroup implements ScrollAdapter,
         NotificationListContainer, ConfigurationListener, Dumpable,
-        DynamicPrivacyController.Listener {
+        DynamicPrivacyController.Listener,TunerService.Tunable {
+
+    private static final String NOTIF_DISMISALL_COLOR_MODE =
+            "system:" + Settings.System.NOTIF_DISMISALL_COLOR_MODE;
+    private static final String NOTIF_DISMISALL_ICON_COLOR_MODE =
+            "system:" + Settings.System.NOTIF_DISMISALL_ICON_COLOR_MODE;
+    private static final String NOTIF_CLEAR_ALL_ICON_COLOR =
+            "system:" + Settings.System.NOTIF_CLEAR_ALL_ICON_COLOR;
+    private static final String NOTIF_CLEAR_ALL_BG_COLOR =
+            "system:" + Settings.System.NOTIF_CLEAR_ALL_BG_COLOR;
+    private int mMode, mNotifIconColor, mNotifBgColor, mIconMode;
 
     public static final float BACKGROUND_ALPHA_DIMMED = 0.7f;
     private static final String TAG = "StackScroller";
@@ -684,6 +694,11 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         }, HIGH_PRIORITY, Settings.Secure.NOTIFICATION_DISMISS_RTL,
                 Settings.Secure.NOTIFICATION_HISTORY_ENABLED);
 
+        tunerService.addTunable(this, NOTIF_DISMISALL_COLOR_MODE);
+        tunerService.addTunable(this, NOTIF_DISMISALL_ICON_COLOR_MODE);
+        tunerService.addTunable(this, NOTIF_CLEAR_ALL_BG_COLOR);
+        tunerService.addTunable(this, NOTIF_CLEAR_ALL_ICON_COLOR);
+
         mFeatureFlags = featureFlags;
         mNotifPipeline = notifPipeline;
         mEntryManager = entryManager;
@@ -782,7 +797,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         updateFooter();
         mIconColor = mContext.getColor(R.color.dismiss_all_icon_color);
         mSectionsManager.reinflateViews(LayoutInflater.from(mContext));
-        mStatusBar.updateDismissAllButton(mIconColor);
+        checkColor();
+        mStatusBar.updateDismissAllButton(mIconColor, mBgColor);
     }
 
     @Override
@@ -818,6 +834,44 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
                 Settings.Secure.NOTIFICATION_HISTORY_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
 
         updateFooterView(showFooterView, showDismissView, showHistory);
+    }
+
+    public void checkColor() {
+        if (mMode == 0) {
+            mBgColor = mContext.getColor(R.color.dismiss_all_background_color);
+        } else if (mMode == 1) {
+            mBgColor = mContext.getColor(R.color.accent_device_default_light);
+        } else if (mMode == 2) {
+            mBgColor = mNotifBgColor;
+        }
+
+        if (mIconMode == 0) {
+            mIconColor = mContext.getColor(R.color.dismiss_all_icon_color);
+        } else if (mIconMode == 1) {
+            mIconColor = mContext.getColor(R.color.accent_device_default_light);
+        } else if (mIconMode == 2) {
+            mIconColor = mNotifIconColor;
+        }
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        if (NOTIF_DISMISALL_COLOR_MODE.equals(key)) {
+            mMode =
+                   TunerService.parseInteger(newValue, 0);
+        } else if (NOTIF_DISMISALL_ICON_COLOR_MODE.equals(key)) {
+            mIconMode =
+                   TunerService.parseInteger(newValue, 0);
+        } else if (NOTIF_CLEAR_ALL_ICON_COLOR.equals(key)) {
+            int color = mContext.getColor(R.color.dismiss_all_icon_color);
+            mNotifIconColor =
+                   TunerService.parseInteger(newValue, color);
+        } else if (NOTIF_CLEAR_ALL_BG_COLOR.equals(key)) {
+            int color = mContext.getColor(R.color.dismiss_all_background_color);
+            mNotifBgColor =
+                   TunerService.parseInteger(newValue, color);
+        }
+	checkColor();
     }
 
     /**
@@ -914,7 +968,8 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
         mIconColor = mContext.getColor(R.color.dismiss_all_icon_color);
         updateBackgroundDimming();
         mShelf.onUiModeChanged();
-        mStatusBar.updateDismissAllButton(mIconColor);
+        checkColor();
+        mStatusBar.updateDismissAllButton(mIconColor, mBgColor);
     }
 
     @ShadeViewRefactor(RefactorComponent.DECORATOR)
