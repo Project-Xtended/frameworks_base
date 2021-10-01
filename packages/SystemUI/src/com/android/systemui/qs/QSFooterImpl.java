@@ -34,6 +34,8 @@ import android.os.Handler;
 import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
@@ -103,6 +105,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     private OnClickListener mExpandClickListener;
 
+    protected Vibrator mVibrator;
+
     private final ContentObserver mSettingsObserver = new ContentObserver(
             new Handler(mContext.getMainLooper())) {
         @Override
@@ -120,6 +124,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mActivityStarter = activityStarter;
         mUserInfoController = userInfoController;
         mDeviceProvisionedController = deviceProvisionedController;
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @VisibleForTesting
@@ -405,6 +410,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @Override
     public boolean onLongClick(View v) {
         if (v == mSettingsButton) {
+            if (mVibrator != null && mVibrator.hasVibrator()) {
+                mVibrator.vibrate(VibrationEffect.createOneShot(100,
+                     VibrationEffect.EFFECT_TICK));
+            }
             startXtensionsActivity();
         }
         return false;
