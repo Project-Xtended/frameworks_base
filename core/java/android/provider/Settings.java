@@ -5729,24 +5729,6 @@ public final class Settings {
         public static final String QS_DATAUSAGE = "qs_datausage";
 
         /**
-         * Whether the phone vibrates on call connect
-         * @hide
-         */
-        public static final String VIBRATE_ON_CONNECT = "vibrate_on_connect";
-
-        /**
-         * Whether the phone vibrates on call waiting
-         * @hide
-         */
-        public static final String VIBRATE_ON_CALLWAITING = "vibrate_on_callwaiting";
-
-        /**
-         * Whether the phone vibrates on disconnect
-         * @hide
-         */
-        public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
-
-        /**
          * Which Vibration Pattern to use
          * 0: dzzz-dzzz
          * 1: dzzz-da
@@ -7220,6 +7202,12 @@ public final class Settings {
         public static final String NOTIF_CLEAR_ALL_BG_COLOR = "notif_bg_color";
 
         /**
+         * Whether to vibrate on call state change
+         * @hide
+         */
+        public static final String INCALL_FEEDBACK_VIBRATE = "incall_feeedback_vibrate";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -7385,9 +7373,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
             PRIVATE_SETTINGS.add(SHOW_FOURG);
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
-            PRIVATE_SETTINGS.add(VIBRATE_ON_CONNECT);
-            PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
-            PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_METADATA);
             PRIVATE_SETTINGS.add(QS_SHOW_BATTERY_PERCENT);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_STATE);
@@ -7435,6 +7420,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_IMAGE_SHADOW);
             PRIVATE_SETTINGS.add(QS_TILE_ICON_TINT_STYLE);
             PRIVATE_SETTINGS.add(XTENDED_STYLE_QS_TILE_ICON);
+            PRIVATE_SETTINGS.add(INCALL_FEEDBACK_VIBRATE);
         }
 
         /**
