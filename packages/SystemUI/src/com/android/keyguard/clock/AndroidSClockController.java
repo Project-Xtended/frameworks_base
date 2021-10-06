@@ -21,6 +21,8 @@ import android.animation.ValueAnimator;
 import android.app.PendingIntent;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.ColorUtils;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -47,7 +49,6 @@ import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.android.internal.colorextraction.ColorExtractor;
-import com.android.internal.graphics.ColorUtils;
 import com.android.internal.util.Converter;
 import com.android.settingslib.Utils;
 import com.android.systemui.Dependency;
@@ -211,7 +212,7 @@ public class AndroidSClockController implements ClockPlugin {
 
     @Override
     public String getName() {
-        return "android_s";
+        return "xtended_a12";
     }
 
     @Override
@@ -235,12 +236,10 @@ public class AndroidSClockController implements ClockPlugin {
         previewClock.setFormat24Hour("kk\nmm");
         previewTitle.setText(new SimpleDateFormat("EEE, MMM d", Locale.getDefault()).format(new Date()));
 
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        mPalette.setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-
-        int color = getTextColor();
-        previewClock.setTextColor(color);
+        final boolean isDarkMode = (mContext.getResources().getConfiguration().uiMode
+            & Configuration.UI_MODE_NIGHT_YES) != 0;
+        int color = isDarkMode ? Color.WHITE : Color.GRAY;
+        previewClock.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(mContext)));
         previewTitle.setTextColor(color);
 
         return mRenderer.createPreview(previewView, width, height);
@@ -298,8 +297,10 @@ public class AndroidSClockController implements ClockPlugin {
             }
         }
 
+        final boolean isDarkMode = (mContext.getResources().getConfiguration().uiMode
+            & Configuration.UI_MODE_NIGHT_YES) != 0;
         final int subItemsCount = subItems.size();
-        final int blendedColor = getTextColor();
+        final int blendedColor = isDarkMode ? Color.WHITE : Color.GRAY;
         final int startIndex = mHasHeader ? 1 : 0; // First item is header; skip it
         mRow.setVisibility(subItemsCount > 0 ? View.VISIBLE : View.GONE);
 
@@ -331,13 +332,13 @@ public class AndroidSClockController implements ClockPlugin {
                 button = new KeyguardSliceTextView(mContext);
                 button.setTextSize(isDateSlice ? mTitleTextSize : mSliceTextSize);
                 button.setTextColor(blendedColor);
-                button.setGravity(Gravity.START);
+                button.setGravity(Gravity.CENTER_HORIZONTAL);
                 button.setTag(itemTag);
                 final int viewIndex = i - (mHasHeader ? 1 : 0);
                 mRow.addView(button, viewIndex);
             } else {
                 button.setTextSize(isDateSlice ? mTitleTextSize : mSliceTextSize);
-                button.setGravity(Gravity.START);
+                button.setGravity(Gravity.CENTER_HORIZONTAL);
             }
 
             if (mSliceTypeface != null) button.setTypeface(mSliceTypeface);
@@ -346,9 +347,9 @@ public class AndroidSClockController implements ClockPlugin {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) button.getLayoutParams();
             layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
             layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
-            layoutParams.gravity = Gravity.START;
-            layoutParams.topMargin = 8;
-            layoutParams.bottomMargin = 8;
+            layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+            layoutParams.topMargin = 4;
+            layoutParams.bottomMargin = 4;
             button.setLayoutParams(layoutParams);
 
             PendingIntent pendingIntent = null;
@@ -467,6 +468,7 @@ public class AndroidSClockController implements ClockPlugin {
         animate();
         mBigClockView.onTimeChanged();
         mClock.refreshTime();
+        updateTextColors();
     }
 
     @Override
@@ -499,23 +501,28 @@ public class AndroidSClockController implements ClockPlugin {
     }
 
     private void updateTextColors() {
-        final int blendedColor = getTextColor();
-        mTitle.setTextColor(blendedColor);
+        final boolean isDarkMode = (mContext.getResources().getConfiguration().uiMode
+            & Configuration.UI_MODE_NIGHT_YES) != 0;
+        mTitle.setTextColor(isDarkMode ? Color.WHITE : Color.GRAY);
         int childCount = mRow.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View v = mRow.getChildAt(i);
             if (v instanceof TextView) {
-                ((TextView) v).setTextColor(blendedColor);
+                ((TextView) v).setTextColor(isDarkMode ? Color.WHITE : Color.GRAY);
             }
         }
 
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        mPalette.setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        mClock.setTextColor(ColorUtils.blendARGB(mPalette.getPrimaryColor(), Color.WHITE, 0.3f));
+        mClock.setTextColor(ColorUtils.genRandomAccentColor(isThemeDark(mContext)));
     }
 
-    int getTextColor() {
-        return ColorUtils.blendARGB(mTextColor, Color.WHITE, mDarkAmount);
+    private static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
     }
 }

@@ -19,7 +19,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal|top"
+    android:layout_gravity="center_horizontal"
     android:layout_marginRight="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,15 +30,16 @@
         android:layout_alignParentTop="true">
         <TextView
             android:id="@+id/title"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start|top"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:letterSpacing="0.02"
             android:fontFamily="@*android:string/config_headlineFontFamily"
             android:textColor="?attr/wallpaperTextColor"
             android:textSize="18sp"
             android:singleLine="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="12dp"
             android:shadowColor="#7F000000"
@@ -49,26 +50,27 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/row"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/clock"
+            app:layout_constraintEnd_toEndOf="parent"
         />
         <view class="com.android.keyguard.KeyguardSliceView$Row"
             android:id="@+id/row"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:gravity="start"
-            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:layout_marginStart="12dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/clock" 
+            app:layout_constraintEnd_toEndOf="parent" 
         />
         <TextClock
             android:id="@+id/clock"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:gravity="end|top"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:fontFamily="@*android:string/config_headlineFontFamily"
             android:lineSpacingMultiplier="0.7"
             android:textAlignment="center"
@@ -81,7 +83,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.android.keyguard.clock.ClockLayout>
