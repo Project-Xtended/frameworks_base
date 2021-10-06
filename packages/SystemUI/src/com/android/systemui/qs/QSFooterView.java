@@ -21,11 +21,21 @@ import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
+import android.text.BidiFormatter;
+import android.text.format.Formatter;
+import android.text.format.Formatter.BytesResult;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -34,7 +44,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import com.android.settingslib.net.DataUsageController;
 import com.android.systemui.R;
+
+import java.util.List;
 
 /**
  * Footer of expanded Quick Settings, tiles page indicator, (optionally) build number and
@@ -42,6 +55,7 @@ import com.android.systemui.R;
  */
 public class QSFooterView extends FrameLayout {
     private PageIndicator mPageIndicator;
+    private TextView mUsageText;
     private View mEditButton;
 
     @Nullable
@@ -51,53 +65,92 @@ public class QSFooterView extends FrameLayout {
     private boolean mExpanded;
     private float mExpansionAmount;
 
-
     @Nullable
     private OnClickListener mExpandClickListener;
 
-    private final ContentObserver mSettingsObserver = new ContentObserver(
-            new Handler(mContext.getMainLooper())) {
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            super.onChange(selfChange, uri);
-            setBuildText();
-        }
-    };
+    private DataUsageController mDataController;
+    private ConnectivityManager mConnectivityManager;
+    private WifiManager mWifiManager;
+    private SubscriptionManager mSubManager;
 
     public QSFooterView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mDataController = new DataUsageController(context);
+        mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        mSubManager = (SubscriptionManager) context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         mPageIndicator = findViewById(R.id.footer_page_indicator);
+        mUsageText = findViewById(R.id.build);
         mEditButton = findViewById(android.R.id.edit);
 
         updateResources();
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
-        setBuildText();
+        setUsageText();
     }
 
-    private void setBuildText() {
-        TextView v = findViewById(R.id.build);
-        if (v == null) return;
-        boolean isShow = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.OMNI_FOOTER_TEXT_SHOW, 0,
-                        UserHandle.USER_CURRENT) == 1;
-        String text = Settings.System.getStringForUser(mContext.getContentResolver(),
-                        Settings.System.X_FOOTER_TEXT_STRING,
-                        UserHandle.USER_CURRENT);
-        if (isShow) {
-            if (text == null || text == "") {
-                v.setText("Xtended");
-                v.setVisibility(View.VISIBLE);
-            } else {
-                v.setText(text);
-                v.setVisibility(View.VISIBLE);
-            }
+    private void setUsageText() {
+        if (mUsageText == null) return;
+        DataUsageController.DataUsageInfo info;
+        String suffix;
+        if (isWifiConnected()) {
+            info = mDataController.getWifiDailyDataUsageInfo();
+            suffix = getWifiSsid();
         } else {
-            v.setVisibility(View.INVISIBLE);
+            mDataController.setSubscriptionId(
+                    SubscriptionManager.getDefaultDataSubscriptionId());
+            info = mDataController.getDailyDataUsageInfo();
+            suffix = getSlotCarrierName();
+        }
+        mUsageText.setText(formatDataUsage(info.usageLevel) + " " +
+                mContext.getResources().getString(R.string.usage_data) +
+                " (" + suffix + ")");
+    }
+
+    private CharSequence formatDataUsage(long byteValue) {
+        final BytesResult res = Formatter.formatBytes(mContext.getResources(), byteValue,
+                Formatter.FLAG_IEC_UNITS);
+        return BidiFormatter.getInstance().unicodeWrap(mContext.getString(
+                com.android.internal.R.string.fileSizeSuffix, res.value, res.units));
+    }
+
+    private boolean isWifiConnected() {
+        final Network network = mConnectivityManager.getActiveNetwork();
+        if (network != null) {
+            NetworkCapabilities capabilities = mConnectivityManager.getNetworkCapabilities(network);
+            return capabilities != null &&
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI);
+        } else {
+            return false;
+        }
+    }
+
+    private String getSlotCarrierName() {
+        CharSequence result = mContext.getResources().getString(R.string.usage_data_default_suffix);
+        int subId = mSubManager.getDefaultDataSubscriptionId();
+        final List<SubscriptionInfo> subInfoList =
+                mSubManager.getActiveSubscriptionInfoList(true);
+        if (subInfoList != null) {
+            for (SubscriptionInfo subInfo : subInfoList) {
+                if (subId == subInfo.getSubscriptionId()) {
+                    result = subInfo.getDisplayName();
+                    break;
+                }
+            }
+        }
+        return result.toString();
+    }
+
+    private String getWifiSsid() {
+        final WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+        if (wifiInfo.getHiddenSSID() || wifiInfo.getSSID() == WifiManager.UNKNOWN_SSID) {
+            return mContext.getResources().getString(R.string.usage_wifi_default_suffix);
+        } else {
+            return wifiInfo.getSSID().replace("\"", "");
         }
     }
 
@@ -122,6 +175,7 @@ public class QSFooterView extends FrameLayout {
     private TouchAnimator createFooterAnimator() {
         TouchAnimator.Builder builder = new TouchAnimator.Builder()
                 .addFloat(mPageIndicator, "alpha", 0, 1)
+                .addFloat(mUsageText, "alpha", 0, 1)
                 .addFloat(mEditButton, "alpha", 0, 1)
                 .setStartDelay(0.9f);
         return builder.build();
@@ -148,25 +202,18 @@ public class QSFooterView extends FrameLayout {
         if (mFooterAnimator != null) {
             mFooterAnimator.setPosition(headerExpansionFraction);
         }
-    }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.OMNI_FOOTER_TEXT_SHOW), false,
-                mSettingsObserver, UserHandle.USER_ALL);
-
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.X_FOOTER_TEXT_STRING), false,
-                mSettingsObserver, UserHandle.USER_ALL);
-    }
-
-    @Override
-    @VisibleForTesting
-    public void onDetachedFromWindow() {
-        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
-        super.onDetachedFromWindow();
+        if (mUsageText == null) return;
+        if (headerExpansionFraction == 1.0f) {
+            mUsageText.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mUsageText.setSelected(true);
+                }
+            }, 1000);
+        } else {
+            mUsageText.setSelected(false);
+        }
     }
 
     void disable(int state2) {
@@ -188,5 +235,7 @@ public class QSFooterView extends FrameLayout {
     }
 
     private void updateVisibilities() {
+        mUsageText.setVisibility(mExpanded ? View.VISIBLE : View.INVISIBLE);
+        if (mExpanded) setUsageText();
     }
 }
