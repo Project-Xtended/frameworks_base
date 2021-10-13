@@ -68,7 +68,6 @@ public class XtendedIdleManager {
 
         rStateTwo = new Runnable() {
             public void run() {
-                    syncHandler(false);
                     servicesKiller();
             }
         };
@@ -107,7 +106,6 @@ public class XtendedIdleManager {
         String TAG_SUBCLASS = "theAwakening";
         IdleManLog(LOG_MSGS[0] + TAG_SUBCLASS);
         h.removeCallbacks(rStateThree);
-        syncHandler(true);
     }
 
     public static long msTillAlarm(Context imContext) {
@@ -124,12 +122,6 @@ public class XtendedIdleManager {
         } else {
             return 0;
         }
-    }
-
-    public static void syncHandler(boolean state) {
-        String TAG_SUBCLASS = "syncHandler";
-        IdleManLog(LOG_MSGS[0] + TAG_SUBCLASS);
-        ContentResolver.setMasterSyncAutomatically(state);
     }
 
     public static void positionHandler(boolean state) {
@@ -158,7 +150,6 @@ public class XtendedIdleManager {
         String TAG_SUBCLASS = "ultraSaver";
         IdleManLog(LOG_MSGS[0] + TAG_SUBCLASS);
         ultraSaverStatus = state;
-        syncHandler(ultraSaverStatus == 1 ? false : true);
         positionHandler(ultraSaverStatus == 1 ? false : true);
         PackageManager pm = uCon.getPackageManager();
         localActivityManager = (ActivityManager) uCon.getSystemService(Context.ACTIVITY_SERVICE);
