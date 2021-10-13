@@ -455,7 +455,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     private final UserInfoControllerImpl mUserInfoControllerImpl;
     private final DismissCallbackRegistry mDismissCallbackRegistry;
     private NotificationsController mNotificationsController;
-    private NotificationStackScrollLayout mNotificationStackScrollLayout;
 
     // viewgroup containing the normal contents of the statusbar
     LinearLayout mStatusBarContent;
@@ -553,6 +552,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     public boolean mClearableNotifications = true;
     public float mQsExpansionFraction = 0f;
     private int mDismissAllStyle;
+    private int mBgColor, mIconColor, mMode, mNotifIconColor, mNotifBgColor, mIconMode;
 
     Runnable mLongPressBrightnessChange = new Runnable() {
         @Override
@@ -1618,36 +1618,23 @@ public class StatusBar extends SystemUI implements DemoMode,
             mDismissAllButton.getBackground().setAlpha(0);
             mDismissAllButton.setVisibility(View.INVISIBLE);
         }
+    }
 
-        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mDismissAllButton.getLayoutParams();
-        switch (getDismissAllButtonGravity()) {
-            case 0:
-                lp.gravity = Gravity.LEFT|Gravity.BOTTOM;
-                break;
-            case 1:
-                lp.gravity = Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM;
-                break;
-            case 2:
-                lp.gravity = Gravity.RIGHT|Gravity.BOTTOM;
-                break;
-        }
-        mDismissAllButton.setLayoutParams(lp);
-        updateDismissAllButtonColors();
+    public void updateDismissAllButton() {
         dismissAllButtonStyle();
+        dismissAllButtonGravity();
+        updateDismissAllButtonColors();
+        updateDismissAllButton(mIconColor, mBgColor);
     }
 
     public void updateDismissAllButton(int iconcolor, int bgcolor) {
+        iconcolor = mIconColor;
+        bgcolor = mBgColor;
         if (mDismissAllButton != null) {
-            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mDismissAllButton.getLayoutParams();
-            layoutParams.width = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_width);
-            layoutParams.height = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_height);
-            layoutParams.bottomMargin = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_margin_bottom);
-            mDismissAllButton.setElevation(mContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
             Drawable d = mContext.getResources().getDrawable(R.drawable.dismiss_all_background);
-            updateDismissAllButtonColors();
-            d.setTint(bgcolor);
             mDismissAllButton.setBackground(d);
-            mDismissAllButton.setColorFilter(iconcolor);
+            d.setTint(mBgColor);
+            mDismissAllButton.setColorFilter(mIconColor);
         }
     }
 
@@ -2787,6 +2774,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         mDismissAllStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
 	            Settings.System.NOTIF_DISMISSALL_STYLE, 0, UserHandle.USER_CURRENT);
+
+        if (mDismissAllButton != null) {
         switch(mDismissAllStyle) {
             case 1:
                 d = mContext.getDrawable(R.drawable.ic_dismiss_all);
@@ -2870,14 +2859,75 @@ public class StatusBar extends SystemUI implements DemoMode,
             default: // Default
                 d = mContext.getDrawable(R.drawable.dismiss_all_icon);
                 break;
+           }
         }
 	mDismissAllButton.setImageDrawable(null);
 	mDismissAllButton.setImageDrawable(d);
     }
 
     public void updateDismissAllButtonColors() {
-        if (mNotificationStackScrollLayout != null) {
-            mNotificationStackScrollLayout.checkColor();
+        if (mContext == null) {
+            return;
+        }
+
+        int bgColor = mContext.getColor(R.color.dismiss_all_background_color);
+        int iconColor = mContext.getColor(R.color.dismiss_all_icon_color);
+
+        mMode = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.NOTIF_DISMISALL_COLOR_MODE, 0, UserHandle.USER_CURRENT);
+
+        mIconMode = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.NOTIF_DISMISALL_ICON_COLOR_MODE, 0, UserHandle.USER_CURRENT);
+
+        mNotifIconColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.NOTIF_CLEAR_ALL_ICON_COLOR, iconColor, UserHandle.USER_CURRENT);
+
+        mNotifBgColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.NOTIF_CLEAR_ALL_BG_COLOR, bgColor, UserHandle.USER_CURRENT);
+
+        if (mDismissAllButton != null) {
+            switch (mMode) {
+                 default:
+                 case 0:
+                      mBgColor = mContext.getColor(R.color.dismiss_all_background_color);
+                      break;
+                 case 1:
+                      mBgColor = mContext.getColor(R.color.accent_device_default_light);
+                      break;
+                 case 2:
+                      mBgColor = mNotifBgColor;
+                      break;
+            }
+            switch (mIconMode) {
+                 default:
+                 case 0:
+                      mIconColor = mContext.getColor(R.color.dismiss_all_icon_color);
+                      break;
+                 case 1:
+                      mIconColor = mContext.getColor(R.color.accent_device_default_light);
+                      break;
+                 case 2:
+                      mIconColor = mNotifIconColor;
+                      break;
+            }
+        }
+    }
+
+    public void dismissAllButtonGravity() {
+        if (mDismissAllButton != null) {
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mDismissAllButton.getLayoutParams();
+            switch (getDismissAllButtonGravity()) {
+                case 0:
+                    layoutParams.gravity = Gravity.LEFT|Gravity.BOTTOM;
+                    break;
+                case 1:
+                    layoutParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM;
+                    break;
+                case 2:
+                    layoutParams.gravity = Gravity.RIGHT|Gravity.BOTTOM;
+                    break;
+            }
+            mDismissAllButton.setLayoutParams(layoutParams);
         }
     }
 
