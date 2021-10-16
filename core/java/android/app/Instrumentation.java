@@ -60,6 +60,8 @@ import com.android.internal.content.ReferrerIntent;
 import com.android.internal.gmscompat.AttestationHooks;
 import com.android.internal.gmscompat.GmsHooks;
 
+import com.android.internal.gmscompat.GmsHooks;
+
 import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
