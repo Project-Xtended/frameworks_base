@@ -58,9 +58,9 @@ public final class SingleKeyGestureDetector {
     private final Handler mHandler;
     private long mLastDownTime = 0;
 
-    static final int TORCH_DOUBLE_TAP_DELAY = 170;
+    private static final int TORCH_DOUBLE_TAP_DELAY = 170;
 
-    private Context mContext;
+    private final Context mContext;
 
     /** Supported gesture flags */
     public static final int KEY_LONGPRESS = 1 << 1;

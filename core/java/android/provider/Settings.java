@@ -5855,6 +5855,7 @@ public final class Settings {
          * 2: long tap power for torch
          * @hide
          */
+        @Readable
         public static final String TORCH_POWER_BUTTON_GESTURE = "torch_power_button_gesture";
 
         /**

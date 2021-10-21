@@ -259,5 +259,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.AICP_LOCKSCREEN_WEATHER_STYLE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.NAVIGATION_BAR_IME_SPACE, ANY_INTEGER_VALIDATOR);
         VALIDATORS.put(System.FORCE_FULLSCREEN_CUTOUT_APPS, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.TORCH_POWER_BUTTON_GESTURE, new InclusiveIntegerRangeValidator(0, 2));
     }
 }

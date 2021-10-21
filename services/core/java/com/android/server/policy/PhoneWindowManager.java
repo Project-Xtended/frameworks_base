@@ -1110,6 +1110,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void powerPress(long eventTime, int count, boolean beganFromNonInteractive) {
+        if (mDefaultDisplayPolicy.isScreenOnEarly() && !mDefaultDisplayPolicy.isScreenOnFully()
+            && mTorchActionMode != 1) {
+            Slog.i(TAG, "Suppressed redundant power key press while "
+                    + "already in the process of turning the screen on.");
+            return;
+        }
+
         final boolean interactive = Display.isOnState(mDefaultDisplay.getState());
 
         Slog.d(TAG, "powerPress: eventTime=" + eventTime + " interactive=" + interactive
