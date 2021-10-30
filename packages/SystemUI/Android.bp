@@ -126,6 +126,8 @@ android_library {
         "lottie",
         "LowLightDreamLib",
         "faceunlock_framework",
+        "colorkt",
+        "themelib",
     ],
     manifest: "AndroidManifest.xml",
 
