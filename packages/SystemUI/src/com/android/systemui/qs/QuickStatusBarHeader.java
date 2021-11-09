@@ -260,6 +260,14 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mPrivacyContainer.setLayoutParams(lp);
     }
 
+    private void updateBatteryMode() {
+        if (mConfigShowBatteryEstimate) {
+            mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
+        } else {
+            mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
+        }
+    }
+
     void updateResources() {
         Resources resources = mContext.getResources();
         boolean largeScreenHeaderActive =
