@@ -131,6 +131,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
     private boolean mUseCombinedQSHeader;
 
+    private boolean mConfigShowBatteryEstimate;
+
     private int mStatusBarBatteryStyle, mQSBatteryStyle, mQSBatteryLocation;
 
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
@@ -267,6 +269,14 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             return super.onTouchEvent(event);
         } else {
             return false;
+        }
+    }
+
+    private void updateBatteryMode() {
+        if (mConfigShowBatteryEstimate) {
+            mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
+        } else {
+            mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
         }
     }
 
