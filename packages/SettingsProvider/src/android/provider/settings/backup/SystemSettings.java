@@ -86,5 +86,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.COLOR_BUCKET_OVERLAY,
         Settings.System.DOZE_ON_CHARGE,
+        Settings.System.SCREEN_OFF_FOD,
     };
 }
