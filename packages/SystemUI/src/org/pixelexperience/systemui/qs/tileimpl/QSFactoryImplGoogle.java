@@ -48,6 +48,18 @@ import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
+import com.android.systemui.qs.tiles.CaffeineTile;
+import com.android.systemui.qs.tiles.AODTile;
+import com.android.systemui.qs.tiles.CompassTile;
+import com.android.systemui.qs.tiles.DataSwitchTile;
+import com.android.systemui.qs.tiles.FPSInfoTile;
+import com.android.systemui.qs.tiles.HeadsUpTile;
+import com.android.systemui.qs.tiles.OnTheGoTile;
+import com.android.systemui.qs.tiles.RefreshRateTile;
+import com.android.systemui.qs.tiles.ScreenshotTile;
+import com.android.systemui.qs.tiles.SoundTile;
+import com.android.systemui.qs.tiles.SyncTile;
+import com.android.systemui.qs.tiles.VpnTile;
 import com.google.android.systemui.qs.tiles.BatterySaverTileGoogle;
 import com.google.android.systemui.qs.tiles.OverlayToggleTile;
 import com.google.android.systemui.qs.tiles.ReverseChargingTile;
@@ -94,6 +106,18 @@ public class QSFactoryImplGoogle extends QSFactoryImpl {
             Provider<DeviceControlsTile> deviceControlsTileProvider,
             Provider<AlarmTile> alarmTileProvider,
             Provider<QuickAccessWalletTile> quickAccessWalletTileProvider,
+            Provider<CaffeineTile> caffeineTileProvider,
+            Provider<DataSwitchTile> dataSwitchTileProvider,
+            Provider<VpnTile> vpnTileProvider,
+            Provider<SyncTile> syncTileProvider,
+            Provider<SoundTile> soundTileProvider,
+            Provider<ScreenshotTile> screenshotTileProvider,
+            Provider<CompassTile> compassTileProvider,
+            Provider<HeadsUpTile> headsupTileProvider,
+            Provider<AODTile> aodTileProvider,
+            Provider<RefreshRateTile> refreshRateTileProvider,
+            Provider<OnTheGoTile> onTheGoTileProvider,
+            Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<OverlayToggleTile> overlayToggleTileProvider,
             Provider<ReverseChargingTile> reverseChargingTileProvider) {
         super(qsHostLazy,
@@ -124,7 +148,19 @@ public class QSFactoryImplGoogle extends QSFactoryImpl {
                 microphoneToggleTileProvider,
                 deviceControlsTileProvider,
                 alarmTileProvider,
-                quickAccessWalletTileProvider);
+                quickAccessWalletTileProvider,
+                caffeineTileProvider,
+                dataSwitchTileProvider,
+                vpnTileProvider,
+                syncTileProvider,
+                soundTileProvider,
+                screenshotTileProvider,
+                compassTileProvider,
+                headsupTileProvider,
+                aodTileProvider,
+                refreshRateTileProvider,
+                onTheGoTileProvider,
+                fpsInfoTileProvider);
         this.mReverseChargingTileProvider = reverseChargingTileProvider;
         this.mBatterySaverTileGoogleProvider = batterySaverTileGoogleProvider;
         this.mOverlayToggleTileProvider = overlayToggleTileProvider;
