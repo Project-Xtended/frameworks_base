@@ -1126,26 +1126,25 @@ public class ScreenshotController {
 
     private void playShutterSound() {
        boolean playSound = readCameraSoundForced() && mCamsInUse > 0;
+       boolean screenshotSound = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SCREENSHOT_SHUTTER_SOUND, 1, UserHandle.USER_CURRENT) == 1;
         switch (mAudioManager.getRingerMode()) {
             case AudioManager.RINGER_MODE_SILENT:
                 // do nothing
                 break;
             case AudioManager.RINGER_MODE_VIBRATE:
-                if (mVibrator != null && mVibrator.hasVibrator()) {
+                if (mVibrator != null && mVibrator.hasVibrator() && screenshotSound) {
                     mVibrator.vibrate(VibrationEffect.createOneShot(50,
                             VibrationEffect.DEFAULT_AMPLITUDE));
                 }
                 break;
             case AudioManager.RINGER_MODE_NORMAL:
                 // in this case we want to play sound even if not forced on
-                playSound = true;
+                if (screenshotSound) {
+                    mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
+                    playSound = true;
+                }
                 break;
-        }
-        // We want to play the shutter sound when it's either forced or
-        // when we use normal ringer mode
-        if (playSound && Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SCREENSHOT_SHUTTER_SOUND, 1, UserHandle.USER_CURRENT) == 1) {
-            mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
         }
     }
 
