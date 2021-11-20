@@ -6082,12 +6082,4 @@ ul.</string>
     <string name="ui_translation_accessibility_translated_text"><xliff:g id="message" example="Hello">%1$s</xliff:g> Translated.</string>
     <!-- Accessibility message announced to notify the user when the system has finished translating the content displayed on the screen to a different language after the user requested translation. [CHAR LIMIT=NONE] -->
     <string name="ui_translation_accessibility_translation_finished">Message translated from <xliff:g id="from_language" example="English">%1$s</xliff:g> to <xliff:g id="to_language" example="French">%2$s</xliff:g>.</string>
-    
-    <!-- Advanced reboot -->
-    <string name="reboot_to_recovery_title" translatable="false">Recovery</string>
-    <string name="reboot_to_recovery_message" translatable="false">Rebooting to recovery</string>
-    <string name="reboot_to_bootloader_title" translatable="false">Bootloader</string>
-    <string name="reboot_to_bootloader_message" translatable="false">Rebooting to bootloader</string>
-    <string name="reboot_title">Reboot</string>
-    <string name="reboot_message">Rebooting system</string>
 </resources>
