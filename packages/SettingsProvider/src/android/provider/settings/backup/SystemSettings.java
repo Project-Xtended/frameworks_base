@@ -100,5 +100,6 @@ public class SystemSettings {
         Settings.System.LOCKSCREEN_SMALL_CLOCK,
         Settings.System.NAVIGATION_BAR_INVERSE,
         Settings.System.NAVBAR_LAYOUT_VIEWS,
+        Settings.System.FULLSCREEN_GESTURES,
     };
 }
