@@ -36,12 +36,6 @@
     <!-- Date and privacy. Only visible in QS -->
     <include layout="@layout/quick_status_bar_header_date_privacy"/>
 
-    <com.android.systemui.statusbar.policy.BatteryBarController
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        systemui:viewLocation="5"
-        android:layout_below="@+id/quick_status_bar_date_privacy" />
-
     <RelativeLayout
         android:id="@+id/qs_container"
         android:layout_width="match_parent"
@@ -52,11 +46,18 @@
     <!-- Time, icons and Carrier (only in QS) -->
     <include layout="@layout/quick_qs_status_icons"/>
 
+    <com.android.systemui.statusbar.policy.BatteryBarController
+        android:id="@+id/battery_bar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        systemui:viewLocation="5"
+        android:layout_below="@+id/quick_qs_status_icons" />
+
     <com.android.systemui.qs.QuickQSPanel
         android:id="@+id/quick_qs_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/quick_qs_status_icons"
+        android:layout_below="@id/battery_bar"
         android:layout_marginTop="@dimen/qqs_layout_margin_top"
         android:accessibilityTraversalAfter="@id/quick_qs_status_icons"
         android:clipChildren="false"
