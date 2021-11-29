@@ -1333,10 +1333,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                         updateScrimController();
                     });
             fragmentHostManager.addTagListener(QS.TAG, (tag, f) -> {
-                QS qs = (QS) f;
-                if (qs instanceof QSFragment) {
-                    mQSBarHeader = ((QSFragment) qs).getHeader();
-                    mQSPanelController = ((QSFragment) qs).getQSPanelController();
+                if (f instanceof QSFragment) {
+                    mQSBarHeader = ((QSFragment) f).getHeader();
+                    mQSPanelController = ((QSFragment) f).getQSPanelController();
                     mQSPanelController.setBrightnessMirror(mBrightnessMirrorController);
                 }
             });
