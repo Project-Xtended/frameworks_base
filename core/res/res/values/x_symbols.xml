@@ -86,4 +86,7 @@
   <!-- Proximity check on screen on default -->
   <java-symbol type="bool" name="config_proximityCheckOnWakeEnabledByDefault" />
 
+  <!-- NightLight FOD -->
+  <java-symbol type="bool" name="disable_fod_night_light"/>
+
 </resources>
