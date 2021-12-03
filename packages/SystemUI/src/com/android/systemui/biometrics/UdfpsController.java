@@ -29,10 +29,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.RectF;
+import android.hardware.display.ColorDisplayManager;
 import android.hardware.display.DisplayManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
@@ -44,6 +46,7 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.VibrationEffect;
@@ -123,6 +126,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
     @NonNull private final DumpManager mDumpManager;
     @NonNull private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     @Nullable private final Vibrator mVibrator;
+    @NonNull private final Handler mMainHandler;
     @NonNull private final FalsingManager mFalsingManager;
     @NonNull private final PowerManager mPowerManager;
     @NonNull private final AccessibilityManager mAccessibilityManager;
@@ -169,6 +173,9 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
     private final int mUdfpsVendorCode;
     private final SystemSettings mSystemSettings;
     private boolean mScreenOffFod;
+    private boolean mDisableNightMode;
+    private boolean mNightModeActive;
+    private int mAutoModeState;
 
     @VisibleForTesting
     public static final AudioAttributes VIBRATION_SONIFICATION_ATTRIBUTES =
@@ -247,6 +254,9 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         @Override
         public void showUdfpsOverlay(int sensorId, int reason,
                 @NonNull IUdfpsOverlayControllerCallback callback) {
+            if (mDisableNightMode && isNightLightEnabled()) {
+                disableNightMode();
+            }
             mFgExecutor.execute(() -> {
                 final UdfpsEnrollHelper enrollHelper;
                 if (reason == IUdfpsOverlayController.REASON_ENROLL_FIND_SENSOR
@@ -262,6 +272,9 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
 
         @Override
         public void hideUdfpsOverlay(int sensorId) {
+            if (mDisableNightMode && isNightLightEnabled()) {
+                setNightMode(mNightModeActive, mAutoModeState);
+            }
             mFgExecutor.execute(() -> {
                 mServerRequest = null;
                 updateOverlay();
@@ -565,6 +578,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         mExecution = execution;
         // TODO (b/185124905): inject main handler and vibrator once done prototyping
         mVibrator = vibrator;
+        mMainHandler = mainHandler;
         mInflater = inflater;
         // The fingerprint manager is queried for UDFPS before this class is constructed, so the
         // fingerprint manager should never be null.
@@ -621,6 +635,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
         udfpsHapticsSimulator.setUdfpsController(this);
 
         mUdfpsVendorCode = mContext.getResources().getInteger(R.integer.config_udfps_vendor_code);
+        mDisableNightMode = mContext.getResources().getBoolean(com.android.internal.R.bool.disable_fod_night_light);
         mSystemSettings = systemSettings;
         updateScreenOffFodState();
         mSystemSettings.registerContentObserver(Settings.System.SCREEN_OFF_FOD,
@@ -637,6 +652,28 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
 
     private void updateScreenOffFodState() {
         mScreenOffFod = mSystemSettings.getInt(Settings.System.SCREEN_OFF_FOD, 1) == 1;
+    }
+
+    private boolean isNightLightEnabled() {
+       return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_NIGHT_LIGHT, 1) == 1;
+    }
+
+    private void disableNightMode() {
+        ColorDisplayManager colorDisplayManager = mContext.getSystemService(ColorDisplayManager.class);
+        mAutoModeState = colorDisplayManager.getNightDisplayAutoMode();
+        mNightModeActive = colorDisplayManager.isNightDisplayActivated();
+        colorDisplayManager.setNightDisplayActivated(false);
+    }
+
+    private void setNightMode(boolean activated, int autoMode) {
+        ColorDisplayManager colorDisplayManager = mContext.getSystemService(ColorDisplayManager.class);
+        colorDisplayManager.setNightDisplayAutoMode(0);
+        if (autoMode == 0) {
+            colorDisplayManager.setNightDisplayActivated(activated);
+        } else if (autoMode == 1 || autoMode == 2) {
+            colorDisplayManager.setNightDisplayAutoMode(autoMode);
+        }
     }
 
     /**

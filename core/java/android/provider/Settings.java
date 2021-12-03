@@ -6106,6 +6106,12 @@ public final class Settings {
         public static final String RIGHT_PADDING = "statusbar_right_padding";
 
         /**
+         * FOD night light
+         * @hide
+         */
+        public static final String FOD_NIGHT_LIGHT = "fod_night_light";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
