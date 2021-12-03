@@ -1146,7 +1146,9 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
     @Override
     public void setBlockedGesturalNavigation(boolean blocked) {
         synchronized (mLock) {
-            mHandler.removeMessages(MSG_SET_BLOCKED_GESTURAL_NAVIGATION);
+            if (mHandler.hasMessages(MSG_SET_BLOCKED_GESTURAL_NAVIGATION)) {
+                mHandler.removeMessages(MSG_SET_BLOCKED_GESTURAL_NAVIGATION);
+            }
             mHandler.obtainMessage(MSG_SET_BLOCKED_GESTURAL_NAVIGATION, blocked).sendToTarget();
         }
     }

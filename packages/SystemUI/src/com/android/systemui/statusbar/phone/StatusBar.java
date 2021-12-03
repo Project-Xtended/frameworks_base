@@ -2339,13 +2339,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         return mPresenter;
     }
 
-    @Override
-    public void setBlockedGesturalNavigation(boolean blocked) {
-        if (getNavigationBarView() != null) {
-            getNavigationBarView().setBlockedGesturalNavigation(blocked);
-        }
-    }
-
     @VisibleForTesting
     void setBarStateForTest(int state) {
         mState = state;
@@ -2478,6 +2471,13 @@ public class StatusBar extends SystemUI implements DemoMode,
             if (mFlashlightController.hasFlashlight() && mFlashlightController.isAvailable()) {
                 mFlashlightController.setFlashlight(enable);
             }
+        }
+    }
+
+    @Override
+    public void setBlockedGesturalNavigation(boolean blocked) {
+        if (getNavigationBarView() != null) {
+            getNavigationBarView().setBlockedGesturalNavigation(blocked);
         }
     }
 

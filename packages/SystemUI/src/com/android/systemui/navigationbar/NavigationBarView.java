@@ -885,7 +885,7 @@ public class NavigationBarView extends FrameLayout implements
             mSysUiFlagContainer.setFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED, mBlockedGesturalNavigation ||
                     mPanelView.isFullyExpanded() && !mPanelView.isInSettings())
                     .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
-                            mPanelView.isInSettings())
+                            mBlockedGesturalNavigation || mPanelView.isInSettings())
                     .commitUpdate(displayId);
         }
     }
@@ -908,6 +908,7 @@ public class NavigationBarView extends FrameLayout implements
 
     public void setBlockedGesturalNavigation(boolean blocked) {
         mBlockedGesturalNavigation = blocked;
+        mEdgeBackGestureHandler.setBlockedGesturalNavigation(blocked);
         updateDisabledSystemUiStateFlags();
         updatePanelSystemUiStateFlags();
     }
