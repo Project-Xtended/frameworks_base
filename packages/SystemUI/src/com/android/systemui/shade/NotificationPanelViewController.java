@@ -793,6 +793,8 @@ public final class NotificationPanelViewController implements Dumpable {
                     step.getTransitionState() == TransitionState.RUNNING;
             };
 
+    private boolean mBlockedGesturalNavigation = false;
+
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,
             @Main Handler handler,
@@ -5105,7 +5107,8 @@ public final class NotificationPanelViewController implements Dumpable {
         }
         mSysUiState.setFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED,
                         isFullyExpanded() && !isInSettings())
-                .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED, isFullyExpanded() && isInSettings())
+                .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
+                        mBlockedGesturalNavigation || isFullyExpanded() && isInSettings())
                 .commitUpdate(mDisplayId);
     }
 
@@ -5749,6 +5752,10 @@ public final class NotificationPanelViewController implements Dumpable {
 
     private ShadeExpansionStateManager getShadeExpansionStateManager() {
         return mShadeExpansionStateManager;
+    }
+
+    public void setBlockedGesturalNavigation(boolean blocked) {
+        mBlockedGesturalNavigation = blocked;
     }
 
     private final class NsslHeightChangedListener implements
