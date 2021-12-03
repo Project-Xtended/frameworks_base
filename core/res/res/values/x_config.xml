@@ -74,4 +74,7 @@
   <integer name="config_proximityCheckTimeout">250</integer>
   <bool name="config_proximityCheckOnWakeEnabledByDefault">false</bool>
 
+    <!-- NightLight FOD -->
+    <bool name="disable_fod_night_light">false</bool>
+
 </resources>
