@@ -90,5 +90,6 @@ public class SystemSettings {
         Settings.System.DISABLE_RIPPLE_EFFECT,
         Settings.System.SCREEN_OFF_FOD,
         Settings.System.COLOR_BUCKET_OVERLAY,
+        Settings.System.FULLSCREEN_GESTURES,
     };
 }
