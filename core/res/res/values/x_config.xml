@@ -91,4 +91,7 @@
     <!-- Wheter device supports an gaming mode profiles -->
     <bool name="config_gamingmode_performance">true</bool>
 
+    <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+    <bool name="config_cleanupUnusedFingerprints">true</bool>
+
 </resources>
