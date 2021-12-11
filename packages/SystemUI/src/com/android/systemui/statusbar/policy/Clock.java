@@ -165,7 +165,6 @@ public class Clock extends TextView implements
     protected String mClockDateFormat = null;
     protected int mClockDatePosition;
     protected boolean mShowClock = true;
-    private int mClockColor = 0xffffffff;
     private int mClockSize = 14;
     private int mAmPmStyle;
     protected boolean mQsHeader;
@@ -225,9 +224,6 @@ public class Clock extends TextView implements
                     Settings.System.STATUSBAR_CLOCK_DATE_POSITION),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CLOCK_COLOR),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_SIZE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -239,7 +235,6 @@ public class Clock extends TextView implements
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
-	    updateClockColor();
 	    updateClockSize();
 	    updateClockFontStyle();
         }
@@ -337,7 +332,6 @@ public class Clock extends TextView implements
         mSettingsObserver.observe();
         updateSettings();
         updateShowSeconds();
-	updateClockColor();
 	updateClockSize();
 	updateClockFontStyle();
     }
@@ -488,22 +482,7 @@ public class Clock extends TextView implements
     @Override
     public void onDarkChanged(ArrayList<Rect> areas, float darkIntensity, int tint) {
         mNonAdaptedColor = DarkIconDispatcher.getTint(areas, this, tint);
-        if (mClockColor == 0xFFFFFFFF) {
-            setTextColor(mNonAdaptedColor);
-        } else {
-            setTextColor(mClockColor);
-        }
-    }
-
-    // Update text color based when shade scrim changes color.
-    public void onColorsChanged(boolean lightTheme) {
-        final Context context = new ContextThemeWrapper(mContext,
-                lightTheme ? R.style.Theme_SystemUI_LightWallpaper : R.style.Theme_SystemUI);
-        if (mClockColor == 0xFFFFFFFF) {
-            setTextColor(Utils.getColorAttrDefaultColor(context, R.attr.wallpaperTextColor));
-        } else {
-            setTextColor(mClockColor);
-        }
+		setTextColor(mNonAdaptedColor);
     }
 
     @Override
@@ -726,7 +705,6 @@ public class Clock extends TextView implements
             updateClockVisibility();
             updateClock();
             updateShowSeconds();
-            updateClockColor();
 	    updateClockSize();
 	    updateClockFontStyle();
         }
@@ -808,18 +786,6 @@ public class Clock extends TextView implements
                 UserHandle.USER_CURRENT);
             setTextSize(mClockSize);
             updateClock();
-    }
-
-    private void updateClockColor() {
-        mClockColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CLOCK_COLOR, DEFAULT_CLOCK_COLOR,
-                UserHandle.USER_CURRENT);
-                if (mClockColor == 0xFFFFFFFF) {
-                    setTextColor(mNonAdaptedColor);
-                } else {
-                    setTextColor(mClockColor);
-                }
-   	        updateClock();
     }
 
     private void updateClockFontStyle() {
