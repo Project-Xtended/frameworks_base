@@ -169,6 +169,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mPrivacyChip = findViewById(R.id.privacy_chip);
         mDateView = findViewById(R.id.date);
         mClockDateView = findViewById(R.id.date_clock);
+        mClockDateView.setVisibility(View.GONE);
         mClockIconsSeparator = findViewById(R.id.separator);
         mRightLayout = findViewById(R.id.rightLayout);
         mDateContainer = findViewById(R.id.date_container);
@@ -357,9 +358,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 mClockView.getPaddingBottom()
         );
 
-        MarginLayoutParams lp = (MarginLayoutParams) mClockDateView.getLayoutParams();
-        lp.setMarginStart(endPadding);
-        mClockDateView.setLayoutParams(lp);
+//        MarginLayoutParams lp = (MarginLayoutParams) mClockDateView.getLayoutParams();
+//        lp.setMarginStart(endPadding);
+//        mClockDateView.setLayoutParams(lp);
     }
 
     private void updateAnimators() {
@@ -385,8 +386,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         }
         TouchAnimator.Builder builder = new TouchAnimator.Builder()
                 // These views appear on expanding down
-                .addFloat(mDateView, "alpha", 0, 0, 1)
-                .addFloat(mClockDateView, "alpha", 1, 0, 0)
+//                .addFloat(mDateView, "alpha", 0, 0, 1)
+//                .addFloat(mClockDateView, "alpha", 1, 0, 0)
+                .addFloat(mClockView, "alpha", 0, 1)
                 .addFloat(mQSCarriers, "alpha", 0, 1)
                 // Use statusbar paddings when collapsed,
                 // align with QS when expanded, and animate translation
@@ -407,8 +409,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
                     @Override
                     public void onAnimationStarted() {
-                        mClockDateView.setVisibility(View.VISIBLE);
-                        mClockDateView.setFreezeSwitching(true);
+//                        mClockDateView.setVisibility(View.VISIBLE);
+//                        mClockDateView.setFreezeSwitching(true);
                         setSeparatorVisibility(false);
                         if (!mIsSingleCarrier) {
                             mIconContainer.addIgnoredSlots(mRssiIgnoredSlots);
@@ -418,8 +420,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                     @Override
                     public void onAnimationAtStart() {
                         super.onAnimationAtStart();
-                        mClockDateView.setFreezeSwitching(false);
-                        mClockDateView.setVisibility(View.VISIBLE);
+//                        mClockDateView.setFreezeSwitching(false);
+//                        mClockDateView.setVisibility(View.VISIBLE);
                         setSeparatorVisibility(mShowClockIconsSeparator);
                         // In QQS we never ignore RSSI.
                         mIconContainer.removeIgnoredSlots(mRssiIgnoredSlots);
