@@ -90,4 +90,7 @@
   <!-- NightLight FOD -->
   <java-symbol type="bool" name="disable_fod_night_light"/>
 
+  <!-- Wheter device supports an gaming mode profiles -->
+  <java-symbol type="bool" name="config_gamingmode_performance" />
+
 </resources>

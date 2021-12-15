@@ -706,6 +706,11 @@
     <protected-broadcast android:name="android.app.action.ACTION_SHOW_NEW_USER_DISCLAIMER" />
     <protected-broadcast android:name="xtended.intent.action.GO_TO_SLEEP" />
 
+    <!-- Gaming Mode -->
+    <protected-broadcast android:name="exthmui.intent.action.GAMING_MODE_ON" />
+    <protected-broadcast android:name="exthmui.intent.action.GAMING_MODE_OFF" />
+
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
