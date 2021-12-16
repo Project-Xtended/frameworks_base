@@ -41,4 +41,8 @@
     <!-- Whether to pulse onFingerDown actions while in AOD. -->
     <bool name="config_pulseOnFingerDownInAod">false</bool>
 
+    <!-- SystemUI Google -->
+    <bool name="flag_monet">true</bool>
+    <bool name="flag_smartspace">true</bool>
+
 </resources>
