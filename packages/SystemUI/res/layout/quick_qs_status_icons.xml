@@ -25,7 +25,7 @@
 </LinearLayout>
 
 <!-- MOD QS Style 1 (Vertically) -->
-<LinearLayout android:id="@+id/imgclock" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="42dp">
+<LinearLayout android:id="@+id/imgclock" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="1dp">
 	<!-- First Row of QS1 (Date + Clock) Horizontally -->
 	<LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
 		<!-- Image View -->
@@ -53,7 +53,7 @@
 </LinearLayout>
 
 <!-- MOD QS Style 2 (Vertically) -->
-<LinearLayout android:id="@+id/bigclock" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="42dp">
+<LinearLayout android:id="@+id/bigclock" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="1dp">
 	<!-- First Row of QS2 (Clock + Date) Horizontally  -->
 	<LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
 		<!-- Clock -->
@@ -76,8 +76,8 @@
 	<LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
 		<!-- OS Name -->
 		<LinearLayout android:orientation="horizontal" android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="28dp" android:background="@drawable/mountain5" android:paddingStart="4dp" android:paddingEnd="4dp">
-			<TextView android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:text="Spark " android:background="@drawable/mountain4" android:paddingStart="6dp" android:paddingEnd="6dp"/>
-			<TextView android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:text="OS" android:paddingStart="6dp" android:paddingEnd="6dp"/>
+			<TextView android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:text="Derp " android:background="@drawable/mountain4" android:paddingStart="6dp" android:paddingEnd="6dp"/>
+			<TextView android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="20dp" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textColor="?android:colorAccent" android:textSize="12.0sp" android:textStyle="bold" android:text="Fest" android:paddingStart="6dp" android:paddingEnd="6dp"/>
 		</LinearLayout>
 		<!-- Thie view is required to push layouts left and right-->
 		<View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.10" />
