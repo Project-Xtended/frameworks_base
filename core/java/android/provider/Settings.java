@@ -6160,6 +6160,7 @@ public final class Settings {
           * Setting to enable/disable gaming mode
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_ENABLED = "gaming_mode_enabled";
 
         /**
