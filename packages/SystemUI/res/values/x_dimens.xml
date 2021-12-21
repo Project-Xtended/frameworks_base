@@ -88,4 +88,8 @@
     <dimen name="screenshot_preview_corner_radius">20dp</dimen>
     <dimen name="screenshot_button_corner_radius">20dp</dimen>
 
+    <!-- Recognizing fingerprint animation -->
+    <dimen name="udfps_animation_size">280dp</dimen>
+    <dimen name="udfps_animation_offset">0dp</dimen>
+
 </resources>
