@@ -77,4 +77,8 @@
     <!-- Height-Width of the big battery circle icon in the status bar. -->
     <dimen name="big_battery_height">19dp</dimen>
 
+    <!-- Recognizing fingerprint animation -->
+    <dimen name="udfps_animation_size">280dp</dimen>
+    <dimen name="udfps_animation_offset">0dp</dimen>
+
 </resources>
