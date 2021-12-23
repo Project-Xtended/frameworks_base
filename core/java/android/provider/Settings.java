@@ -6168,54 +6168,64 @@ public final class Settings {
           * 1 - user is in gaming mode
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_ACTIVE = "gaming_mode_active";
 
         /**
           * Dynamically identify the top application and add it to the list
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DYNAMIC_ADD = "gaming_mode_dynamic_add";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_APP_LIST = "gaming_mode_app_list";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_REMOVED_APP_LIST = "gaming_mode_removed_app_list";
 
         /**
           * Auto answer call in gaming mode
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_AUTO_ANSWER_CALL = "gaming_mode_auto_answer_call";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DISABLE_AUTO_BRIGHTNESS = "gaming_mode_disable_auto_brightness";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DISABLE_NOTIFICATION_ALERT = "gaming_mode_disable_notification_alert";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DISABLE_RINGTONE = "gaming_mode_disable_ringtone";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DISABLE_GESTURE = "gaming_mode_disable_gesture";
 
         /**
           * Change performance level in gaming mode
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_CHANGE_PERFORMANCE_LEVEL = "gaming_mode_change_performance_level";
 
         /**
@@ -6223,63 +6233,74 @@ public final class Settings {
           * 0 - 6 : Powersave - Performance
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_PERFORMANCE_LEVEL = "gaming_mode_performance_level";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_QS_APP_LIST = "gaming_mode_qs_app_list";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_SHOW_DANMAKU = "gaming_mode_show_danmaku";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DANMAKU_SPEED_HORIZONTAL = "gaming_mode_danmaku_speed_horizontal";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DANMAKU_SPEED_VERTICAL = "gaming_mode_danmaku_speed_vertical";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DANMAKU_SIZE_HORIZONTAL = "gaming_mode_danmaku_size_horizontal";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DANMAKU_SIZE_VERTICAL = "gaming_mode_danmaku_size_vertical";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DANMAKU_DYNAMIC_NOTIFICATION_FILTER = "gaming_mode_danmaku_dynamic_notification_filter";
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_DANMAKU_APP_BLACKLIST = "gaming_mode_danmaku_app_blacklist";
-
 
         /**
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_USE_GAME_DRIVER = "gaming_mode_use_game_driver";
 
         /**
           * Opacity adjustment for the GamingMode's menu
           * @hide
           */
+        @Readable
         public static final String GAMING_MODE_MENU_OPACITY = "gaming_mode_menu_opacity";
 
         /**
          * @hide
          */
+        @Readable
         public static final String GAMING_MODE_USE_OVERLAY_MENU = "gaming_mode_use_overlay_menu";
 
        /**
@@ -6288,6 +6309,7 @@ public final class Settings {
          * 1 - always
          * @hide
          */
+        @Readable
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
 
         /**
