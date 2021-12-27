@@ -808,144 +808,144 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             switch(mLogoStyle) {
                     // Xtnd Old
                 case 1:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_xtnd_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_xtnd_logo);
                     break;
                     // XTND Short
                 case 2:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_xtnd_short);
+                    logo = getContext().getDrawable(R.drawable.ic_xtnd_short);
                     break;
                     // GZR Skull
                 case 3:
-                    logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_skull_logo);
+                    logo = getContext().getDrawable(R.drawable.status_bar_gzr_skull_logo);
                     break;
                     // GZR Circle
                 case 4:
-                    logo = getContext().getResources().getDrawable(R.drawable.status_bar_gzr_circle_logo);
+                    logo = getContext().getDrawable(R.drawable.status_bar_gzr_circle_logo);
                     break;
                     // Batman
                 case 5:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_batman_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_batman_logo);
                     break;
                     // Deadpool
                 case 6:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_deadpool_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_deadpool_logo);
                     break;
                     // Superman
                 case 7:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_superman_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_superman_logo);
                     break;
                     // Ironman
                 case 8:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_ironman_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_ironman_logo);
                     break;
                     // Spiderman
                 case 9:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_spiderman_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_spiderman_logo);
                     break;
                     // Decepticons
                 case 10:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_decpeticons_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_decpeticons_logo);
                     break;
                     // Minions
                 case 11:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_minions_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_minions_logo);
                     break;
                 case 12:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_android_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_android_logo);
                     break;
                     // Shit
                 case 13:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_apple_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_apple_logo);
                     break;
                     // Shitty Logo
                 case 14:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_ios_logo);
+                    logo = getContext().getDrawable(R.drawable.ic_ios_logo);
                     break;
                     // Others
                 case 15:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_blackberry);
+                    logo = getContext().getDrawable(R.drawable.ic_blackberry);
                     break;
                 case 16:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_cake);
+                    logo = getContext().getDrawable(R.drawable.ic_cake);
                     break;
                 case 17:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_blogger);
+                    logo = getContext().getDrawable(R.drawable.ic_blogger);
                     break;
                 case 18:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_biohazard);
+                    logo = getContext().getDrawable(R.drawable.ic_biohazard);
                     break;
                 case 19:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_linux);
+                    logo = getContext().getDrawable(R.drawable.ic_linux);
                     break;
                 case 20:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_yin_yang);
+                    logo = getContext().getDrawable(R.drawable.ic_yin_yang);
                     break;
                 case 21:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_windows);
+                    logo = getContext().getDrawable(R.drawable.ic_windows);
                     break;
                 case 22:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_robot);
+                    logo = getContext().getDrawable(R.drawable.ic_robot);
                     break;
                 case 23:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_ninja);
+                    logo = getContext().getDrawable(R.drawable.ic_ninja);
                     break;
                 case 24:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_heart);
+                    logo = getContext().getDrawable(R.drawable.ic_heart);
                     break;
                 case 25:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_ghost);
+                    logo = getContext().getDrawable(R.drawable.ic_ghost);
                     break;
                 case 26:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_google);
+                    logo = getContext().getDrawable(R.drawable.ic_google);
                     break;
                 case 27:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_human_male);
+                    logo = getContext().getDrawable(R.drawable.ic_human_male);
                     break;
                 case 28:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_human_female);
+                    logo = getContext().getDrawable(R.drawable.ic_human_female);
                     break;
                 case 29:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_human_male_female);
+                    logo = getContext().getDrawable(R.drawable.ic_human_male_female);
                     break;
                 case 30:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_gender_male);
+                    logo = getContext().getDrawable(R.drawable.ic_gender_male);
                     break;
                 case 31:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_gender_female);
+                    logo = getContext().getDrawable(R.drawable.ic_gender_female);
                     break;
                 case 32:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_gender_male_female);
+                    logo = getContext().getDrawable(R.drawable.ic_gender_male_female);
                     break;
                 case 33:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_guitar_electric);
+                    logo = getContext().getDrawable(R.drawable.ic_guitar_electric);
                     break;
                 case 34:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon);
                     break;
                 case 35:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_neutral);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon_neutral);
                     break;
                 case 36:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_happy);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon_happy);
                     break;
                 case 37:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_sad);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon_sad);
                     break;
                 case 38:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_tongue);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon_tongue);
                     break;
                 case 39:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_dead);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon_dead);
                     break;
                 case 40:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_cool);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon_cool);
                     break;
                 case 41:
-                    logo = getContext().getResources().getDrawable(R.drawable.ic_emoticon_devil);
+                    logo = getContext().getDrawable(R.drawable.ic_emoticon_devil);
                     break;
                 case 0:
                 default: // Default (Xtended Main)
-                    logo = getContext().getResources().getDrawable(R.drawable.status_bar_logo);
+                    logo = getContext().getDrawable(R.drawable.status_bar_logo);
                     break;
             }
             if (mShowLogo == 1) {
