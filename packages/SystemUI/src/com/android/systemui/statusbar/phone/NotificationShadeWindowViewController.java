@@ -127,6 +127,9 @@ public class NotificationShadeWindowViewController {
     private RectF mTempRect = new RectF();
     private boolean mIsTrackingBarGesture = false;
 
+    // custom additions start
+    private boolean mDoubleTapEnabledNative;
+
     @Inject
     public NotificationShadeWindowViewController(
             InjectionInflationController injectionInflationController,
@@ -201,17 +204,24 @@ public class NotificationShadeWindowViewController {
         final AmbientDisplayConfiguration configuration = new AmbientDisplayConfiguration(mView.getContext());
         mDoubleTapEnabled = configuration.doubleTapGestureEnabled(UserHandle.USER_CURRENT);
         mSingleTapEnabled = configuration.tapGestureEnabled(UserHandle.USER_CURRENT);
+        mDoubleTapEnabledNative = mSecureSettings.getIntForUser(
+            Settings.Secure.DOUBLE_TAP_TO_WAKE, 0, UserHandle.USER_CURRENT) == 1;
 
         final ContentObserver contentObserver = new ContentObserver(mHandler) {
             @Override
             public void onChange(boolean selfChange, Uri uri) {
                 switch (uri.getLastPathSegment()) {
                     case Settings.Secure.DOZE_DOUBLE_TAP_GESTURE:
-                        mDoubleTapEnabled = Settings.Secure.getIntForUser(mView.getContext().getContentResolver(),
-                            Settings.Secure.DOZE_DOUBLE_TAP_GESTURE, 1, UserHandle.USER_CURRENT) == 1;
+                        mDoubleTapEnabled = configuration.doubleTapGestureEnabled(
+                                UserHandle.USER_CURRENT);
                         break;
                     case Settings.Secure.DOZE_TAP_SCREEN_GESTURE:
                         mSingleTapEnabled = configuration.tapGestureEnabled(UserHandle.USER_CURRENT);
+                        break;
+                    case Settings.Secure.DOUBLE_TAP_TO_WAKE:
+                        mDoubleTapEnabledNative = mSecureSettings.getIntForUser(
+                            Settings.Secure.DOUBLE_TAP_TO_WAKE, 0,
+                            UserHandle.USER_CURRENT) == 1;
                         break;
                     case Settings.System.QS_SHOW_AUTO_BRIGHTNESS_BUTTON:
                         updateAutoBrightnessIconVisibility();
@@ -225,6 +235,9 @@ public class NotificationShadeWindowViewController {
             contentObserver, UserHandle.USER_ALL);
         mSecureSettings.registerContentObserverForUser(
             Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
+            contentObserver, UserHandle.USER_ALL);
+        mSecureSettings.registerContentObserverForUser(
+            Settings.Secure.DOUBLE_TAP_TO_WAKE,
             contentObserver, UserHandle.USER_ALL);
         if (mAutoBrightnessConfigEnabled) {
             updateAutoBrightnessIconVisibility();
@@ -247,7 +260,7 @@ public class NotificationShadeWindowViewController {
 
                     @Override
                     public boolean onDoubleTap(MotionEvent e) {
-                        if (mDoubleTapEnabled || mSingleTapEnabled) {
+                        if (mDoubleTapEnabled || mSingleTapEnabled || mDoubleTapEnabledNative) {
                             mService.wakeUpIfDozing(
                                     SystemClock.uptimeMillis(), mView, "DOUBLE_TAP");
                             return true;
