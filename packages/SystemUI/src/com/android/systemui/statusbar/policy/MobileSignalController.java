@@ -546,7 +546,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
                         break;
                 }
             }
-        } else if (mImsManager != null && mShowVolteIcon && isVolteAvailable()) {
+        } else if (mImsManager != null && mShowVolteIcon && mVolteIcon && isVolteAvailable()) {
             switch (mVoLTEstyle) {
                 case 1:
                     resId = R.drawable.ic_volte1;
@@ -1115,37 +1115,10 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     }
 
     private MobileIconGroup getVowifiIconGroup() {
-        if (mVoWIFIicon == 0 || mOverride) return null;
+        if (mVoWIFIicon == 0 || !mOverride) return null;
 
-        if ( isVowifiAvailable() && !isCallIdle() ) {
+        if (isVowifiAvailable() && !isCallIdle()) {
             return TelephonyIcons.VOWIFI_CALLING;
-        }else if (isVowifiAvailable()) {
-            switch (mVoWIFIicon) {
-                case 1:
-                default:
-                    return TelephonyIcons.VOWIFI;
-                // OOS
-                case 2:
-                    return TelephonyIcons.VOWIFI_ONEPLUS;
-                // Motorola
-                case 3:
-                    return TelephonyIcons.VOWIFI_MOTO;
-                // ASUS
-                case 4:
-                    return TelephonyIcons.VOWIFI_ASUS;
-                // EMUI (Huawei P10)
-                case 5:
-                    return TelephonyIcons.VOWIFI_EMUI;
-                // Oneplus Compact
-                case 6:
-                    return TelephonyIcons.VOWIFI_ONEPLUS_COMPACT;
-                // Vivo
-                case 7:
-                    return TelephonyIcons.VOWIFI_VIVO;
-                // Margaritov
-                case 8:
-                    return TelephonyIcons.VOWIFI_Margaritov;
-            }
         } else {
             return null;
         }
