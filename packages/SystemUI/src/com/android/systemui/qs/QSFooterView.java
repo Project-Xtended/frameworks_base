@@ -34,7 +34,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import com.android.settingslib.development.DevelopmentSettingsEnabler;
 import com.android.systemui.R;
 
 /**
@@ -43,7 +42,6 @@ import com.android.systemui.R;
  */
 public class QSFooterView extends FrameLayout {
     private PageIndicator mPageIndicator;
-    private TextView mBuildText;
     private View mEditLayout;
     private View mEditButton;
 
@@ -54,13 +52,12 @@ public class QSFooterView extends FrameLayout {
     private boolean mExpanded;
     private float mExpansionAmount;
 
-    private boolean mShouldShowBuildText;
     private boolean mShowEditIcon;
 
     @Nullable
     private OnClickListener mExpandClickListener;
 
-    private final ContentObserver mDeveloperSettingsObserver = new ContentObserver(
+    private final ContentObserver mSettingsObserver = new ContentObserver(
             new Handler(mContext.getMainLooper())) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -77,7 +74,6 @@ public class QSFooterView extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mPageIndicator = findViewById(R.id.footer_page_indicator);
-        mBuildText = findViewById(R.id.build);
         mEditButton = findViewById(android.R.id.edit);
         mEditLayout = findViewById(R.id.edit_layout);
 
@@ -87,10 +83,17 @@ public class QSFooterView extends FrameLayout {
     }
 
     private void setBuildText() {
-        if (mBuildText == null) return;
-        mBuildText.setText(null);
-        mShouldShowBuildText = false;
-        mBuildText.setSelected(false);
+        TextView v = findViewById(R.id.build);
+        if (v == null) return;
+        boolean isShow = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.OMNI_FOOTER_TEXT_SHOW, 0,
+                        UserHandle.USER_CURRENT) == 1;
+        if (isShow) {
+            v.setText("#Xtended");
+            v.setVisibility(View.VISIBLE);
+        } else {
+            v.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -114,7 +117,6 @@ public class QSFooterView extends FrameLayout {
     private TouchAnimator createFooterAnimator() {
         TouchAnimator.Builder builder = new TouchAnimator.Builder()
                 .addFloat(mPageIndicator, "alpha", 0, 1)
-                .addFloat(mBuildText, "alpha", 0, 1)
                 .addFloat(mEditButton, "alpha", 0, 1)
                 .setStartDelay(0.9f);
         return builder.build();
@@ -147,14 +149,15 @@ public class QSFooterView extends FrameLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mContext.getContentResolver().registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
-                mDeveloperSettingsObserver, UserHandle.USER_ALL);
+                Settings.System.getUriFor(Settings.System.OMNI_FOOTER_TEXT_SHOW), false,
+                mSettingsObserver, UserHandle.USER_ALL);
+
     }
 
     @Override
     @VisibleForTesting
     public void onDetachedFromWindow() {
-        mContext.getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
+        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
         super.onDetachedFromWindow();
     }
 
@@ -174,11 +177,9 @@ public class QSFooterView extends FrameLayout {
     }
 
     private void updateClickabilities() {
-        mBuildText.setLongClickable(mBuildText.getVisibility() == View.VISIBLE);
     }
 
     private void updateVisibilities() {
-        mBuildText.setVisibility(mExpanded && mShouldShowBuildText ? View.VISIBLE : View.INVISIBLE);
         mShowEditIcon = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_FOOTER_SHOW_EDIT, 1,
                 UserHandle.USER_CURRENT) == 1;
