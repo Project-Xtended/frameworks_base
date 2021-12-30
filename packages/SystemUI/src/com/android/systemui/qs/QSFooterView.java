@@ -42,7 +42,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.settingslib.Utils;
-import com.android.settingslib.development.DevelopmentSettingsEnabler;
 import com.android.settingslib.drawable.UserIconDrawable;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
@@ -66,8 +65,6 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
     private SettingsButton mSettingsButton;
     protected View mSettingsContainer;
     private PageIndicator mPageIndicator;
-    private TextView mBuildText;
-    private boolean mShouldShowBuildText;
     private View mRunningServicesButton;
 
     private boolean mQsDisabled;
@@ -98,7 +95,7 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
     private boolean mShowEditIcon;
     private boolean mShowUserIcon;
 
-    private final ContentObserver mDeveloperSettingsObserver = new ContentObserver(
+    private final ContentObserver mSettingsObserver = new ContentObserver(
             new Handler(mContext.getMainLooper())) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -126,7 +123,6 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
         mMultiUserAvatar = mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
 
         mActionsContainer = requireViewById(R.id.qs_footer_actions_container);
-        mBuildText = findViewById(R.id.build);
         mTunerIcon = requireViewById(R.id.tuner_icon);
 
         // RenderThread is doing more harm than good when touching the header (to expand quick
@@ -144,10 +140,17 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
     }
 
     private void setBuildText() {
-        if (mBuildText == null) return;
-        mBuildText.setText(null);
-        mShouldShowBuildText = false;
-        mBuildText.setSelected(false);
+        TextView v = findViewById(R.id.build);
+        if (v == null) return;
+        boolean isShow = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.OMNI_FOOTER_TEXT_SHOW, 0,
+                        UserHandle.USER_CURRENT) == 1;
+        if (isShow) {
+            v.setText("#Xtended");
+            v.setVisibility(View.VISIBLE);
+        } else {
+            v.setVisibility(View.INVISIBLE);
+        }
     }
 
     void updateAnimator(int width, int numTiles) {
@@ -196,7 +199,6 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
         TouchAnimator.Builder builder = new TouchAnimator.Builder()
                 .addFloat(mActionsContainer, "alpha", 0, 1)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
-                .addFloat(mBuildText, "alpha", 0, 1)
                 .setStartDelay(0.9f);
         return builder.build();
     }
@@ -231,8 +233,8 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mContext.getContentResolver().registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
-                mDeveloperSettingsObserver, UserHandle.USER_ALL);
+                Settings.System.getUriFor(Settings.System.OMNI_FOOTER_TEXT_SHOW), false,
+                mSettingsObserver, UserHandle.USER_ALL);
 
         final TunerService tunerService = Dependency.get(TunerService.class);
         tunerService.addTunable(this, QS_FOOTER_SHOW_SETTINGS);
@@ -245,7 +247,7 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
     @VisibleForTesting
     public void onDetachedFromWindow() {
         Dependency.get(TunerService.class).removeTunable(this);
-        mContext.getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
+        mContext.getContentResolver().unregisterContentObserver(mSettingsObserver);
         super.onDetachedFromWindow();
     }
 
@@ -320,7 +322,6 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
         mEdit.setClickable(mEdit.getVisibility() == View.VISIBLE);
         mRunningServicesButton.setClickable(mRunningServicesButton.getVisibility() == View.VISIBLE);
         mSettingsButton.setClickable(mSettingsButton.getVisibility() == View.VISIBLE);
-        mBuildText.setLongClickable(mBuildText.getVisibility() == View.VISIBLE);
     }
 
     private void updateVisibilities(boolean isTunerEnabled, boolean multiUserEnabled) {
@@ -334,8 +335,6 @@ public class QSFooterView extends FrameLayout implements TunerService.Tunable {
                 View.GONE : View.VISIBLE);
         mEdit.setVisibility(isDemo || !mExpanded || !mShowEditIcon ?
                 View.GONE : View.VISIBLE);
-
-        mBuildText.setVisibility(mExpanded && mShouldShowBuildText ? View.VISIBLE : View.INVISIBLE);
     }
 
     private boolean showUserSwitcher(boolean multiUserEnabled) {
