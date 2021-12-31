@@ -100,9 +100,12 @@ import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.ExtensionController;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
+import com.android.systemui.statusbar.policy.SecureLockscreenQSDisabler;
+import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.volume.VolumeComponent;
@@ -235,7 +238,10 @@ public class StatusBarGoogle extends StatusBar {
                            SmartSpaceController smartSpaceController,
                            WallpaperNotifier wallpaperNotifier,
                            Optional<ReverseChargingViewController> reverseChargingViewController,
-                           Lazy<Optional<NotificationVoiceReplyClient>> notificationVoiceReplyClient) {
+                           Lazy<Optional<NotificationVoiceReplyClient>> notificationVoiceReplyClient,
+                           FlashlightController flashlightController,
+                           TaskHelper taskHelper,
+                           SecureLockscreenQSDisabler secureLockscreenQSDisabler) {
         super(context, notificationsController, lightBarController, autoHideController, keyguardUpdateMonitor,
                 signalPolicy, pulseExpansionHandler, notificationWakeUpCoordinator, keyguardBypassController,
                 keyguardStateController, headsUpManagerPhone, dynamicPrivacyController, bypassHeadsUpNotifier,
@@ -257,7 +263,8 @@ public class StatusBarGoogle extends StatusBar {
                 notificationShadeDepthControllerLazy, statusBarTouchableRegionManager, notificationIconAreaController,
                 brightnessSliderFactory, chargingRippleAnimationController, ongoingCallController, animationScheduler,
                 locationPublisher, statusBarIconController, lockscreenShadeTransitionController, featureFlags,
-                keyguardUnlockAnimationController, unlockedScreenOffAnimationController, startingSurfaceOptional);
+                keyguardUnlockAnimationController, unlockedScreenOffAnimationController, startingSurfaceOptional,
+                flashlightController, taskHelper, secureLockscreenQSDisabler);
         mSmartSpaceController = smartSpaceController;
         mWallpaperNotifier = wallpaperNotifier;
         mReverseChargingViewController = reverseChargingViewController;
