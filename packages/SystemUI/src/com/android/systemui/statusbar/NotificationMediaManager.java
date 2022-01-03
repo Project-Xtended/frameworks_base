@@ -18,7 +18,6 @@ package com.android.systemui.statusbar;
 import static com.android.systemui.statusbar.StatusBarState.KEYGUARD;
 import static com.android.systemui.statusbar.phone.StatusBar.DEBUG_MEDIA_FAKE_ARTWORK;
 import static com.android.systemui.statusbar.phone.StatusBar.ENABLE_LOCKSCREEN_WALLPAPER;
-import static com.android.systemui.statusbar.phone.StatusBar.SHOW_LOCKSCREEN_MEDIA_ARTWORK;
 
 import android.annotation.MainThread;
 import android.annotation.NonNull;
@@ -626,10 +625,6 @@ public class NotificationMediaManager implements Dumpable {
      */
     public void updateMediaMetaData(boolean metaDataChanged, boolean allowEnterAnimation) {
         Trace.beginSection("StatusBar#updateMediaMetaData");
-        if (!SHOW_LOCKSCREEN_MEDIA_ARTWORK) {
-            Trace.endSection();
-            return;
-        }
 
         if (mBackdrop == null) {
             Trace.endSection();
@@ -655,7 +650,7 @@ public class NotificationMediaManager implements Dumpable {
         }
 
         Bitmap artworkBitmap = null;
-        if (mShowLockscreenMediaArt && mediaMetadata != null && !mKeyguardBypassController.getBypassEnabled()) {
+        if (mediaMetadata != null && !mKeyguardBypassController.getBypassEnabled()) {
             artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ART);
             if (artworkBitmap == null) {
                 artworkBitmap = mediaMetadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART);
@@ -684,7 +679,7 @@ public class NotificationMediaManager implements Dumpable {
             @Nullable Bitmap bmp) {
         Drawable artworkDrawable = null;
         // set media artwork as lockscreen wallpaper if player is playing
-        if (bmp != null && !ENABLE_LOCKSCREEN_WALLPAPER &&
+        if (bmp != null && (mShowLockscreenMediaArt || !ENABLE_LOCKSCREEN_WALLPAPER) &&
                 PlaybackState.STATE_PLAYING == getMediaControllerPlaybackState(mMediaController)) {
             switch (mAlbumArtFilter) {
                 case 0:
