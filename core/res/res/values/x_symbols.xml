@@ -125,8 +125,6 @@
   <java-symbol type="bool" name="config_forceMultiResolution" />
 
   <!-- PixelPropUtils -->
-  <java-symbol type="array" name="gaaps_package_names" />
-  <java-symbol type="array" name="marlin_package_names" />
   <java-symbol type="string" name="build_device" />
   <java-symbol type="string" name="build_fp" />
   <java-symbol type="string" name="build_model" />
