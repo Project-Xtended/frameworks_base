@@ -120,5 +120,8 @@
 
   <!-- Device Hardware Wake Keys -->
   <java-symbol type="integer" name="config_deviceHardwareWakeKeys" />
+  
+  <!-- Whether to force enable multi resolution configuration for camera -->
+  <java-symbol type="bool" name="config_forceMultiResolution" />
 
 </resources>
