@@ -6553,6 +6553,13 @@ public final class Settings {
         public static final String LOCKSCREEN_SMALL_CLOCK = "lockscreen_small_clock";
 
         /**
+         * Whether to disable the ripple animation on fingerprint unlock
+         *
+         * @hide
+         */
+        public static final String DISABLE_RIPPLE_EFFECT = "disable_ripple_effect";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
