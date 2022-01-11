@@ -267,6 +267,7 @@ import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
 import com.android.systemui.statusbar.policy.PulseController;
 import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
+import com.android.systemui.statusbar.policy.SecureLockscreenQSDisabler;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.tuner.TunerService;
@@ -777,6 +778,9 @@ public class StatusBar extends SystemUI implements DemoMode,
     private ActivityIntentHelper mActivityIntentHelper;
     private NotificationStackScrollLayoutController mStackScrollerController;
 
+    private final SecureLockscreenQSDisabler mSecureLockscreenQSDisabler;
+    private boolean mStatusBarWindowCreated = false;
+
     /**
      * Public constructor for StatusBar.
      *
@@ -875,7 +879,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             KeyguardUnlockAnimationController keyguardUnlockAnimationController,
             UnlockedScreenOffAnimationController unlockedScreenOffAnimationController,
             Optional<StartingSurface> startingSurfaceOptional,
-            FlashlightController flashlightController) {
+            FlashlightController flashlightController,
+            SecureLockscreenQSDisabler secureLockscreenQSDisabler) {
         super(context);
         mNotificationsController = notificationsController;
         mLightBarController = lightBarController;
@@ -961,6 +966,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFeatureFlags = featureFlags;
         mKeyguardUnlockAnimationController = keyguardUnlockAnimationController;
         mUnlockedScreenOffAnimationController = unlockedScreenOffAnimationController;
+        mSecureLockscreenQSDisabler = secureLockscreenQSDisabler;
 
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
         mStartingSurfaceOptional = startingSurfaceOptional;
@@ -1955,6 +1961,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             return;
         }
         state2 = mRemoteInputQuickSettingsDisabler.adjustDisableFlags(state2);
+
+        // Guard this so that updateQsExpansionEnabled is not called before
+        // createAndAddWindows is finished and prevent a ton of NPEs.
+        if (mStatusBarWindowCreated) {
+            state2 = mSecureLockscreenQSDisabler.adjustDisableState(state2);
+        }
 
         animate &= mStatusBarWindowState != WINDOW_STATE_HIDDEN;
         final int old1 = mDisabled1;
@@ -3057,6 +3069,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         makeStatusBarView(result);
         mNotificationShadeWindowController.attach();
         mStatusBarWindowController.attach();
+        mStatusBarWindowCreated = true;
     }
 
     // called by makeStatusbar and also by PhoneStatusBarView
