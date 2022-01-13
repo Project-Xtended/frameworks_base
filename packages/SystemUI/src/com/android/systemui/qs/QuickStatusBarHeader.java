@@ -101,7 +101,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
     private LinearLayout mQsClock2;
     private LinearLayout mQsClock3;
     private LinearLayout mQsClock4;
-
+    private LinearLayout mQsClock5;
+    private LinearLayout mQsClock6;
     private BatteryMeterView mBatteryRemainingIcon;
     private StatusIconContainer mIconContainer;
     private View mPrivacyChip;
@@ -182,7 +183,6 @@ public class QuickStatusBarHeader extends FrameLayout implements
         mPrivacyChip = findViewById(R.id.privacy_chip);
         mDateView = findViewById(R.id.date);
         mDateView.setOnClickListener(this);
-        mClockDateView.setVisibility(View.GONE);
         mSecurityHeaderView = findViewById(R.id.header_text_container);
         mClockIconsSeparator = findViewById(R.id.separator);
         mDateContainer = findViewById(R.id.date_container);
@@ -202,6 +202,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
         mQsClock2 = findViewById(R.id.sparkqs2);
  	mQsClock3 = findViewById(R.id.newqs3);
         mQsClock4 = findViewById(R.id.newqs4);
+        mQsClock5 = findViewById(R.id.defqs);
+        mQsClock6 = findViewById(R.id.clock_coloros);
 
         mSettingsObserver.observe();
         updateSettings();
@@ -360,7 +362,7 @@ public class QuickStatusBarHeader extends FrameLayout implements
 
         MarginLayoutParams qqsLP = (MarginLayoutParams) mHeaderQsPanel.getLayoutParams();
         qqsLP.topMargin = mContext.getResources()
-                .getDimensionPixelSize(R.dimen.qqs_layout_margin_top);
+                .getDimensionPixelSize(com.android.internal.R.dimen.qqs_layout_margin_top);
         mHeaderQsPanel.setLayoutParams(qqsLP);
 
         updateBatteryMode();
@@ -386,6 +388,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
            mQsClock2.setVisibility(View.GONE);
            mQsClock3.setVisibility(View.GONE);
            mQsClock4.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
@@ -394,6 +398,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
            mQsClock1.setVisibility(View.GONE);
            mQsClock3.setVisibility(View.GONE);
            mQsClock4.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
@@ -402,6 +408,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
            mQsClock2.setVisibility(View.GONE);
            mQsClock1.setVisibility(View.GONE);
            mQsClock4.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
@@ -410,10 +418,32 @@ public class QuickStatusBarHeader extends FrameLayout implements
            mQsClock3.setVisibility(View.GONE);
            mQsClock2.setVisibility(View.GONE);
            mQsClock1.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
            if (mDatePrivacyView != null) {
            mDatePrivacyView.setVisibility(View.GONE);
            }
-       }
+           } else if (qsclock == 4) {
+           mQsClock5.setVisibility(View.VISIBLE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock2.setVisibility(View.GONE);
+           mQsClock1.setVisibility(View.GONE);
+           mQsClock6.setVisibility(View.GONE);
+           if (mDatePrivacyView != null) {
+           mDatePrivacyView.setVisibility(View.GONE);
+           }
+           } else if (qsclock == 5) {
+           mQsClock6.setVisibility(View.VISIBLE);
+           mQsClock4.setVisibility(View.GONE);
+           mQsClock3.setVisibility(View.GONE);
+           mQsClock2.setVisibility(View.GONE);
+           mQsClock1.setVisibility(View.GONE);
+           mQsClock5.setVisibility(View.GONE);
+           if (mDatePrivacyView != null) {
+           mDatePrivacyView.setVisibility(View.GONE);
+           }
+        }
     }
 
     private void updateAnimators() {
@@ -432,11 +462,11 @@ public class QuickStatusBarHeader extends FrameLayout implements
         TouchAnimator.Builder builder = new TouchAnimator.Builder()
                 .addFloat(mSecurityHeaderView, "alpha", 0, 1)
                 // These views appear on expanding down
-//               .addFloat(mClockView, "alpha", 0, 1)
-                 .addFloat(mQSCarriers, "alpha", 0, 1)
+                .addFloat(mClockView, "alpha", 0, 1)
+                .addFloat(mQSCarriers, "alpha", 0, 1)
                 // Use statusbar paddings when collapsed, align with QS when expanded, and animate translation
-                .addFloat(mClockContainer, "translationX", mHeaderPaddingLeft + mStatusBarPaddingStart, 0)
-                .addFloat(mRightLayout, "translationX", -(mHeaderPaddingRight + mStatusBarPaddingEnd), 0)
+//                .addFloat(mClockContainer, "translationX", mHeaderPaddingLeft + mStatusBarPaddingStart, 0)
+//                .addFloat(mRightLayout, "translationX", -(mHeaderPaddingRight + mStatusBarPaddingEnd), 0)
                 .setListener(new TouchAnimator.ListenerAdapter() {
                     @Override
                     public void onAnimationAtEnd() {
