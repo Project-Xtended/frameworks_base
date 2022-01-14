@@ -4019,8 +4019,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mAmbientIndicationContainer != null) {
             ((AmbientIndicationContainer)mAmbientIndicationContainer)
                     .updateDozingState(mDozing);
-        } else {
-            Log.d("StatusBar", "updateDozingState -> AmbientIndicationContainer null");
         }
 
         Trace.endSection();
@@ -4198,8 +4196,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mAmbientIndicationContainer != null) {
             ((AmbientIndicationContainer)mAmbientIndicationContainer)
                     .updateKeyguardState(mState == StatusBarState.KEYGUARD);
-        } else {
-            Log.d("StatusBar", "updateKeyguardState -> AmbientIndicationContainer null");
         }
         Trace.endSection();
     }
