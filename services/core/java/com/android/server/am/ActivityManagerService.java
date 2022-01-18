@@ -18704,6 +18704,11 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    @Override
+    public boolean shouldForceCutoutFullscreen(String packageName) {
+        return mActivityTaskManager.shouldForceCutoutFullscreen(packageName);
+    }
+
     /**
      * Suppress or reenable the rate limit on foreground service notification deferral.
      * @param enable false to suppress rate-limit policy; true to reenable it.

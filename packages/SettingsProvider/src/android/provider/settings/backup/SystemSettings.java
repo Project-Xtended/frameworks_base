@@ -104,5 +104,6 @@ public class SystemSettings {
         Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED,
         Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE,
         Settings.System.NAVIGATION_BAR_IME_SPACE,
+        Settings.System.FORCE_FULLSCREEN_CUTOUT_APPS,
     };
 }
