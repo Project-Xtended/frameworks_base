@@ -55,6 +55,8 @@ public class ThemesUtils {
 
     public static final String TAG = "ThemesUtils";
 
+    public static final String FONT_KEY = "android.theme.customization.font";
+    public static final String ICON_SHAPE_KEY= "android.theme.customization.adaptive_icon_shape";
 
     public static final Comparator<OverlayInfo> OVERLAY_INFO_COMPARATOR =
             Comparator.comparingInt(a -> a.priority);
@@ -166,6 +168,54 @@ public class ThemesUtils {
             }
         }
         return labels;
+    }
+
+    public List<Typeface> getFonts() {
+        final List<Typeface> fontlist = new ArrayList<>();
+            for (String overlayPackage : getOverlayPackagesForCategory(FONT_KEY)) {
+                try {
+                    overlayRes = overlayPackage.equals("android") ? Resources.getSystem()
+                           : pm.getResourcesForApplication(overlayPackage);
+                    final String font = overlayRes.getString(
+                            overlayRes.getIdentifier("config_bodyFontFamily",
+                            "string", overlayPackage));
+                    fontlist.add(Typeface.create(font, Typeface.NORMAL));
+                } catch (NameNotFoundException | NotFoundException e) {
+                // Do nothing
+                }
+            }
+        return fontlist;
+    }
+
+    public List<ShapeDrawable> getShapeDrawables() {
+        final List<ShapeDrawable> shapelist = new ArrayList<>();
+            for (String overlayPackage : getOverlayPackagesForCategory(ICON_SHAPE_KEY)) {
+                    shapelist.add(createShapeDrawable(overlayPackage));
+            }
+        return shapelist;
+    }
+
+    public ShapeDrawable createShapeDrawable(String overlayPackage) {
+        try {
+            if (overlayPackage.equals("android")) {
+                overlayRes = Resources.getSystem();
+            } else {
+                if (overlayPackage.equals("default")) overlayPackage = "android";
+                overlayRes = pm.getResourcesForApplication(overlayPackage);
+            }
+        } catch (NameNotFoundException | NotFoundException e) {
+            // Do nothing
+        }
+        final String shape = overlayRes.getString(
+            overlayRes.getIdentifier("config_icon_mask",
+            "string", overlayPackage));
+        Path path = TextUtils.isEmpty(shape) ? null : PathParser.createPathFromPathData(shape);
+        PathShape pathShape = new PathShape(path, 100f, 100f);
+        ShapeDrawable shapeDrawable = new ShapeDrawable(pathShape);
+        int mThumbSize = (int) (mContext.getResources().getDisplayMetrics().density * 72);
+        shapeDrawable.setIntrinsicHeight(mThumbSize);
+        shapeDrawable.setIntrinsicWidth(mThumbSize);
+        return shapeDrawable;
     }
 
     public boolean isOverlayEnabled(String overlayPackage) {
