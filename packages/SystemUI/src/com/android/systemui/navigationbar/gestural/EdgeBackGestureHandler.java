@@ -1110,6 +1110,12 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
             case 13: // Kill app
                 ActionHandler.killProcess(mContext);
                 break;
+            case 14: // Skip song
+                XtendedUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_NEXT);
+                break;
+            case 15: // Previous song
+                XtendedUtils.sendSystemKeyToStatusBar(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
+                break;
         }
     }
 
