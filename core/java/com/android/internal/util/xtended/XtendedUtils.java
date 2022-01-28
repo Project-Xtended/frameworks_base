@@ -259,6 +259,11 @@ public class XtendedUtils {
     }
 
     public static void takeScreenshot(boolean full) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ie) {
+            // Do nothing
+        }
         IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
         try {
             wm.sendCustomAction(new Intent(full? INTENT_SCREENSHOT : INTENT_REGION_SCREENSHOT));
