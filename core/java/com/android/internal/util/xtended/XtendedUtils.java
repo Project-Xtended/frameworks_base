@@ -312,4 +312,14 @@ public class XtendedUtils {
            }
        }
     }
+
+    // Launch Power Menu dialog
+    public static void showPowerMenu() {
+        final IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
+        try {
+            wm.showGlobalActions();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 }
