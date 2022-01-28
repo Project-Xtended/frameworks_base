@@ -1093,7 +1093,7 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                 ActionUtils.switchScreenOff(mContext);
                 break;
             case 8: // Screenshot
-                ActionUtils.takeScreenshot(true);
+                XtendedUtils.takeScreenshot(true);
                 break;
             case 9: // Notification panel
                 ActionUtils.toggleNotifications();
@@ -1118,6 +1118,9 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                 break;
             case 16: // Powermenu
                 XtendedUtils.showPowerMenu();
+                break;
+            case 17: // Partial Screenshot
+                XtendedUtils.takeScreenshot(false);
                 break;
         }
     }
