@@ -359,8 +359,11 @@ public class BatteryMeterView extends LinearLayout implements
             return;
         }
 
+        boolean showBatteryPercent = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_SHOW_BATTERY_PERCENT, 0, mUser) == 1;
+
         if (mBatteryPercentView != null) {
-            if (mShowPercentMode == MODE_ESTIMATE && !mCharging) {
+            if (mShowPercentMode == MODE_ESTIMATE && !mCharging && !showBatteryPercent) {
                 mBatteryController.getEstimatedTimeRemainingString((String estimate) -> {
                     if (mBatteryPercentView == null) {
                         return;
@@ -673,6 +676,9 @@ public class BatteryMeterView extends LinearLayout implements
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.TEXT_CHARGING_SYMBOL),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SHOW_BATTERY_PERCENT),
                     false, this, UserHandle.USER_ALL);
         }
 

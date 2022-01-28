@@ -275,7 +275,11 @@ public class QuickStatusBarHeader extends FrameLayout implements
     }
 
     private void updateBatteryMode() {
-        if (mConfigShowBatteryEstimate) {
+        boolean showBatteryPercent = Settings.System
+                .getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_SHOW_BATTERY_PERCENT, 0, UserHandle.USER_CURRENT) == 1;
+
+        if (mConfigShowBatteryEstimate || !showBatteryPercent) {
             mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
         } else {
             mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
