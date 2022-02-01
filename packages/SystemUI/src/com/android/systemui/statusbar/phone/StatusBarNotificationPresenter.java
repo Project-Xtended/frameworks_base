@@ -516,10 +516,16 @@ public class StatusBarNotificationPresenter implements NotificationPresenter,
             return false;
         }
 
-        @Override
+	@Override
         public boolean suppressAwakeInterruptions(NotificationEntry entry) {
-            return isDeviceInVrMode();
-        }
+            final StatusBarNotification sbn = entry.getSbn();
+            if (sbn.getIsContentSecure()) {
+                return true;
+            } else {
+                final Notification notification = entry.getSbn().getNotification();
+                return isDeviceInVrMode();
+            }
+       }
 
         @Override
         public boolean suppressInterruptions(NotificationEntry entry) {
