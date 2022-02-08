@@ -102,6 +102,7 @@ android_library {
         "tensorflowlite_java",
         "SystemUIGoogle-lib",
         "vendor-pixelatoms-java",
+        "android.frameworks.stats-V1-java",
     ],
     manifest: "AndroidManifest.xml",
 
