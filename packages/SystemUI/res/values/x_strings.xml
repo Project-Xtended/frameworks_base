@@ -197,4 +197,7 @@
     <!-- Now playing lockscreen music Ticker -->
     <string name="ambientmusic_songinfo" formatted="false">%s by %s</string>
 
+    <!-- Screenrecord skip timer -->
+    <string name="screenrecord_skip_time_label">Reduce 3 second wait to 100ms</string>
+
 </resources>

@@ -48,6 +48,7 @@ import javax.inject.Inject;
  */
 public class ScreenRecordDialog extends Activity {
     private static final long DELAY_MS = 3000;
+    private static final long NO_DELAY = 100;
     private static final long INTERVAL_MS = 1000;
     private static final String TAG = "ScreenRecordDialog";
     private static final String PREFS = "screenrecord_";
@@ -65,6 +66,7 @@ public class ScreenRecordDialog extends Activity {
     private Switch mLowQualitySwitch;
     private Switch mLongerSwitch;
     private Switch mAudioSwitch;
+    private Switch mSkipSwitch;
     private Spinner mOptions;
     private List<ScreenRecordingAudioSource> mModes;
 
@@ -106,6 +108,7 @@ public class ScreenRecordDialog extends Activity {
         mModes.add(MIC_AND_INTERNAL);
 
         mAudioSwitch = findViewById(R.id.screenrecord_audio_switch);
+        mSkipSwitch = findViewById(R.id.screenrecord_skip_switch);
         mTapsSwitch = findViewById(R.id.screenrecord_taps_switch);
         mStopDotSwitch = findViewById(R.id.screenrecord_stopdot_switch);
         mLowQualitySwitch = findViewById(R.id.screenrecord_lowquality_switch);
@@ -130,6 +133,7 @@ public class ScreenRecordDialog extends Activity {
         boolean showStopDot = mStopDotSwitch.isChecked();
         boolean lowQuality = mLowQualitySwitch.isChecked();
         boolean longerDuration = mLongerSwitch.isChecked();
+        boolean skipTime = mSkipSwitch.isChecked();
         ScreenRecordingAudioSource audioMode = mAudioSwitch.isChecked()
                 ? (ScreenRecordingAudioSource) mOptions.getSelectedItem()
                 : NONE;
@@ -144,7 +148,7 @@ public class ScreenRecordDialog extends Activity {
                 RecordingService.REQUEST_CODE,
                 RecordingService.getStopIntent(userContext),
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        mController.startCountdown(DELAY_MS, INTERVAL_MS, startIntent, stopIntent);
+        mController.startCountdown(skipTime ? NO_DELAY : DELAY_MS, INTERVAL_MS, startIntent, stopIntent);
     }
 
     private void savePrefs() {
