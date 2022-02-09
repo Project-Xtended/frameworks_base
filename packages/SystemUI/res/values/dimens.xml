@@ -1405,7 +1405,7 @@
     <dimen name="controls_dialog_control_width">200dp</dimen>
 
     <!-- Screen record dialog -->
-    <dimen name="screenrecord_option_padding">18dp</dimen>
+    <dimen name="screenrecord_option_padding">15dp</dimen>
     <dimen name="screenrecord_logo_size">26dp</dimen>
     <dimen name="screenrecord_option_icon_size">24dp</dimen>
     <!-- Screen record status bar icon -->
@@ -1620,4 +1620,8 @@
     <item name="communal_source_height_percentage" format="float" type="dimen">0.80</item>
 
     <dimen name="drag_and_drop_icon_size">70dp</dimen>
+
+    <!-- Dialog margin -->
+    <dimen name="rdnt_margin_dialog">12dp</dimen>
+
 </resources>
