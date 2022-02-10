@@ -103,6 +103,7 @@ android_library {
         "SystemUIGoogle-lib",
         "vendor-pixelatoms-java",
         "android.frameworks.stats-V1-java",
+        "faceunlock_framework",
     ],
     manifest: "AndroidManifest.xml",
 
