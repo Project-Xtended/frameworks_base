@@ -91,8 +91,8 @@ class AuthRippleController @Inject constructor(
     private var udfpsRadius: Float = -1f
 
     private val isRippleDisabled: Boolean
-        get() = Settings.System.getInt(context.contentResolver,
-            Settings.System.DISABLE_RIPPLE_EFFECT, 0) == 1
+        get() = Settings.System.getIntForUser(context.contentResolver,
+            Settings.System.DISABLE_RIPPLE_EFFECT, 0, UserHandle.USER_CURRENT) == 1
 
     override fun onInit() {
         mView.setAlphaInDuration(sysuiContext.resources.getInteger(
