@@ -209,4 +209,7 @@
     <string name="active_edge_app_select_title">Select app</string>
     <string name="active_edge_activity_select_title">Select activity</string>
 
+    <!-- Face Unlock -->
+    <string name="face_unlock_recognizing">Recognizing face...</string>
+
 </resources>
