@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2017 AospExtended ROM Project
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 2 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+
+    <!-- Bottom margin size when fingerprint in display is active -->
+    <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">@dimen/keyguard_indication_margin_bottom</dimen>
+
+    <!-- Network traffic monitor -->
+    <dimen name="net_traffic_multi_text_size">8dp</dimen>
+    <dimen name="net_traffic_txt_img_padding">4dp</dimen>
+
+    <!-- QQS Brightness slider -->
+    <dimen name="quick_qs_brightness_margin_top">24dp</dimen>
+
+    <!-- Old style mobile data indicators -->
+    <dimen name="status_bar_mobile_signal_with_type_width">18dp</dimen>
+    <dimen name="status_bar_mobile_signal_width">16dp</dimen>
+    <dimen name="status_bar_mobile_type_height">8dp</dimen>
+    <dimen name="status_bar_mobile_type_padding">2dp</dimen>
+    <dimen name="status_bar_mobile_type_padding_limit">10dp</dimen>
+
+    <!-- Burn-in protection -->
+    <dimen name="horizontal_max_swift">3.0dp</dimen>
+    <dimen name="vertical_max_swift">1.0dp</dimen>
+
+    <!-- Width of the battery icon in the status bar when set to circle style. -->
+    <dimen name="status_bar_battery_icon_circle_width">13.5dp</dimen>
+
+    <!-- Margin on the left side of the center clock -->
+    <dimen name="status_bar_center_clock_padding_start">0dp</dimen>
+
+    <!-- Margin on the right side of the center clock -->
+    <dimen name="status_bar_center_clock_padding_end">0dp</dimen>
+    
+    <!-- Height of the battery icon in the status bar. -->
+    <dimen name="status_bar_battery_icon_height_landscape">10.5dp</dimen>
+    <dimen name="status_bar_battery_icon_width_landscape">20dp</dimen>
+
+    <!-- Additional gesture navbar lengths -->
+    <dimen name="navigation_home_handle_width_medium">110dp</dimen>
+    <dimen name="navigation_home_handle_width_long">140dp</dimen>
+    
+    <dimen name="screenshot_button_corner_radius">20dp</dimen>
+        <!-- Screenshot drawables -->
+    <dimen name="screenshot_border_corner_radius">24dp</dimen>
+    <dimen name="screenshot_preview_corner_radius">20dp</dimen>
+
+    <!-- Recognizing fingerprint animation -->
+    <dimen name="udfps_animation_size">280dp</dimen>
+    <dimen name="udfps_animation_offset">0dp</dimen>
+    
+    <!-- Media output -->
+    <dimen name="dialog_button_vertical_inset">6dp</dimen>
+    <dimen name="dialog_button_horizontal_padding">16dp</dimen>
+    <dimen name="dialog_button_vertical_padding">8dp</dimen>
+    <dimen name="dialog_side_padding">24dp</dimen>
+    <dimen name="dialog_bottom_padding">18dp</dimen>
+</resources>
