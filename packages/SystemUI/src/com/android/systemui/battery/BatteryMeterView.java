@@ -62,16 +62,16 @@ import java.util.ArrayList;
 
 public class BatteryMeterView extends LinearLayout implements DarkReceiver {
 
-    protected static final int BATTERY_STYLE_PORTRAIT = 0;
-    protected static final int BATTERY_STYLE_RLANDSCAPE = 1;
-    protected static final int BATTERY_STYLE_LANDSCAPE = 2;
-    protected static final int BATTERY_STYLE_CIRCLE = 3;
-    protected static final int BATTERY_STYLE_DOTTED_CIRCLE = 4;
-    protected static final int BATTERY_STYLE_BIG_CIRCLE = 5;
-    protected static final int BATTERY_STYLE_BIG_DOTTED_CIRCLE = 6;
-    protected static final int BATTERY_STYLE_FULL_CIRCLE = 7;
-    protected static final int BATTERY_STYLE_TEXT = 8;
-    protected static final int BATTERY_STYLE_HIDDEN = 9;
+    public static final int BATTERY_STYLE_PORTRAIT = 0;
+    public static final int BATTERY_STYLE_RLANDSCAPE = 1;
+    public static final int BATTERY_STYLE_LANDSCAPE = 2;
+    public static final int BATTERY_STYLE_CIRCLE = 3;
+    public static final int BATTERY_STYLE_DOTTED_CIRCLE = 4;
+    public static final int BATTERY_STYLE_BIG_CIRCLE = 5;
+    public static final int BATTERY_STYLE_BIG_DOTTED_CIRCLE = 6;
+    public static final int BATTERY_STYLE_FULL_CIRCLE = 7;
+    public static final int BATTERY_STYLE_TEXT = 8;
+    public static final int BATTERY_STYLE_HIDDEN = 9;
 
     @Retention(SOURCE)
     @IntDef({MODE_DEFAULT, MODE_ON, MODE_OFF, MODE_ESTIMATE})
