@@ -42,8 +42,8 @@ import android.util.ArraySet
 import android.util.Log
 import android.util.Slog
 
-import com.android.internal.annotations.GuardedBy
 import com.android.internal.R
+import com.android.internal.annotations.GuardedBy
 import com.android.server.app.AppLockManagerServiceInternal.CancelCallback
 import com.android.server.app.AppLockManagerServiceInternal.UnlockCallback
 import com.android.server.LocalServices
@@ -219,6 +219,11 @@ class AppLockManagerService(private val context: Context) :
                     checkAndUnlockPackage(it)
                 }
             }
+        }
+
+        override fun onActivityUnpinned() {
+            logD("onActivityUnpinned")
+            onTaskStackChanged()
         }
     }
 
@@ -942,14 +947,18 @@ class AppLockManagerService(private val context: Context) :
 
     companion object {
         internal const val TAG = "AppLockManagerService"
-        internal val DEBUG: Boolean
+        private val DEBUG: Boolean
             get() = Log.isLoggable(TAG, Log.DEBUG)
 
         private const val ACTION_APP_LOCK_TIMEOUT = "com.android.server.app.AppLockManagerService.APP_LOCK_TIMEOUT"
         private const val EXTRA_PACKAGE = "com.android.server.app.AppLockManagerService.PACKAGE"
 
-        internal fun logD(msg: String) {
-            if (DEBUG) Slog.d(TAG, msg)
+        internal fun logD(vararg msgs: String) {
+            if (DEBUG) {
+                msgs.forEach {
+                    Slog.d(TAG, it)
+                }
+            }
         }
     }
 }
