@@ -19,8 +19,8 @@
 	<LinearLayout android:id="@+id/sparkqs1" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
 		<View android:layout_width="0dp" android:layout_height="0dp"/>
 		<LinearLayout android:layout_gravity="start|center" android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" >
-			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="44.0sp" android:textColor="?android:colorAccent" android:textStyle="normal" android:format12Hour="h:mm" android:format24Hour="k:mm" />
-			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="12.0sp" android:textColor="?androidprv:attr/colorAccentSecondaryVariant" android:textStyle="normal" android:format12Hour="EEE, MMM d" android:format24Hour="EEE, MMM d" />
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="44.0sp" android:textColor="?android:textColorPrimary" android:textStyle="normal" android:format12Hour="h:mm" android:format24Hour="k:mm" />
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="12.0sp" android:textColor="?android:textColorPrimary" android:textStyle="normal" android:format12Hour="EEE, MMM d" android:format24Hour="EEE, MMM d" />
 	 </LinearLayout>
 	</LinearLayout>
 	<!-- left clock and date style-->
@@ -36,6 +36,7 @@
             <TextClock android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="14.0sp" android:textStyle="normal" android:textColor="?androidprv:attr/colorAccentSecondaryVariant" android:gravity="center" android:layout_gravity="start|center" android:layout_width="wrap_content" android:layout_height="20.0dip" android:minHeight="20.0dip" android:singleLine="true" android:paddingStart="6.0dip" android:paddingEnd="6.0dip" android:format12Hour="EEE, MMM d" android:format24Hour="EEE, MMM d" />
         </LinearLayout>
     </LinearLayout>
+
 	<!-- left date / right clock style-->
 	<LinearLayout android:id="@+id/newqs3" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
 		<LinearLayout android:layout_gravity="left|center" android:gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" >
@@ -53,6 +54,7 @@
 			<TextClock android:layout_gravity="center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="26.0sp" android:textColor="?android:colorAccent" android:textStyle="bold" android:format12Hour="mm" android:format24Hour="mm"/>	
 		</LinearLayout>
 	</LinearLayout>
+	
 	<!-- left clock and date style-->
     <LinearLayout android:id="@+id/newqs4" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
         <LinearLayout android:gravity="center" android:layout_gravity="start|center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -68,6 +70,8 @@
             <TextClock android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="12.0sp" android:textStyle="bold" android:textColor="?androidprv:attr/colorAccentSecondaryVariant" android:gravity="center" android:layout_gravity="start|center" android:background="@drawable/sparkqs2_bg2" android:layout_width="wrap_content" android:layout_height="20.0dip" android:minHeight="20.0dip" android:singleLine="true" android:paddingStart="6.0dip" android:paddingEnd="6.0dip" android:format12Hour="MMMM d" android:format24Hour="MMMM d" />
         </LinearLayout>
     </LinearLayout>
+	
+
 	<!-- ColorOS Clock Style -->
 	<!-- Must use these height
 		<dimen name="quick_qs_offset_height">144.0dip</dimen>
@@ -80,7 +84,8 @@
 			<TextClock android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="48.0sp" android:textStyle="normal" android:textColor="?android:colorAccent" android:layout_gravity="start|center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:format12Hour="mm" android:format24Hour="mm" />
 		</LinearLayout>
 		<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="16.0sp" android:textColor="?androidprv:attr/colorAccentSecondaryVariant" android:textStyle="normal" android:format12Hour="EEE, MMM d" android:format24Hour="EEE, MMM d" />
-	</LinearLayout>	
+	</LinearLayout>
+	
 <!-- Default Clock Style -->
 	<!-- Must use these height
 		<dimen name="quick_qs_offset_height">48.0dip</dimen>
@@ -93,7 +98,25 @@
 		<View android:layout_width="0.0dip" android:layout_height="0.0dip" android:layout_weight="0.1" />
 		<include android:layout_gravity="end|center" android:id="@+id/carrier_group" android:focusable="false" android:layout_width="0.0dip" android:layout_height="fill_parent" android:minWidth="48.0dip" android:minHeight="48.0dip" android:layout_weight="1.0" layout="@layout/qs_carrier_group" />
 	</LinearLayout>
-
+	
+	<!-- simple clock -->
+	<LinearLayout android:id="@+id/customclock3" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<View android:layout_width="0dp" android:layout_height="0dp"/>
+		<LinearLayout android:layout_gravity="start|center" android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" >
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="16.0sp" android:textColor="?android:textColorPrimary" android:textStyle="normal" android:format12Hour="EEE, MMM d" android:format24Hour="EEE, MMM d" />
+			<TextClock android:layout_gravity="start|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="48.0sp" android:textColor="?android:textColorPrimary" android:textStyle="normal" android:format12Hour="h:mm" android:format24Hour="k:mm" />
+	 </LinearLayout>
+	</LinearLayout>
+	
+	<!-- right qs clock style-->
+	<LinearLayout android:id="@+id/customclock4" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.10"/>
+		<LinearLayout android:layout_gravity="right|center" android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" >
+			<TextClock android:layout_gravity="right|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="16.0sp" android:textColor="?android:textColorPrimary" android:textStyle="normal" android:format12Hour="EEE, MMM d" android:format24Hour="EEE, MMM d" />
+			<TextClock android:layout_gravity="right|center" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:textAppearance="@style/TextAppearance.StatusBar.Clock" android:textSize="48.0sp" android:textColor="?android:textColorPrimary" android:textStyle="normal" android:format12Hour="h:mm" android:format24Hour="k:mm" />
+	 </LinearLayout>
+	</LinearLayout>
+	
 	<!-- The below layouts are not necessary-->
 <LinearLayout android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
     <com.android.systemui.statusbar.policy.Clock android:textAppearance="@style/TextAppearance.QS.Status" android:gravity="start|center" android:id="@+id/clock" android:layout_width="wrap_content" android:layout_height="fill_parent" android:minWidth="48.0dip" android:minHeight="48.0dip" android:singleLine="true" android:paddingStart="@dimen/status_bar_left_clock_starting_padding" android:paddingEnd="@dimen/status_bar_left_clock_end_padding" />

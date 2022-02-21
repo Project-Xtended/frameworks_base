@@ -27,6 +27,8 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationWaterfallOverlay \
         AospClockStyleOverlay \
         ColorOsClockStyleOverlay \
+        RightClockStyleOverlay \
+        SimpleClockStyleOverlay \
 	FontNotoSerifSourceOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarMode2ButtonOverlay \
