@@ -297,6 +297,8 @@ class AppLockManagerService(private val context: Context) :
                 mutex.withLock {
                     if (topPackages.contains(packageName)) {
                         logD("$packageName is currently in foreground, skipping lock")
+                        // Mark it as unlocked, since it actually is
+                        unlockedPackages.add(packageName)
                         return@withLock
                     }
                     unlockedPackages.remove(packageName)
@@ -311,7 +313,8 @@ class AppLockManagerService(private val context: Context) :
                     }
                 } == true
                 notificationManagerInternal.updateSecureNotifications(
-                    packageName, isContentSecure, currentUserId)
+                    packageName, isContentSecure,
+                    true /* isBubbleUpSuppressed */, currentUserId)
             }
         }
     }
@@ -382,11 +385,10 @@ class AppLockManagerService(private val context: Context) :
                 }
                 if (!config.addPackage(packageName)) return@withLock
                 // Collapse any active notifications or bubbles for the app.
-                if (!unlockedPackages.contains(packageName) &&
-                        !topPackages.contains(packageName) &&
-                        config.packageNotificationMap[packageName] == true) {
+                if (!topPackages.contains(packageName)) {
                     notificationManagerInternal.updateSecureNotifications(
-                        packageName, true, actualUserId)
+                        packageName, true /* isContentSecure */,
+                        true /* isBubbleUpSuppressed */, actualUserId)
                 }
                 withContext(Dispatchers.IO) {
                     config.write()
@@ -430,7 +432,8 @@ class AppLockManagerService(private val context: Context) :
                 // Let active notifications be expanded since the app
                 // is no longer protected.
                 notificationManagerInternal.updateSecureNotifications(
-                    packageName, false, actualUserId)
+                    packageName, false /* isContentSecure */,
+                    false /* isBubbleUpSuppressed */, actualUserId)
                 withContext(Dispatchers.IO) {
                     config.write()
                 }
@@ -538,12 +541,13 @@ class AppLockManagerService(private val context: Context) :
                     return@withLock
                 }
                 if (!config.setSecureNotification(packageName, secure)) return@withLock
-                val shouldSecureContent = secure &&
-                    !unlockedPackages.contains(packageName) &&
-                    !topPackages.contains(packageName)
+                val isLocked = !unlockedPackages.contains(packageName)
+                    && !topPackages.contains(packageName)
+                val shouldSecureContent = secure && isLocked
                 notificationManagerInternal.updateSecureNotifications(
                     packageName,
                     shouldSecureContent,
+                    isLocked /* isBubbleUpSuppressed */,
                     actualUserId
                 )
                 withContext(Dispatchers.IO) {
@@ -808,7 +812,8 @@ class AppLockManagerService(private val context: Context) :
                             }
                             unlockCallback?.onUnlocked(packageName)
                             notificationManagerInternal.updateSecureNotifications(
-                                packageName, false, actualUserId)
+                                packageName, false /* isContentSecure */,
+                                false /* isBubbleUpSuppressed */, actualUserId)
                         }
                     },
                     onCancel = {
