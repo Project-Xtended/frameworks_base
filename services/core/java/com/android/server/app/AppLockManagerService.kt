@@ -296,11 +296,17 @@ class AppLockManagerService(private val context: Context) :
                     }
                     unlockedPackages.remove(packageName)
                 }
-                notificationManagerInternal.updateSecureNotifications(
-                    packageName, true, currentUserId)
                 alarmsMutex.withLock {
                     scheduledAlarms.remove(packageName)
                 }
+                val isContentSecure = mutex.withLock {
+                    userConfigMap[currentUserId]?.packageNotificationMap?.get(packageName) ?: run {
+                        Slog.e(TAG, "Config unavailable for user $currentUserId")
+                        return@launch
+                    }
+                } == true
+                notificationManagerInternal.updateSecureNotifications(
+                    packageName, isContentSecure, currentUserId)
             }
         }
     }
@@ -372,7 +378,8 @@ class AppLockManagerService(private val context: Context) :
                 if (!config.addPackage(packageName)) return@withLock
                 // Collapse any active notifications or bubbles for the app.
                 if (!unlockedPackages.contains(packageName) &&
-                        !topPackages.contains(packageName)) {
+                        !topPackages.contains(packageName) &&
+                        config.packageNotificationMap[packageName] == true) {
                     notificationManagerInternal.updateSecureNotifications(
                         packageName, true, actualUserId)
                 }
@@ -526,8 +533,14 @@ class AppLockManagerService(private val context: Context) :
                     return@withLock
                 }
                 if (!config.setSecureNotification(packageName, secure)) return@withLock
+                val shouldSecureContent = secure &&
+                    !unlockedPackages.contains(packageName) &&
+                    !topPackages.contains(packageName)
                 notificationManagerInternal.updateSecureNotifications(
-                    packageName, secure, actualUserId)
+                    packageName,
+                    shouldSecureContent,
+                    actualUserId
+                )
                 withContext(Dispatchers.IO) {
                     config.write()
                 }
