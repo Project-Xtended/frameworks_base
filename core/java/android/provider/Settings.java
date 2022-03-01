@@ -12207,6 +12207,13 @@ public final class Settings {
         public static final String TAP_GESTURE = "tap_gesture";
 
         /**
+         * Whether to skip biometric auth confirmation
+         * @hide
+         */
+        @Readable
+        public static final String IGNORE_AUTH_CONFIRMATION = "ignore_auth_confirmation";
+
+        /**
          * Controls whether the people strip is enabled.
          * @hide
          */
