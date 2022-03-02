@@ -64,6 +64,4 @@ public interface NotificationPresenter extends ExpandableNotificationRow.OnExpan
      */
     boolean isCollapsing();
 
-    void setHeadsUpStoplist();
-    void setHeadsUpBlacklist();
 }
