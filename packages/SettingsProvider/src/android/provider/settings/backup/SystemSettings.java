@@ -91,5 +91,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.ENABLE_RIPPLE_EFFECT,
         Settings.System.COLOR_BUCKET_OVERLAY,
+        Settings.System.USE_OLD_MOBILETYPE,
     };
 }
