@@ -21,6 +21,7 @@ import static com.android.systemui.statusbar.StatusBarState.SHADE;
 import android.app.NotificationManager;
 import android.content.ContentResolver;
 import android.database.ContentObserver;
+import android.content.Context;
 import android.hardware.display.AmbientDisplayConfiguration;
 import android.os.Build;
 import android.os.Handler;
@@ -30,6 +31,7 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.service.dreams.IDreamManager;
 import android.service.notification.StatusBarNotification;
+import android.telecom.TelecomManager;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -73,9 +75,12 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     protected boolean mUseHeadsUp = false;
 
     private boolean mLessBoringHeadsUp;
+    private TelecomManager mTm;
+    private Context mContext;
 
     @Inject
     public NotificationInterruptStateProviderImpl(
+            Context context,
             ContentResolver contentResolver,
             PowerManager powerManager,
             IDreamManager dreamManager,
@@ -85,6 +90,8 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
             StatusBarStateController statusBarStateController,
             HeadsUpManager headsUpManager,
             @Main Handler mainHandler) {
+        mContext = context;
+        mTm = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
         mContentResolver = contentResolver;
         mPowerManager = powerManager;
         mDreamManager = dreamManager;
@@ -189,6 +196,13 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         if (!mUseHeadsUp) {
             if (DEBUG_HEADS_UP) {
                 Log.d(TAG, "No heads up: no huns");
+            }
+            return false;
+        }
+
+        if (shouldSkipHeadsUp(sbn)) {
+            if (DEBUG_HEADS_UP) {
+                Log.d(TAG, "No alerting: boring apps");
             }
             return false;
         }
@@ -355,11 +369,16 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     }
 
     public boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
-        boolean isImportantHeadsUp = false;
-        String notificationPackageName = sbn.getPackageName().toLowerCase();
-        isImportantHeadsUp = notificationPackageName.contains("dialer") ||
-                notificationPackageName.contains("clock");
-        return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isImportantHeadsUp;
+        String notificationPackageName = sbn.getPackageName();
+
+        boolean isLessBoring = notificationPackageName.equals(getDefaultDialerPackage(mTm))
+                || notificationPackageName.toLowerCase().contains("clock");
+
+        return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isLessBoring;
+    }
+
+    private static String getDefaultDialerPackage(TelecomManager tm) {
+        return tm != null ? tm.getDefaultDialerPackage() : "";
     }
 
     /**
@@ -379,12 +398,6 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
                 }
                 return false;
             }
-        }
-        if (shouldSkipHeadsUp(sbn)) {
-            if (DEBUG_HEADS_UP) {
-                Log.d(TAG, "No alerting: less boring headsup enabled");
-            }
-            return false;
         }
         return true;
     }
