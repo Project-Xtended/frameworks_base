@@ -130,14 +130,6 @@
     <!-- Whether to cancel fingerprint operation if not idle -->
     <java-symbol type="bool" name="config_fpCancelIfNotIdle" />
 
-  <!-- PixelPropUtils -->
-  <java-symbol type="string" name="build_device" />
-  <java-symbol type="string" name="build_fp" />
-  <java-symbol type="string" name="build_model" />
-  <java-symbol type="string" name="redfin_device" />
-  <java-symbol type="string" name="redfin_fp" />
-  <java-symbol type="string" name="redfin_model" />
-
   <!-- App lock -->
   <java-symbol type="string" name="unlock_application" />
   <java-symbol type="array" name="config_appLockAllowedSystemApps" />
