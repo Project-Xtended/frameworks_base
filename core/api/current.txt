@@ -31399,7 +31399,7 @@ package android.os {
   public class HandlerThread extends java.lang.Thread {
     ctor public HandlerThread(String);
     ctor public HandlerThread(String, int);
-    method public android.os.Looper getLooper();
+    method @Nullable public android.os.Looper getLooper();
     method public int getThreadId();
     method protected void onLooperPrepared();
     method public boolean quit();
