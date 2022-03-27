@@ -105,7 +105,7 @@ public class QSPanel extends LinearLayout implements Tunable {
 
     protected boolean mExpanded;
     protected boolean mListening;
-    private boolean mIsAutomaticBrightnessAvailable = false;
+    protected boolean mIsAutomaticBrightnessAvailable = false;
 
     @Nullable protected QSTileHost mHost;
     private final List<OnConfigurationChangedListener> mOnConfigurationChangedListeners =
@@ -735,7 +735,7 @@ public class QSPanel extends LinearLayout implements Tunable {
         mCollapseExpandAction = action;
     }
 
-    private void updateBrightnessSliderPosition() {
+    protected void updateBrightnessSliderPosition() {
         if (mBrightnessView == null) return;
         removeView(mBrightnessView);
         addView(mBrightnessView, mTop ? 0 : 1);
