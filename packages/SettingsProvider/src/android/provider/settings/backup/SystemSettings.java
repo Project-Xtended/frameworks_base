@@ -96,5 +96,7 @@ public class SystemSettings {
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.CUSTOM_RINGTONE_VIBRATION_PATTERN,
         Settings.System.DOZE_ON_CHARGE,
+	    Settings.System.QS_TILE_LABEL_HIDE,
+        Settings.System.QS_TILE_VERTICAL_LAYOUT,
     };
 }
