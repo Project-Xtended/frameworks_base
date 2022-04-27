@@ -59,6 +59,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Vibrator;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -337,6 +338,21 @@ public class XtendedUtils {
             case AudioManager.RINGER_MODE_SILENT:
                 am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                 break;
+        }
+    }
+    
+    public static class QSLayoutUtils {
+
+        public static boolean getQSTileLabelHide(Context context) {
+            return Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_LABEL_HIDE,
+                    0, UserHandle.USER_CURRENT) == 1;
+        }
+
+        public static boolean getQSTileVerticalLayout(Context context) {
+            return Settings.System.getIntForUser(context.getContentResolver(),
+                    Settings.System.QS_TILE_VERTICAL_LAYOUT,
+                    0, UserHandle.USER_CURRENT) == 1;
         }
     }
 }
