@@ -893,7 +893,14 @@ public final class Choreographer {
                 mLastVsyncEventData = vsyncEventData;
             }
 
-            AnimationUtils.lockAnimationClock(frameTimeNanos / TimeUtils.NANOS_PER_MS);
+            if (frameIntervalNanos > 0 && frameIntervalNanos != mFrameIntervalNanos) {
+                mFrameIntervalNanos = frameIntervalNanos;
+                ScrollOptimizer.setFrameInterval(mFrameIntervalNanos);
+            }
+            ScrollOptimizer.setUITaskStatus(true);
+            long adjustedTime =
+                    ScrollOptimizer.getAdjustedAnimationClock(frameTimeNanos);
+            AnimationUtils.lockAnimationClock(adjustedTime / TimeUtils.NANOS_PER_MS);
 
             mFrameInfo.markInputHandlingStart();
             doCallbacks(Choreographer.CALLBACK_INPUT, frameData, frameIntervalNanos);
