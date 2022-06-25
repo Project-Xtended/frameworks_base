@@ -32,6 +32,8 @@ public class LongScreenshotData {
     private final AtomicReference<ScreenshotController.TransitionDestination>
             mTransitionDestinationCallback;
 
+    private boolean mNeedsMagnification;
+
     @Inject
     public LongScreenshotData() {
         mLongScreenshot = new AtomicReference<>();
@@ -72,5 +74,13 @@ public class LongScreenshotData {
      */
     public ScreenshotController.TransitionDestination takeTransitionDestinationCallback() {
         return mTransitionDestinationCallback.getAndSet(null);
+    }
+
+    public void setNeedsMagnification(boolean status) {
+        mNeedsMagnification = status;
+    }
+
+    public boolean getNeedsMagnification() {
+        return mNeedsMagnification;
     }
 }
