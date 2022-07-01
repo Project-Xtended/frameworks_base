@@ -199,6 +199,8 @@ public class KeyguardIndicationController {
     private IBatteryPropertiesRegistrar mBatteryPropertiesRegistrar;
     private boolean mAlternateFastchargeInfoUpdate;
 
+    private int mCurrentDivider;
+
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallback;
 
     private boolean mDozing;
@@ -321,6 +323,8 @@ public class KeyguardIndicationController {
 
         mStatusBarStateListener.onDozingChanged(mStatusBarStateController.isDozing());
 
+        mCurrentDivider = mContext.getResources().getInteger(R.integer.config_currentInfoDivider);
+        
         mBatteryPropertiesRegistrar =
                     IBatteryPropertiesRegistrar.Stub.asInterface(
                     ServiceManager.getService("batteryproperties"));
@@ -499,7 +503,7 @@ public class KeyguardIndicationController {
         if (mPowerPluggedIn || mEnableBatteryDefender) {
             String powerIndication = computePowerIndication();
             if (DEBUG_CHARGING_SPEED) {
-                powerIndication += ",  " + (mChargingWattage / 1000) + " mW";
+                powerIndication += ",  " + (mChargingWattage / mCurrentDivider) + " mW";
             }
 
             mRotateTextViewController.updateIndication(
@@ -1016,16 +1020,17 @@ public class KeyguardIndicationController {
         double voltage = 0;
         boolean showbatteryInfo = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.LOCKSCREEN_BATTERY_INFO, 1, UserHandle.USER_CURRENT) == 1;
+        voltage = mChargingVoltage / 1000 / 1000;
+        current = (mChargingCurrent < 5 ? (mChargingCurrent * 1000)
+                   : (mChargingCurrent < 4000 ? mChargingCurrent : (mChargingCurrent / mCurrentDivider)));
         if (showbatteryInfo) {
             if (mChargingCurrent > 0) {
-                current = (mChargingCurrent < 5 ? (mChargingCurrent * 1000)
-                        : (mChargingCurrent < 4000 ? mChargingCurrent : (mChargingCurrent / 1000)));
                 batteryInfo = batteryInfo + current + "mA";
             }
             if (mChargingVoltage > 0 && mChargingCurrent > 0) {
                 voltage = (mChargingVoltage / 1000 / 1000);
                 batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
-                        String.format("%.1f" , ((double) current / 1000) * voltage) + "W";
+                        String.format("%.1f" , ((double) current / mCurrentDivider) * voltage) + "W";
             }
             if (mChargingVoltage > 0) {
                 batteryInfo = (batteryInfo == "" ? "" : batteryInfo + " · ") +
