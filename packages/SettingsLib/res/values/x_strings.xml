@@ -20,5 +20,8 @@
     <string name="screen_zoom_summary_smaller">Smaller</string>
     <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
     <string name="screen_zoom_summary_smallest">Smallest</string>
+    
+    <!-- [CHAR LIMIT=25] Manage applications, text for when an application is hidden. -->
+    <string name="hidden">Hidden</string>
 
 </resources>
