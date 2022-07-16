@@ -82,4 +82,6 @@
         of waking the screen while the screen is off or in lpm. -->
     <bool name="config_pulseOnFingerDown">false</bool>
 
+    <!-- Preferred max refresh rate at AOD & Ambient Display, if supported by the display. -->
+    <integer name="config_aodMaxRefreshRate">-1</integer>
 </resources>
