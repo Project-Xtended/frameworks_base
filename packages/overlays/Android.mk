@@ -32,6 +32,7 @@ LOCAL_REQUIRED_MODULES := \
 	NavigationBarModeGesturalOverlayWideBack \
 	NavigationBarModeGesturalOverlayExtraWideBack \
         NavigationBarModeGesturalOverlayFS \
+	NotchBarKillerLeftrOverlay \
 	NotchBarKillerOverlay \
     qs_portrait_2x2 \
     qs_portrait_2x3 \
