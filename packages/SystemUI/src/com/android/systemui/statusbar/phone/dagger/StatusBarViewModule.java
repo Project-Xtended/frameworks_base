@@ -301,7 +301,8 @@ public abstract class StatusBarViewModule {
             OperatorNameViewController.Factory operatorNameViewControllerFactory,
             SecureSettings secureSettings,
             @Main Executor mainExecutor,
-            DumpManager dumpManager
+            DumpManager dumpManager,
+            TunerService tunerService
     ) {
         return new CollapsedStatusBarFragment(statusBarFragmentComponentFactory,
                 ongoingCallController,
@@ -323,7 +324,8 @@ public abstract class StatusBarViewModule {
                 operatorNameViewControllerFactory,
                 secureSettings,
                 mainExecutor,
-                dumpManager);
+                dumpManager,
+                tunerService);
     }
 
     /**
