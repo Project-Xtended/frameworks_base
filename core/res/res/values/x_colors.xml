@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<!--
+     Copyright (C) 2017-2022 The Project-Xtended ROM
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,6 +14,16 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <corners android:radius="?android:attr/dialogCornerRadius" />
-</shape>
+<resources>
+
+    <!-- Parallel space badge colors -->
+    <color name="parallel_badge_1">#025fee</color>
+    <color name="parallel_badge_2">#ee9002</color>
+    <color name="parallel_badge_3">#02d6ee</color>
+    <color name="parallel_badge_4">#9002ee</color>
+    <color name="parallel_badge_5">#ee0260</color>
+    <color name="parallel_badge_6">#00b200</color>
+    <color name="parallel_badge_7">#7200b6</color>
+    <color name="parallel_badge_8">#006f72</color>
+    <color name="parallel_badge_9">#eed315</color>
+</resources>
