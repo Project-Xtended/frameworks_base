@@ -117,5 +117,8 @@
 
   <!-- Default state for LiveDisplay -->
   <bool name="config_liveDisplayAvailable">true</bool>
+  
+  <!-- Wether to handle audio direction changes between major call states -->
+  <bool name="config_handleAudioDirectionChangesBetweenCallStateChanges">true</bool>
 
 </resources>
