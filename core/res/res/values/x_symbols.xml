@@ -123,4 +123,7 @@
   <!-- Expected value from fast charging status file -->
   <java-symbol type="string" name="config_oemFastChargerStatusValue" />
 
+  <!-- Location indicator -->
+  <java-symbol type="drawable" name="stat_sys_location" />
+
 </resources>
