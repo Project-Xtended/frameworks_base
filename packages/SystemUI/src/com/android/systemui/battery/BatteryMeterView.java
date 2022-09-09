@@ -104,6 +104,7 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     private int mShowBatteryPercent;
     private int mShowBatteryEstimate = 0;
     private boolean mBatteryPercentCharging;
+    private int mTextChargingSymbol;
 
     private DualToneHandler mDualToneHandler;
 
@@ -237,6 +238,12 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         updatePercentView();
     }
 
+    public void updateTextChargingSymbol(int textChargingSymbol) {
+        if (textChargingSymbol == mTextChargingSymbol) return;
+        mTextChargingSymbol = textChargingSymbol;
+        updatePercentView();
+    }
+
     public int getBatteryEstimate() {
         return mShowBatteryEstimate;
     }
@@ -353,11 +360,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                     getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
                             : R.string.accessibility_battery_level, mLevel));
         }
-    }
-
-    private void setPercentTextAtCurrentLevel() {
-        String text = NumberFormat.getPercentInstance().format(mLevel / 100f);
-
         if (mBatteryEstimateFetcher != null && mShowBatteryEstimate != 0 && !mCharging) {
                 mBatteryEstimateFetcher.fetchBatteryTimeRemainingEstimate(
                         (String estimate) -> {
@@ -370,29 +372,35 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                             R.string.accessibility_battery_level_with_estimate,
                             mLevel, estimate));
                 } else {
-                    mBatteryPercentView.setText(text);
+                    setPercentTextAtCurrentLevel();
                     setContentDescription(getContext().getString(
                             R.string.accessibility_battery_level,
                             mLevel));
                 }
             });
-        } else {
-            // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
-            // to load its emoji colored variant with the uFE0E flag
-            String bolt = "\u26A1\uFE0E";
-            CharSequence mChargeIndicator = mCharging && (mBatteryStyle == BATTERY_STYLE_HIDDEN ||
-                mBatteryStyle == BATTERY_STYLE_TEXT) ? (bolt + " ") : "";
-            // Setting text actually triggers a layout pass (because the text view is set to
-            // wrap_content width and TextView always relayouts for this). Avoid needless
-            // relayout if the text didn't actually change.
-            if (!TextUtils.equals(mBatteryPercentView.getText(), text)) {
-                mBatteryPercentView.setText(mChargeIndicator + text);
-            }
-
-            setContentDescription(
-                    getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
-                            : R.string.accessibility_battery_level, mLevel));
         }
+    }
+
+    private void setPercentTextAtCurrentLevel() {
+        if (mBatteryPercentView == null) {
+              return;
+        }
+
+        String text = NumberFormat.getPercentInstance().format(mLevel / 100f);
+
+        if (mCharging && (mBatteryPercentView != null && (mBatteryStyle == BATTERY_STYLE_TEXT
+            || mBatteryStyle == BATTERY_STYLE_HIDDEN)) && mTextChargingSymbol > 0) {
+            switch (mTextChargingSymbol) {
+                case 1:
+                default:
+                    text = "⚡️ " + text;
+                   break;
+                case 2:
+                    text = "~ " + text;
+                    break;
+            }
+        }
+        mBatteryPercentView.setText(text);
     }
 
     private void removeBatteryPercentView() {
