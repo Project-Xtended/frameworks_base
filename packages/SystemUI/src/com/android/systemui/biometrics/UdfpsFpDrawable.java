@@ -13,19 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.systemui.biometrics
 
-import android.content.Context
-import android.graphics.Canvas
+package com.android.systemui.biometrics;
+
+import android.content.Context;
+import android.graphics.Canvas;
+
+import androidx.annotation.NonNull;
 
 /**
  * Draws udfps fingerprint if sensor isn't illuminating.
  */
-class UdfpsFpDrawable(context: Context) : UdfpsDrawable(context) {
-    override fun draw(canvas: Canvas) {
-        if (isDisplayConfigured) {
-            return
+public class UdfpsFpDrawable extends UdfpsDrawable {
+
+    UdfpsFpDrawable(@NonNull Context context) {
+        super(context);
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+        if (isDisplayConfigured()) {
+            return;
         }
-        fingerprintDrawable.draw(canvas)
+
+        mFingerprintDrawable.draw(canvas);
     }
 }
