@@ -622,7 +622,9 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
                 Math.round(fullBatteryIconHeight));
         scaledLayoutParams.setMargins(0, marginTop, 0, marginBottom);
 
-        mBatteryIconView.setLayoutParams(scaledLayoutParams);
+        if (mBatteryIconView != null) {
+            mBatteryIconView.setLayoutParams(scaledLayoutParams);
+        }
     }
 
     private void updateDrawable() {
