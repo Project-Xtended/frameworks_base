@@ -4067,6 +4067,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LESS_BORING_HEADS_UP),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_TRANSPARENCY),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4078,6 +4081,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
                 setLockscreenDoubleTapToSleep();
+            }  else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.QS_TRANSPARENCY))) {
+                setCustomQsAlpha();
             }
             update();
         }
@@ -4087,6 +4093,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
             setUseLessBoringHeadsUp();
+            setCustomQsAlpha();
         }
     }
 
@@ -4111,6 +4118,12 @@ public class CentralSurfacesImpl extends CoreStartable implements
                 Settings.System.LESS_BORING_HEADS_UP, 1,
                 UserHandle.USER_CURRENT) == 1;
         mNotificationInterruptStateProvider.setUseLessBoringHeadsUp(lessBoringHeadsUp);
+    }
+
+    private void setCustomQsAlpha() {
+        mScrimController.setCustomScrimAlpha(Settings.System.getIntForUser(
+	mContext.getContentResolver(), Settings.System.QS_TRANSPARENCY, 100,
+        UserHandle.USER_CURRENT));
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
