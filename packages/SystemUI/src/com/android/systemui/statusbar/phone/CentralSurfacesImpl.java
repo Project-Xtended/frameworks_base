@@ -250,6 +250,7 @@ import com.android.systemui.statusbar.policy.ExtensionController;
 import com.android.systemui.statusbar.policy.GameSpaceManager;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.FlashlightController;
+import com.android.systemui.statusbar.policy.TaskHelper;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.statusbar.window.StatusBarWindowController;
@@ -530,6 +531,7 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
 
     protected GameSpaceManager mGameSpaceManager;
     private final PulseControllerImpl mPulseController;
+    protected TaskHelper mTaskHelper;
 
     /** Controller for the Shade. */
     @VisibleForTesting
@@ -810,7 +812,8 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
             Lazy<CameraLauncher> cameraLauncherLazy,
             Lazy<LightRevealScrimViewModel> lightRevealScrimViewModelLazy,
             BurnInProtectionController burnInProtectionController,
-            SysUiState sysUiState) {
+            SysUiState sysUiState,
+            TaskHelper taskHelper) {
         mContext = context;
         mNotificationsController = notificationsController;
         mFragmentService = fragmentService;
@@ -903,6 +906,8 @@ public class CentralSurfacesImpl implements CoreStartable, PackageChangedListene
 
         mShadeExpansionStateManager.addExpansionListener(this::onPanelExpansionChanged);
         mShadeExpansionStateManager.addFullExpansionListener(this::onShadeExpansionFullyChanged);
+
+        mTaskHelper = taskHelper;
 
         mBubbleExpandListener = (isExpanding, key) ->
                 mContext.getMainExecutor().execute(this::updateScrimController);

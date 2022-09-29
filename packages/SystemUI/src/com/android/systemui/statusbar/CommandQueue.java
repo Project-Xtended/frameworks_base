@@ -1352,6 +1352,15 @@ public class CommandQueue extends IStatusBar.Stub implements
         mHandler.obtainMessage(MSG_GO_TO_FULLSCREEN_FROM_SPLIT).sendToTarget();
     }
 
+    @Override
+    public void killForegroundApp() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_KILL_FOREGROUND_APP);
+            mHandler.sendEmptyMessage(MSG_KILL_FOREGROUND_APP);
+        }
+    }
+
+    @Override
     public void toggleCameraFlash() {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH);
@@ -1366,13 +1375,6 @@ public class CommandQueue extends IStatusBar.Stub implements
                 mHandler.removeMessages(MSG_SET_BLOCKED_GESTURAL_NAVIGATION);
             }
             mHandler.obtainMessage(MSG_SET_BLOCKED_GESTURAL_NAVIGATION, blocked).sendToTarget();
-        }
-    }
-
-    public void killForegroundApp() {
-        synchronized (mLock) {
-            mHandler.removeMessages(MSG_KILL_FOREGROUND_APP);
-            mHandler.sendEmptyMessage(MSG_KILL_FOREGROUND_APP);
         }
     }
 
