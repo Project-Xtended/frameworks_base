@@ -77,6 +77,7 @@ import android.view.WindowManagerGlobal;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.InterruptedException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -197,6 +198,22 @@ public class XtendedUtils {
                 enabled != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER;
         } catch (NameNotFoundException e) {
             return false;
+        }
+    }
+    
+    // Google now has a change screen reolution option but it fails to update dpi properly
+    // This function takes screen diagonal and updates dpi
+    public static void changeScreenDPI(int resolutionWidth, int resolutionHeight, float diagonalLength) {
+	int dpi = (int) (Math.sqrt((resolutionHeight*resolutionHeight) + (resolutionWidth*resolutionWidth)) / diagonalLength);
+	String command = String.format("wm density %s", Integer.toString(dpi));
+	try {
+	    Runtime.getRuntime().exec(command).waitFor();
+	} catch (IOException e) {
+            System.err.println("XtendedUtils: Error changing dpi");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.err.println("XtendedUtils: Error changing dpi");
+            e.printStackTrace();
         }
     }
     
