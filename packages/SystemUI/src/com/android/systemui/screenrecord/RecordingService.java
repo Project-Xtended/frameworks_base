@@ -183,13 +183,6 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
                         intent.getParcelableExtra(EXTRA_CAPTURE_TARGET,
                                 MediaProjectionCaptureTarget.class);
 
-                mOriginalShowTaps = Settings.System.getInt(
-                        getApplicationContext().getContentResolver(),
-                        Settings.System.SHOW_TOUCHES, 0) != 0;
-
-                setTapsVisible(mShowTaps);
-                setStopDotVisible(mShowStopDot);
-
                 mRecorder = new ScreenMediaRecorder(
                         mUserContextTracker.getUserContext(),
                         mMainHandler,
@@ -198,6 +191,8 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
                         captureTarget,
                         this
                 );
+                setTapsVisible(mShowTaps);
+                setStopDotVisible(mShowStopDot);
                 setLowQuality(mLowQuality);
                 setLongerDuration(mLongerDuration);
 
@@ -479,7 +474,7 @@ public class RecordingService extends Service implements ScreenMediaRecorderList
             userId = mUserContextTracker.getUserContext().getUserId();
         }
         Log.d(TAG, "notifying for user " + userId);
-        setTapsVisible(mOriginalShowTaps);
+        setTapsVisible(false);
         setStopDotVisible(false);
         if (getRecorder() != null) {
             try {
