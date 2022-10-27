@@ -219,4 +219,9 @@
     <!-- Weather string format in expanded statusbar header -->
     <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g></string>
 
+    <!-- Bluetooth dialog -->
+    <string name="turn_on_bluetooth">Use Bluetooth</string>
+    <string name="bluetooth_is_off">Bluetooth is off</string>
+    <string name="tap_a_device_to_connect">Tap a device to connect</string>
+
 </resources>
