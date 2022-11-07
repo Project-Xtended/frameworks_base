@@ -45,6 +45,8 @@ import com.android.systemui.flags.FeatureFlags
 import com.android.systemui.keyguard.WakefulnessLifecycle
 import com.android.systemui.monet.Style
 import com.android.systemui.settings.UserTracker
+import com.android.systemui.statusbar.policy.ConfigurationController
+import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener
 import com.android.systemui.statusbar.policy.DeviceProvisionedController
 import com.android.systemui.theme.ThemeOverlayApplier
 import com.android.systemui.theme.ThemeOverlayController
@@ -85,6 +87,7 @@ class customThemeOverlayController @Inject constructor(
     featureFlags: FeatureFlags,
     @Main resources: Resources,
     wakefulnessLifecycle: WakefulnessLifecycle,
+    private val configurationController: ConfigurationController,
 ) : ThemeOverlayController(
     context,
     broadcastDispatcher,
@@ -101,8 +104,20 @@ class customThemeOverlayController @Inject constructor(
     featureFlags,
     resources,
     wakefulnessLifecycle,
+    configurationController,
 ) {
 
+    private val darkConfigurationListener = object : ConfigurationListener {
+        override fun onUiModeChanged() {
+            reevaluateSystemTheme(true /* forceReload */)
+        }
+    }
+
+    override fun start() {
+        super.start()
+        configurationController.addCallback(darkConfigurationListener)
+    }
+    
     private val settingsObserver = object : ContentObserver(bgHandler) {
         override fun onChange(selfChange: Boolean, uri: Uri) {
             when (uri.lastPathSegment) {
