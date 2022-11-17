@@ -308,16 +308,11 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
                         vibrateTick();
                     }
                     mFalsingManager.isFalseTouch(BACK_GESTURE);
-                    // Only inject back keycodes when ahead-of-time back dispatching is disabled.
-                    if (mBackAnimation == null) {
-                        boolean sendDown = sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
-                        boolean sendUp = sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK);
-                        if (DEBUG_MISSING_GESTURE) {
-                            Log.d(DEBUG_MISSING_GESTURE_TAG, "Triggered back: down="
-                                    + sendDown + ", up=" + sendUp);
-                        }
-                    } else {
-                        mBackAnimation.setTriggerBack(true);
+                    boolean sendDown = sendEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
+                    boolean sendUp = sendEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK);
+                    if (DEBUG_MISSING_GESTURE) {
+                        Log.d(DEBUG_MISSING_GESTURE_TAG, "Triggered back: down="
+                                + sendDown + ", up=" + sendUp);
                     }
 
                     mOverviewProxyService.notifyBackAction(true, (int) mDownPoint.x,
@@ -336,9 +331,9 @@ public class EdgeBackGestureHandler extends CurrentUserTracker
 
                 @Override
                 public void setTriggerBack(boolean triggerBack) {
-                    if (mBackAnimation != null) {
+                   /** if (mBackAnimation != null) {
                         mBackAnimation.setTriggerBack(triggerBack);
-                    }
+                    }*/
                 }
             };
 
