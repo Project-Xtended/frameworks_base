@@ -886,7 +886,6 @@ public class NavigationBarEdgePanel extends View implements NavigationEdgeBackPl
             // Whenever the trigger back state changes the existing translation animation should be
             // cancelled
             mTranslationAnimation.cancel();
-            mBackCallback.setTriggerBack(mTriggerBack);
         }
     }
 
