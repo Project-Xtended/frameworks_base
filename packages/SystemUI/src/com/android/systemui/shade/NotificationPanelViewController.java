@@ -430,6 +430,10 @@ public final class NotificationPanelViewController implements Dumpable {
     private boolean mDoubleTapToSleepEnabled;
     private int mStatusBarHeaderHeight;
 
+    //Lockscreen Notifications
+    private int mMaxKeyguardNotifConfig;
+    private boolean mCustomMaxKeyguard;
+
     /** Whether the ongoing gesture might both trigger the expansion in both the view and QS. */
     private boolean mConflictingQsExpansionGesture;
     private boolean mPanelExpanded;
@@ -1477,12 +1481,20 @@ public final class NotificationPanelViewController implements Dumpable {
         return mIsFlinging;
     }
 
-    private void updateMaxDisplayedNotifications(boolean recompute) {
-        if (recompute) {
-            setMaxDisplayedNotifications(Math.max(computeMaxKeyguardNotifications(), 1));
+    public void updateMaxDisplayedNotifications(boolean recompute) {
+        mCustomMaxKeyguard = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+            Settings.System.LOCK_SCREEN_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
+        mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+                 Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
+        if (mCustomMaxKeyguard) {
+                mMaxAllowedKeyguardNotifications = mMaxKeyguardNotifConfig;
         } else {
-            if (SPEW_LOGCAT) Log.d(TAG, "Skipping computeMaxKeyguardNotifications() by request");
-        }
+            if (recompute) {
+                mMaxAllowedKeyguardNotifications = Math.max(computeMaxKeyguardNotifications(), 1);
+            } else {
+                if (SPEW_LOGCAT) Log.d(TAG, "Skipping computeMaxKeyguardNotifications() by request");
+            }
+	}
 
         if (mKeyguardShowing && !mKeyguardBypassController.getBypassEnabled()) {
             mNotificationStackScrollLayoutController.setMaxDisplayedNotifications(
