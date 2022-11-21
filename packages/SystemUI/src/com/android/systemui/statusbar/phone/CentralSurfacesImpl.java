@@ -4080,6 +4080,12 @@ public class CentralSurfacesImpl extends CoreStartable implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NOTIF_PANEL_CUSTOM_NOTIF),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NOTIF_PANEL_MAX_NOTIF_CONFIG),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4097,6 +4103,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCK_SCREEN_CUSTOM_NOTIF)) ||
                 uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
                 setMaxKeyguardNotifConfig();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_PANEL_CUSTOM_NOTIF)) ||
+                uri.equals(Settings.System.getUriFor(Settings.System.NOTIF_PANEL_MAX_NOTIF_CONFIG))) {
+		setMaxNotifPanelNotifConfig();
             }
             update();
         }
@@ -4108,6 +4117,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
             setUseLessBoringHeadsUp();
             setCustomQsAlpha();
             setMaxKeyguardNotifConfig();
+            setMaxNotifPanelNotifConfig();
         }
     }
 
@@ -4148,6 +4158,16 @@ public class CentralSurfacesImpl extends CoreStartable implements
                  Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
 
         mNotificationPanelViewController.updateMaxDisplayedNotifications(customMaxKeyguard);
+    }
+
+    private void setMaxNotifPanelNotifConfig() {
+        boolean customMaxNotifPanel = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.NOTIF_PANEL_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
+
+        int maxNotifPanelNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.NOTIF_PANEL_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
+
+        mNotificationPanelViewController.updateMaxDisplayedNotifications(customMaxNotifPanel);
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
