@@ -433,6 +433,9 @@ public final class NotificationPanelViewController implements Dumpable {
     //Lockscreen Notifications
     private int mMaxKeyguardNotifConfig;
     private boolean mCustomMaxKeyguard;
+    //Notif Panel Notifications
+    private int mMaxNotifPanelNotifConfig;
+    private boolean mCustomMaxNotifPanel;
 
     /** Whether the ongoing gesture might both trigger the expansion in both the view and QS. */
     private boolean mConflictingQsExpansionGesture;
@@ -1486,6 +1489,14 @@ public final class NotificationPanelViewController implements Dumpable {
             Settings.System.LOCK_SCREEN_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
         mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
                  Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
+
+        mCustomMaxNotifPanel = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+            Settings.System.NOTIF_PANEL_CUSTOM_NOTIF, 0, UserHandle.USER_CURRENT) == 1;
+        mMaxNotifPanelNotifConfig = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+                 Settings.System.NOTIF_PANEL_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
+
+        int newMaxNotifPanelNotifConfig = (mMaxNotifPanelNotifConfig + 1);
+
         if (mCustomMaxKeyguard) {
                 mMaxAllowedKeyguardNotifications = mMaxKeyguardNotifConfig;
         } else {
@@ -1502,8 +1513,12 @@ public final class NotificationPanelViewController implements Dumpable {
             mNotificationStackScrollLayoutController.setKeyguardBottomPaddingForDebug(
                     mKeyguardNotificationBottomPadding);
         } else {
-            // no max when not on the keyguard
-            mNotificationStackScrollLayoutController.setMaxDisplayedNotifications(-1);
+            if (mCustomMaxNotifPanel) {
+                mNotificationStackScrollLayoutController.setMaxDisplayedNotifications(newMaxNotifPanelNotifConfig);
+            } else {
+                // no max when not on the keyguard
+                mNotificationStackScrollLayoutController.setMaxDisplayedNotifications(-1);
+            }
             mNotificationStackScrollLayoutController.setKeyguardBottomPaddingForDebug(-1f);
         }
     }
