@@ -6435,6 +6435,13 @@ public final class Settings {
         public static final String CUSTOM_UI_TOGGLE = "custom_ui_toggle";
 
         /**
+         * Haptic feedback on scroll fling
+         * @hide
+         */ 
+        @Readable
+        public static final String SCROLL_FLING_HAPTIC_FEEDBACK = "scroll_fling_haptic_feedback";
+
+        /**
          * reTicker Status
          * @hide
          */
