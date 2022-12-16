@@ -163,6 +163,7 @@ public class BootReceiver extends BroadcastReceiver {
         }.start();
 
         FileDescriptor tracefd = null;
+        if (!fileExists(ERROR_REPORT_TRACE_PIPE)) return;
         try {
             if (!fileExists(ERROR_REPORT_TRACE_PIPE)) return;
             tracefd = Os.open(ERROR_REPORT_TRACE_PIPE, O_RDONLY, 0600);
