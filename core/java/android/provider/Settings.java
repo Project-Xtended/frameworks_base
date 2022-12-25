@@ -7043,6 +7043,11 @@ public final class Settings {
          */
         public static final String QS_HEADER_IMAGE = "qs_header_image";
 
+	/**
+         * @hide
+         */
+        public static final String VOLUME_MEDIA_OUTPUT_TOGGLE = "volume_media_output_toggle";
+
         /**
          * Bottom screen shortcuts on keyguard
          * Two lists of strings delimeted by ;
