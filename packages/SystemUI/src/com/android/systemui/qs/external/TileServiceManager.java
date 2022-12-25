@@ -109,9 +109,9 @@ public class TileServiceManager {
     void startLifecycleManagerAndAddTile() {
         mStarted = true;
         ComponentName component = mStateManager.getComponent();
-        final int userId = mStateManager.getUserId();
-        if (!mServices.getHost().isTileAdded(component, userId)) {
-            mServices.getHost().setTileAdded(component, userId, true);
+        Context context = mServices.getContext();
+        if (!TileLifecycleManager.isTileAdded(context, component)) {
+            TileLifecycleManager.setTileAdded(context, component, true);
             mStateManager.onTileAdded();
             mStateManager.flushMessagesAndUnbind();
         }

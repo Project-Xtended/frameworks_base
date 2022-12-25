@@ -45,7 +45,6 @@ import com.android.systemui.dump.DumpManager;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSFactoryImpl;
-import com.android.systemui.settings.UserFileManager;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shared.plugins.PluginManager;
 import com.android.systemui.statusbar.CommandQueue;
@@ -119,8 +118,6 @@ public class TileServicesTest extends SysuiTestCase {
     private TileLifecycleManager.Factory mTileLifecycleManagerFactory;
     @Mock
     private TileLifecycleManager mTileLifecycleManager;
-    @Mock
-    private UserFileManager mUserFileManager;
 
     @Before
     public void setUp() throws Exception {
@@ -152,8 +149,7 @@ public class TileServicesTest extends SysuiTestCase {
                 mSecureSettings,
                 mock(CustomTileStatePersister.class),
                 mTileServiceRequestControllerBuilder,
-                mTileLifecycleManagerFactory,
-                mUserFileManager);
+                mTileLifecycleManagerFactory);
         mTileService = new TestTileServices(host, provider, mBroadcastDispatcher,
                 mUserTracker, mKeyguardStateController, mCommandQueue);
     }
