@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Resources
+import android.os.UserHandle
 import android.text.format.DateFormat
 import android.util.TypedValue
 import android.view.View
@@ -57,6 +58,8 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+
+import android.provider.Settings.Secure
 
 /**
  * Controller for a Clock provided by the registry and used on the keyguard. Instantiated by
@@ -169,6 +172,7 @@ open class ClockEventController @Inject constructor(
     private val configListener = object : ConfigurationController.ConfigurationListener {
         override fun onThemeChanged() {
             clock?.events?.onColorPaletteChanged(resources)
+            updateFontSizes()
             updateColors()
         }
 
@@ -200,6 +204,7 @@ open class ClockEventController @Inject constructor(
                     clock?.animations?.doze(if (isDozing) 1f else 0f)
                 }
             }
+            updateFontSizes()
         }
 
         override fun onTimeFormatChanged(timeFormat: String) {
@@ -259,10 +264,16 @@ open class ClockEventController @Inject constructor(
     }
 
     private fun updateFontSizes() {
+        val customTextSize = Secure.getIntForUser(context.getContentResolver(),
+             Secure.KG_BIG_CLOCK_TEXT_SIZE, 86, UserHandle.USER_CURRENT)
         clock?.smallClock?.events?.onFontSettingChanged(
             resources.getDimensionPixelSize(R.dimen.small_clock_text_size).toFloat())
         clock?.largeClock?.events?.onFontSettingChanged(
-            resources.getDimensionPixelSize(R.dimen.large_clock_text_size).toFloat())
+            resources.getDimensionPixelSize(R.dimen.clock_text_size_base).toFloat() * customTextSize)
+    }
+
+    public fun updateAll() {
+        updateFontSizes()
     }
 
     /**

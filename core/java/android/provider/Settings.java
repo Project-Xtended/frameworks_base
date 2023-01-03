@@ -12581,6 +12581,12 @@ public final class Settings {
         public static final String LOCKSCREEN_MEDIA_METADATA = "lockscreen_media_metadata";
 
         /**
+        /**
+         * @hide
+         */
+        public static final String KG_BIG_CLOCK_TEXT_SIZE = "kg_big_clock_text_size";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
