@@ -120,6 +120,11 @@ open class ClockEventController @Inject constructor(
 
         clock?.smallClock?.events?.onRegionDarknessChanged(smallClockIsDark)
         clock?.largeClock?.events?.onRegionDarknessChanged(largeClockIsDark)
+
+        val customClockColorEnabled = Secure.getIntForUser(context.getContentResolver(),
+               Secure.KG_CUSTOM_CLOCK_COLOR_ENABLED, 0, UserHandle.USER_CURRENT) != 0
+        val customClockColor = Secure.getIntForUser(context.getContentResolver(),
+               Secure.KG_CUSTOM_CLOCK_COLOR, 0xFFFFFFFF.toInt(), UserHandle.USER_CURRENT)
     }
 
     private fun updateRegionSamplers(currentClock: ClockController?) {
@@ -274,6 +279,7 @@ open class ClockEventController @Inject constructor(
 
     public fun updateAll() {
         updateFontSizes()
+        updateColors()
     }
 
     /**
