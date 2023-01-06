@@ -12790,12 +12790,18 @@ public final class Settings {
          * @hide
          */
         public static final String GMS_ENABLED = "gms_enabled";
-        
+
         /**
          * Whether to show Wi-Fi standard icon
          * @hide
          */
         public static final String SHOW_WIFI_STANDARD_ICON = "show_wifi_standard_icon";
+
+        /**
+         * Whether to trigger doze for new notifications
+         * @hide
+         */
+        public static final String DOZE_FOR_NOTIFICATIONS = "doze_for_notifications";
 
         /**
          * These entries are considered common between the personal and the managed profile,

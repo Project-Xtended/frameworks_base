@@ -51,7 +51,8 @@ public class AmbientDisplayConfiguration {
             Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
             Settings.Secure.DOZE_WAKE_LOCK_SCREEN_GESTURE,
             Settings.Secure.DOZE_WAKE_DISPLAY_GESTURE,
-            Settings.Secure.DOZE_TAP_SCREEN_GESTURE
+            Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
+            Settings.Secure.DOZE_FOR_NOTIFICATIONS,
     };
 
     /** Non-user configurable doze settings */
@@ -101,6 +102,12 @@ public class AmbientDisplayConfiguration {
     /** @hide */
     public boolean isAmbientTickerEnabled(int user) {
         return boolSettingDefaultOff(Settings.Secure.PULSE_ON_NEW_TRACKS, user);
+    }
+
+    /** @hide */
+    public boolean userPulseOnNotificationEnabled(int user) {
+        return boolSettingDefaultOn(Settings.Secure.DOZE_FOR_NOTIFICATIONS, user)
+                && pulseOnNotificationEnabled(user);
     }
 
     /** @hide */
