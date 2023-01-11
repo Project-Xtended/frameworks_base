@@ -85,6 +85,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.InterruptedException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -243,6 +244,23 @@ public class XtendedUtils {
         return false;
     }
 
+    // Method to detect whether a clock font overlay is enabled or not
+    public static boolean isClockFontEnabled(String fontName) {
+        mOverlayService = new OverlayManager();
+        try {
+            List<OverlayInfo> infos = mOverlayService.getOverlayInfosForTarget("android",
+                    UserHandle.myUserId());
+            for (int i = 0, size = infos.size(); i < size; i++) {
+                if (infos.get(i).packageName.contains(fontName)) {
+                    return infos.get(i).isEnabled();
+                }
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public static class OverlayManager {
         private final IOverlayManager mService;
 
