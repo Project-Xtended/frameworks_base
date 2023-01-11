@@ -105,7 +105,8 @@
   <!-- Camera -->
   <java-symbol type="array" name="config_cameraAuxPackageAllowList" />
   <java-symbol type="array" name="config_cameraAuxPackageExcludeList" />
-
+  <java-symbol type="array" name="config_cameraHFRPrivAppList" />
+  
    <!-- Enforce DisplayModeDirector to select user preferred resolution -->
    <java-symbol type="bool" name="config_forceToUseSelectedResolution" />
 

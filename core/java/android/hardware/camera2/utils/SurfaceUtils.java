@@ -308,10 +308,10 @@ public class SurfaceUtils {
         List<String> packageList = new ArrayList<>(Arrays.asList(
                 SystemProperties.get("persist.vendor.camera.privapp.list", ",").split(",")));
 
-        // Append packages from lineage-sdk resources
+        // Append packages from framework resources
         Resources res = ActivityThread.currentApplication().getResources();
         packageList.addAll(Arrays.asList(res.getStringArray(
-                org.lineageos.platform.internal.R.array.config_cameraHFRPrivAppList)));
+                com.android.internal.R.array.config_cameraHFRPrivAppList)));
 
         return packageList.contains(packageName);
     }
