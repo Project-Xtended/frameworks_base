@@ -4765,6 +4765,11 @@ public final class NotificationPanelViewController extends PanelViewController {
                 UserHandle.USER_ALL
         );
         updateReticker();
+        mContentResolver.registerContentObserver(
+                Settings.System.getUriFor(Settings.System.KEYGUARD_QUICK_TOGGLES),
+                /* notifyForDescendants */ false,
+                mSettingsChangeObserver
+        );
     }
 
     private void unregisterSettingsChangeListener() {
@@ -5006,6 +5011,9 @@ public final class NotificationPanelViewController extends PanelViewController {
                 || uri.equals(Settings.System.getUriFor(
                     Settings.System.RETICKER_LANDSCAPE_ONLY))) {
                 updateReticker();
+            } else if (uri.getLastPathSegment().equals(
+                    Settings.System.KEYGUARD_QUICK_TOGGLES)) {
+                mKeyguardBottomAreaViewModel.updateSettings();
             } else {
                 // Can affect multi-user switcher visibility
                 reInflateViews();
