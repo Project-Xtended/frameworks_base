@@ -103,4 +103,7 @@
   <java-symbol type="array" name="config_cameraAuxPackageAllowList" />
   <java-symbol type="array" name="config_cameraAuxPackageExcludeList" />
 
+   <!-- Enforce DisplayModeDirector to select user preferred resolution -->
+   <java-symbol type="bool" name="config_forceToUseSelectedResolution" />
+
 </resources>

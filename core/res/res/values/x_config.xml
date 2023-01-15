@@ -94,5 +94,8 @@
 
   <!-- The list of package IDs that are not allowed to use aux cameras. -->
   <string-array name="config_cameraAuxPackageExcludeList" translatable="false" />
+  
+   <!-- Enforce DisplayModeDirector to select user preferred resolution -->
+   <bool name="config_forceToUseSelectedResolution">false</bool>
 
 </resources>
