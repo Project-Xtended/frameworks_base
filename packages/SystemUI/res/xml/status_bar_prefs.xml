@@ -19,6 +19,11 @@
     android:title="@string/status_bar_items_title">
 
     <com.android.systemui.tuner.StatusBarSwitch
+        android:icon="@drawable/ic_statusbar_alarm"
+        android:key="alarm_clock"
+        android:title="@string/status_bar_alarm" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:icon="@drawable/ic_statusbar_auto_rotate"
         android:key="rotate"
         android:title="@string/status_bar_settings_auto_rotation" />
