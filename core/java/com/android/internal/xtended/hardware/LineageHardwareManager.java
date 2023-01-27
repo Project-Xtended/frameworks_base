@@ -29,7 +29,6 @@ import com.android.internal.xtended.app.LineageContextConstants;
 import com.android.internal.xtended.hardware.HIDLHelper;
 
 import vendor.lineage.touch.V1_0.IGloveMode;
-import vendor.lineage.touch.V1_0.IHighTouchPollingRate;
 import vendor.lineage.touch.V1_0.IKeyDisabler;
 import vendor.lineage.touch.V1_0.IStylusMode;
 import vendor.lineage.touch.V1_0.ITouchscreenGesture;
@@ -58,12 +57,6 @@ public final class LineageHardwareManager {
     // the support library is properly handled in the platform, we should change this.
 
     /**
-     * High Touch Polling Rate
-     */
-    @VisibleForTesting
-    public static final int FEATURE_HIGH_TOUCH_POLLING_RATE = 0x8;
-
-    /**
      * High touch sensitivity for touch panels
      */
     @VisibleForTesting
@@ -88,7 +81,6 @@ public final class LineageHardwareManager {
     public static final int FEATURE_TOUCHSCREEN_GESTURES = 0x80000;
 
     private static final List<Integer> BOOLEAN_FEATURES = Arrays.asList(
-        FEATURE_HIGH_TOUCH_POLLING_RATE,
         FEATURE_HIGH_TOUCH_SENSITIVITY,
         FEATURE_KEY_DISABLE,
         FEATURE_TOUCH_HOVERING
@@ -177,8 +169,6 @@ public final class LineageHardwareManager {
     private IBase getHIDLService(int feature) {
         try {
             switch (feature) {
-                case FEATURE_HIGH_TOUCH_POLLING_RATE:
-                    return IHighTouchPollingRate.getService(true);
                 case FEATURE_HIGH_TOUCH_SENSITIVITY:
                     return IGloveMode.getService(true);
                 case FEATURE_KEY_DISABLE:
@@ -231,9 +221,6 @@ public final class LineageHardwareManager {
             if (isSupportedHIDL(feature)) {
                 IBase obj = mHIDLMap.get(feature);
                 switch (feature) {
-                    case FEATURE_HIGH_TOUCH_POLLING_RATE:
-                        IHighTouchPollingRate highTouchPollingRate = (IHighTouchPollingRate) obj;
-                        return highTouchPollingRate.isEnabled();
                     case FEATURE_HIGH_TOUCH_SENSITIVITY:
                         IGloveMode gloveMode = (IGloveMode) obj;
                         return gloveMode.isEnabled();
@@ -271,9 +258,6 @@ public final class LineageHardwareManager {
             if (isSupportedHIDL(feature)) {
                 IBase obj = mHIDLMap.get(feature);
                 switch (feature) {
-                    case FEATURE_HIGH_TOUCH_POLLING_RATE:
-                        IHighTouchPollingRate highTouchPollingRate = (IHighTouchPollingRate) obj;
-                        return highTouchPollingRate.setEnabled(enable);
                     case FEATURE_HIGH_TOUCH_SENSITIVITY:
                         IGloveMode gloveMode = (IGloveMode) obj;
                         return gloveMode.setEnabled(enable);
