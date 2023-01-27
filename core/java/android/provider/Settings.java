@@ -6066,15 +6066,6 @@ public final class Settings {
 
         /**
          * @hide
-         * Enable fod detection even when screen is off
-         * Default value is 0
-         * @hide
-         */
-        @Readable
-        public static final String SCREEN_OFF_FOD = "screen_off_fod";
-
-        /**
-         * @hide
          */
         public static final String UDFPS_ANIM = "udfps_anim";
 
