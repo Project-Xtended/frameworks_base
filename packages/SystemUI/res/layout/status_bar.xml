@@ -91,7 +91,8 @@
                         android:scaleType="centerInside"
                         android:layout_gravity="center_vertical"
                         android:gravity="start|center_vertical"
-                        android:padding="2dp"
+                        android:paddingStart="2dp"
+                        android:paddingEnd="2dp"
                         android:paddingTop="@dimen/status_bar_padding_top"
                         android:visibility="gone" />
 
