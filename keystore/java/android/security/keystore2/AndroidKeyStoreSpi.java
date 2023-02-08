@@ -21,6 +21,7 @@ import android.hardware.biometrics.BiometricManager;
 import android.hardware.security.keymint.HardwareAuthenticatorType;
 import android.hardware.security.keymint.KeyParameter;
 import android.hardware.security.keymint.SecurityLevel;
+import android.os.SystemProperties;
 import android.security.GateKeeper;
 import android.security.KeyStore2;
 import android.security.KeyStoreParameter;
@@ -42,6 +43,7 @@ import android.system.keystore2.ResponseCode;
 import android.util.Log;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.xtended.PropImitationHooks;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -77,6 +79,7 @@ import java.util.Set;
 
 import javax.crypto.SecretKey;
 
+import com.android.internal.util.xtended.AttestationHooks;
 import com.android.internal.util.xtended.PixelPropsUtils;
 
 /**
@@ -101,6 +104,8 @@ import com.android.internal.util.xtended.PixelPropsUtils;
 public class AndroidKeyStoreSpi extends KeyStoreSpi {
     public static final String TAG = "AndroidKeyStoreSpi";
     public static final String NAME = "AndroidKeyStore";
+
+    private static final String DEVICE = "ro.product.device";
 
     private KeyStore2 mKeyStore;
     private @KeyProperties.Namespace int mNamespace = KeyProperties.NAMESPACE_APPLICATION;
@@ -164,9 +169,29 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
         }
     }
 
+    // Codenames for currently supported Pixels by Google
+    private static final String[] pixelCodenames = {
+            "cheetah",
+            "panther",
+            "bluejay",
+            "oriole",
+            "raven",
+            "redfin",
+            "barbet",
+            "bramble",
+            "sunfish",
+            "coral",
+            "flame"
+    };
+
     @Override
     public Certificate[] engineGetCertificateChain(String alias) {
-        PixelPropsUtils.onEngineGetCertificateChain();
+        boolean isPixelDevice = Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE));
+        if (!isPixelDevice) {
+            AttestationHooks.onEngineGetCertificateChain();
+        } else {
+            PropImitationHooks.onEngineGetCertificateChain();
+        }
 
         KeyEntryResponse response = getKeyMetadata(alias);
 
