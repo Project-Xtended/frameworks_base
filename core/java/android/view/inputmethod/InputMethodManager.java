@@ -2248,15 +2248,18 @@ public final class InputMethodManager {
             @Nullable IBinder windowGainingFocus, @StartInputFlags int startInputFlags,
             @SoftInputModeFlags int softInputMode, int windowFlags) {
         final View view;
+        final ViewRootImpl viewRoot;
         synchronized (mH) {
             view = getServedViewLocked();
+            viewRoot = view.getViewRootImpl();
 
             // Make sure we have a window token for the served view.
             if (DEBUG) {
                 Log.v(TAG, "Starting input: view=" + dumpViewInfo(view) +
                         " reason=" + InputMethodDebug.startInputReasonToString(startInputReason));
             }
-            if (view == null) {
+            // view and view root will be used by input checks, if one of them is missing return false
+            if (view == null && viewRoot == null) {
                 if (DEBUG) Log.v(TAG, "ABORT input: no served view!");
                 return false;
             }
