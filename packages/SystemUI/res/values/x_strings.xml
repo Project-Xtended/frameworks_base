@@ -206,8 +206,8 @@
     <string name="empty_app_killed">App</string>
 
     <!-- Omnijaws Weather -->
-    <string name="omnijaws_service_error">Error</string>
-    <string name="omnijaws_service_unkown">No weather data</string>
+    <string name="omnijaws_service_error">Error loading weather data</string>
+    <string name="omnijaws_service_unknown">No weather data</string>
     <string name="omnijaws_service_error_long">Error loading weather data</string>
     <string name="omnijaws_service_disabled">Service is disabled</string>
     <string name="omnijaws_detail_header">Weather</string>

@@ -20,7 +20,9 @@ package com.android.systemui.qs.tiles;
 import static com.android.internal.logging.MetricsLogger.VIEW_UNKNOWN;
 
 import android.content.Context;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -30,6 +32,7 @@ import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
@@ -48,19 +51,15 @@ import androidx.annotation.Nullable;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.util.xtended.OmniJawsClient;
-import com.android.systemui.Dependency;
+import com.android.internal.util.xtended.XtendedUtils;
 import com.android.systemui.R;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
-import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
-import com.android.systemui.plugins.qs.DetailAdapter;
 import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.qs.QSDetailItems;
-import com.android.systemui.qs.QSDetailItems.Item;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
@@ -71,17 +70,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsClient.OmniJawsObserver {
+
     private static final String TAG = "WeatherTile";
     private static final boolean DEBUG = false;
     private OmniJawsClient mWeatherClient;
     private Drawable mWeatherImage;
     private String mWeatherLabel;
-    private DetailedWeatherView mDetailedView;
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
     private final ActivityStarter mActivityStarter;
-    private WeatherDetailAdapter mDetailAdapter;
-    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_weather_default_on);
+
+    private static final String[] ALTERNATIVE_WEATHER_APPS = {
+            "cz.martykan.forecastie",
+            "com.accuweather.android",
+            "com.wunderground.android.weather",
+            "com.samruston.weather",
+            "jp.miyavi.androiod.gnws",
+    };
 
     @Inject
     public WeatherTile(
@@ -98,18 +103,12 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
                 statusBarStateController, activityStarter, qsLogger);
         mWeatherClient = new OmniJawsClient(mContext);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
-        mActivityStarter = Dependency.get(ActivityStarter.class);
-        mDetailAdapter = (WeatherDetailAdapter) createDetailAdapter();
+        mActivityStarter = activityStarter;
     }
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.CUSTOM_QUICK_TILES;
-    }
-
-    @Override
-    public DetailAdapter getDetailAdapter() {
-        return mDetailAdapter;
+        return MetricsEvent.XTENDED;
     }
 
     @Override
@@ -130,6 +129,7 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
             queryAndUpdateWeather();
         } else {
             mWeatherClient.removeObserver(this);
+            mWeatherClient.cleanupObserver();
         }
     }
 
@@ -143,11 +143,9 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     public void weatherError(int errorReason) {
         if (DEBUG) Log.d(TAG, "weatherError " + errorReason);
         if (errorReason != OmniJawsClient.EXTRA_ERROR_DISABLED) {
+            mWeatherData = null;
             mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_service_error);
             refreshState();
-            if (isShowingDetail()) {
-                mDetailedView.weatherError(errorReason);
-            }
         }
     }
 
@@ -160,13 +158,6 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     }
 
     @Override
-    protected void handleSecondaryClick(@Nullable View view) {
-        if (DEBUG) Log.d(TAG, "handleSecondaryClick");
-        // Secondary clicks are also on quickbar tiles
-        showDetail(true);
-    }
-
-    @Override
     public boolean isAvailable() {
         return mWeatherClient.isOmniJawsServiceInstalled();
     }
@@ -174,21 +165,27 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     @Override
     protected void handleClick(@Nullable View view) {
         if (DEBUG) Log.d(TAG, "handleClick");
-        if (!mState.value) {
-            if (!mWeatherClient.isOmniJawsSetupDone()) {
-                mActivityStarter.postStartActivityDismissingKeyguard(mWeatherClient.getSettingsIntent(), 0);
-            } else {
-                // service enablement is delayed so we keep the status
-                // extra and hope service will follow correct :)
-                mEnabled = true;
-                mWeatherData = null;
-                mWeatherClient.setOmniJawsEnabled(true);
-            }
+        if (!mState.value || mWeatherData == null) {
+            mActivityStarter.postStartActivityDismissingKeyguard(mWeatherClient.getSettingsIntent(), 0);
         } else {
-            mEnabled = false;
-            mWeatherData = null;
-            mWeatherClient.setOmniJawsEnabled(false);
+            PackageManager pm = mContext.getPackageManager();
+            for (String app: ALTERNATIVE_WEATHER_APPS) {
+                if (XtendedUtils.isPackageInstalled(mContext, app)) {
+                    Intent intent = pm.getLaunchIntentForPackage(app);
+                    if (intent != null) {
+                        mActivityStarter.postStartActivityDismissingKeyguard(intent, 0);
+                    }
+                }
+            }
+            if (XtendedUtils.isPackageInstalled(mContext, "com.google.android.googlequicksearchbox")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("dynact://velour/weather/ProxyActivity"));
+                intent.setComponent(new ComponentName("com.google.android.googlequicksearchbox",
+                        "com.google.android.apps.gsa.velour.DynamicActivityTrampoline"));
+                mActivityStarter.postStartActivityDismissingKeyguard(intent, 0);
+            }
         }
+        mEnabled = mWeatherClient.isOmniJawsEnabled();
         refreshState();
     }
 
@@ -203,17 +200,18 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
         if (DEBUG) Log.d(TAG, "handleUpdateState " + mEnabled);
         state.value = mEnabled;
         state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
-        state.icon = mIcon;
+        state.icon = ResourceIcon.get(R.drawable.ic_qs_weather);
+        state.label = mContext.getResources().getString(R.string.omnijaws_label_default);
+        state.secondaryLabel = mContext.getResources().getString(R.string.omnijaws_service_unknown);
         if (mEnabled) {
-            if (mWeatherImage == null) {
+            if (mWeatherData == null || mWeatherImage == null) {
                 state.label = mContext.getResources().getString(R.string.omnijaws_label_default);
+                state.secondaryLabel = mContext.getResources().getString(R.string.omnijaws_service_error);
             } else {
                 state.icon = new DrawableIcon(mWeatherImage);
-                state.label = mWeatherLabel;
+                state.label = mWeatherData.city;
+                state.secondaryLabel = mWeatherData.temp + mWeatherData.tempUnits;
             }
-        } else {
-            mWeatherImage = null;
-            state.label = mContext.getResources().getString(R.string.omnijaws_label_default);
         }
     }
 
@@ -236,7 +234,7 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
                     mWeatherImage = mWeatherImage.mutate();
                     mWeatherLabel = mWeatherData.temp + mWeatherData.tempUnits;
                 } else {
-                    mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_service_unkown);
+                    mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_service_unknown);
                 }
             } else {
                 mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_label_default);
@@ -245,69 +243,5 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
             mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_label_default);
         }
         refreshState();
-        if (isShowingDetail()) {
-            mDetailedView.updateWeatherData(mWeatherData);
-        }
-    }
-
-    @Override
-    protected DetailAdapter createDetailAdapter() {
-        return new WeatherDetailAdapter();
-    }
-
-    private class WeatherDetailAdapter implements DetailAdapter {
-
-        @Override
-        public int getMetricsCategory() {
-        return MetricsEvent.CUSTOM_QUICK_TILES;
-        }
-
-        @Override
-        public CharSequence getTitle() {
-            return mContext.getString(R.string.omnijaws_detail_header);
-        }
-
-        @Override
-        public Boolean getToggleState() {
-            return mEnabled;
-        }
-
-        @Override
-        public void setToggleState(boolean state) {
-            MetricsLogger.action(mContext, getMetricsCategory());
-            mWeatherData = null;
-            mEnabled = state;
-            mWeatherClient.setOmniJawsEnabled(state);
-            if (state) {
-                mDetailedView.startProgress();
-            } else {
-                mDetailedView.stopProgress();
-                mDetailedView.post(() -> {
-                    mDetailedView.updateWeatherData(null);
-                });
-            }
-            refreshState();
-        }
-
-        @Override
-        public Intent getSettingsIntent() {
-            return mWeatherClient.getSettingsIntent();
-        }
-
-        @Override
-        public View createDetailView(Context context, View convertView, ViewGroup parent) {
-            if (DEBUG) Log.d(TAG, "createDetailView ");
-            mDetailedView = (DetailedWeatherView) LayoutInflater.from(context).inflate(
-                    R.layout.detailed_weather_view, parent, false);
-            mDetailedView.setWeatherClient(mWeatherClient);
-            mDetailedView.post(() -> {
-                try {
-                    mDetailedView.updateWeatherData(mWeatherData);
-                }   catch (Exception e){
-                }
-            });
-
-            return mDetailedView;
-        }
     }
 }
