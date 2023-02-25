@@ -93,7 +93,6 @@
                         android:gravity="start|center_vertical"
                         android:paddingStart="2dp"
                         android:paddingEnd="2dp"
-                        android:paddingTop="@dimen/status_bar_padding_top"
                         android:visibility="gone" />
 
                     <com.android.systemui.statusbar.policy.Clock
@@ -104,7 +103,6 @@
                         android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
                         android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
                         android:gravity="center_vertical|start"
-                        android:paddingTop="@dimen/status_bar_padding_top"
                         android:visibility="gone"
                     />
 
@@ -178,7 +176,6 @@
             android:visibility="gone"
             android:paddingStart="@dimen/status_bar_center_clock_padding_start"
             android:paddingEnd="@dimen/status_bar_center_clock_padding_end"
-            android:paddingTop="@dimen/status_bar_padding_top"
             android:singleLine="true"
             />
     </com.android.keyguard.AlphaOptimizedLinearLayout>
