@@ -13009,6 +13009,12 @@ public final class Settings {
         public static final String EXTRA_DIM_AUTO_TIME = "extra_dim_auto_time";
         
         /**
+         * Whether to increase touch sensitivity
+         * @hide
+         */
+        public static final String TOUCH_SENSITIVITY_ENABLED = "touch_sensitivity_enabled";
+
+        /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
          */

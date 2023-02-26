@@ -230,5 +230,6 @@ public class SecureSettings {
         Settings.Secure.IGNORE_AUTH_CONFIRMATION,
         Settings.Secure.EXTRA_DIM_AUTO_MODE,
         Settings.Secure.EXTRA_DIM_AUTO_TIME,
+        Settings.Secure.TOUCH_SENSITIVITY_ENABLED,
     };
 }
