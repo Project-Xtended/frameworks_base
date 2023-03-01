@@ -6917,6 +6917,12 @@ public final class Settings {
         public static final String LOCKSCREEN_WEATHER_SHOW_IMAGE = "lockscreen_weather_show_image";
 
         /**
+         * Lockscreen Weather Background Selection
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_SELECTION = "lockscreen_weather_selection";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
