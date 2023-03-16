@@ -1717,10 +1717,8 @@ public final class CameraManager {
 
         private String[] extractCameraIdListLocked() {
             String[] cameraIds = null;
-            boolean exposeAuxCamera = Camera.shouldExposeAuxCamera();
-            int size = exposeAuxCamera ? mDeviceStatus.size() : 2;
             int idCount = 0;
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < mDeviceStatus.size(); i++) {
                 int status = mDeviceStatus.valueAt(i);
                 if (status == ICameraServiceListener.STATUS_NOT_PRESENT
                         || status == ICameraServiceListener.STATUS_ENUMERATING) continue;
@@ -1728,7 +1726,7 @@ public final class CameraManager {
             }
             cameraIds = new String[idCount];
             idCount = 0;
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < mDeviceStatus.size(); i++) {
                 int status = mDeviceStatus.valueAt(i);
                 if (status == ICameraServiceListener.STATUS_NOT_PRESENT
                         || status == ICameraServiceListener.STATUS_ENUMERATING) continue;
@@ -1991,14 +1989,6 @@ public final class CameraManager {
 
                 if (cameraId == null) {
                     throw new IllegalArgumentException("cameraId was null");
-                }
-
-                /* Force to expose only two cameras
-                 * if the package name does not falls in this bucket
-                 */
-                boolean exposeAuxCamera = Camera.shouldExposeAuxCamera();
-                if (exposeAuxCamera == false && (Integer.parseInt(cameraId) >= 2)) {
-                    throw new IllegalArgumentException("invalid cameraId");
                 }
 
                 ICameraService cameraService = getCameraService();
@@ -2268,11 +2258,6 @@ public final class CameraManager {
         }
 
         private void onStatusChangedLocked(int status, String id) {
-            if (!Camera.shouldExposeAuxCamera() && Integer.parseInt(id) >= 2) {
-                Log.w(TAG, "[soar.cts] ignore the status update of camera: " + id);
-                return;
-            }
-
             if (DEBUG) {
                 Log.v(TAG,
                         String.format("Camera id %s has status changed to 0x%x", id, status));
@@ -2402,15 +2387,6 @@ public final class CameraManager {
             if (DEBUG) {
                 Log.v(TAG,
                         String.format("Camera id %s has torch status changed to 0x%x", id, status));
-            }
-
-            /* Force to ignore the aux or composite camera torch status update
-             * if the package name does not falls in this bucket
-             */
-            boolean exposeAuxCamera = Camera.shouldExposeAuxCamera();
-            if (exposeAuxCamera == false && Integer.parseInt(id) >= 2) {
-                Log.w(TAG, "ignore the torch status update of camera: " + id);
-                return;
             }
 
             if (!validTorchStatus(status)) {
