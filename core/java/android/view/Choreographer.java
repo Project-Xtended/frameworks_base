@@ -34,6 +34,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.util.BoostFramework.ScrollOptimizer;
 import android.util.Log;
 import android.util.TimeUtils;
 import android.view.animation.AnimationUtils;
@@ -332,6 +333,7 @@ public final class Choreographer {
         synchronized(this) {
             mTouchMoveNum = touchMoveNum;
             mMotionEventType = motionEventType;
+            ScrollOptimizer.setMotionType(mMotionEventType);
         }
     }
 
@@ -1275,6 +1277,7 @@ public final class Choreographer {
                 mTimestampNanos = timestampNanos;
                 mFrame = frame;
                 mLastVsyncEventData = vsyncEventData;
+                ScrollOptimizer.setVsyncTime(mTimestampNanos);
                 Message msg = Message.obtain(mHandler, this);
                 msg.setAsynchronous(true);
                 mHandler.sendMessageAtTime(msg, timestampNanos / TimeUtils.NANOS_PER_MS);
