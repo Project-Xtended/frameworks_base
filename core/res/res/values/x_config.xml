@@ -181,5 +181,9 @@
 
     <!-- Enable face auth only when swiping security view -->
     <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
-                        
+
+    <!-- InputFilter Class-->
+    <string name="config_deviceInputFilterLibs" translatable="false"></string>
+    <string name="config_deviceInputFilterClasses" translatable="false"></string>
+                            
 </resources>
