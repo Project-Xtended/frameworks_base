@@ -223,7 +223,9 @@ public class SecureSettings {
         Settings.Secure.BLUETOOTH_LE_BROADCAST_APP_SOURCE_NAME,
         Settings.Secure.GESTURE_NAVBAR_LENGTH_MODE,
         Settings.Secure.SECURE_LOCKSCREEN_QS_DISABLED,
-        Settings.Secure.SHOW_WIFI_STANDARD_ICON
+        Settings.Secure.SHOW_WIFI_STANDARD_ICON,
         Settings.Secure.DOZE_FOR_NOTIFICATIONS,
+        Settings.Secure.DOZE_DOUBLE_TAP_GESTURE_AMBIENT,
+        Settings.Secure.DOZE_PICK_UP_GESTURE_AMBIENT,
     };
 }
