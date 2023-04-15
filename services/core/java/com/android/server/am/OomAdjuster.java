@@ -1409,25 +1409,6 @@ public class OomAdjuster {
         }
     }
 
-    /**
-     * Return true if we should kill excessive cached/empty processes.
-     */
-    private boolean shouldKillExcessiveProcesses(long nowUptime) {
-        final long lastUserUnlockingUptime = mService.mUserController.getLastUserUnlockingUptime();
-
-        if (lastUserUnlockingUptime == 0) {
-            // No users have been unlocked.
-            return !mConstants.mNoKillCachedProcessesUntilBootCompleted;
-        }
-        final long noKillCachedProcessesPostBootCompletedDurationMillis =
-                mConstants.mNoKillCachedProcessesPostBootCompletedDurationMillis;
-        if ((lastUserUnlockingUptime + noKillCachedProcessesPostBootCompletedDurationMillis)
-                > nowUptime) {
-            return false;
-        }
-        return true;
-    }
-
     private final ComputeOomAdjWindowCallback mTmpComputeOomAdjWindowCallback =
             new ComputeOomAdjWindowCallback();
 
