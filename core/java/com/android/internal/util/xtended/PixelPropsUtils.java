@@ -66,6 +66,10 @@ public class PixelPropsUtils {
             "com.google.android.apps.privacy.wildlife",
             "com.google.android.apps.wallpaper",
             "com.google.android.apps.wallpaper.pixel",
+            "com.google.android.apps.subscriptions.red",
+            "com.google.android.dialer",
+            "com.google.android.messaging",
+            "com.google.android.googlequicksearchbox",
             "com.google.android.inputmethod.latin"
     };
 
@@ -97,7 +101,6 @@ public class PixelPropsUtils {
             "com.google.android.MTCL83",
             "com.google.android.UltraCVM",
             "com.google.android.apps.cameralite",
-            "com.google.android.dialer",
             "com.google.android.euicc",
             "com.google.ar.core",
             "com.google.android.youtube",
@@ -105,7 +108,6 @@ public class PixelPropsUtils {
             "com.google.android.apps.youtube.music",
             "com.google.android.apps.recorder",
             "com.google.android.apps.wearables.maestro.companion",
-            "com.google.android.apps.subscriptions.red",
             "com.google.android.apps.tachyon",
             "com.google.android.apps.tycho"
     };
