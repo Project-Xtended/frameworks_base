@@ -12900,6 +12900,12 @@ public final class Settings {
         @Readable
         public static final String GAMES_DEVICE_SPOOF = "games_device_spoof";
 
+	/**
+         * Brightness slider styles
+         * @hide
+         */
+        public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
+
         /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
