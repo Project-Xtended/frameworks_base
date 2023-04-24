@@ -132,7 +132,7 @@ public class PreferredNetworkTile extends SecureQSTile<State> {
 
     @Override
     public int getMetricsCategory() {
-        return return MetricsEvent.XTENDED;
+       return MetricsEvent.XTENDED;
     }
 
     @Override
