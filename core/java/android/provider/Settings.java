@@ -5863,15 +5863,6 @@ public final class Settings {
 
         /**
          * @hide
-         * Enable fod detection even when screen is off
-         * Default value is 0
-         * @hide
-         */
-        @Readable
-        public static final String SCREEN_OFF_FOD = "screen_off_fod";
-
-        /**
-         * @hide
          */
         public static final String UDFPS_ANIM = "udfps_anim";
 
@@ -7019,7 +7010,7 @@ public final class Settings {
          * @hide
          */
         public static final String QS_HEADER_IMAGE = "qs_header_image";
-        
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
@@ -12595,6 +12586,13 @@ public final class Settings {
          * @hide
          */
         public static final String KG_CUSTOM_CLOCK_COLOR_ENABLED = "kg_custom_clock_color_enabled";
+
+        /**
+         * Enable udfps detection even when screen is off
+         * Default value is 0
+         * @hide
+         */
+        public static final String SCREEN_OFF_UDFPS_ENABLED = "screen_off_udfps_enabled";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
