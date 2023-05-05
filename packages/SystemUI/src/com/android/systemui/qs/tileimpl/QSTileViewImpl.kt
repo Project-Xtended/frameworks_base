@@ -682,7 +682,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
         return when {
             state == Tile.STATE_UNAVAILABLE || disabledByPolicy -> colorUnavailable
             state == Tile.STATE_ACTIVE -> 
-                if(qsPanelStyle == 2) 
+                if(qsPanelStyle == 2 || qsPanelStyle == 10) 
                     colorActiveAlpha 
                 else if(qsPanelStyle == 3) 
                     colorActiveRandom 
@@ -699,7 +699,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
         return when {
             state == Tile.STATE_UNAVAILABLE || disabledByPolicy -> colorLabelUnavailable
             state == Tile.STATE_ACTIVE -> 
-                if(qsPanelStyle == 1 || qsPanelStyle == 2)
+                if(qsPanelStyle == 1 || qsPanelStyle == 2 || qsPanelStyle == 10)
                     colorActive
                 else if(qsPanelStyle == 3) 
                     colorLabelActiveRandom
@@ -718,7 +718,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
         return when {
             state == Tile.STATE_UNAVAILABLE || disabledByPolicy -> colorSecondaryLabelUnavailable
             state == Tile.STATE_ACTIVE -> 
-                if(qsPanelStyle == 1 || qsPanelStyle == 2) 
+                if(qsPanelStyle == 1 || qsPanelStyle == 2 || qsPanelStyle == 10) 
                     colorActive
                 else if(qsPanelStyle == 3) 
                     colorSecondaryLabelActiveRandom
