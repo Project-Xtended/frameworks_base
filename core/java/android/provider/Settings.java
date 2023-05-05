@@ -6417,6 +6417,15 @@ public final class Settings {
         @Readable
         public static final String GAMESPACE_SUPPRESS_FULLSCREEN_INTENT = "gamespace_suppress_fullscreen_intent";
 
+	/**
+         * Enable disable CustomUI
+         *   0 = disabled
+         *   1 = enabled
+         * @author vjspranav
+         * @hide
+         */
+        public static final String CUSTOM_UI_TOGGLE = "custom_ui_toggle";
+
         /**
          * reTicker Status
          * @hide
@@ -7227,7 +7236,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_REALLYFULL_COLOR);
             PRIVATE_SETTINGS.add(NAVIGATION_BAR_IME_SPACE);
             PRIVATE_SETTINGS.add(FORCE_FULLSCREEN_CUTOUT_APPS);
-        }
+            PRIVATE_SETTINGS.add(CUSTOM_UI_TOGGLE);
+	}
 
         /**
          * These entries are considered common between the personal and the managed profile,
