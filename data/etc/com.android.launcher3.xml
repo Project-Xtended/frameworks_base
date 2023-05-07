@@ -30,5 +30,6 @@
         <permission name="android.permission.MANAGE_PARALLEL_SPACES" />
         <permission name="android.permission.REGISTER_STATS_PULL_ATOM" />
         <permission name="android.permission.DEVICE_POWER" />
+        <permission name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
     </privapp-permissions>
 </permissions>
