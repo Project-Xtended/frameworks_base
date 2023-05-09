@@ -110,6 +110,8 @@ class DefaultClockController(
         private var currentColor = Color.MAGENTA
         private var isRegionDark = false
         protected var targetRegion: Rect? = null
+        val Int.dp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+	val Int.px: Int get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
         init {
             view.setColors(currentColor, currentColor)
@@ -128,8 +130,15 @@ class DefaultClockController(
                 }
 
                 override fun onFontSettingChanged(fontSizePx: Float) {
-                    view.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSizePx)
+	        val largeClockTextSize = Secure.getIntForUser(ctx.getContentResolver(),
+	            Secure.KG_BIG_CLOCK_TEXT_SIZE, 86, UserHandle.USER_CURRENT)
+		val finalLargeClockTextSize = largeClockTextSize.dp
+                setClockFontSize(largeClock.view, finalLargeClockTextSize.px.toFloat() * 2.5f)
                     recomputePadding(targetRegion)
+                }
+
+                fun setClockFontSize(v: AnimatableClockView, fontSizePx: Float) {
+	           v.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSizePx)
                 }
             }
 
