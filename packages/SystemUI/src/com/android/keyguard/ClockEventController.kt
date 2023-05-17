@@ -89,7 +89,6 @@ open class ClockEventController @Inject constructor(
 
                 value.initialize(resources, dozeAmount, 0f)
                 updateRegionSamplers(value)
-                updateFontSizes()
             }
         }
 
