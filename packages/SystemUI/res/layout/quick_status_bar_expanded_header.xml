@@ -49,6 +49,14 @@
             android:layout_height="match_parent"    
             android:scaleType="centerCrop"
             android:background="@drawable/qs_header_image_view_outline" />
+
+        <ImageView
+            android:id="@+id/custom_qs_header_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/qs_header_image_view_outline" />
+
     </LinearLayout>
 
     <!-- Date and privacy. Only visible in QS when not in split shade -->
