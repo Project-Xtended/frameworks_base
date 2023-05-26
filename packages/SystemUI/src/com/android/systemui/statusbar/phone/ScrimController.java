@@ -47,6 +47,7 @@ import com.android.keyguard.BouncerPanelExpansionCalculator;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.settingslib.Utils;
+import com.android.systemui.Dependency;
 import com.android.systemui.DejankUtils;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
@@ -54,6 +55,7 @@ import com.android.systemui.animation.ShadeInterpolation;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dock.DockManager;
+import com.android.systemui.tuner.TunerService;
 import com.android.systemui.keyguard.KeyguardUnlockAnimationController;
 import com.android.systemui.scrim.ScrimView;
 import com.android.systemui.shade.NotificationPanelViewController;
@@ -260,6 +262,12 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     private boolean mWallpaperSupportsAmbientMode;
     private boolean mScreenOn;
     private boolean mTransparentScrimBackground;
+    
+    private static final String QS_DUAL_TONE =
+        "system:" + Settings.System.QS_DUAL_TONE;
+
+    private boolean mUseDualToneColor;
+
 
     // Scrim blanking callbacks
     private Runnable mPendingFrameCallback;
@@ -323,6 +331,14 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         });
         mColors = new GradientColors();
         mBehindColors = new GradientColors();
+        
+        TunerService tunerService = Dependency.get(TunerService.class);
+        tunerService.addTunable((key, newValue) -> {
+            if (key.equals(QS_DUAL_TONE)) {
+            	mUseDualToneColor = TunerService.parseIntegerSwitch(newValue, false);
+                ScrimController.this.onThemeChanged();
+            }
+        }, QS_DUAL_TONE);
     }
 
     /**
@@ -1419,7 +1435,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
         mColors.setSupportsDarkText(
                 ColorUtils.calculateContrast(mColors.getMainColor(), Color.WHITE) > 4.5);
 
-        mBehindColors.setMainColor(surfaceBackground);
+        mBehindColors.setMainColor(mUseDualToneColor ? surfaceBackground : background);
         mBehindColors.setSecondaryColor(accent);
         mBehindColors.setSupportsDarkText(
                 ColorUtils.calculateContrast(mBehindColors.getMainColor(), Color.WHITE) > 4.5);
