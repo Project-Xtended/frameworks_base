@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -99,15 +100,30 @@ public class BrightnessSliderController extends ViewController<BrightnessSliderV
     }
 
     private void triggerVibration(Context context, boolean tracking) {
-    	Vibrator vibrator = context.getSystemService(Vibrator.class);
-        if (vibrator == null || !tracking) {
+        Vibrator vibrator = context.getSystemService(Vibrator.class);
+        int vibrateIntensity = Settings.System.getInt(context.getContentResolver(),
+                    Settings.System.BRIGHTNESS_SLIDER_HAPTICS_INTENSITY, 1);
+        if (vibrator == null || !tracking || vibrateIntensity == 0) {
             return;
         }
-        AsyncTask.execute(
-                    () -> vibrator.vibrate(VibrationEffect.createOneShot(
-                hapticDuration.toMillis(),
-                VibrationEffect.EFFECT_TEXTURE_TICK)));
-        
+
+            VibrationEffect effect;
+            switch (vibrateIntensity) {
+                case 1:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TEXTURE_TICK);
+                    break;
+                case 2:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK);
+                    break;
+                case 3:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
+                    break;
+                default:
+                    effect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TEXTURE_TICK);
+                    break;
+            }
+
+        AsyncTask.execute(() -> vibrator.vibrate(effect));
     }
 
     @Override

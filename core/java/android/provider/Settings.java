@@ -6082,6 +6082,27 @@ public final class Settings {
         public static final String CUSTOM_RINGTONE_VIBRATION_PATTERN = "custom_ringtone_vibration_pattern";
 
         /**
+         * Edge scrolling haptics intensity
+         * @hide
+         */
+        @Readable
+        public static final String EDGE_SCROLLING_HAPTICS_INTENSITY = "edge_scrolling_haptics_intensity";
+
+        /**
+         * Brightness sliding haptics intensity
+         * @hide
+         */
+        @Readable
+        public static final String BRIGHTNESS_SLIDER_HAPTICS_INTENSITY = "brightness_slider_haptics_intensity";
+
+        /**
+         * Volume sliding haptics intensity
+         * @hide
+         */
+        @Readable
+        public static final String VOLUME_SLIDER_HAPTICS_INTENSITY = "volume_slider_haptics_intensity";
+
+        /**
          * Whether to enable DOZE only when charging
          * @hide
          */
