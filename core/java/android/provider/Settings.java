@@ -12920,14 +12920,7 @@ public final class Settings {
          */
         public static final String FACE_UNLOCK_METHOD = "face_unlock_method";
 
-        /**
-         * Whether to spoof device as a high-end model to unlock higher FPS in certain games.
-         * @hide
-         */
-        @Readable
-        public static final String GAMES_DEVICE_SPOOF = "games_device_spoof";
-
-	/**
+       	/**
          * Brightness slider styles
          * @hide
          */
