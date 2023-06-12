@@ -292,7 +292,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     static final int LONG_PRESS_POWER_SHUT_OFF_NO_CONFIRM = 3;
     static final int LONG_PRESS_POWER_GO_TO_VOICE_ASSIST = 4;
     static final int LONG_PRESS_POWER_ASSISTANT = 5; // Settings.Secure.ASSISTANT
-    static final int LONG_PRESS_POWER_TORCH = 6;
 
     // must match: config_veryLongPresOnPowerBehavior in config.xml
     static final int VERY_LONG_PRESS_POWER_NOTHING = 0;
@@ -1089,7 +1088,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // Abort possibly stuck animations only when power key up without long press case.
                 mHandler.post(mWindowManagerFuncs::triggerAnimationFailsafe);
                 // See if we deferred screen wake because long press power for torch is enabled
-                if (mResolvedLongPressOnPowerBehavior == LONG_PRESS_POWER_TORCH && !isScreenOn()) {
+                if (mResolvedLongPressOnPowerBehavior == TORCH_ACTION_LONG && !isScreenOn()) {
                     wakeUpFromPowerKey(SystemClock.uptimeMillis());
                 }
             }
@@ -1409,15 +1408,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 launchAssistAction(null, powerKeyDeviceId, eventTime,
                         AssistUtils.INVOCATION_TYPE_POWER_BUTTON_LONG_PRESS);
                 break;
-            case LONG_PRESS_POWER_TORCH:
-                mPowerKeyHandled = true;
-                // Toggle torch state asynchronously to help protect against
-                // a misbehaving cameraservice from blocking systemui.
-                mHandler.removeMessages(MSG_TOGGLE_TORCH);
-                Message msg = mHandler.obtainMessage(MSG_TOGGLE_TORCH);
-                msg.setAsynchronous(true);
-                msg.sendToTarget();
-                break;
         }
     }
 
@@ -1476,7 +1466,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             return LONG_PRESS_POWER_SHUT_OFF_NO_CONFIRM;
         }
         if ((mTorchActionMode == 2) && (!isScreenOn() || mTorchEnabled)) {
-            return LONG_PRESS_POWER_TORCH;
+            return TORCH_ACTION_LONG;
         }
 
         // If the config indicates the assistant behavior but the device isn't yet provisioned, show
@@ -6513,8 +6503,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 return "LONG_PRESS_POWER_GO_TO_VOICE_ASSIST";
             case LONG_PRESS_POWER_ASSISTANT:
                 return "LONG_PRESS_POWER_ASSISTANT";
-            case LONG_PRESS_POWER_TORCH:
-                return "LONG_PRESS_POWER_TORCH";
             default:
                 return Integer.toString(behavior);
         }
